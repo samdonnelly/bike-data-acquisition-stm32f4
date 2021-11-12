@@ -1,0 +1,138 @@
+ARM GAS  C:\Users\samue\AppData\Local\Temp\ccqWlWrU.s 			page 1
+
+
+   1              		.cpu cortex-m4
+   2              		.arch armv7e-m
+   3              		.fpu fpv4-sp-d16
+   4              		.eabi_attribute 27, 1
+   5              		.eabi_attribute 28, 1
+   6              		.eabi_attribute 20, 1
+   7              		.eabi_attribute 21, 1
+   8              		.eabi_attribute 23, 3
+   9              		.eabi_attribute 24, 1
+  10              		.eabi_attribute 25, 1
+  11              		.eabi_attribute 26, 1
+  12              		.eabi_attribute 30, 1
+  13              		.eabi_attribute 34, 1
+  14              		.eabi_attribute 18, 4
+  15              		.file	"i2c-lcd.c"
+  16              		.text
+  17              	.Ltext0:
+  18              		.cfi_sections	.debug_frame
+  19              		.section	.text.lcd_clear,"ax",%progbits
+  20              		.align	1
+  21              		.global	lcd_clear
+  22              		.syntax unified
+  23              		.thumb
+  24              		.thumb_func
+  26              	lcd_clear:
+  27              	.LFB130:
+  28              		.file 1 "Core/Src/i2c-lcd.c"
+   1:Core/Src/i2c-lcd.c **** 
+   2:Core/Src/i2c-lcd.c **** // /** Put this in the src folder **/
+   3:Core/Src/i2c-lcd.c **** 
+   4:Core/Src/i2c-lcd.c **** #include "i2c-lcd.h"
+   5:Core/Src/i2c-lcd.c **** // extern I2C_HandleTypeDef hi2c1;  // change your handler here accordingly
+   6:Core/Src/i2c-lcd.c **** #include "main.h"
+   7:Core/Src/i2c-lcd.c **** 
+   8:Core/Src/i2c-lcd.c **** // #define SLAVE_ADDRESS_LCD 0x4E // change this according to your setup
+   9:Core/Src/i2c-lcd.c **** 
+  10:Core/Src/i2c-lcd.c **** // void lcd_send_cmd (char cmd)
+  11:Core/Src/i2c-lcd.c **** // {
+  12:Core/Src/i2c-lcd.c **** //   char data_u, data_l;
+  13:Core/Src/i2c-lcd.c **** // 	uint8_t data_t[4];
+  14:Core/Src/i2c-lcd.c **** // 	data_u = (cmd&0xf0);
+  15:Core/Src/i2c-lcd.c **** // 	data_l = ((cmd<<4)&0xf0);
+  16:Core/Src/i2c-lcd.c **** // 	data_t[0] = data_u|0x0C;  //en=1, rs=0
+  17:Core/Src/i2c-lcd.c **** // 	data_t[1] = data_u|0x08;  //en=0, rs=0
+  18:Core/Src/i2c-lcd.c **** // 	data_t[2] = data_l|0x0C;  //en=1, rs=0
+  19:Core/Src/i2c-lcd.c **** // 	data_t[3] = data_l|0x08;  //en=0, rs=0
+  20:Core/Src/i2c-lcd.c **** // 	HAL_I2C_Master_Transmit (&hi2c1, SLAVE_ADDRESS_LCD,(uint8_t *) data_t, 4, 100);
+  21:Core/Src/i2c-lcd.c **** // }
+  22:Core/Src/i2c-lcd.c **** 
+  23:Core/Src/i2c-lcd.c **** // void lcd_send_data (char data)
+  24:Core/Src/i2c-lcd.c **** // {
+  25:Core/Src/i2c-lcd.c **** // 	char data_u, data_l;
+  26:Core/Src/i2c-lcd.c **** // 	uint8_t data_t[4];
+  27:Core/Src/i2c-lcd.c **** // 	data_u = (data&0xf0);
+  28:Core/Src/i2c-lcd.c **** // 	data_l = ((data<<4)&0xf0);
+  29:Core/Src/i2c-lcd.c **** // 	data_t[0] = data_u|0x0D;  //en=1, rs=1
+  30:Core/Src/i2c-lcd.c **** // 	data_t[1] = data_u|0x09;  //en=0, rs=1
+ARM GAS  C:\Users\samue\AppData\Local\Temp\ccqWlWrU.s 			page 2
+
+
+  31:Core/Src/i2c-lcd.c **** // 	data_t[2] = data_l|0x0D;  //en=1, rs=1
+  32:Core/Src/i2c-lcd.c **** // 	data_t[3] = data_l|0x09;  //en=0, rs=1
+  33:Core/Src/i2c-lcd.c **** // 	HAL_I2C_Master_Transmit (&hi2c1, SLAVE_ADDRESS_LCD,(uint8_t *) data_t, 4, 100);
+  34:Core/Src/i2c-lcd.c **** // }
+  35:Core/Src/i2c-lcd.c **** 
+  36:Core/Src/i2c-lcd.c **** void lcd_clear (void)
+  37:Core/Src/i2c-lcd.c **** {
+  29              		.loc 1 37 1 view -0
+  30              		.cfi_startproc
+  31              		@ args = 0, pretend = 0, frame = 0
+  32              		@ frame_needed = 0, uses_anonymous_args = 0
+  33 0000 10B5     		push	{r4, lr}
+  34              	.LCFI0:
+  35              		.cfi_def_cfa_offset 8
+  36              		.cfi_offset 4, -8
+  37              		.cfi_offset 14, -4
+  38:Core/Src/i2c-lcd.c **** 	lcd_send_cmd (0x00);
+  38              		.loc 1 38 2 view .LVU1
+  39 0002 0020     		movs	r0, #0
+  40 0004 FFF7FEFF 		bl	lcd_send_cmd
+  41              	.LVL0:
+  39:Core/Src/i2c-lcd.c **** 	for (int i=0; i<100; i++)
+  42              		.loc 1 39 2 view .LVU2
+  43              	.LBB2:
+  44              		.loc 1 39 7 view .LVU3
+  45              		.loc 1 39 11 is_stmt 0 view .LVU4
+  46 0008 0024     		movs	r4, #0
+  47              		.loc 1 39 2 view .LVU5
+  48 000a 03E0     		b	.L2
+  49              	.LVL1:
+  50              	.L3:
+  40:Core/Src/i2c-lcd.c **** 	{
+  41:Core/Src/i2c-lcd.c **** 		lcd_send_data (' ');
+  51              		.loc 1 41 3 is_stmt 1 discriminator 3 view .LVU6
+  52 000c 2020     		movs	r0, #32
+  53 000e FFF7FEFF 		bl	lcd_send_data
+  54              	.LVL2:
+  39:Core/Src/i2c-lcd.c **** 	for (int i=0; i<100; i++)
+  55              		.loc 1 39 23 discriminator 3 view .LVU7
+  39:Core/Src/i2c-lcd.c **** 	for (int i=0; i<100; i++)
+  56              		.loc 1 39 24 is_stmt 0 discriminator 3 view .LVU8
+  57 0012 0134     		adds	r4, r4, #1
+  58              	.LVL3:
+  59              	.L2:
+  39:Core/Src/i2c-lcd.c **** 	for (int i=0; i<100; i++)
+  60              		.loc 1 39 16 is_stmt 1 discriminator 1 view .LVU9
+  39:Core/Src/i2c-lcd.c **** 	for (int i=0; i<100; i++)
+  61              		.loc 1 39 2 is_stmt 0 discriminator 1 view .LVU10
+  62 0014 632C     		cmp	r4, #99
+  63 0016 F9DD     		ble	.L3
+  64              	.LBE2:
+  42:Core/Src/i2c-lcd.c **** 	}
+  43:Core/Src/i2c-lcd.c **** }
+  65              		.loc 1 43 1 view .LVU11
+  66 0018 10BD     		pop	{r4, pc}
+  67              		.loc 1 43 1 view .LVU12
+  68              		.cfi_endproc
+ARM GAS  C:\Users\samue\AppData\Local\Temp\ccqWlWrU.s 			page 3
+
+
+  69              	.LFE130:
+  71              		.text
+  72              	.Letext0:
+  73              		.file 2 "Core/Inc/main.h"
+ARM GAS  C:\Users\samue\AppData\Local\Temp\ccqWlWrU.s 			page 4
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 i2c-lcd.c
+C:\Users\samue\AppData\Local\Temp\ccqWlWrU.s:20     .text.lcd_clear:00000000 $t
+C:\Users\samue\AppData\Local\Temp\ccqWlWrU.s:26     .text.lcd_clear:00000000 lcd_clear
+
+UNDEFINED SYMBOLS
+lcd_send_cmd
+lcd_send_data
