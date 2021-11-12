@@ -7,8 +7,8 @@
 
 // #include "stm32f4xx_hal.h"
 
-// #ifndef LCD_I2C
-// #define LCD_I2C
+#ifndef LCD_I2C
+#define LCD_I2C
 
 // void lcd_init (void);   // initialize lcd
 
@@ -18,6 +18,6 @@
 
 // void lcd_send_string (char *str);  // send string to the lcd
 
-// void lcd_clear (void);  
+void lcd_clear (void);  
 
-// #endif
+#endif

@@ -1,8 +1,9 @@
 
 // /** Put this in the src folder **/
 
-// #include "i2c-lcd.h"
+#include "i2c-lcd.h"
 // extern I2C_HandleTypeDef hi2c1;  // change your handler here accordingly
+#include "main.h"
 
 // #define SLAVE_ADDRESS_LCD 0x4E // change this according to your setup
 
@@ -32,14 +33,14 @@
 // 	HAL_I2C_Master_Transmit (&hi2c1, SLAVE_ADDRESS_LCD,(uint8_t *) data_t, 4, 100);
 // }
 
-// void lcd_clear (void)
-// {
-// 	lcd_send_cmd (0x00);
-// 	for (int i=0; i<100; i++)
-// 	{
-// 		lcd_send_data (' ');
-// 	}
-// }
+void lcd_clear (void)
+{
+	lcd_send_cmd (0x00);
+	for (int i=0; i<100; i++)
+	{
+		lcd_send_data (' ');
+	}
+}
 
 // void lcd_init (void)
 // {

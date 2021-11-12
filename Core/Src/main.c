@@ -23,13 +23,11 @@
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 
+#include "i2c-lcd.h"
+
 // Libraries
 #include <stdlib.h>
 #include <stdio.h>
-
-// Header files
-// #include "i2c-lcd.h"
-// #include "accelerometer_data.h"
 
 /* USER CODE END Includes */
 
@@ -40,37 +38,6 @@
 
 /* Private define ------------------------------------------------------------*/
 /* USER CODE BEGIN PD */
-
-// State machine states
-#define startup_state         0
-#define normal_state          1
-#define accel_cal_prep_state  2
-#define accel_cal_state       3
-
-// Accelerometer hardware registers
-#define MPU6050_ADDR       0xD0      // MPU6050 ID
-
-#define SMPLRT_DIV_REG     0x19      // Sample rate divider
-#define GYRO_CONFIG_REG    0x1B      // Gyroscope configuration
-#define ACCEL_CONFIG_REG   0x1C      // Accelerometer configuration
-#define ACCEL_XOUT_H_REG   0x3B      // Accelerometer measurements
-#define TEMP_OUT_H_REG     0x41      // Temperature measurement
-#define GYRO_XOUT_H_REG    0x43      // Gyroscope measurements
-#define PWR_MGMT_1_REG     0x6B      // Power management 1
-#define WHO_AM_I_REG       0x75      // Who am I - verify device identity
-
-// Constants
-#define NUM_OPTIONS 2
-#define NUM_STATES 4
-#define S0_DELAY 3000
-#define S1_DELAY 500
-#define S2_DELAY 1000
-#define S3_DELAY 2000
-
-#define ACCEL_CONST 16384.0
-#define GYRO_CONST  131.0
-
-#define SLAVE_ADDRESS_LCD 0x4E // change this according to your setup
 
 /* USER CODE END PD */
 
@@ -97,59 +64,12 @@ static void MX_USART2_UART_Init(void);
 static void MX_I2C1_Init(void);
 /* USER CODE BEGIN PFP */
 
-// Function prototypes -------------------------------------------------------------------------------
-
-// Accelerometer functions
-void MPU6050_Init(void);
-
-// State machine functions
-void startup         (void);     // Initialize everything on startup
-void normal          (void);     // Normal run mode
-void accel_cal_prep  (void);     // Prepare to calibrate the accelerometer
-void accel_cal       (void);     // Calibrate the accelerometer
-//void data_choice     (void);     // Choose which data to log
-//void standby         (void);     // Device ready to go, waiting on requested state from user
-//void record_slow     (void);     // Records data at a slow rate - used when no significant activity detected
-//void record_fast     (void);     // Records data at a fast rate - used when activity detected
-//void mem_status      (void);     // Tells the amount of memory used/left
-//void mem_full        (void);     // Memory is full on the SD
-//void data_analyze    (void);     // Do suspension calculation in background with saved data
-//void delay           (void);     // Delay
-//void sd_eject        (void);     // Safely eject SD card - Only if controller is running - Is this necessary?
-
-
-// Read accelerometer raw data
-float* MPU6050_read_accel_raw(float accel_con, uint8_t MPU_ADDR, uint8_t ACCEL_REG, float accel_corr[]);
-
-// Read accelerometer calibrated data
-float* MPU6050_read_accel(float accel_con, uint8_t MPU_ADDR, uint8_t ACCEL_REG, float accel_data[], float accel_corr[]);
-
-// Read gyroscope raw data
-float* MPU6050_read_gyro_raw(float gyro_con, uint8_t MPU_ADDR, uint8_t GYRO_REG, float gyro_corr[]);
-
-// Read gyroscope calibrated data
-float* MPU6050_read_gyro(float gyro_con, uint8_t MPU_ADDR, uint8_t GYRO_REG, float gyro_data[], float gyro_corr[]);
-
-
-void lcd_init (void);   // initialize lcd
-
-void lcd_send_cmd (char cmd);  // send command to the lcd
-
-void lcd_send_data (char data);  // send data to the lcd
-
-void lcd_send_string (char *str);  // send string to the lcd
-
-void lcd_clear (void);  
-
-
-
 /* USER CODE END PFP */
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
 
-
-// Structures ---------------------------------------------------------------------------------------------------
+// Structures ----------------------------------------------------------------------------------
 
 // Primary state machine structure
 typedef const struct BSDA {
@@ -157,7 +77,6 @@ typedef const struct BSDA {
 	unsigned long time_delay;
 	unsigned long next_state[NUM_OPTIONS];
 } BSDA;
-
 
 // State Machines
 
@@ -170,7 +89,7 @@ BSDA FSM[NUM_STATES] = {
 };
 
 
-// Global variables --------------------------------------------------------------------------------------------
+// Global variables ----------------------------------------------------------------------------
 
 uint8_t flag = 0;     // Interrupt flag
 unsigned long state;  // Current state
@@ -188,7 +107,7 @@ float *gyro_corr_p;
 char buf[5];      // Accelerometer data buffer
 
 
-// Functions --------------------------------------------------------------------------------------------------
+// Functions -----------------------------------------------------------------------------------
 
 // Accelerometer initialization
 void MPU6050_Init(void) {
@@ -249,8 +168,10 @@ void normal(void) {
 	// Normal run mode
 	uint8_t line_pos;
 
-	accel_data_p = MPU6050_read_accel(ACCEL_CONST, MPU6050_ADDR, ACCEL_XOUT_H_REG, accel_data, accel_corr);
-	gyro_data_p  = MPU6050_read_gyro(GYRO_CONST, MPU6050_ADDR, GYRO_XOUT_H_REG, gyro_data, gyro_corr);
+	accel_data_p = MPU6050_read_accel(ACCEL_CONST, MPU6050_ADDR, ACCEL_XOUT_H_REG, accel_data, 
+		accel_corr);
+	gyro_data_p  = MPU6050_read_gyro(GYRO_CONST, MPU6050_ADDR, GYRO_XOUT_H_REG, gyro_data, 
+		gyro_corr);
 
 	accel_data[0] = accel_data_p[0];
 	accel_data[1] = accel_data_p[1];
@@ -369,14 +290,14 @@ void lcd_send_data (char data)
 	HAL_I2C_Master_Transmit (&hi2c1, SLAVE_ADDRESS_LCD,(uint8_t *) data_t, 4, 100);
 }
 
-void lcd_clear (void)
-{
-	lcd_send_cmd (0x00);
-	for (int i=0; i<100; i++)
-	{
-		lcd_send_data (' ');
-	}
-}
+// void lcd_clear (void)
+// {
+// 	lcd_send_cmd (0x00);
+// 	for (int i=0; i<100; i++)
+// 	{
+// 		lcd_send_data (' ');
+// 	}
+// }
 
 void lcd_init (void)
 {
@@ -392,15 +313,17 @@ void lcd_init (void)
 	HAL_Delay(10);
 
   // display initialization
-	lcd_send_cmd (0x28); // Function set --> DL=0 (4 bit mode), N = 1 (2 line display) F = 0 (5x8 characters)
+	lcd_send_cmd (0x28);   // Function set --> DL=0 (4 bit mode), N = 1 (2 line display) F = 0 
+	                       // (5x8 characters)
 	HAL_Delay(1);
-	lcd_send_cmd (0x08); //Display on/off control --> D=0,C=0, B=0  ---> display off
+	lcd_send_cmd (0x08);   // Display on/off control --> D=0,C=0, B=0  ---> display off
 	HAL_Delay(1);
-	lcd_send_cmd (0x01);  // clear display
+	lcd_send_cmd (0x01);   // clear display
 	HAL_Delay(1);
-	lcd_send_cmd (0x06); //Entry mode set --> I/D = 1 (increment cursor) & S = 0 (no shift)
+	lcd_send_cmd (0x06);   // Entry mode set --> I/D = 1 (increment cursor) & S = 0 (no shift)
 	HAL_Delay(1);
-	lcd_send_cmd (0x0C); //Display on/off control --> D = 1, C and B = 0. (Cursor and blink, last two bits)
+	lcd_send_cmd (0x0C);   // Display on/off control --> D = 1, C and B = 0. (Cursor and blink, 
+	                       // last two bits)
 }
 
 void lcd_send_string (char *str)
@@ -408,7 +331,8 @@ void lcd_send_string (char *str)
 	while (*str) lcd_send_data (*str++);
 }
 
-float* MPU6050_read_accel_raw(float accel_con, uint8_t MPU_ADDR, uint8_t ACCEL_REG, float accel_corr[]) {
+float* MPU6050_read_accel_raw(float accel_con, uint8_t MPU_ADDR, uint8_t ACCEL_REG, 
+	float accel_corr[]) {
 	uint8_t data[6];
 
 	// Read 6 bytes of data starting from ACCEL_XOUT_H register
@@ -421,7 +345,8 @@ float* MPU6050_read_accel_raw(float accel_con, uint8_t MPU_ADDR, uint8_t ACCEL_R
 	return accel_corr;
 }
 
-float* MPU6050_read_accel(float accel_con, uint8_t MPU_ADDR, uint8_t ACCEL_REG, float accel_data[], float accel_corr[]) {
+float* MPU6050_read_accel(float accel_con, uint8_t MPU_ADDR, uint8_t ACCEL_REG, 
+	float accel_data[], float accel_corr[]) {
 	uint8_t data[6];
 
 	// Read 6 bytes of data starting from ACCEL_XOUT_H register
@@ -434,7 +359,8 @@ float* MPU6050_read_accel(float accel_con, uint8_t MPU_ADDR, uint8_t ACCEL_REG, 
 	return accel_data;
 }
 
-float* MPU6050_read_gyro_raw(float gyro_con, uint8_t MPU_ADDR, uint8_t GYRO_REG, float gyro_corr[]) {
+float* MPU6050_read_gyro_raw(float gyro_con, uint8_t MPU_ADDR, uint8_t GYRO_REG, 
+	float gyro_corr[]) {
 	uint8_t data[6];
 
 	// Read 6 bytes of data starting from ACCEL_XOUT_H register
@@ -447,7 +373,8 @@ float* MPU6050_read_gyro_raw(float gyro_con, uint8_t MPU_ADDR, uint8_t GYRO_REG,
 	return gyro_corr;
 }
 
-float* MPU6050_read_gyro(float gyro_con, uint8_t MPU_ADDR, uint8_t GYRO_REG, float gyro_data[], float gyro_corr[]) {
+float* MPU6050_read_gyro(float gyro_con, uint8_t MPU_ADDR, uint8_t GYRO_REG, float gyro_data[], 
+	float gyro_corr[]) {
 	uint8_t data[6];
 
 	// Read 6 bytes of data starting from ACCEL_XOUT_H register
