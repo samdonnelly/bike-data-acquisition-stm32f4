@@ -70,37 +70,6 @@ void accel_cal(void);
 // Initiate accelerometer
 void MPU6050_Init(void);
 
-// Read accelerometer raw data
-float* MPU6050_read_accel_raw(float accel_con, uint8_t MPU_ADDR, uint8_t ACCEL_REG, 
-	float accel_corr[]);
-
-// Read accelerometer calibrated data
-float* MPU6050_read_accel(float accel_con, uint8_t MPU_ADDR, uint8_t ACCEL_REG, 
-	float accel_data[], float accel_corr[]);
-
-// Read gyroscope raw data
-float* MPU6050_read_gyro_raw(float gyro_con, uint8_t MPU_ADDR, uint8_t GYRO_REG, 
-	float gyro_corr[]);
-
-// Read gyroscope calibrated data
-float* MPU6050_read_gyro(float gyro_con, uint8_t MPU_ADDR, uint8_t GYRO_REG, 
-	float gyro_data[], float gyro_corr[]);
-
-// initialize lcd
-void lcd_init (void);
-
-// send command to the lcd
-void lcd_send_cmd (char cmd);
-
-// send data to the lcd
-void lcd_send_data (char data);
-
-// send string to the lcd
-void lcd_send_string (char *str);
-
-// Clear display
-void lcd_clear (void);  
-
 /* USER CODE END EFP */
 
 /* Private defines -----------------------------------------------------------*/

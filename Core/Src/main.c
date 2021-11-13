@@ -24,6 +24,7 @@
 /* USER CODE BEGIN Includes */
 
 #include "i2c-lcd.h"
+#include "accelerometer_data.h"
 
 // Libraries
 #include <stdlib.h>
@@ -262,129 +263,6 @@ void accel_cal(void) {
 
 	lcd_send_cmd(0x80|0x00);
 	lcd_send_string("Calibration Complete");
-}
-
-void lcd_send_cmd (char cmd)
-{
-  char data_u, data_l;
-	uint8_t data_t[4];
-	data_u = (cmd&0xf0);
-	data_l = ((cmd<<4)&0xf0);
-	data_t[0] = data_u|0x0C;  //en=1, rs=0
-	data_t[1] = data_u|0x08;  //en=0, rs=0
-	data_t[2] = data_l|0x0C;  //en=1, rs=0
-	data_t[3] = data_l|0x08;  //en=0, rs=0
-	HAL_I2C_Master_Transmit (&hi2c1, SLAVE_ADDRESS_LCD,(uint8_t *) data_t, 4, 100);
-}
-
-void lcd_send_data (char data)
-{
-	char data_u, data_l;
-	uint8_t data_t[4];
-	data_u = (data&0xf0);
-	data_l = ((data<<4)&0xf0);
-	data_t[0] = data_u|0x0D;  //en=1, rs=1
-	data_t[1] = data_u|0x09;  //en=0, rs=1
-	data_t[2] = data_l|0x0D;  //en=1, rs=1
-	data_t[3] = data_l|0x09;  //en=0, rs=1
-	HAL_I2C_Master_Transmit (&hi2c1, SLAVE_ADDRESS_LCD,(uint8_t *) data_t, 4, 100);
-}
-
-// void lcd_clear (void)
-// {
-// 	lcd_send_cmd (0x00);
-// 	for (int i=0; i<100; i++)
-// 	{
-// 		lcd_send_data (' ');
-// 	}
-// }
-
-void lcd_init (void)
-{
-	// 4 bit initialisation
-	HAL_Delay(50);  // wait for >40ms
-	lcd_send_cmd (0x30);
-	HAL_Delay(5);  // wait for >4.1ms
-	lcd_send_cmd (0x30);
-	HAL_Delay(1);  // wait for >100us
-	lcd_send_cmd (0x30);
-	HAL_Delay(10);
-	lcd_send_cmd (0x20);  // 4bit mode
-	HAL_Delay(10);
-
-  // display initialization
-	lcd_send_cmd (0x28);   // Function set --> DL=0 (4 bit mode), N = 1 (2 line display) F = 0 
-	                       // (5x8 characters)
-	HAL_Delay(1);
-	lcd_send_cmd (0x08);   // Display on/off control --> D=0,C=0, B=0  ---> display off
-	HAL_Delay(1);
-	lcd_send_cmd (0x01);   // clear display
-	HAL_Delay(1);
-	lcd_send_cmd (0x06);   // Entry mode set --> I/D = 1 (increment cursor) & S = 0 (no shift)
-	HAL_Delay(1);
-	lcd_send_cmd (0x0C);   // Display on/off control --> D = 1, C and B = 0. (Cursor and blink, 
-	                       // last two bits)
-}
-
-void lcd_send_string (char *str)
-{
-	while (*str) lcd_send_data (*str++);
-}
-
-float* MPU6050_read_accel_raw(float accel_con, uint8_t MPU_ADDR, uint8_t ACCEL_REG, 
-	float accel_corr[]) {
-	uint8_t data[6];
-
-	// Read 6 bytes of data starting from ACCEL_XOUT_H register
-	HAL_I2C_Mem_Read(&hi2c1, MPU_ADDR, ACCEL_REG, 1, data, 6, 1000);
-
-	accel_corr[0] = ((int16_t)(data[0] << 8 | data[1]))/accel_con;
-	accel_corr[1] = ((int16_t)(data[2] << 8 | data[3]))/accel_con;
-	accel_corr[2] = ((int16_t)(data[4] << 8 | data[5]))/accel_con;
-
-	return accel_corr;
-}
-
-float* MPU6050_read_accel(float accel_con, uint8_t MPU_ADDR, uint8_t ACCEL_REG, 
-	float accel_data[], float accel_corr[]) {
-	uint8_t data[6];
-
-	// Read 6 bytes of data starting from ACCEL_XOUT_H register
-	HAL_I2C_Mem_Read(&hi2c1, MPU_ADDR, ACCEL_REG, 1, data, 6, 1000);
-
-	accel_data[0] = ((int16_t)(data[0] << 8 | data[1]))/accel_con - accel_corr[0];
-	accel_data[1] = ((int16_t)(data[2] << 8 | data[3]))/accel_con - accel_corr[1];
-	accel_data[2] = ((int16_t)(data[4] << 8 | data[5]))/accel_con - accel_corr[2];
-
-	return accel_data;
-}
-
-float* MPU6050_read_gyro_raw(float gyro_con, uint8_t MPU_ADDR, uint8_t GYRO_REG, 
-	float gyro_corr[]) {
-	uint8_t data[6];
-
-	// Read 6 bytes of data starting from ACCEL_XOUT_H register
-	HAL_I2C_Mem_Read(&hi2c1, MPU_ADDR, GYRO_REG, 1, data, 6, 1000);
-
-	gyro_corr[0] = ((int16_t)(data[0] << 8 | data[1]))/gyro_con;
-	gyro_corr[1] = ((int16_t)(data[2] << 8 | data[3]))/gyro_con;
-	gyro_corr[2] = ((int16_t)(data[4] << 8 | data[5]))/gyro_con;
-
-	return gyro_corr;
-}
-
-float* MPU6050_read_gyro(float gyro_con, uint8_t MPU_ADDR, uint8_t GYRO_REG, float gyro_data[], 
-	float gyro_corr[]) {
-	uint8_t data[6];
-
-	// Read 6 bytes of data starting from ACCEL_XOUT_H register
-	HAL_I2C_Mem_Read(&hi2c1, MPU_ADDR, GYRO_REG, 1, data, 6, 1000);
-
-	gyro_data[0] = ((int16_t)(data[0] << 8 | data[1]))/gyro_con - gyro_corr[0];
-	gyro_data[1] = ((int16_t)(data[2] << 8 | data[3]))/gyro_con - gyro_corr[1];
-	gyro_data[2] = ((int16_t)(data[4] << 8 | data[5]))/gyro_con - gyro_corr[2];
-
-	return gyro_data;
 }
 
 

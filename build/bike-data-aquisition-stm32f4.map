@@ -75,11 +75,6 @@ Discarded input sections
  .text          0x00000000        0x0 build/accelerometer_data.o
  .data          0x00000000        0x0 build/accelerometer_data.o
  .bss           0x00000000        0x0 build/accelerometer_data.o
- .debug_line    0x00000000        0x0 build/accelerometer_data.o
- .debug_str     0x00000000      0x120 build/accelerometer_data.o
- .comment       0x00000000       0x4a build/accelerometer_data.o
- .ARM.attributes
-                0x00000000       0x34 build/accelerometer_data.o
  .text          0x00000000        0x0 build/stm32f4xx_it.o
  .data          0x00000000        0x0 build/stm32f4xx_it.o
  .bss           0x00000000        0x0 build/stm32f4xx_it.o
@@ -1052,90 +1047,90 @@ LOAD c:/dev_tools/gcc-arm-none-eabi-10.3-2021.10-win32/gcc-arm-none-eabi-10.3-20
                 0x080008f8                __aeabi_idiv0
                 0x080008f8                __aeabi_ldiv0
  *(.text*)
- .text.MX_GPIO_Init
-                0x080008fc       0xd0 build/main.o
- .text.MX_DMA_Init
-                0x080009cc       0x34 build/main.o
- .text.lcd_send_cmd
-                0x08000a00       0x48 build/main.o
-                0x08000a00                lcd_send_cmd
- .text.lcd_send_data
-                0x08000a48       0x48 build/main.o
-                0x08000a48                lcd_send_data
- .text.lcd_init
-                0x08000a90       0x70 build/main.o
-                0x08000a90                lcd_init
- .text.lcd_send_string
-                0x08000b00       0x14 build/main.o
-                0x08000b00                lcd_send_string
- .text.MPU6050_Init
-                0x08000b14       0xb0 build/main.o
-                0x08000b14                MPU6050_Init
+ .text.normal   0x080008fc      0x248 build/main.o
+                0x080008fc                normal
  .text.accel_cal_prep
-                0x08000bc4       0x44 build/main.o
-                0x08000bc4                accel_cal_prep
- .text.MPU6050_read_accel_raw
-                0x08000c08       0x90 build/main.o
-                0x08000c08                MPU6050_read_accel_raw
- .text.MPU6050_read_accel
-                0x08000c98       0xac build/main.o
-                0x08000c98                MPU6050_read_accel
- .text.MPU6050_read_gyro_raw
-                0x08000d44       0x90 build/main.o
-                0x08000d44                MPU6050_read_gyro_raw
- .text.startup  0x08000dd4       0x70 build/main.o
-                0x08000dd4                startup
+                0x08000b44       0x44 build/main.o
+                0x08000b44                accel_cal_prep
  .text.accel_cal
-                0x08000e44       0x7c build/main.o
-                0x08000e44                accel_cal
- .text.MPU6050_read_gyro
-                0x08000ec0       0xac build/main.o
-                0x08000ec0                MPU6050_read_gyro
- .text.normal   0x08000f6c      0x248 build/main.o
-                0x08000f6c                normal
+                0x08000b88       0x7c build/main.o
+                0x08000b88                accel_cal
+ .text.MX_GPIO_Init
+                0x08000c04       0xd0 build/main.o
+ .text.MX_DMA_Init
+                0x08000cd4       0x34 build/main.o
+ .text.MPU6050_Init
+                0x08000d08       0xb0 build/main.o
+                0x08000d08                MPU6050_Init
+ .text.startup  0x08000db8       0x70 build/main.o
+                0x08000db8                startup
  .text.Error_Handler
-                0x080011b4        0x4 build/main.o
-                0x080011b4                Error_Handler
+                0x08000e28        0x4 build/main.o
+                0x08000e28                Error_Handler
  .text.MX_USART2_UART_Init
-                0x080011b8       0x34 build/main.o
+                0x08000e2c       0x34 build/main.o
  .text.MX_I2C1_Init
-                0x080011ec       0x38 build/main.o
+                0x08000e60       0x38 build/main.o
  .text.SystemClock_Config
-                0x08001224       0xa0 build/main.o
-                0x08001224                SystemClock_Config
- .text.main     0x080012c4       0x58 build/main.o
-                0x080012c4                main
+                0x08000e98       0xa0 build/main.o
+                0x08000e98                SystemClock_Config
+ .text.main     0x08000f38       0x58 build/main.o
+                0x08000f38                main
+ .text.lcd_send_cmd
+                0x08000f90       0x48 build/i2c-lcd.o
+                0x08000f90                lcd_send_cmd
+ .text.lcd_send_data
+                0x08000fd8       0x48 build/i2c-lcd.o
+                0x08000fd8                lcd_send_data
  .text.lcd_clear
-                0x0800131c       0x1a build/i2c-lcd.o
-                0x0800131c                lcd_clear
+                0x08001020       0x1a build/i2c-lcd.o
+                0x08001020                lcd_clear
+ .text.lcd_init
+                0x0800103a       0x70 build/i2c-lcd.o
+                0x0800103a                lcd_init
+ .text.lcd_send_string
+                0x080010aa       0x14 build/i2c-lcd.o
+                0x080010aa                lcd_send_string
+ *fill*         0x080010be        0x2 
+ .text.MPU6050_read_accel_raw
+                0x080010c0       0x90 build/accelerometer_data.o
+                0x080010c0                MPU6050_read_accel_raw
+ .text.MPU6050_read_accel
+                0x08001150       0xac build/accelerometer_data.o
+                0x08001150                MPU6050_read_accel
+ .text.MPU6050_read_gyro_raw
+                0x080011fc       0x90 build/accelerometer_data.o
+                0x080011fc                MPU6050_read_gyro_raw
+ .text.MPU6050_read_gyro
+                0x0800128c       0xac build/accelerometer_data.o
+                0x0800128c                MPU6050_read_gyro
  .text.NMI_Handler
-                0x08001336        0x2 build/stm32f4xx_it.o
-                0x08001336                NMI_Handler
- .text.HardFault_Handler
                 0x08001338        0x2 build/stm32f4xx_it.o
-                0x08001338                HardFault_Handler
- .text.MemManage_Handler
+                0x08001338                NMI_Handler
+ .text.HardFault_Handler
                 0x0800133a        0x2 build/stm32f4xx_it.o
-                0x0800133a                MemManage_Handler
- .text.BusFault_Handler
+                0x0800133a                HardFault_Handler
+ .text.MemManage_Handler
                 0x0800133c        0x2 build/stm32f4xx_it.o
-                0x0800133c                BusFault_Handler
- .text.UsageFault_Handler
+                0x0800133c                MemManage_Handler
+ .text.BusFault_Handler
                 0x0800133e        0x2 build/stm32f4xx_it.o
-                0x0800133e                UsageFault_Handler
- .text.SVC_Handler
+                0x0800133e                BusFault_Handler
+ .text.UsageFault_Handler
                 0x08001340        0x2 build/stm32f4xx_it.o
-                0x08001340                SVC_Handler
- .text.DebugMon_Handler
+                0x08001340                UsageFault_Handler
+ .text.SVC_Handler
                 0x08001342        0x2 build/stm32f4xx_it.o
-                0x08001342                DebugMon_Handler
- .text.PendSV_Handler
+                0x08001342                SVC_Handler
+ .text.DebugMon_Handler
                 0x08001344        0x2 build/stm32f4xx_it.o
-                0x08001344                PendSV_Handler
+                0x08001344                DebugMon_Handler
+ .text.PendSV_Handler
+                0x08001346        0x2 build/stm32f4xx_it.o
+                0x08001346                PendSV_Handler
  .text.SysTick_Handler
-                0x08001346        0x8 build/stm32f4xx_it.o
-                0x08001346                SysTick_Handler
- *fill*         0x0800134e        0x2 
+                0x08001348        0x8 build/stm32f4xx_it.o
+                0x08001348                SysTick_Handler
  .text.DMA1_Stream6_IRQHandler
                 0x08001350       0x10 build/stm32f4xx_it.o
                 0x08001350                DMA1_Stream6_IRQHandler
@@ -1400,19 +1395,19 @@ LOAD c:/dev_tools/gcc-arm-none-eabi-10.3-2021.10-win32/gcc-arm-none-eabi-10.3-20
                 0x08003a2c                . = ALIGN (0x4)
  *(.rodata)
  *(.rodata*)
- .rodata.MPU6050_Init.str1.4
-                0x08003a2c       0x10 build/main.o
- .rodata.accel_cal_prep.str1.4
-                0x08003a3c       0x36 build/main.o
- *fill*         0x08003a72        0x2 
- .rodata.startup.str1.4
-                0x08003a74        0xc build/main.o
- .rodata.accel_cal.str1.4
-                0x08003a80       0x15 build/main.o
- *fill*         0x08003a95        0x3 
  .rodata.normal.str1.4
-                0x08003a98       0x69 build/main.o
- *fill*         0x08003b01        0x3 
+                0x08003a2c       0x69 build/main.o
+ *fill*         0x08003a95        0x3 
+ .rodata.accel_cal_prep.str1.4
+                0x08003a98       0x36 build/main.o
+ *fill*         0x08003ace        0x2 
+ .rodata.accel_cal.str1.4
+                0x08003ad0       0x15 build/main.o
+ *fill*         0x08003ae5        0x3 
+ .rodata.MPU6050_Init.str1.4
+                0x08003ae8       0x10 build/main.o
+ .rodata.startup.str1.4
+                0x08003af8        0xc build/main.o
  .rodata.FSM    0x08003b04       0x40 build/main.o
                 0x08003b04                FSM
  .rodata.flagBitshiftOffset.0
@@ -1582,112 +1577,117 @@ LOAD c:/dev_tools/gcc-arm-none-eabi-10.3-2021.10-win32/gcc-arm-none-eabi-10.3-20
  .ARM.attributes
                 0x00000086       0x34 build/i2c-lcd.o
  .ARM.attributes
-                0x000000ba       0x34 build/stm32f4xx_it.o
+                0x000000ba       0x34 build/accelerometer_data.o
  .ARM.attributes
-                0x000000ee       0x34 build/stm32f4xx_hal_msp.o
+                0x000000ee       0x34 build/stm32f4xx_it.o
  .ARM.attributes
-                0x00000122       0x34 build/stm32f4xx_hal_i2c.o
+                0x00000122       0x34 build/stm32f4xx_hal_msp.o
  .ARM.attributes
-                0x00000156       0x34 build/stm32f4xx_hal_rcc.o
+                0x00000156       0x34 build/stm32f4xx_hal_i2c.o
  .ARM.attributes
-                0x0000018a       0x34 build/stm32f4xx_hal_gpio.o
+                0x0000018a       0x34 build/stm32f4xx_hal_rcc.o
  .ARM.attributes
-                0x000001be       0x34 build/stm32f4xx_hal_dma.o
+                0x000001be       0x34 build/stm32f4xx_hal_gpio.o
  .ARM.attributes
-                0x000001f2       0x34 build/stm32f4xx_hal_cortex.o
+                0x000001f2       0x34 build/stm32f4xx_hal_dma.o
  .ARM.attributes
-                0x00000226       0x34 build/stm32f4xx_hal.o
+                0x00000226       0x34 build/stm32f4xx_hal_cortex.o
  .ARM.attributes
-                0x0000025a       0x34 build/stm32f4xx_hal_uart.o
+                0x0000025a       0x34 build/stm32f4xx_hal.o
  .ARM.attributes
-                0x0000028e       0x34 build/system_stm32f4xx.o
+                0x0000028e       0x34 build/stm32f4xx_hal_uart.o
  .ARM.attributes
-                0x000002c2       0x21 build/startup_stm32f411xe.o
+                0x000002c2       0x34 build/system_stm32f4xx.o
  .ARM.attributes
-                0x000002e3       0x34 c:/dev_tools/gcc-arm-none-eabi-10.3-2021.10-win32/gcc-arm-none-eabi-10.3-2021.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libc_nano.a(lib_a-impure.o)
+                0x000002f6       0x21 build/startup_stm32f411xe.o
  .ARM.attributes
-                0x00000317       0x34 c:/dev_tools/gcc-arm-none-eabi-10.3-2021.10-win32/gcc-arm-none-eabi-10.3-2021.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libc_nano.a(lib_a-init.o)
+                0x00000317       0x34 c:/dev_tools/gcc-arm-none-eabi-10.3-2021.10-win32/gcc-arm-none-eabi-10.3-2021.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libc_nano.a(lib_a-impure.o)
  .ARM.attributes
-                0x0000034b       0x34 c:/dev_tools/gcc-arm-none-eabi-10.3-2021.10-win32/gcc-arm-none-eabi-10.3-2021.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libc_nano.a(lib_a-memset.o)
+                0x0000034b       0x34 c:/dev_tools/gcc-arm-none-eabi-10.3-2021.10-win32/gcc-arm-none-eabi-10.3-2021.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libc_nano.a(lib_a-init.o)
  .ARM.attributes
-                0x0000037f       0x34 c:/dev_tools/gcc-arm-none-eabi-10.3-2021.10-win32/gcc-arm-none-eabi-10.3-2021.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libc_nano.a(lib_a-sprintf.o)
+                0x0000037f       0x34 c:/dev_tools/gcc-arm-none-eabi-10.3-2021.10-win32/gcc-arm-none-eabi-10.3-2021.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libc_nano.a(lib_a-memset.o)
  .ARM.attributes
-                0x000003b3       0x34 c:/dev_tools/gcc-arm-none-eabi-10.3-2021.10-win32/gcc-arm-none-eabi-10.3-2021.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libc_nano.a(lib_a-nano-svfprintf.o)
+                0x000003b3       0x34 c:/dev_tools/gcc-arm-none-eabi-10.3-2021.10-win32/gcc-arm-none-eabi-10.3-2021.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libc_nano.a(lib_a-sprintf.o)
  .ARM.attributes
-                0x000003e7       0x34 c:/dev_tools/gcc-arm-none-eabi-10.3-2021.10-win32/gcc-arm-none-eabi-10.3-2021.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libc_nano.a(lib_a-nano-vfprintf_i.o)
+                0x000003e7       0x34 c:/dev_tools/gcc-arm-none-eabi-10.3-2021.10-win32/gcc-arm-none-eabi-10.3-2021.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libc_nano.a(lib_a-nano-svfprintf.o)
  .ARM.attributes
-                0x0000041b       0x1c c:/dev_tools/gcc-arm-none-eabi-10.3-2021.10-win32/gcc-arm-none-eabi-10.3-2021.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libc_nano.a(lib_a-memchr.o)
+                0x0000041b       0x34 c:/dev_tools/gcc-arm-none-eabi-10.3-2021.10-win32/gcc-arm-none-eabi-10.3-2021.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libc_nano.a(lib_a-nano-vfprintf_i.o)
  .ARM.attributes
-                0x00000437       0x34 c:/dev_tools/gcc-arm-none-eabi-10.3-2021.10-win32/gcc-arm-none-eabi-10.3-2021.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libc_nano.a(lib_a-memcpy-stub.o)
+                0x0000044f       0x1c c:/dev_tools/gcc-arm-none-eabi-10.3-2021.10-win32/gcc-arm-none-eabi-10.3-2021.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libc_nano.a(lib_a-memchr.o)
  .ARM.attributes
-                0x0000046b       0x34 c:/dev_tools/gcc-arm-none-eabi-10.3-2021.10-win32/gcc-arm-none-eabi-10.3-2021.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libc_nano.a(lib_a-memmove.o)
+                0x0000046b       0x34 c:/dev_tools/gcc-arm-none-eabi-10.3-2021.10-win32/gcc-arm-none-eabi-10.3-2021.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libc_nano.a(lib_a-memcpy-stub.o)
  .ARM.attributes
-                0x0000049f       0x34 c:/dev_tools/gcc-arm-none-eabi-10.3-2021.10-win32/gcc-arm-none-eabi-10.3-2021.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libc_nano.a(lib_a-nano-freer.o)
+                0x0000049f       0x34 c:/dev_tools/gcc-arm-none-eabi-10.3-2021.10-win32/gcc-arm-none-eabi-10.3-2021.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libc_nano.a(lib_a-memmove.o)
  .ARM.attributes
-                0x000004d3       0x34 c:/dev_tools/gcc-arm-none-eabi-10.3-2021.10-win32/gcc-arm-none-eabi-10.3-2021.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libc_nano.a(lib_a-nano-mallocr.o)
+                0x000004d3       0x34 c:/dev_tools/gcc-arm-none-eabi-10.3-2021.10-win32/gcc-arm-none-eabi-10.3-2021.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libc_nano.a(lib_a-nano-freer.o)
  .ARM.attributes
-                0x00000507       0x34 c:/dev_tools/gcc-arm-none-eabi-10.3-2021.10-win32/gcc-arm-none-eabi-10.3-2021.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libc_nano.a(lib_a-nano-reallocr.o)
+                0x00000507       0x34 c:/dev_tools/gcc-arm-none-eabi-10.3-2021.10-win32/gcc-arm-none-eabi-10.3-2021.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libc_nano.a(lib_a-nano-mallocr.o)
  .ARM.attributes
-                0x0000053b       0x34 c:/dev_tools/gcc-arm-none-eabi-10.3-2021.10-win32/gcc-arm-none-eabi-10.3-2021.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libc_nano.a(lib_a-sbrkr.o)
+                0x0000053b       0x34 c:/dev_tools/gcc-arm-none-eabi-10.3-2021.10-win32/gcc-arm-none-eabi-10.3-2021.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libc_nano.a(lib_a-nano-reallocr.o)
  .ARM.attributes
-                0x0000056f       0x34 c:/dev_tools/gcc-arm-none-eabi-10.3-2021.10-win32/gcc-arm-none-eabi-10.3-2021.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libc_nano.a(lib_a-mlock.o)
+                0x0000056f       0x34 c:/dev_tools/gcc-arm-none-eabi-10.3-2021.10-win32/gcc-arm-none-eabi-10.3-2021.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libc_nano.a(lib_a-sbrkr.o)
  .ARM.attributes
-                0x000005a3       0x34 c:/dev_tools/gcc-arm-none-eabi-10.3-2021.10-win32/gcc-arm-none-eabi-10.3-2021.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libc_nano.a(lib_a-nano-msizer.o)
+                0x000005a3       0x34 c:/dev_tools/gcc-arm-none-eabi-10.3-2021.10-win32/gcc-arm-none-eabi-10.3-2021.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libc_nano.a(lib_a-mlock.o)
  .ARM.attributes
-                0x000005d7       0x34 c:/dev_tools/gcc-arm-none-eabi-10.3-2021.10-win32/gcc-arm-none-eabi-10.3-2021.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libc_nano.a(lib_a-reent.o)
+                0x000005d7       0x34 c:/dev_tools/gcc-arm-none-eabi-10.3-2021.10-win32/gcc-arm-none-eabi-10.3-2021.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libc_nano.a(lib_a-nano-msizer.o)
  .ARM.attributes
-                0x0000060b       0x34 c:/dev_tools/gcc-arm-none-eabi-10.3-2021.10-win32/gcc-arm-none-eabi-10.3-2021.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libc_nano.a(lib_a-lock.o)
+                0x0000060b       0x34 c:/dev_tools/gcc-arm-none-eabi-10.3-2021.10-win32/gcc-arm-none-eabi-10.3-2021.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libc_nano.a(lib_a-reent.o)
  .ARM.attributes
-                0x0000063f       0x34 c:/dev_tools/gcc-arm-none-eabi-10.3-2021.10-win32/gcc-arm-none-eabi-10.3-2021.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libnosys.a(sbrk.o)
+                0x0000063f       0x34 c:/dev_tools/gcc-arm-none-eabi-10.3-2021.10-win32/gcc-arm-none-eabi-10.3-2021.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libc_nano.a(lib_a-lock.o)
  .ARM.attributes
-                0x00000673       0x1e c:/dev_tools/gcc-arm-none-eabi-10.3-2021.10-win32/gcc-arm-none-eabi-10.3-2021.10/bin/../lib/gcc/arm-none-eabi/10.3.1/thumb/v7e-m+fp/hard\libgcc.a(_arm_addsubdf3.o)
+                0x00000673       0x34 c:/dev_tools/gcc-arm-none-eabi-10.3-2021.10-win32/gcc-arm-none-eabi-10.3-2021.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libnosys.a(sbrk.o)
  .ARM.attributes
-                0x00000691       0x1e c:/dev_tools/gcc-arm-none-eabi-10.3-2021.10-win32/gcc-arm-none-eabi-10.3-2021.10/bin/../lib/gcc/arm-none-eabi/10.3.1/thumb/v7e-m+fp/hard\libgcc.a(_aeabi_uldivmod.o)
+                0x000006a7       0x1e c:/dev_tools/gcc-arm-none-eabi-10.3-2021.10-win32/gcc-arm-none-eabi-10.3-2021.10/bin/../lib/gcc/arm-none-eabi/10.3.1/thumb/v7e-m+fp/hard\libgcc.a(_arm_addsubdf3.o)
  .ARM.attributes
-                0x000006af       0x34 c:/dev_tools/gcc-arm-none-eabi-10.3-2021.10-win32/gcc-arm-none-eabi-10.3-2021.10/bin/../lib/gcc/arm-none-eabi/10.3.1/thumb/v7e-m+fp/hard\libgcc.a(_udivmoddi4.o)
+                0x000006c5       0x1e c:/dev_tools/gcc-arm-none-eabi-10.3-2021.10-win32/gcc-arm-none-eabi-10.3-2021.10/bin/../lib/gcc/arm-none-eabi/10.3.1/thumb/v7e-m+fp/hard\libgcc.a(_aeabi_uldivmod.o)
  .ARM.attributes
-                0x000006e3       0x1e c:/dev_tools/gcc-arm-none-eabi-10.3-2021.10-win32/gcc-arm-none-eabi-10.3-2021.10/bin/../lib/gcc/arm-none-eabi/10.3.1/thumb/v7e-m+fp/hard\libgcc.a(_dvmd_tls.o)
+                0x000006e3       0x34 c:/dev_tools/gcc-arm-none-eabi-10.3-2021.10-win32/gcc-arm-none-eabi-10.3-2021.10/bin/../lib/gcc/arm-none-eabi/10.3.1/thumb/v7e-m+fp/hard\libgcc.a(_udivmoddi4.o)
  .ARM.attributes
-                0x00000701       0x1e c:/dev_tools/gcc-arm-none-eabi-10.3-2021.10-win32/gcc-arm-none-eabi-10.3-2021.10/bin/../lib/gcc/arm-none-eabi/10.3.1/thumb/v7e-m+fp/hard/crtn.o
+                0x00000717       0x1e c:/dev_tools/gcc-arm-none-eabi-10.3-2021.10-win32/gcc-arm-none-eabi-10.3-2021.10/bin/../lib/gcc/arm-none-eabi/10.3.1/thumb/v7e-m+fp/hard\libgcc.a(_dvmd_tls.o)
+ .ARM.attributes
+                0x00000735       0x1e c:/dev_tools/gcc-arm-none-eabi-10.3-2021.10-win32/gcc-arm-none-eabi-10.3-2021.10/bin/../lib/gcc/arm-none-eabi/10.3.1/thumb/v7e-m+fp/hard/crtn.o
 OUTPUT(build/bike-data-aquisition-stm32f4.elf elf32-littlearm)
 LOAD linker stubs
 LOAD c:/dev_tools/gcc-arm-none-eabi-10.3-2021.10-win32/gcc-arm-none-eabi-10.3-2021.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libc.a
 LOAD c:/dev_tools/gcc-arm-none-eabi-10.3-2021.10-win32/gcc-arm-none-eabi-10.3-2021.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libm.a
 LOAD c:/dev_tools/gcc-arm-none-eabi-10.3-2021.10-win32/gcc-arm-none-eabi-10.3-2021.10/bin/../lib/gcc/arm-none-eabi/10.3.1/thumb/v7e-m+fp/hard\libgcc.a
 
-.debug_info     0x00000000     0xf867
- .debug_info    0x00000000     0x233f build/main.o
- .debug_info    0x0000233f       0xee build/i2c-lcd.o
- .debug_info    0x0000242d      0x469 build/stm32f4xx_it.o
- .debug_info    0x00002896      0xf2b build/stm32f4xx_hal_msp.o
- .debug_info    0x000037c1     0x3b41 build/stm32f4xx_hal_i2c.o
- .debug_info    0x00007302      0xc14 build/stm32f4xx_hal_rcc.o
- .debug_info    0x00007f16      0x872 build/stm32f4xx_hal_gpio.o
- .debug_info    0x00008788      0xbc9 build/stm32f4xx_hal_dma.o
- .debug_info    0x00009351     0x10e4 build/stm32f4xx_hal_cortex.o
- .debug_info    0x0000a435      0xa67 build/stm32f4xx_hal.o
- .debug_info    0x0000ae9c     0x43c4 build/stm32f4xx_hal_uart.o
- .debug_info    0x0000f260      0x5e5 build/system_stm32f4xx.o
- .debug_info    0x0000f845       0x22 build/startup_stm32f411xe.o
+.debug_info     0x00000000    0x10524
+ .debug_info    0x00000000     0x1d84 build/main.o
+ .debug_info    0x00001d84      0x9e1 build/i2c-lcd.o
+ .debug_info    0x00002765      0x985 build/accelerometer_data.o
+ .debug_info    0x000030ea      0x469 build/stm32f4xx_it.o
+ .debug_info    0x00003553      0xf2b build/stm32f4xx_hal_msp.o
+ .debug_info    0x0000447e     0x3b41 build/stm32f4xx_hal_i2c.o
+ .debug_info    0x00007fbf      0xc14 build/stm32f4xx_hal_rcc.o
+ .debug_info    0x00008bd3      0x872 build/stm32f4xx_hal_gpio.o
+ .debug_info    0x00009445      0xbc9 build/stm32f4xx_hal_dma.o
+ .debug_info    0x0000a00e     0x10e4 build/stm32f4xx_hal_cortex.o
+ .debug_info    0x0000b0f2      0xa67 build/stm32f4xx_hal.o
+ .debug_info    0x0000bb59     0x43c4 build/stm32f4xx_hal_uart.o
+ .debug_info    0x0000ff1d      0x5e5 build/system_stm32f4xx.o
+ .debug_info    0x00010502       0x22 build/startup_stm32f411xe.o
 
-.debug_abbrev   0x00000000     0x1b9c
- .debug_abbrev  0x00000000      0x325 build/main.o
- .debug_abbrev  0x00000325       0x92 build/i2c-lcd.o
- .debug_abbrev  0x000003b7      0x13c build/stm32f4xx_it.o
- .debug_abbrev  0x000004f3      0x1c8 build/stm32f4xx_hal_msp.o
- .debug_abbrev  0x000006bb      0x304 build/stm32f4xx_hal_i2c.o
- .debug_abbrev  0x000009bf      0x2aa build/stm32f4xx_hal_rcc.o
- .debug_abbrev  0x00000c69      0x22b build/stm32f4xx_hal_gpio.o
- .debug_abbrev  0x00000e94      0x2bf build/stm32f4xx_hal_dma.o
- .debug_abbrev  0x00001153      0x382 build/stm32f4xx_hal_cortex.o
- .debug_abbrev  0x000014d5      0x23a build/stm32f4xx_hal.o
- .debug_abbrev  0x0000170f      0x360 build/stm32f4xx_hal_uart.o
- .debug_abbrev  0x00001a6f      0x11b build/system_stm32f4xx.o
- .debug_abbrev  0x00001b8a       0x12 build/startup_stm32f411xe.o
+.debug_abbrev   0x00000000     0x1e47
+ .debug_abbrev  0x00000000      0x2cb build/main.o
+ .debug_abbrev  0x000002cb      0x204 build/i2c-lcd.o
+ .debug_abbrev  0x000004cf      0x193 build/accelerometer_data.o
+ .debug_abbrev  0x00000662      0x13c build/stm32f4xx_it.o
+ .debug_abbrev  0x0000079e      0x1c8 build/stm32f4xx_hal_msp.o
+ .debug_abbrev  0x00000966      0x304 build/stm32f4xx_hal_i2c.o
+ .debug_abbrev  0x00000c6a      0x2aa build/stm32f4xx_hal_rcc.o
+ .debug_abbrev  0x00000f14      0x22b build/stm32f4xx_hal_gpio.o
+ .debug_abbrev  0x0000113f      0x2bf build/stm32f4xx_hal_dma.o
+ .debug_abbrev  0x000013fe      0x382 build/stm32f4xx_hal_cortex.o
+ .debug_abbrev  0x00001780      0x23a build/stm32f4xx_hal.o
+ .debug_abbrev  0x000019ba      0x360 build/stm32f4xx_hal_uart.o
+ .debug_abbrev  0x00001d1a      0x11b build/system_stm32f4xx.o
+ .debug_abbrev  0x00001e35       0x12 build/startup_stm32f411xe.o
 
 .debug_loc      0x00000000     0xcdd5
- .debug_loc     0x00000000      0x800 build/main.o
- .debug_loc     0x00000800       0x43 build/i2c-lcd.o
+ .debug_loc     0x00000000      0x230 build/main.o
+ .debug_loc     0x00000230      0x1b3 build/i2c-lcd.o
+ .debug_loc     0x000003e3      0x460 build/accelerometer_data.o
  .debug_loc     0x00000843       0x40 build/stm32f4xx_it.o
  .debug_loc     0x00000883      0x1d8 build/stm32f4xx_hal_msp.o
  .debug_loc     0x00000a5b     0x4e35 build/stm32f4xx_hal_i2c.o
@@ -1699,96 +1699,103 @@ LOAD c:/dev_tools/gcc-arm-none-eabi-10.3-2021.10-win32/gcc-arm-none-eabi-10.3-20
  .debug_loc     0x00007c4e     0x502f build/stm32f4xx_hal_uart.o
  .debug_loc     0x0000cc7d      0x158 build/system_stm32f4xx.o
 
-.debug_aranges  0x00000000      0x980
+.debug_aranges  0x00000000      0x998
  .debug_aranges
-                0x00000000       0xc0 build/main.o
+                0x00000000       0x80 build/main.o
  .debug_aranges
-                0x000000c0       0x20 build/i2c-lcd.o
+                0x00000080       0x40 build/i2c-lcd.o
  .debug_aranges
-                0x000000e0       0x68 build/stm32f4xx_it.o
+                0x000000c0       0x38 build/accelerometer_data.o
  .debug_aranges
-                0x00000148       0x40 build/stm32f4xx_hal_msp.o
+                0x000000f8       0x68 build/stm32f4xx_it.o
  .debug_aranges
-                0x00000188      0x2a0 build/stm32f4xx_hal_i2c.o
+                0x00000160       0x40 build/stm32f4xx_hal_msp.o
  .debug_aranges
-                0x00000428       0x88 build/stm32f4xx_hal_rcc.o
+                0x000001a0      0x2a0 build/stm32f4xx_hal_i2c.o
  .debug_aranges
-                0x000004b0       0x58 build/stm32f4xx_hal_gpio.o
+                0x00000440       0x88 build/stm32f4xx_hal_rcc.o
  .debug_aranges
-                0x00000508       0x90 build/stm32f4xx_hal_dma.o
+                0x000004c8       0x58 build/stm32f4xx_hal_gpio.o
  .debug_aranges
-                0x00000598       0xa8 build/stm32f4xx_hal_cortex.o
+                0x00000520       0x90 build/stm32f4xx_hal_dma.o
  .debug_aranges
-                0x00000640       0xf0 build/stm32f4xx_hal.o
+                0x000005b0       0xa8 build/stm32f4xx_hal_cortex.o
  .debug_aranges
-                0x00000730      0x200 build/stm32f4xx_hal_uart.o
+                0x00000658       0xf0 build/stm32f4xx_hal.o
  .debug_aranges
-                0x00000930       0x28 build/system_stm32f4xx.o
+                0x00000748      0x200 build/stm32f4xx_hal_uart.o
  .debug_aranges
-                0x00000958       0x28 build/startup_stm32f411xe.o
+                0x00000948       0x28 build/system_stm32f4xx.o
+ .debug_aranges
+                0x00000970       0x28 build/startup_stm32f411xe.o
 
-.debug_ranges   0x00000000      0x960
- .debug_ranges  0x00000000       0xb0 build/main.o
- .debug_ranges  0x000000b0       0x10 build/i2c-lcd.o
- .debug_ranges  0x000000c0       0x58 build/stm32f4xx_it.o
- .debug_ranges  0x00000118       0x30 build/stm32f4xx_hal_msp.o
- .debug_ranges  0x00000148      0x2a8 build/stm32f4xx_hal_i2c.o
- .debug_ranges  0x000003f0       0x90 build/stm32f4xx_hal_rcc.o
- .debug_ranges  0x00000480       0x48 build/stm32f4xx_hal_gpio.o
- .debug_ranges  0x000004c8       0x80 build/stm32f4xx_hal_dma.o
- .debug_ranges  0x00000548       0xf8 build/stm32f4xx_hal_cortex.o
- .debug_ranges  0x00000640       0xe0 build/stm32f4xx_hal.o
- .debug_ranges  0x00000720      0x208 build/stm32f4xx_hal_uart.o
- .debug_ranges  0x00000928       0x18 build/system_stm32f4xx.o
- .debug_ranges  0x00000940       0x20 build/startup_stm32f411xe.o
+.debug_ranges   0x00000000      0x968
+ .debug_ranges  0x00000000       0x70 build/main.o
+ .debug_ranges  0x00000070       0x30 build/i2c-lcd.o
+ .debug_ranges  0x000000a0       0x28 build/accelerometer_data.o
+ .debug_ranges  0x000000c8       0x58 build/stm32f4xx_it.o
+ .debug_ranges  0x00000120       0x30 build/stm32f4xx_hal_msp.o
+ .debug_ranges  0x00000150      0x2a8 build/stm32f4xx_hal_i2c.o
+ .debug_ranges  0x000003f8       0x90 build/stm32f4xx_hal_rcc.o
+ .debug_ranges  0x00000488       0x48 build/stm32f4xx_hal_gpio.o
+ .debug_ranges  0x000004d0       0x80 build/stm32f4xx_hal_dma.o
+ .debug_ranges  0x00000550       0xf8 build/stm32f4xx_hal_cortex.o
+ .debug_ranges  0x00000648       0xe0 build/stm32f4xx_hal.o
+ .debug_ranges  0x00000728      0x208 build/stm32f4xx_hal_uart.o
+ .debug_ranges  0x00000930       0x18 build/system_stm32f4xx.o
+ .debug_ranges  0x00000948       0x20 build/startup_stm32f411xe.o
 
-.debug_line     0x00000000     0xde5b
- .debug_line    0x00000000      0xc34 build/main.o
- .debug_line    0x00000c34       0x8e build/i2c-lcd.o
- .debug_line    0x00000cc2      0x2f4 build/stm32f4xx_it.o
- .debug_line    0x00000fb6      0x3e6 build/stm32f4xx_hal_msp.o
- .debug_line    0x0000139c     0x53a5 build/stm32f4xx_hal_i2c.o
- .debug_line    0x00006741      0xb4c build/stm32f4xx_hal_rcc.o
- .debug_line    0x0000728d      0x6ff build/stm32f4xx_hal_gpio.o
- .debug_line    0x0000798c      0xe64 build/stm32f4xx_hal_dma.o
- .debug_line    0x000087f0      0x7b4 build/stm32f4xx_hal_cortex.o
- .debug_line    0x00008fa4      0x5a1 build/stm32f4xx_hal.o
- .debug_line    0x00009545     0x4614 build/stm32f4xx_hal_uart.o
- .debug_line    0x0000db59      0x28c build/system_stm32f4xx.o
- .debug_line    0x0000dde5       0x76 build/startup_stm32f411xe.o
+.debug_line     0x00000000     0xe1e2
+ .debug_line    0x00000000      0x984 build/main.o
+ .debug_line    0x00000984      0x345 build/i2c-lcd.o
+ .debug_line    0x00000cc9      0x380 build/accelerometer_data.o
+ .debug_line    0x00001049      0x2f4 build/stm32f4xx_it.o
+ .debug_line    0x0000133d      0x3e6 build/stm32f4xx_hal_msp.o
+ .debug_line    0x00001723     0x53a5 build/stm32f4xx_hal_i2c.o
+ .debug_line    0x00006ac8      0xb4c build/stm32f4xx_hal_rcc.o
+ .debug_line    0x00007614      0x6ff build/stm32f4xx_hal_gpio.o
+ .debug_line    0x00007d13      0xe64 build/stm32f4xx_hal_dma.o
+ .debug_line    0x00008b77      0x7b4 build/stm32f4xx_hal_cortex.o
+ .debug_line    0x0000932b      0x5a1 build/stm32f4xx_hal.o
+ .debug_line    0x000098cc     0x4614 build/stm32f4xx_hal_uart.o
+ .debug_line    0x0000dee0      0x28c build/system_stm32f4xx.o
+ .debug_line    0x0000e16c       0x76 build/startup_stm32f411xe.o
 
-.debug_str      0x00000000     0x2f78
- .debug_str     0x00000000     0x117e build/main.o
-                               0x1262 (size before relaxing)
- .debug_str     0x0000117e       0x13 build/i2c-lcd.o
-                                0x1ca (size before relaxing)
- .debug_str     0x00001191       0xdf build/stm32f4xx_it.o
+.debug_str      0x00000000     0x2f96
+ .debug_str     0x00000000     0x110a build/main.o
+                               0x11e1 (size before relaxing)
+ .debug_str     0x0000110a       0x4e build/i2c-lcd.o
+                                0x734 (size before relaxing)
+ .debug_str     0x00001158       0x57 build/accelerometer_data.o
+                                0x799 (size before relaxing)
+ .debug_str     0x000011af       0xdf build/stm32f4xx_it.o
                                 0x4e0 (size before relaxing)
- .debug_str     0x00001270       0xc3 build/stm32f4xx_hal_msp.o
+ .debug_str     0x0000128e       0xc3 build/stm32f4xx_hal_msp.o
                                 0xaf4 (size before relaxing)
- .debug_str     0x00001333      0x8f3 build/stm32f4xx_hal_i2c.o
+ .debug_str     0x00001351      0x8f3 build/stm32f4xx_hal_i2c.o
                                0x104c (size before relaxing)
- .debug_str     0x00001c26      0x1f8 build/stm32f4xx_hal_rcc.o
+ .debug_str     0x00001c44      0x1f8 build/stm32f4xx_hal_rcc.o
                                 0x72f (size before relaxing)
- .debug_str     0x00001e1e      0x105 build/stm32f4xx_hal_gpio.o
+ .debug_str     0x00001e3c      0x105 build/stm32f4xx_hal_gpio.o
                                 0x509 (size before relaxing)
- .debug_str     0x00001f23      0x298 build/stm32f4xx_hal_dma.o
+ .debug_str     0x00001f41      0x298 build/stm32f4xx_hal_dma.o
                                 0x78d (size before relaxing)
- .debug_str     0x000021bb      0x4cc build/stm32f4xx_hal_cortex.o
+ .debug_str     0x000021d9      0x4cc build/stm32f4xx_hal_cortex.o
                                 0xaeb (size before relaxing)
- .debug_str     0x00002687      0x295 build/stm32f4xx_hal.o
+ .debug_str     0x000026a5      0x295 build/stm32f4xx_hal.o
                                 0xa2b (size before relaxing)
- .debug_str     0x0000291c      0x5f1 build/stm32f4xx_hal_uart.o
+ .debug_str     0x0000293a      0x5f1 build/stm32f4xx_hal_uart.o
                                 0xd70 (size before relaxing)
- .debug_str     0x00002f0d       0x47 build/system_stm32f4xx.o
+ .debug_str     0x00002f2b       0x47 build/system_stm32f4xx.o
                                 0x39e (size before relaxing)
- .debug_str     0x00002f54       0x24 build/startup_stm32f411xe.o
+ .debug_str     0x00002f72       0x24 build/startup_stm32f411xe.o
                                  0x81 (size before relaxing)
 
 .comment        0x00000000       0x49
  .comment       0x00000000       0x49 build/main.o
                                  0x4a (size before relaxing)
  .comment       0x00000049       0x4a build/i2c-lcd.o
+ .comment       0x00000049       0x4a build/accelerometer_data.o
  .comment       0x00000049       0x4a build/stm32f4xx_it.o
  .comment       0x00000049       0x4a build/stm32f4xx_hal_msp.o
  .comment       0x00000049       0x4a build/stm32f4xx_hal_i2c.o
@@ -1800,38 +1807,39 @@ LOAD c:/dev_tools/gcc-arm-none-eabi-10.3-2021.10-win32/gcc-arm-none-eabi-10.3-20
  .comment       0x00000049       0x4a build/stm32f4xx_hal_uart.o
  .comment       0x00000049       0x4a build/system_stm32f4xx.o
 
-.debug_frame    0x00000000     0x1ff8
- .debug_frame   0x00000000      0x294 build/main.o
- .debug_frame   0x00000294       0x28 build/i2c-lcd.o
- .debug_frame   0x000002bc       0xc0 build/stm32f4xx_it.o
- .debug_frame   0x0000037c       0xa4 build/stm32f4xx_hal_msp.o
- .debug_frame   0x00000420      0x970 build/stm32f4xx_hal_i2c.o
- .debug_frame   0x00000d90      0x16c build/stm32f4xx_hal_rcc.o
- .debug_frame   0x00000efc       0xd8 build/stm32f4xx_hal_gpio.o
- .debug_frame   0x00000fd4      0x188 build/stm32f4xx_hal_dma.o
- .debug_frame   0x0000115c      0x148 build/stm32f4xx_hal_cortex.o
- .debug_frame   0x000012a4      0x1ec build/stm32f4xx_hal.o
- .debug_frame   0x00001490      0x5cc build/stm32f4xx_hal_uart.o
- .debug_frame   0x00001a5c       0x30 build/system_stm32f4xx.o
- .debug_frame   0x00001a8c       0x2c c:/dev_tools/gcc-arm-none-eabi-10.3-2021.10-win32/gcc-arm-none-eabi-10.3-2021.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libc_nano.a(lib_a-init.o)
- .debug_frame   0x00001ab8       0x20 c:/dev_tools/gcc-arm-none-eabi-10.3-2021.10-win32/gcc-arm-none-eabi-10.3-2021.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libc_nano.a(lib_a-memset.o)
- .debug_frame   0x00001ad8       0x6c c:/dev_tools/gcc-arm-none-eabi-10.3-2021.10-win32/gcc-arm-none-eabi-10.3-2021.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libc_nano.a(lib_a-sprintf.o)
- .debug_frame   0x00001b44       0x90 c:/dev_tools/gcc-arm-none-eabi-10.3-2021.10-win32/gcc-arm-none-eabi-10.3-2021.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libc_nano.a(lib_a-nano-svfprintf.o)
- .debug_frame   0x00001bd4       0x60 c:/dev_tools/gcc-arm-none-eabi-10.3-2021.10-win32/gcc-arm-none-eabi-10.3-2021.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libc_nano.a(lib_a-nano-vfprintf_i.o)
- .debug_frame   0x00001c34       0x28 c:/dev_tools/gcc-arm-none-eabi-10.3-2021.10-win32/gcc-arm-none-eabi-10.3-2021.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libc_nano.a(lib_a-memcpy-stub.o)
- .debug_frame   0x00001c5c       0x28 c:/dev_tools/gcc-arm-none-eabi-10.3-2021.10-win32/gcc-arm-none-eabi-10.3-2021.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libc_nano.a(lib_a-memmove.o)
- .debug_frame   0x00001c84       0x38 c:/dev_tools/gcc-arm-none-eabi-10.3-2021.10-win32/gcc-arm-none-eabi-10.3-2021.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libc_nano.a(lib_a-nano-freer.o)
- .debug_frame   0x00001cbc       0x4c c:/dev_tools/gcc-arm-none-eabi-10.3-2021.10-win32/gcc-arm-none-eabi-10.3-2021.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libc_nano.a(lib_a-nano-mallocr.o)
- .debug_frame   0x00001d08       0x3c c:/dev_tools/gcc-arm-none-eabi-10.3-2021.10-win32/gcc-arm-none-eabi-10.3-2021.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libc_nano.a(lib_a-nano-reallocr.o)
- .debug_frame   0x00001d44       0x2c c:/dev_tools/gcc-arm-none-eabi-10.3-2021.10-win32/gcc-arm-none-eabi-10.3-2021.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libc_nano.a(lib_a-sbrkr.o)
- .debug_frame   0x00001d70       0x30 c:/dev_tools/gcc-arm-none-eabi-10.3-2021.10-win32/gcc-arm-none-eabi-10.3-2021.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libc_nano.a(lib_a-mlock.o)
- .debug_frame   0x00001da0       0x20 c:/dev_tools/gcc-arm-none-eabi-10.3-2021.10-win32/gcc-arm-none-eabi-10.3-2021.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libc_nano.a(lib_a-nano-msizer.o)
- .debug_frame   0x00001dc0       0x5c c:/dev_tools/gcc-arm-none-eabi-10.3-2021.10-win32/gcc-arm-none-eabi-10.3-2021.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libc_nano.a(lib_a-reent.o)
- .debug_frame   0x00001e1c       0xb0 c:/dev_tools/gcc-arm-none-eabi-10.3-2021.10-win32/gcc-arm-none-eabi-10.3-2021.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libc_nano.a(lib_a-lock.o)
- .debug_frame   0x00001ecc       0x20 c:/dev_tools/gcc-arm-none-eabi-10.3-2021.10-win32/gcc-arm-none-eabi-10.3-2021.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libnosys.a(sbrk.o)
- .debug_frame   0x00001eec       0xac c:/dev_tools/gcc-arm-none-eabi-10.3-2021.10-win32/gcc-arm-none-eabi-10.3-2021.10/bin/../lib/gcc/arm-none-eabi/10.3.1/thumb/v7e-m+fp/hard\libgcc.a(_arm_addsubdf3.o)
- .debug_frame   0x00001f98       0x2c c:/dev_tools/gcc-arm-none-eabi-10.3-2021.10-win32/gcc-arm-none-eabi-10.3-2021.10/bin/../lib/gcc/arm-none-eabi/10.3.1/thumb/v7e-m+fp/hard\libgcc.a(_aeabi_uldivmod.o)
- .debug_frame   0x00001fc4       0x34 c:/dev_tools/gcc-arm-none-eabi-10.3-2021.10-win32/gcc-arm-none-eabi-10.3-2021.10/bin/../lib/gcc/arm-none-eabi/10.3.1/thumb/v7e-m+fp/hard\libgcc.a(_udivmoddi4.o)
+.debug_frame    0x00000000     0x2008
+ .debug_frame   0x00000000      0x16c build/main.o
+ .debug_frame   0x0000016c       0x90 build/i2c-lcd.o
+ .debug_frame   0x000001fc       0xd0 build/accelerometer_data.o
+ .debug_frame   0x000002cc       0xc0 build/stm32f4xx_it.o
+ .debug_frame   0x0000038c       0xa4 build/stm32f4xx_hal_msp.o
+ .debug_frame   0x00000430      0x970 build/stm32f4xx_hal_i2c.o
+ .debug_frame   0x00000da0      0x16c build/stm32f4xx_hal_rcc.o
+ .debug_frame   0x00000f0c       0xd8 build/stm32f4xx_hal_gpio.o
+ .debug_frame   0x00000fe4      0x188 build/stm32f4xx_hal_dma.o
+ .debug_frame   0x0000116c      0x148 build/stm32f4xx_hal_cortex.o
+ .debug_frame   0x000012b4      0x1ec build/stm32f4xx_hal.o
+ .debug_frame   0x000014a0      0x5cc build/stm32f4xx_hal_uart.o
+ .debug_frame   0x00001a6c       0x30 build/system_stm32f4xx.o
+ .debug_frame   0x00001a9c       0x2c c:/dev_tools/gcc-arm-none-eabi-10.3-2021.10-win32/gcc-arm-none-eabi-10.3-2021.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libc_nano.a(lib_a-init.o)
+ .debug_frame   0x00001ac8       0x20 c:/dev_tools/gcc-arm-none-eabi-10.3-2021.10-win32/gcc-arm-none-eabi-10.3-2021.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libc_nano.a(lib_a-memset.o)
+ .debug_frame   0x00001ae8       0x6c c:/dev_tools/gcc-arm-none-eabi-10.3-2021.10-win32/gcc-arm-none-eabi-10.3-2021.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libc_nano.a(lib_a-sprintf.o)
+ .debug_frame   0x00001b54       0x90 c:/dev_tools/gcc-arm-none-eabi-10.3-2021.10-win32/gcc-arm-none-eabi-10.3-2021.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libc_nano.a(lib_a-nano-svfprintf.o)
+ .debug_frame   0x00001be4       0x60 c:/dev_tools/gcc-arm-none-eabi-10.3-2021.10-win32/gcc-arm-none-eabi-10.3-2021.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libc_nano.a(lib_a-nano-vfprintf_i.o)
+ .debug_frame   0x00001c44       0x28 c:/dev_tools/gcc-arm-none-eabi-10.3-2021.10-win32/gcc-arm-none-eabi-10.3-2021.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libc_nano.a(lib_a-memcpy-stub.o)
+ .debug_frame   0x00001c6c       0x28 c:/dev_tools/gcc-arm-none-eabi-10.3-2021.10-win32/gcc-arm-none-eabi-10.3-2021.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libc_nano.a(lib_a-memmove.o)
+ .debug_frame   0x00001c94       0x38 c:/dev_tools/gcc-arm-none-eabi-10.3-2021.10-win32/gcc-arm-none-eabi-10.3-2021.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libc_nano.a(lib_a-nano-freer.o)
+ .debug_frame   0x00001ccc       0x4c c:/dev_tools/gcc-arm-none-eabi-10.3-2021.10-win32/gcc-arm-none-eabi-10.3-2021.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libc_nano.a(lib_a-nano-mallocr.o)
+ .debug_frame   0x00001d18       0x3c c:/dev_tools/gcc-arm-none-eabi-10.3-2021.10-win32/gcc-arm-none-eabi-10.3-2021.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libc_nano.a(lib_a-nano-reallocr.o)
+ .debug_frame   0x00001d54       0x2c c:/dev_tools/gcc-arm-none-eabi-10.3-2021.10-win32/gcc-arm-none-eabi-10.3-2021.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libc_nano.a(lib_a-sbrkr.o)
+ .debug_frame   0x00001d80       0x30 c:/dev_tools/gcc-arm-none-eabi-10.3-2021.10-win32/gcc-arm-none-eabi-10.3-2021.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libc_nano.a(lib_a-mlock.o)
+ .debug_frame   0x00001db0       0x20 c:/dev_tools/gcc-arm-none-eabi-10.3-2021.10-win32/gcc-arm-none-eabi-10.3-2021.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libc_nano.a(lib_a-nano-msizer.o)
+ .debug_frame   0x00001dd0       0x5c c:/dev_tools/gcc-arm-none-eabi-10.3-2021.10-win32/gcc-arm-none-eabi-10.3-2021.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libc_nano.a(lib_a-reent.o)
+ .debug_frame   0x00001e2c       0xb0 c:/dev_tools/gcc-arm-none-eabi-10.3-2021.10-win32/gcc-arm-none-eabi-10.3-2021.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libc_nano.a(lib_a-lock.o)
+ .debug_frame   0x00001edc       0x20 c:/dev_tools/gcc-arm-none-eabi-10.3-2021.10-win32/gcc-arm-none-eabi-10.3-2021.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libnosys.a(sbrk.o)
+ .debug_frame   0x00001efc       0xac c:/dev_tools/gcc-arm-none-eabi-10.3-2021.10-win32/gcc-arm-none-eabi-10.3-2021.10/bin/../lib/gcc/arm-none-eabi/10.3.1/thumb/v7e-m+fp/hard\libgcc.a(_arm_addsubdf3.o)
+ .debug_frame   0x00001fa8       0x2c c:/dev_tools/gcc-arm-none-eabi-10.3-2021.10-win32/gcc-arm-none-eabi-10.3-2021.10/bin/../lib/gcc/arm-none-eabi/10.3.1/thumb/v7e-m+fp/hard\libgcc.a(_aeabi_uldivmod.o)
+ .debug_frame   0x00001fd4       0x34 c:/dev_tools/gcc-arm-none-eabi-10.3-2021.10-win32/gcc-arm-none-eabi-10.3-2021.10/bin/../lib/gcc/arm-none-eabi/10.3.1/thumb/v7e-m+fp/hard\libgcc.a(_udivmoddi4.o)
 
 Cross Reference Table
 
@@ -1912,6 +1920,7 @@ HAL_DMA_Start_IT                                  build/stm32f4xx_hal_dma.o
 HAL_DMA_UnRegisterCallback                        build/stm32f4xx_hal_dma.o
 HAL_DeInit                                        build/stm32f4xx_hal.o
 HAL_Delay                                         build/stm32f4xx_hal.o
+                                                  build/i2c-lcd.o
                                                   build/main.o
 HAL_DisableCompensationCell                       build/stm32f4xx_hal.o
 HAL_EXTI_ClearConfigLine                          build/stm32f4xx_hal_exti.o
@@ -2007,12 +2016,13 @@ HAL_I2C_Master_Seq_Receive_IT                     build/stm32f4xx_hal_i2c.o
 HAL_I2C_Master_Seq_Transmit_DMA                   build/stm32f4xx_hal_i2c.o
 HAL_I2C_Master_Seq_Transmit_IT                    build/stm32f4xx_hal_i2c.o
 HAL_I2C_Master_Transmit                           build/stm32f4xx_hal_i2c.o
-                                                  build/main.o
+                                                  build/i2c-lcd.o
 HAL_I2C_Master_Transmit_DMA                       build/stm32f4xx_hal_i2c.o
 HAL_I2C_Master_Transmit_IT                        build/stm32f4xx_hal_i2c.o
 HAL_I2C_MemRxCpltCallback                         build/stm32f4xx_hal_i2c.o
 HAL_I2C_MemTxCpltCallback                         build/stm32f4xx_hal_i2c.o
 HAL_I2C_Mem_Read                                  build/stm32f4xx_hal_i2c.o
+                                                  build/accelerometer_data.o
                                                   build/main.o
 HAL_I2C_Mem_Read_DMA                              build/stm32f4xx_hal_i2c.o
 HAL_I2C_Mem_Read_IT                               build/stm32f4xx_hal_i2c.o
@@ -2171,10 +2181,14 @@ I2C2_EV_IRQHandler                                build/startup_stm32f411xe.o
 I2C3_ER_IRQHandler                                build/startup_stm32f411xe.o
 I2C3_EV_IRQHandler                                build/startup_stm32f411xe.o
 MPU6050_Init                                      build/main.o
-MPU6050_read_accel                                build/main.o
-MPU6050_read_accel_raw                            build/main.o
-MPU6050_read_gyro                                 build/main.o
-MPU6050_read_gyro_raw                             build/main.o
+MPU6050_read_accel                                build/accelerometer_data.o
+                                                  build/main.o
+MPU6050_read_accel_raw                            build/accelerometer_data.o
+                                                  build/main.o
+MPU6050_read_gyro                                 build/accelerometer_data.o
+                                                  build/main.o
+MPU6050_read_gyro_raw                             build/accelerometer_data.o
+                                                  build/main.o
 MemManage_Handler                                 build/stm32f4xx_it.o
 NMI_Handler                                       build/stm32f4xx_it.o
 OTG_FS_IRQHandler                                 build/startup_stm32f411xe.o
@@ -2363,16 +2377,19 @@ hdma_usart2_tx                                    build/main.o
                                                   build/stm32f4xx_hal_msp.o
                                                   build/stm32f4xx_it.o
 hi2c1                                             build/main.o
+                                                  build/accelerometer_data.o
+                                                  build/i2c-lcd.o
 huart2                                            build/main.o
 input                                             build/main.o
 lcd_clear                                         build/i2c-lcd.o
                                                   build/main.o
-lcd_init                                          build/main.o
-lcd_send_cmd                                      build/main.o
-                                                  build/i2c-lcd.o
-lcd_send_data                                     build/main.o
-                                                  build/i2c-lcd.o
-lcd_send_string                                   build/main.o
+lcd_init                                          build/i2c-lcd.o
+                                                  build/main.o
+lcd_send_cmd                                      build/i2c-lcd.o
+                                                  build/main.o
+lcd_send_data                                     build/i2c-lcd.o
+lcd_send_string                                   build/i2c-lcd.o
+                                                  build/main.o
 main                                              build/main.o
                                                   build/startup_stm32f411xe.o
                                                   c:/dev_tools/gcc-arm-none-eabi-10.3-2021.10-win32/gcc-arm-none-eabi-10.3-2021.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/crt0.o

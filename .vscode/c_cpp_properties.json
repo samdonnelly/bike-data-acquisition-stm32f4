@@ -3,8 +3,13 @@
         {
             "name": "bike-data-aquisition-stm32f4",
             "includePath": [
-                "${workspaceFolder}/**",
-                "C:\\Users\\samue\\Documents\\Projects\\Bike Data Aquisition\\Software\\bike-data-aquisition-stm32f4\\Core\\Inc"
+                "${workspaceFolder}/**"
+                // "C:\\Users\\samue\\Documents\\Projects\\Bike Data Aquisition\\Software\\bike-data-aquisition-stm32f4\\Core\\Inc",
+                // "C:\\Users\\samue\\Documents\\Projects\\Bike Data Aquisition\\Software\\bike-data-aquisition-stm32f4\\Drivers\\STM32F4xx_HAL_Driver\\Inc",
+                // "C:\\Users\\samue\\Documents\\Projects\\Bike Data Aquisition\\Software\\bike-data-aquisition-stm32f4\\Drivers\\STM32F4xx_HAL_Driver\\Inc",
+                // "C:\\Users\\samue\\Documents\\Projects\\Bike Data Aquisition\\Software\\bike-data-aquisition-stm32f4\\Drivers\\STM32F4xx_HAL_Driver\\Inc\\Legacy",
+                // "C:\\Users\\samue\\Documents\\Projects\\Bike Data Aquisition\\Software\\bike-data-aquisition-stm32f4\\Drivers\\CMSIS\\Device\\ST\\STM32F4xx\\Include",
+                // "C:\\Users\\samue\\Documents\\Projects\\Bike Data Aquisition\\Software\\bike-data-aquisition-stm32f4\\Drivers\\CMSIS\\Include"
             ],
             "defines": [
                 "_DEBUG",
