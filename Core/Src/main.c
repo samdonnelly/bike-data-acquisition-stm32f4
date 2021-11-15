@@ -19,16 +19,10 @@
 /* USER CODE END Header */
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
+#include "main_functions.h"
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-
-#include "i2c-lcd.h"
-#include "accelerometer_data.h"
-
-// Libraries
-#include <stdlib.h>
-#include <stdio.h>
 
 /* USER CODE END Includes */
 
@@ -70,208 +64,6 @@ static void MX_I2C1_Init(void);
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
 
-// Structures ----------------------------------------------------------------------------------
-
-// Primary state machine structure
-typedef const struct BSDA {
-	void (*output_func)(void);
-	unsigned long time_delay;
-	unsigned long next_state[NUM_OPTIONS];
-} BSDA;
-
-// State Machines
-
-// Primary state machine
-BSDA FSM[NUM_STATES] = {
-		{&startup,        S0_DELAY, {normal_state,         normal_state         }},
-		{&normal,         S1_DELAY, {normal_state,         accel_cal_prep_state }},
-		{&accel_cal_prep, S2_DELAY, {accel_cal_prep_state, accel_cal_state      }},
-		{&accel_cal,      S3_DELAY, {normal_state,         normal_state         }}
-};
-
-
-// Global variables ----------------------------------------------------------------------------
-
-uint8_t flag = 0;     // Interrupt flag
-unsigned long state;  // Current state
-unsigned long input;  // For various inputs
-
-float accel_data[3];
-float *accel_data_p;
-float accel_corr[3];
-float *accel_corr_p;
-float gyro_data[3];
-float *gyro_data_p;
-float gyro_corr[3];
-float *gyro_corr_p;
-
-char buf[5];      // Accelerometer data buffer
-
-
-// Functions -----------------------------------------------------------------------------------
-
-// Accelerometer initialization
-void MPU6050_Init(void) {
-
-	uint8_t check;
-	uint8_t Data;
-
-	// check ID WHO_AM_I
-	HAL_I2C_Mem_Read(&hi2c1, MPU6050_ADDR, WHO_AM_I_REG, 1, &check, 1, 1000);
-
-	// If the device is present
-	if (check == 104) {  // 104 -> 0x68
-		// Power management register 0x6B we should write all 0's to wake the sensor up
-		Data = 0;
-		HAL_I2C_Mem_Write(&hi2c1, MPU6050_ADDR, PWR_MGMT_1_REG, 1, &Data, 1, 1000);
-
-		// Set DATA RATE of 1kHz by writing SMPLRT_DIV register
-		Data = 0x07;
-		HAL_I2C_Mem_Write(&hi2c1, MPU6050_ADDR, SMPLRT_DIV_REG, 1, &Data, 1, 1000);
-
-		// Set accelerometer configuration in ACCEL_CONFIG register
-		// XA_ST = 0, YA_ST = 0, ZA_ST = 0, FS_SEL = 0 -> +/- 2g
-		Data = 0x00;
-		HAL_I2C_Mem_Write(&hi2c1, MPU6050_ADDR, ACCEL_CONFIG_REG, 1, &Data, 1, 1000);
-
-		// Set gyroscope configuration in GYRO_CONFIG register
-		// XG_ST = 0, YG_ST = 0, ZG_ST = 0, FS_SEL = 0 -> +/- 250 deg/s
-		Data = 0x00;
-		HAL_I2C_Mem_Write(&hi2c1, MPU6050_ADDR, GYRO_CONFIG_REG, 1, &Data, 1, 1000);
-	}
-
-	else {
-		lcd_send_string("Sensor Not Resp");
-		HAL_Delay(5000);
-	}
-}
-
-
-void startup(void) {
-	// Initialize everything on startup
-	lcd_init();
-	MPU6050_Init();
-
-	accel_corr_p = MPU6050_read_accel_raw(ACCEL_CONST, MPU6050_ADDR, ACCEL_XOUT_H_REG, accel_corr);
-	gyro_corr_p  = MPU6050_read_gyro_raw(GYRO_CONST, MPU6050_ADDR, GYRO_XOUT_H_REG, gyro_corr);
-
-	accel_corr[0] = accel_corr_p[0];
-	accel_corr[1] = accel_corr_p[1];
-	accel_corr[2] = accel_corr_p[2];
-	gyro_corr[0]  = gyro_corr_p[0];
-	gyro_corr[1]  = gyro_corr_p[1];
-	gyro_corr[2]  = gyro_corr_p[2];
-
-	lcd_send_string("Initialized");
-}
-
-void normal(void) {
-	// Normal run mode
-	uint8_t line_pos;
-
-	accel_data_p = MPU6050_read_accel(ACCEL_CONST, MPU6050_ADDR, ACCEL_XOUT_H_REG, accel_data, 
-		accel_corr);
-	gyro_data_p  = MPU6050_read_gyro(GYRO_CONST, MPU6050_ADDR, GYRO_XOUT_H_REG, gyro_data, 
-		gyro_corr);
-
-	accel_data[0] = accel_data_p[0];
-	accel_data[1] = accel_data_p[1];
-	accel_data[2] = accel_data_p[2];
-	gyro_data[0]  = gyro_data_p[0];
-	gyro_data[1]  = gyro_data_p[1];
-	gyro_data[2]  = gyro_data_p[2];
-
-	// Print on the screen
-	lcd_send_cmd(0x80|0x00);
-	lcd_send_string("Ax=       ");
-	sprintf(buf, "%.2f", (double)accel_data[0]);
-	line_pos = (accel_data[0] >= 0) ? (0x04):(0x03);
-	lcd_send_cmd(0x80|line_pos);
-	lcd_send_string(buf);
-	lcd_send_string("g ");
-
-	lcd_send_cmd(0x80|0x40);
-	lcd_send_string("Ay=       ");
-	sprintf(buf, "%.2f", (double)accel_data[1]);
-	line_pos = (accel_data[1] >= 0) ? (0x44):(0x43);
-	lcd_send_cmd(0x80|line_pos);
-	lcd_send_string(buf);
-	lcd_send_string("g ");
-
-	lcd_send_cmd(0x80|0x14);
-	lcd_send_string("Az=       ");
-	sprintf(buf, "%.2f", (double)accel_data[2]);
-	line_pos = (accel_data[2] >= 0) ? (0x18):(0x17);
-	lcd_send_cmd(0x80|line_pos);
-	lcd_send_string(buf);
-	lcd_send_string("g ");
-
-	lcd_send_cmd(0x80|0x0A);
-	lcd_send_string("Gx=       ");
-	sprintf(buf, "%.2f", (double)gyro_data[0]);
-	line_pos = (gyro_data[0] >= 0) ? (0x0E):(0x0D);
-	lcd_send_cmd(0x80|line_pos);
-	lcd_send_string(buf);
-
-	lcd_send_cmd(0x80|0x4A);
-	lcd_send_string("Gy=       ");
-	sprintf(buf, "%.2f", (double)gyro_data[1]);
-	line_pos = (gyro_data[1] >= 0) ? (0x4E):(0x4D);
-	lcd_send_cmd(0x80|line_pos);
-	lcd_send_string(buf);
-
-	lcd_send_cmd(0x80|0x1E);
-	lcd_send_string("Gz=       ");
-	sprintf(buf, "%.2f", (double)gyro_data[2]);
-	line_pos = (gyro_data[2] >= 0) ? (0x22):(0x21);
-	lcd_send_cmd(0x80|line_pos);
-	lcd_send_string(buf);
-
-	lcd_send_cmd(0x80|0x54);
-	lcd_send_string("                    ");
-}
-
-void accel_cal_prep(void) {
-	// Prepare to calibrate the accelerometer
-	flag = 0;
-
-	lcd_clear();
-
-	lcd_send_cmd(0x80|0x00);
-	lcd_send_string("Position the");
-	lcd_send_cmd(0x80|0x40);
-	lcd_send_string("accelerometer to its");
-	lcd_send_cmd(0x80|0x14);
-	lcd_send_string("zero position");
-}
-
-void accel_cal(void) {
-	// Calibrate the accelerometer
-	flag = 0;
-
-	lcd_clear();
-
-	accel_corr_p = MPU6050_read_accel_raw(ACCEL_CONST, MPU6050_ADDR, ACCEL_XOUT_H_REG, accel_corr);
-	gyro_corr_p  = MPU6050_read_gyro_raw(GYRO_CONST, MPU6050_ADDR, GYRO_XOUT_H_REG, gyro_corr);
-
-	accel_corr[0] = accel_corr_p[0];
-	accel_corr[1] = accel_corr_p[1];
-	accel_corr[2] = accel_corr_p[2];
-	gyro_corr[0]  = gyro_corr_p[0];
-	gyro_corr[1]  = gyro_corr_p[1];
-	gyro_corr[2]  = gyro_corr_p[2];
-
-	lcd_send_cmd(0x80|0x00);
-	lcd_send_string("Calibration Complete");
-}
-
-
-// Interrupt
-void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin) {
-	flag = 1;
-}
-
-
 /* USER CODE END 0 */
 
 /**
@@ -282,7 +74,7 @@ int main(void)
 {
   /* USER CODE BEGIN 1 */
 
-	state = startup_state;   // Initialize to state 0
+	// state = startup_state;   // Initialize to state 0
 
   /* USER CODE END 1 */
 
@@ -292,9 +84,6 @@ int main(void)
   HAL_Init();
 
   /* USER CODE BEGIN Init */
-
-  // lcd_init();
-  // MPU6050_Init();
 
   /* USER CODE END Init */
 
@@ -323,11 +112,7 @@ int main(void)
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
-
-	  (FSM[state].output_func)();
-	  HAL_Delay(FSM[state].time_delay);
-	  state = FSM[state].next_state[flag];
-
+    main_function();
   }
   /* USER CODE END 3 */
 }

@@ -55,20 +55,17 @@ void Error_Handler(void);
 
 /* USER CODE BEGIN EFP */
 
-// Initialize everything on startup
-void startup(void);
+// // Initialize everything on startup
+// void startup(void);
 
-// Normal run mode
-void normal(void);
+// // Normal run mode
+// void normal(void);
 
-// Prepare to calibrate the accelerometer
-void accel_cal_prep(void);
+// // Prepare to calibrate the accelerometer
+// void accel_cal_prep(void);
 
-// Calibrate the accelerometer
-void accel_cal(void);
-
-// Initiate accelerometer
-void MPU6050_Init(void);
+// // Calibrate the accelerometer
+// void accel_cal(void);
 
 /* USER CODE END EFP */
 
@@ -90,10 +87,9 @@ void MPU6050_Init(void);
 /* USER CODE BEGIN Private defines */
 
 // State machine states
-#define startup_state         0
-#define normal_state          1
-#define accel_cal_prep_state  2
-#define accel_cal_state       3
+#define normal_state          0 
+#define accel_cal_prep_state  1 
+#define accel_cal_state       2 
 
 // Accelerometer hardware registers
 #define MPU6050_ADDR       0xD0      // MPU6050 ID
@@ -109,7 +105,7 @@ void MPU6050_Init(void);
 
 // Constants
 #define NUM_OPTIONS  2
-#define NUM_STATES   4
+#define NUM_STATES   3
 #define S0_DELAY     3000
 #define S1_DELAY     500
 #define S2_DELAY     1000
@@ -118,7 +114,7 @@ void MPU6050_Init(void);
 #define ACCEL_CONST  16384.0
 #define GYRO_CONST   131.0
 
-// LCD address - change this according to your setup
+// LCD address - hardware specific
 #define SLAVE_ADDRESS_LCD 0x4E
 
 /* USER CODE END Private defines */

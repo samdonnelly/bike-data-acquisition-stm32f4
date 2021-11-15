@@ -1,4 +1,4 @@
-ARM GAS  C:\Users\samue\AppData\Local\Temp\ccFFJToL.s 			page 1
+ARM GAS  C:\Users\samue\AppData\Local\Temp\ccdq4mOc.s 			page 1
 
 
    1              		.cpu cortex-m4
@@ -19,617 +19,417 @@ ARM GAS  C:\Users\samue\AppData\Local\Temp\ccFFJToL.s 			page 1
   16              		.text
   17              	.Ltext0:
   18              		.cfi_sections	.debug_frame
-  19              		.section	.text.MPU6050_read_accel_raw,"ax",%progbits
-  20              		.align	1
-  21              		.global	MPU6050_read_accel_raw
-  22              		.syntax unified
-  23              		.thumb
-  24              		.thumb_func
-  26              	MPU6050_read_accel_raw:
-  27              	.LVL0:
-  28              	.LFB130:
-  29              		.file 1 "Core/Src/accelerometer_data.c"
-   1:Core/Src/accelerometer_data.c **** // /*
-   2:Core/Src/accelerometer_data.c **** //  * accelerometer_data.c
-   3:Core/Src/accelerometer_data.c **** //  *
-   4:Core/Src/accelerometer_data.c **** //  *  Created on: Sep 20, 2021
-   5:Core/Src/accelerometer_data.c **** //  *      Author: Sam Donnelly
-   6:Core/Src/accelerometer_data.c **** //  */
-   7:Core/Src/accelerometer_data.c **** 
-   8:Core/Src/accelerometer_data.c **** #include "accelerometer_data.h"
-   9:Core/Src/accelerometer_data.c **** extern I2C_HandleTypeDef hi2c1;  // change your handler here accordingly
+  19              		.section	.rodata.MPU6050_Init.str1.4,"aMS",%progbits,1
+  20              		.align	2
+  21              	.LC0:
+  22 0000 53656E73 		.ascii	"Sensor Not Resp\000"
+  22      6F72204E 
+  22      6F742052 
+  22      65737000 
+  23              		.section	.text.MPU6050_Init,"ax",%progbits
+  24              		.align	1
+  25              		.global	MPU6050_Init
+  26              		.syntax unified
+  27              		.thumb
+  28              		.thumb_func
+  30              	MPU6050_Init:
+  31              	.LFB130:
+  32              		.file 1 "Core/Src/accelerometer_data.c"
+   1:Core/Src/accelerometer_data.c **** /*
+   2:Core/Src/accelerometer_data.c ****  * File: accelerometer_data.c
+   3:Core/Src/accelerometer_data.c ****  * Purpose: Functions that interact with the systems accelerometer
+   4:Core/Src/accelerometer_data.c ****  * 
+   5:Core/Src/accelerometer_data.c ****  * Created on: Sep 20, 2021
+   6:Core/Src/accelerometer_data.c ****  * Author: Sam Donnelly + External 
+   7:Core/Src/accelerometer_data.c ****  */
+   8:Core/Src/accelerometer_data.c **** 
+   9:Core/Src/accelerometer_data.c **** // Libraries 
   10:Core/Src/accelerometer_data.c **** 
   11:Core/Src/accelerometer_data.c **** 
-  12:Core/Src/accelerometer_data.c **** float* MPU6050_read_accel_raw(float accel_con, uint8_t MPU_ADDR, uint8_t ACCEL_REG, 
-  13:Core/Src/accelerometer_data.c ****     float accel_corr[]) {
-  30              		.loc 1 13 25 view -0
-  31              		.cfi_startproc
-  32              		@ args = 0, pretend = 0, frame = 8
-  33              		@ frame_needed = 0, uses_anonymous_args = 0
-  34              		.loc 1 13 25 is_stmt 0 view .LVU1
-  35 0000 10B5     		push	{r4, lr}
-  36              	.LCFI0:
-  37              		.cfi_def_cfa_offset 8
-  38              		.cfi_offset 4, -8
-  39              		.cfi_offset 14, -4
-  40 0002 2DED028B 		vpush.64	{d8}
-  41              	.LCFI1:
-  42              		.cfi_def_cfa_offset 16
-  43              		.cfi_offset 80, -16
-  44              		.cfi_offset 81, -12
-  45 0006 86B0     		sub	sp, sp, #24
-ARM GAS  C:\Users\samue\AppData\Local\Temp\ccFFJToL.s 			page 2
-
-
-  46              	.LCFI2:
-  47              		.cfi_def_cfa_offset 40
-  48 0008 B0EE408A 		vmov.f32	s16, s0
-  49 000c 1446     		mov	r4, r2
-  14:Core/Src/accelerometer_data.c **** 	uint8_t data[6];
-  50              		.loc 1 14 2 is_stmt 1 view .LVU2
-  15:Core/Src/accelerometer_data.c **** 
-  16:Core/Src/accelerometer_data.c **** 	// Read 6 bytes of data starting from ACCEL_XOUT_H register
-  17:Core/Src/accelerometer_data.c **** 	HAL_I2C_Mem_Read(&hi2c1, MPU_ADDR, ACCEL_REG, 1, data, 6, 1000);
-  51              		.loc 1 17 2 view .LVU3
-  52 000e 4FF47A73 		mov	r3, #1000
-  53 0012 0293     		str	r3, [sp, #8]
-  54 0014 0623     		movs	r3, #6
-  55 0016 0193     		str	r3, [sp, #4]
-  56 0018 04AB     		add	r3, sp, #16
-  57 001a 0093     		str	r3, [sp]
-  58 001c 0123     		movs	r3, #1
-  59 001e 0A46     		mov	r2, r1
-  60              	.LVL1:
-  61              		.loc 1 17 2 is_stmt 0 view .LVU4
-  62 0020 0146     		mov	r1, r0
-  63              	.LVL2:
-  64              		.loc 1 17 2 view .LVU5
-  65 0022 1A48     		ldr	r0, .L3
-  66              	.LVL3:
-  67              		.loc 1 17 2 view .LVU6
-  68 0024 FFF7FEFF 		bl	HAL_I2C_Mem_Read
-  69              	.LVL4:
-  18:Core/Src/accelerometer_data.c **** 
-  19:Core/Src/accelerometer_data.c **** 	accel_corr[0] = ((int16_t)(data[0] << 8 | data[1]))/accel_con;
-  70              		.loc 1 19 2 is_stmt 1 view .LVU7
-  71              		.loc 1 19 33 is_stmt 0 view .LVU8
-  72 0028 9DF81020 		ldrb	r2, [sp, #16]	@ zero_extendqisi2
-  73              		.loc 1 19 48 view .LVU9
-  74 002c 9DF81130 		ldrb	r3, [sp, #17]	@ zero_extendqisi2
-  75              		.loc 1 19 19 view .LVU10
-  76 0030 43EA0223 		orr	r3, r3, r2, lsl #8
-  77 0034 1BB2     		sxth	r3, r3
-  78              		.loc 1 19 53 view .LVU11
-  79 0036 07EE903A 		vmov	s15, r3	@ int
-  80 003a F8EEE77A 		vcvt.f32.s32	s15, s15
-  81 003e 87EE887A 		vdiv.f32	s14, s15, s16
-  82              		.loc 1 19 16 view .LVU12
-  83 0042 84ED007A 		vstr.32	s14, [r4]
-  20:Core/Src/accelerometer_data.c **** 	accel_corr[1] = ((int16_t)(data[2] << 8 | data[3]))/accel_con;
-  84              		.loc 1 20 2 is_stmt 1 view .LVU13
-  85              		.loc 1 20 33 is_stmt 0 view .LVU14
-  86 0046 9DF81220 		ldrb	r2, [sp, #18]	@ zero_extendqisi2
-  87              		.loc 1 20 48 view .LVU15
-  88 004a 9DF81330 		ldrb	r3, [sp, #19]	@ zero_extendqisi2
-  89              		.loc 1 20 19 view .LVU16
-  90 004e 43EA0223 		orr	r3, r3, r2, lsl #8
-  91 0052 1BB2     		sxth	r3, r3
-  92              		.loc 1 20 53 view .LVU17
-  93 0054 07EE903A 		vmov	s15, r3	@ int
-  94 0058 F8EEE77A 		vcvt.f32.s32	s15, s15
-  95 005c 87EE887A 		vdiv.f32	s14, s15, s16
-ARM GAS  C:\Users\samue\AppData\Local\Temp\ccFFJToL.s 			page 3
-
-
-  96              		.loc 1 20 16 view .LVU18
-  97 0060 84ED017A 		vstr.32	s14, [r4, #4]
-  21:Core/Src/accelerometer_data.c **** 	accel_corr[2] = ((int16_t)(data[4] << 8 | data[5]))/accel_con;
-  98              		.loc 1 21 2 is_stmt 1 view .LVU19
-  99              		.loc 1 21 33 is_stmt 0 view .LVU20
- 100 0064 9DF81420 		ldrb	r2, [sp, #20]	@ zero_extendqisi2
- 101              		.loc 1 21 48 view .LVU21
- 102 0068 9DF81530 		ldrb	r3, [sp, #21]	@ zero_extendqisi2
- 103              		.loc 1 21 19 view .LVU22
- 104 006c 43EA0223 		orr	r3, r3, r2, lsl #8
- 105 0070 1BB2     		sxth	r3, r3
- 106              		.loc 1 21 53 view .LVU23
- 107 0072 07EE903A 		vmov	s15, r3	@ int
- 108 0076 F8EEE77A 		vcvt.f32.s32	s15, s15
- 109 007a 87EE887A 		vdiv.f32	s14, s15, s16
- 110              		.loc 1 21 16 view .LVU24
- 111 007e 84ED027A 		vstr.32	s14, [r4, #8]
+  12:Core/Src/accelerometer_data.c **** // Header Files 
+  13:Core/Src/accelerometer_data.c **** #include "main.h"
+  14:Core/Src/accelerometer_data.c **** #include "accelerometer_data.h"
+  15:Core/Src/accelerometer_data.c **** #include "i2c-lcd.h"
+  16:Core/Src/accelerometer_data.c **** 
+  17:Core/Src/accelerometer_data.c **** // Variables 
+  18:Core/Src/accelerometer_data.c **** extern I2C_HandleTypeDef hi2c1;  // change your handler here accordingly
+  19:Core/Src/accelerometer_data.c **** 
+  20:Core/Src/accelerometer_data.c **** uint8_t data[6];
+  21:Core/Src/accelerometer_data.c **** float accel_data[3];
   22:Core/Src/accelerometer_data.c **** 
-  23:Core/Src/accelerometer_data.c **** 	return accel_corr;
- 112              		.loc 1 23 2 is_stmt 1 view .LVU25
-  24:Core/Src/accelerometer_data.c **** }
- 113              		.loc 1 24 1 is_stmt 0 view .LVU26
- 114 0082 2046     		mov	r0, r4
- 115 0084 06B0     		add	sp, sp, #24
- 116              	.LCFI3:
- 117              		.cfi_def_cfa_offset 16
- 118              		@ sp needed
- 119 0086 BDEC028B 		vldm	sp!, {d8}
- 120              	.LCFI4:
- 121              		.cfi_restore 80
- 122              		.cfi_restore 81
- 123              		.cfi_def_cfa_offset 8
- 124              	.LVL5:
- 125              		.loc 1 24 1 view .LVU27
- 126 008a 10BD     		pop	{r4, pc}
- 127              	.LVL6:
- 128              	.L4:
- 129              		.loc 1 24 1 view .LVU28
- 130              		.align	2
- 131              	.L3:
- 132 008c 00000000 		.word	hi2c1
- 133              		.cfi_endproc
- 134              	.LFE130:
- 136              		.section	.text.MPU6050_read_accel,"ax",%progbits
- 137              		.align	1
- 138              		.global	MPU6050_read_accel
- 139              		.syntax unified
- 140              		.thumb
- 141              		.thumb_func
- 143              	MPU6050_read_accel:
- 144              	.LVL7:
- 145              	.LFB131:
-  25:Core/Src/accelerometer_data.c **** 
-  26:Core/Src/accelerometer_data.c **** float* MPU6050_read_accel(float accel_con, uint8_t MPU_ADDR, uint8_t ACCEL_REG, 
-  27:Core/Src/accelerometer_data.c ****     float accel_data[], float accel_corr[]) {
- 146              		.loc 1 27 45 is_stmt 1 view -0
- 147              		.cfi_startproc
-ARM GAS  C:\Users\samue\AppData\Local\Temp\ccFFJToL.s 			page 4
+  23:Core/Src/accelerometer_data.c **** 
+ARM GAS  C:\Users\samue\AppData\Local\Temp\ccdq4mOc.s 			page 2
 
 
- 148              		@ args = 0, pretend = 0, frame = 8
- 149              		@ frame_needed = 0, uses_anonymous_args = 0
- 150              		.loc 1 27 45 is_stmt 0 view .LVU30
- 151 0000 30B5     		push	{r4, r5, lr}
- 152              	.LCFI5:
- 153              		.cfi_def_cfa_offset 12
- 154              		.cfi_offset 4, -12
- 155              		.cfi_offset 5, -8
- 156              		.cfi_offset 14, -4
- 157 0002 2DED028B 		vpush.64	{d8}
- 158              	.LCFI6:
- 159              		.cfi_def_cfa_offset 20
- 160              		.cfi_offset 80, -20
- 161              		.cfi_offset 81, -16
- 162 0006 87B0     		sub	sp, sp, #28
- 163              	.LCFI7:
- 164              		.cfi_def_cfa_offset 48
- 165 0008 B0EE408A 		vmov.f32	s16, s0
- 166 000c 1446     		mov	r4, r2
- 167 000e 1D46     		mov	r5, r3
-  28:Core/Src/accelerometer_data.c **** 	uint8_t data[6];
- 168              		.loc 1 28 2 is_stmt 1 view .LVU31
+  24:Core/Src/accelerometer_data.c **** // Accelerometer initialization
+  25:Core/Src/accelerometer_data.c **** void MPU6050_Init(void) {
+  33              		.loc 1 25 25 view -0
+  34              		.cfi_startproc
+  35              		@ args = 0, pretend = 0, frame = 8
+  36              		@ frame_needed = 0, uses_anonymous_args = 0
+  37 0000 2DE9F041 		push	{r4, r5, r6, r7, r8, lr}
+  38              	.LCFI0:
+  39              		.cfi_def_cfa_offset 24
+  40              		.cfi_offset 4, -24
+  41              		.cfi_offset 5, -20
+  42              		.cfi_offset 6, -16
+  43              		.cfi_offset 7, -12
+  44              		.cfi_offset 8, -8
+  45              		.cfi_offset 14, -4
+  46 0004 86B0     		sub	sp, sp, #24
+  47              	.LCFI1:
+  48              		.cfi_def_cfa_offset 48
+  26:Core/Src/accelerometer_data.c **** 
+  27:Core/Src/accelerometer_data.c **** 	uint8_t check;
+  49              		.loc 1 27 2 view .LVU1
+  28:Core/Src/accelerometer_data.c **** 	uint8_t Data;
+  50              		.loc 1 28 2 view .LVU2
   29:Core/Src/accelerometer_data.c **** 
-  30:Core/Src/accelerometer_data.c **** 	// Read 6 bytes of data starting from ACCEL_XOUT_H register
-  31:Core/Src/accelerometer_data.c **** 	HAL_I2C_Mem_Read(&hi2c1, MPU_ADDR, ACCEL_REG, 1, data, 6, 1000);
- 169              		.loc 1 31 2 view .LVU32
- 170 0010 4FF47A73 		mov	r3, #1000
- 171              	.LVL8:
- 172              		.loc 1 31 2 is_stmt 0 view .LVU33
- 173 0014 0293     		str	r3, [sp, #8]
- 174 0016 0623     		movs	r3, #6
- 175 0018 0193     		str	r3, [sp, #4]
- 176 001a 04AB     		add	r3, sp, #16
- 177 001c 0093     		str	r3, [sp]
- 178 001e 0123     		movs	r3, #1
- 179 0020 0A46     		mov	r2, r1
- 180              	.LVL9:
- 181              		.loc 1 31 2 view .LVU34
- 182 0022 0146     		mov	r1, r0
- 183              	.LVL10:
- 184              		.loc 1 31 2 view .LVU35
- 185 0024 2048     		ldr	r0, .L7
- 186              	.LVL11:
- 187              		.loc 1 31 2 view .LVU36
- 188 0026 FFF7FEFF 		bl	HAL_I2C_Mem_Read
- 189              	.LVL12:
+  30:Core/Src/accelerometer_data.c **** 	// check ID WHO_AM_I
+  31:Core/Src/accelerometer_data.c **** 	HAL_I2C_Mem_Read(&hi2c1, MPU6050_ADDR, WHO_AM_I_REG, 1, &check, 1, 1000);
+  51              		.loc 1 31 2 view .LVU3
+  52 0006 4FF47A73 		mov	r3, #1000
+  53 000a 0293     		str	r3, [sp, #8]
+  54 000c 0123     		movs	r3, #1
+  55 000e 0193     		str	r3, [sp, #4]
+  56 0010 0DF11702 		add	r2, sp, #23
+  57 0014 0092     		str	r2, [sp]
+  58 0016 7522     		movs	r2, #117
+  59 0018 D021     		movs	r1, #208
+  60 001a 2348     		ldr	r0, .L6
+  61 001c FFF7FEFF 		bl	HAL_I2C_Mem_Read
+  62              	.LVL0:
   32:Core/Src/accelerometer_data.c **** 
-  33:Core/Src/accelerometer_data.c **** 	accel_data[0] = ((int16_t)(data[0] << 8 | data[1]))/accel_con - accel_corr[0];
- 190              		.loc 1 33 2 is_stmt 1 view .LVU37
- 191              		.loc 1 33 33 is_stmt 0 view .LVU38
- 192 002a 9DF81020 		ldrb	r2, [sp, #16]	@ zero_extendqisi2
- 193              		.loc 1 33 48 view .LVU39
- 194 002e 9DF81130 		ldrb	r3, [sp, #17]	@ zero_extendqisi2
- 195              		.loc 1 33 19 view .LVU40
- 196 0032 43EA0223 		orr	r3, r3, r2, lsl #8
- 197 0036 1BB2     		sxth	r3, r3
- 198              		.loc 1 33 53 view .LVU41
-ARM GAS  C:\Users\samue\AppData\Local\Temp\ccFFJToL.s 			page 5
+  33:Core/Src/accelerometer_data.c **** 	// If the device is present
+  34:Core/Src/accelerometer_data.c **** 	if (check == 104) {  // 104 -> 0x68
+  63              		.loc 1 34 2 view .LVU4
+  64              		.loc 1 34 12 is_stmt 0 view .LVU5
+  65 0020 9DF81730 		ldrb	r3, [sp, #23]	@ zero_extendqisi2
+  66              		.loc 1 34 5 view .LVU6
+  67 0024 682B     		cmp	r3, #104
+  68 0026 09D0     		beq	.L5
+  35:Core/Src/accelerometer_data.c **** 		// Power management register 0x6B we should write all 0's to wake the sensor up
+  36:Core/Src/accelerometer_data.c **** 		Data = 0;
+  37:Core/Src/accelerometer_data.c **** 		HAL_I2C_Mem_Write(&hi2c1, MPU6050_ADDR, PWR_MGMT_1_REG, 1, &Data, 1, 1000);
+  38:Core/Src/accelerometer_data.c **** 
+  39:Core/Src/accelerometer_data.c **** 		// Set DATA RATE of 1kHz by writing SMPLRT_DIV register
+  40:Core/Src/accelerometer_data.c **** 		Data = 0x07;
+  41:Core/Src/accelerometer_data.c **** 		HAL_I2C_Mem_Write(&hi2c1, MPU6050_ADDR, SMPLRT_DIV_REG, 1, &Data, 1, 1000);
+  42:Core/Src/accelerometer_data.c **** 
+  43:Core/Src/accelerometer_data.c **** 		// Set accelerometer configuration in ACCEL_CONFIG register
+  44:Core/Src/accelerometer_data.c **** 		// XA_ST = 0, YA_ST = 0, ZA_ST = 0, FS_SEL = 0 -> +/- 2g
+ARM GAS  C:\Users\samue\AppData\Local\Temp\ccdq4mOc.s 			page 3
 
 
- 199 0038 07EE903A 		vmov	s15, r3	@ int
- 200 003c F8EEE77A 		vcvt.f32.s32	s15, s15
- 201 0040 87EE887A 		vdiv.f32	s14, s15, s16
- 202              		.loc 1 33 76 view .LVU42
- 203 0044 D5ED007A 		vldr.32	s15, [r5]
- 204              		.loc 1 33 64 view .LVU43
- 205 0048 77EE677A 		vsub.f32	s15, s14, s15
- 206              		.loc 1 33 16 view .LVU44
- 207 004c C4ED007A 		vstr.32	s15, [r4]
-  34:Core/Src/accelerometer_data.c **** 	accel_data[1] = ((int16_t)(data[2] << 8 | data[3]))/accel_con - accel_corr[1];
- 208              		.loc 1 34 2 is_stmt 1 view .LVU45
- 209              		.loc 1 34 33 is_stmt 0 view .LVU46
- 210 0050 9DF81230 		ldrb	r3, [sp, #18]	@ zero_extendqisi2
- 211              		.loc 1 34 48 view .LVU47
- 212 0054 9DF81310 		ldrb	r1, [sp, #19]	@ zero_extendqisi2
- 213              		.loc 1 34 19 view .LVU48
- 214 0058 41EA0321 		orr	r1, r1, r3, lsl #8
- 215 005c 09B2     		sxth	r1, r1
- 216              		.loc 1 34 53 view .LVU49
- 217 005e 07EE901A 		vmov	s15, r1	@ int
- 218 0062 F8EEE77A 		vcvt.f32.s32	s15, s15
- 219 0066 87EE887A 		vdiv.f32	s14, s15, s16
- 220              		.loc 1 34 76 view .LVU50
- 221 006a D5ED017A 		vldr.32	s15, [r5, #4]
- 222              		.loc 1 34 64 view .LVU51
- 223 006e 77EE677A 		vsub.f32	s15, s14, s15
- 224              		.loc 1 34 16 view .LVU52
- 225 0072 C4ED017A 		vstr.32	s15, [r4, #4]
-  35:Core/Src/accelerometer_data.c **** 	accel_data[2] = ((int16_t)(data[4] << 8 | data[5]))/accel_con - accel_corr[2];
- 226              		.loc 1 35 2 is_stmt 1 view .LVU53
- 227              		.loc 1 35 33 is_stmt 0 view .LVU54
- 228 0076 9DF81430 		ldrb	r3, [sp, #20]	@ zero_extendqisi2
- 229              		.loc 1 35 48 view .LVU55
- 230 007a 9DF81510 		ldrb	r1, [sp, #21]	@ zero_extendqisi2
- 231              		.loc 1 35 19 view .LVU56
- 232 007e 41EA0321 		orr	r1, r1, r3, lsl #8
- 233 0082 09B2     		sxth	r1, r1
- 234              		.loc 1 35 53 view .LVU57
- 235 0084 07EE901A 		vmov	s15, r1	@ int
- 236 0088 F8EEE77A 		vcvt.f32.s32	s15, s15
- 237 008c 87EE887A 		vdiv.f32	s14, s15, s16
- 238              		.loc 1 35 76 view .LVU58
- 239 0090 D5ED027A 		vldr.32	s15, [r5, #8]
- 240              		.loc 1 35 64 view .LVU59
- 241 0094 77EE677A 		vsub.f32	s15, s14, s15
- 242              		.loc 1 35 16 view .LVU60
- 243 0098 C4ED027A 		vstr.32	s15, [r4, #8]
-  36:Core/Src/accelerometer_data.c **** 
-  37:Core/Src/accelerometer_data.c **** 	return accel_data;
- 244              		.loc 1 37 2 is_stmt 1 view .LVU61
-  38:Core/Src/accelerometer_data.c **** }
- 245              		.loc 1 38 1 is_stmt 0 view .LVU62
- 246 009c 2046     		mov	r0, r4
- 247 009e 07B0     		add	sp, sp, #28
- 248              	.LCFI8:
- 249              		.cfi_def_cfa_offset 20
- 250              		@ sp needed
-ARM GAS  C:\Users\samue\AppData\Local\Temp\ccFFJToL.s 			page 6
+  45:Core/Src/accelerometer_data.c **** 		Data = 0x00;
+  46:Core/Src/accelerometer_data.c **** 		HAL_I2C_Mem_Write(&hi2c1, MPU6050_ADDR, ACCEL_CONFIG_REG, 1, &Data, 1, 1000);
+  47:Core/Src/accelerometer_data.c **** 
+  48:Core/Src/accelerometer_data.c **** 		// Set gyroscope configuration in GYRO_CONFIG register
+  49:Core/Src/accelerometer_data.c **** 		// XG_ST = 0, YG_ST = 0, ZG_ST = 0, FS_SEL = 0 -> +/- 250 deg/s
+  50:Core/Src/accelerometer_data.c **** 		Data = 0x00;
+  51:Core/Src/accelerometer_data.c **** 		HAL_I2C_Mem_Write(&hi2c1, MPU6050_ADDR, GYRO_CONFIG_REG, 1, &Data, 1, 1000);
+  52:Core/Src/accelerometer_data.c **** 
+  53:Core/Src/accelerometer_data.c **** 		// lcd_send_string("Initialized");
+  54:Core/Src/accelerometer_data.c **** 	}
+  55:Core/Src/accelerometer_data.c **** 
+  56:Core/Src/accelerometer_data.c **** 	else {
+  57:Core/Src/accelerometer_data.c **** 		lcd_send_string("Sensor Not Resp");
+  69              		.loc 1 57 3 is_stmt 1 view .LVU7
+  70 0028 2048     		ldr	r0, .L6+4
+  71 002a FFF7FEFF 		bl	lcd_send_string
+  72              	.LVL1:
+  58:Core/Src/accelerometer_data.c **** 		HAL_Delay(5000);
+  73              		.loc 1 58 3 view .LVU8
+  74 002e 41F28830 		movw	r0, #5000
+  75 0032 FFF7FEFF 		bl	HAL_Delay
+  76              	.LVL2:
+  77              	.L1:
+  59:Core/Src/accelerometer_data.c **** 	}
+  60:Core/Src/accelerometer_data.c **** }
+  78              		.loc 1 60 1 is_stmt 0 view .LVU9
+  79 0036 06B0     		add	sp, sp, #24
+  80              	.LCFI2:
+  81              		.cfi_remember_state
+  82              		.cfi_def_cfa_offset 24
+  83              		@ sp needed
+  84 0038 BDE8F081 		pop	{r4, r5, r6, r7, r8, pc}
+  85              	.L5:
+  86              	.LCFI3:
+  87              		.cfi_restore_state
+  36:Core/Src/accelerometer_data.c **** 		HAL_I2C_Mem_Write(&hi2c1, MPU6050_ADDR, PWR_MGMT_1_REG, 1, &Data, 1, 1000);
+  88              		.loc 1 36 3 is_stmt 1 view .LVU10
+  36:Core/Src/accelerometer_data.c **** 		HAL_I2C_Mem_Write(&hi2c1, MPU6050_ADDR, PWR_MGMT_1_REG, 1, &Data, 1, 1000);
+  89              		.loc 1 36 8 is_stmt 0 view .LVU11
+  90 003c 4FF00008 		mov	r8, #0
+  91 0040 8DF81680 		strb	r8, [sp, #22]
+  37:Core/Src/accelerometer_data.c **** 
+  92              		.loc 1 37 3 is_stmt 1 view .LVU12
+  93 0044 184D     		ldr	r5, .L6
+  94 0046 4FF47A77 		mov	r7, #1000
+  95 004a 0297     		str	r7, [sp, #8]
+  96 004c 0124     		movs	r4, #1
+  97 004e 0194     		str	r4, [sp, #4]
+  98 0050 0DF11606 		add	r6, sp, #22
+  99 0054 0096     		str	r6, [sp]
+ 100 0056 2346     		mov	r3, r4
+ 101 0058 6B22     		movs	r2, #107
+ 102 005a D021     		movs	r1, #208
+ 103 005c 2846     		mov	r0, r5
+ 104 005e FFF7FEFF 		bl	HAL_I2C_Mem_Write
+ 105              	.LVL3:
+  40:Core/Src/accelerometer_data.c **** 		HAL_I2C_Mem_Write(&hi2c1, MPU6050_ADDR, SMPLRT_DIV_REG, 1, &Data, 1, 1000);
+ARM GAS  C:\Users\samue\AppData\Local\Temp\ccdq4mOc.s 			page 4
 
 
- 251 00a0 BDEC028B 		vldm	sp!, {d8}
- 252              	.LCFI9:
- 253              		.cfi_restore 80
- 254              		.cfi_restore 81
- 255              		.cfi_def_cfa_offset 12
- 256              	.LVL13:
- 257              		.loc 1 38 1 view .LVU63
- 258 00a4 30BD     		pop	{r4, r5, pc}
- 259              	.LVL14:
- 260              	.L8:
- 261              		.loc 1 38 1 view .LVU64
- 262 00a6 00BF     		.align	2
- 263              	.L7:
- 264 00a8 00000000 		.word	hi2c1
- 265              		.cfi_endproc
- 266              	.LFE131:
- 268              		.section	.text.MPU6050_read_gyro_raw,"ax",%progbits
- 269              		.align	1
- 270              		.global	MPU6050_read_gyro_raw
- 271              		.syntax unified
- 272              		.thumb
- 273              		.thumb_func
- 275              	MPU6050_read_gyro_raw:
- 276              	.LVL15:
- 277              	.LFB132:
-  39:Core/Src/accelerometer_data.c **** 
-  40:Core/Src/accelerometer_data.c **** float* MPU6050_read_gyro_raw(float gyro_con, uint8_t MPU_ADDR, uint8_t GYRO_REG, 
-  41:Core/Src/accelerometer_data.c ****     float gyro_corr[]) {
- 278              		.loc 1 41 24 is_stmt 1 view -0
- 279              		.cfi_startproc
- 280              		@ args = 0, pretend = 0, frame = 8
- 281              		@ frame_needed = 0, uses_anonymous_args = 0
- 282              		.loc 1 41 24 is_stmt 0 view .LVU66
- 283 0000 10B5     		push	{r4, lr}
- 284              	.LCFI10:
- 285              		.cfi_def_cfa_offset 8
- 286              		.cfi_offset 4, -8
- 287              		.cfi_offset 14, -4
- 288 0002 2DED028B 		vpush.64	{d8}
- 289              	.LCFI11:
- 290              		.cfi_def_cfa_offset 16
- 291              		.cfi_offset 80, -16
- 292              		.cfi_offset 81, -12
- 293 0006 86B0     		sub	sp, sp, #24
- 294              	.LCFI12:
- 295              		.cfi_def_cfa_offset 40
- 296 0008 B0EE408A 		vmov.f32	s16, s0
- 297 000c 1446     		mov	r4, r2
-  42:Core/Src/accelerometer_data.c **** 	uint8_t data[6];
- 298              		.loc 1 42 2 is_stmt 1 view .LVU67
-  43:Core/Src/accelerometer_data.c **** 
-  44:Core/Src/accelerometer_data.c **** 	// Read 6 bytes of data starting from ACCEL_XOUT_H register
-  45:Core/Src/accelerometer_data.c **** 	HAL_I2C_Mem_Read(&hi2c1, MPU_ADDR, GYRO_REG, 1, data, 6, 1000);
- 299              		.loc 1 45 2 view .LVU68
- 300 000e 4FF47A73 		mov	r3, #1000
- 301 0012 0293     		str	r3, [sp, #8]
- 302 0014 0623     		movs	r3, #6
-ARM GAS  C:\Users\samue\AppData\Local\Temp\ccFFJToL.s 			page 7
-
-
- 303 0016 0193     		str	r3, [sp, #4]
- 304 0018 04AB     		add	r3, sp, #16
- 305 001a 0093     		str	r3, [sp]
- 306 001c 0123     		movs	r3, #1
- 307 001e 0A46     		mov	r2, r1
- 308              	.LVL16:
- 309              		.loc 1 45 2 is_stmt 0 view .LVU69
- 310 0020 0146     		mov	r1, r0
- 311              	.LVL17:
- 312              		.loc 1 45 2 view .LVU70
- 313 0022 1A48     		ldr	r0, .L11
- 314              	.LVL18:
- 315              		.loc 1 45 2 view .LVU71
- 316 0024 FFF7FEFF 		bl	HAL_I2C_Mem_Read
- 317              	.LVL19:
+ 106              		.loc 1 40 3 view .LVU13
+  40:Core/Src/accelerometer_data.c **** 		HAL_I2C_Mem_Write(&hi2c1, MPU6050_ADDR, SMPLRT_DIV_REG, 1, &Data, 1, 1000);
+ 107              		.loc 1 40 8 is_stmt 0 view .LVU14
+ 108 0062 0723     		movs	r3, #7
+ 109 0064 8DF81630 		strb	r3, [sp, #22]
+  41:Core/Src/accelerometer_data.c **** 
+ 110              		.loc 1 41 3 is_stmt 1 view .LVU15
+ 111 0068 0297     		str	r7, [sp, #8]
+ 112 006a 0194     		str	r4, [sp, #4]
+ 113 006c 0096     		str	r6, [sp]
+ 114 006e 2346     		mov	r3, r4
+ 115 0070 1922     		movs	r2, #25
+ 116 0072 D021     		movs	r1, #208
+ 117 0074 2846     		mov	r0, r5
+ 118 0076 FFF7FEFF 		bl	HAL_I2C_Mem_Write
+ 119              	.LVL4:
+  45:Core/Src/accelerometer_data.c **** 		HAL_I2C_Mem_Write(&hi2c1, MPU6050_ADDR, ACCEL_CONFIG_REG, 1, &Data, 1, 1000);
+ 120              		.loc 1 45 3 view .LVU16
+  45:Core/Src/accelerometer_data.c **** 		HAL_I2C_Mem_Write(&hi2c1, MPU6050_ADDR, ACCEL_CONFIG_REG, 1, &Data, 1, 1000);
+ 121              		.loc 1 45 8 is_stmt 0 view .LVU17
+ 122 007a 8DF81680 		strb	r8, [sp, #22]
   46:Core/Src/accelerometer_data.c **** 
-  47:Core/Src/accelerometer_data.c **** 	gyro_corr[0] = ((int16_t)(data[0] << 8 | data[1]))/gyro_con;
- 318              		.loc 1 47 2 is_stmt 1 view .LVU72
- 319              		.loc 1 47 32 is_stmt 0 view .LVU73
- 320 0028 9DF81020 		ldrb	r2, [sp, #16]	@ zero_extendqisi2
- 321              		.loc 1 47 47 view .LVU74
- 322 002c 9DF81130 		ldrb	r3, [sp, #17]	@ zero_extendqisi2
- 323              		.loc 1 47 18 view .LVU75
- 324 0030 43EA0223 		orr	r3, r3, r2, lsl #8
- 325 0034 1BB2     		sxth	r3, r3
- 326              		.loc 1 47 52 view .LVU76
- 327 0036 07EE903A 		vmov	s15, r3	@ int
- 328 003a F8EEE77A 		vcvt.f32.s32	s15, s15
- 329 003e 87EE887A 		vdiv.f32	s14, s15, s16
- 330              		.loc 1 47 15 view .LVU77
- 331 0042 84ED007A 		vstr.32	s14, [r4]
-  48:Core/Src/accelerometer_data.c **** 	gyro_corr[1] = ((int16_t)(data[2] << 8 | data[3]))/gyro_con;
- 332              		.loc 1 48 2 is_stmt 1 view .LVU78
- 333              		.loc 1 48 32 is_stmt 0 view .LVU79
- 334 0046 9DF81220 		ldrb	r2, [sp, #18]	@ zero_extendqisi2
- 335              		.loc 1 48 47 view .LVU80
- 336 004a 9DF81330 		ldrb	r3, [sp, #19]	@ zero_extendqisi2
- 337              		.loc 1 48 18 view .LVU81
- 338 004e 43EA0223 		orr	r3, r3, r2, lsl #8
- 339 0052 1BB2     		sxth	r3, r3
- 340              		.loc 1 48 52 view .LVU82
- 341 0054 07EE903A 		vmov	s15, r3	@ int
- 342 0058 F8EEE77A 		vcvt.f32.s32	s15, s15
- 343 005c 87EE887A 		vdiv.f32	s14, s15, s16
- 344              		.loc 1 48 15 view .LVU83
- 345 0060 84ED017A 		vstr.32	s14, [r4, #4]
-  49:Core/Src/accelerometer_data.c **** 	gyro_corr[2] = ((int16_t)(data[4] << 8 | data[5]))/gyro_con;
- 346              		.loc 1 49 2 is_stmt 1 view .LVU84
- 347              		.loc 1 49 32 is_stmt 0 view .LVU85
- 348 0064 9DF81420 		ldrb	r2, [sp, #20]	@ zero_extendqisi2
- 349              		.loc 1 49 47 view .LVU86
- 350 0068 9DF81530 		ldrb	r3, [sp, #21]	@ zero_extendqisi2
- 351              		.loc 1 49 18 view .LVU87
- 352 006c 43EA0223 		orr	r3, r3, r2, lsl #8
- 353 0070 1BB2     		sxth	r3, r3
- 354              		.loc 1 49 52 view .LVU88
- 355 0072 07EE903A 		vmov	s15, r3	@ int
-ARM GAS  C:\Users\samue\AppData\Local\Temp\ccFFJToL.s 			page 8
+ 123              		.loc 1 46 3 is_stmt 1 view .LVU18
+ 124 007e 0297     		str	r7, [sp, #8]
+ 125 0080 0194     		str	r4, [sp, #4]
+ 126 0082 0096     		str	r6, [sp]
+ 127 0084 2346     		mov	r3, r4
+ 128 0086 1C22     		movs	r2, #28
+ 129 0088 D021     		movs	r1, #208
+ 130 008a 2846     		mov	r0, r5
+ 131 008c FFF7FEFF 		bl	HAL_I2C_Mem_Write
+ 132              	.LVL5:
+  50:Core/Src/accelerometer_data.c **** 		HAL_I2C_Mem_Write(&hi2c1, MPU6050_ADDR, GYRO_CONFIG_REG, 1, &Data, 1, 1000);
+ 133              		.loc 1 50 3 view .LVU19
+  50:Core/Src/accelerometer_data.c **** 		HAL_I2C_Mem_Write(&hi2c1, MPU6050_ADDR, GYRO_CONFIG_REG, 1, &Data, 1, 1000);
+ 134              		.loc 1 50 8 is_stmt 0 view .LVU20
+ 135 0090 8DF81680 		strb	r8, [sp, #22]
+  51:Core/Src/accelerometer_data.c **** 
+ 136              		.loc 1 51 3 is_stmt 1 view .LVU21
+ 137 0094 0297     		str	r7, [sp, #8]
+ 138 0096 0194     		str	r4, [sp, #4]
+ 139 0098 0096     		str	r6, [sp]
+ 140 009a 2346     		mov	r3, r4
+ 141 009c 1B22     		movs	r2, #27
+ 142 009e D021     		movs	r1, #208
+ 143 00a0 2846     		mov	r0, r5
+ 144 00a2 FFF7FEFF 		bl	HAL_I2C_Mem_Write
+ 145              	.LVL6:
+ 146 00a6 C6E7     		b	.L1
+ 147              	.L7:
+ 148              		.align	2
+ 149              	.L6:
+ 150 00a8 00000000 		.word	hi2c1
+ 151 00ac 00000000 		.word	.LC0
+ 152              		.cfi_endproc
+ 153              	.LFE130:
+ 155              		.section	.text.MPU6050_read,"ax",%progbits
+ARM GAS  C:\Users\samue\AppData\Local\Temp\ccdq4mOc.s 			page 5
 
 
- 356 0076 F8EEE77A 		vcvt.f32.s32	s15, s15
- 357 007a 87EE887A 		vdiv.f32	s14, s15, s16
- 358              		.loc 1 49 15 view .LVU89
- 359 007e 84ED027A 		vstr.32	s14, [r4, #8]
-  50:Core/Src/accelerometer_data.c **** 
-  51:Core/Src/accelerometer_data.c **** 	return gyro_corr;
- 360              		.loc 1 51 2 is_stmt 1 view .LVU90
-  52:Core/Src/accelerometer_data.c **** }
- 361              		.loc 1 52 1 is_stmt 0 view .LVU91
- 362 0082 2046     		mov	r0, r4
- 363 0084 06B0     		add	sp, sp, #24
- 364              	.LCFI13:
- 365              		.cfi_def_cfa_offset 16
- 366              		@ sp needed
- 367 0086 BDEC028B 		vldm	sp!, {d8}
- 368              	.LCFI14:
- 369              		.cfi_restore 80
- 370              		.cfi_restore 81
- 371              		.cfi_def_cfa_offset 8
- 372              	.LVL20:
- 373              		.loc 1 52 1 view .LVU92
- 374 008a 10BD     		pop	{r4, pc}
- 375              	.LVL21:
- 376              	.L12:
- 377              		.loc 1 52 1 view .LVU93
- 378              		.align	2
- 379              	.L11:
- 380 008c 00000000 		.word	hi2c1
- 381              		.cfi_endproc
- 382              	.LFE132:
- 384              		.section	.text.MPU6050_read_gyro,"ax",%progbits
- 385              		.align	1
- 386              		.global	MPU6050_read_gyro
- 387              		.syntax unified
- 388              		.thumb
- 389              		.thumb_func
- 391              	MPU6050_read_gyro:
- 392              	.LVL22:
- 393              	.LFB133:
-  53:Core/Src/accelerometer_data.c **** 
-  54:Core/Src/accelerometer_data.c **** float* MPU6050_read_gyro(float gyro_con, uint8_t MPU_ADDR, uint8_t GYRO_REG, 
-  55:Core/Src/accelerometer_data.c ****     float gyro_data[], float gyro_corr[]) {
- 394              		.loc 1 55 43 is_stmt 1 view -0
- 395              		.cfi_startproc
- 396              		@ args = 0, pretend = 0, frame = 8
- 397              		@ frame_needed = 0, uses_anonymous_args = 0
- 398              		.loc 1 55 43 is_stmt 0 view .LVU95
- 399 0000 30B5     		push	{r4, r5, lr}
- 400              	.LCFI15:
- 401              		.cfi_def_cfa_offset 12
- 402              		.cfi_offset 4, -12
- 403              		.cfi_offset 5, -8
- 404              		.cfi_offset 14, -4
- 405 0002 2DED028B 		vpush.64	{d8}
- 406              	.LCFI16:
- 407              		.cfi_def_cfa_offset 20
- 408              		.cfi_offset 80, -20
-ARM GAS  C:\Users\samue\AppData\Local\Temp\ccFFJToL.s 			page 9
+ 156              		.align	1
+ 157              		.global	MPU6050_read
+ 158              		.syntax unified
+ 159              		.thumb
+ 160              		.thumb_func
+ 162              	MPU6050_read:
+ 163              	.LVL7:
+ 164              	.LFB131:
+  61:Core/Src/accelerometer_data.c **** 
+  62:Core/Src/accelerometer_data.c **** float* MPU6050_read(float CONST, uint8_t ADDR, uint8_t REG, float data_corr[]) {
+ 165              		.loc 1 62 80 view -0
+ 166              		.cfi_startproc
+ 167              		@ args = 0, pretend = 0, frame = 0
+ 168              		@ frame_needed = 0, uses_anonymous_args = 0
+ 169              		.loc 1 62 80 is_stmt 0 view .LVU23
+ 170 0000 30B5     		push	{r4, r5, lr}
+ 171              	.LCFI4:
+ 172              		.cfi_def_cfa_offset 12
+ 173              		.cfi_offset 4, -12
+ 174              		.cfi_offset 5, -8
+ 175              		.cfi_offset 14, -4
+ 176 0002 2DED028B 		vpush.64	{d8}
+ 177              	.LCFI5:
+ 178              		.cfi_def_cfa_offset 20
+ 179              		.cfi_offset 80, -20
+ 180              		.cfi_offset 81, -16
+ 181 0006 85B0     		sub	sp, sp, #20
+ 182              	.LCFI6:
+ 183              		.cfi_def_cfa_offset 40
+ 184 0008 B0EE408A 		vmov.f32	s16, s0
+ 185 000c 1546     		mov	r5, r2
+  63:Core/Src/accelerometer_data.c **** 	// Read 6 bytes of data starting from ACCEL_XOUT_H register
+  64:Core/Src/accelerometer_data.c **** 	HAL_I2C_Mem_Read(&hi2c1, ADDR, REG, 1, data, 6, 1000);
+ 186              		.loc 1 64 2 is_stmt 1 view .LVU24
+ 187 000e 4FF47A73 		mov	r3, #1000
+ 188 0012 0293     		str	r3, [sp, #8]
+ 189 0014 0623     		movs	r3, #6
+ 190 0016 0193     		str	r3, [sp, #4]
+ 191 0018 1F4C     		ldr	r4, .L10
+ 192 001a 0094     		str	r4, [sp]
+ 193 001c 0123     		movs	r3, #1
+ 194 001e 0A46     		mov	r2, r1
+ 195              	.LVL8:
+ 196              		.loc 1 64 2 is_stmt 0 view .LVU25
+ 197 0020 0146     		mov	r1, r0
+ 198              	.LVL9:
+ 199              		.loc 1 64 2 view .LVU26
+ 200 0022 1E48     		ldr	r0, .L10+4
+ 201              	.LVL10:
+ 202              		.loc 1 64 2 view .LVU27
+ 203 0024 FFF7FEFF 		bl	HAL_I2C_Mem_Read
+ 204              	.LVL11:
+  65:Core/Src/accelerometer_data.c **** 
+  66:Core/Src/accelerometer_data.c **** 	accel_data[0] = ((int16_t)(data[0] << 8 | data[1]))/CONST - data_corr[0];
+ 205              		.loc 1 66 2 is_stmt 1 view .LVU28
+ 206              		.loc 1 66 33 is_stmt 0 view .LVU29
+ 207 0028 2278     		ldrb	r2, [r4]	@ zero_extendqisi2
+ARM GAS  C:\Users\samue\AppData\Local\Temp\ccdq4mOc.s 			page 6
 
 
- 409              		.cfi_offset 81, -16
- 410 0006 87B0     		sub	sp, sp, #28
- 411              	.LCFI17:
- 412              		.cfi_def_cfa_offset 48
- 413 0008 B0EE408A 		vmov.f32	s16, s0
- 414 000c 1446     		mov	r4, r2
- 415 000e 1D46     		mov	r5, r3
-  56:Core/Src/accelerometer_data.c **** 	uint8_t data[6];
- 416              		.loc 1 56 2 is_stmt 1 view .LVU96
-  57:Core/Src/accelerometer_data.c **** 
-  58:Core/Src/accelerometer_data.c **** 	// Read 6 bytes of data starting from ACCEL_XOUT_H register
-  59:Core/Src/accelerometer_data.c **** 	HAL_I2C_Mem_Read(&hi2c1, MPU_ADDR, GYRO_REG, 1, data, 6, 1000);
- 417              		.loc 1 59 2 view .LVU97
- 418 0010 4FF47A73 		mov	r3, #1000
- 419              	.LVL23:
- 420              		.loc 1 59 2 is_stmt 0 view .LVU98
- 421 0014 0293     		str	r3, [sp, #8]
- 422 0016 0623     		movs	r3, #6
- 423 0018 0193     		str	r3, [sp, #4]
- 424 001a 04AB     		add	r3, sp, #16
- 425 001c 0093     		str	r3, [sp]
- 426 001e 0123     		movs	r3, #1
- 427 0020 0A46     		mov	r2, r1
- 428              	.LVL24:
- 429              		.loc 1 59 2 view .LVU99
- 430 0022 0146     		mov	r1, r0
- 431              	.LVL25:
- 432              		.loc 1 59 2 view .LVU100
- 433 0024 2048     		ldr	r0, .L15
- 434              	.LVL26:
- 435              		.loc 1 59 2 view .LVU101
- 436 0026 FFF7FEFF 		bl	HAL_I2C_Mem_Read
- 437              	.LVL27:
-  60:Core/Src/accelerometer_data.c **** 
-  61:Core/Src/accelerometer_data.c **** 	gyro_data[0] = ((int16_t)(data[0] << 8 | data[1]))/gyro_con - gyro_corr[0];
- 438              		.loc 1 61 2 is_stmt 1 view .LVU102
- 439              		.loc 1 61 32 is_stmt 0 view .LVU103
- 440 002a 9DF81020 		ldrb	r2, [sp, #16]	@ zero_extendqisi2
- 441              		.loc 1 61 47 view .LVU104
- 442 002e 9DF81130 		ldrb	r3, [sp, #17]	@ zero_extendqisi2
- 443              		.loc 1 61 18 view .LVU105
- 444 0032 43EA0223 		orr	r3, r3, r2, lsl #8
- 445 0036 1BB2     		sxth	r3, r3
- 446              		.loc 1 61 52 view .LVU106
- 447 0038 07EE903A 		vmov	s15, r3	@ int
- 448 003c F8EEE77A 		vcvt.f32.s32	s15, s15
- 449 0040 87EE887A 		vdiv.f32	s14, s15, s16
- 450              		.loc 1 61 73 view .LVU107
- 451 0044 D5ED007A 		vldr.32	s15, [r5]
- 452              		.loc 1 61 62 view .LVU108
- 453 0048 77EE677A 		vsub.f32	s15, s14, s15
- 454              		.loc 1 61 15 view .LVU109
- 455 004c C4ED007A 		vstr.32	s15, [r4]
-  62:Core/Src/accelerometer_data.c **** 	gyro_data[1] = ((int16_t)(data[2] << 8 | data[3]))/gyro_con - gyro_corr[1];
- 456              		.loc 1 62 2 is_stmt 1 view .LVU110
- 457              		.loc 1 62 32 is_stmt 0 view .LVU111
- 458 0050 9DF81230 		ldrb	r3, [sp, #18]	@ zero_extendqisi2
-ARM GAS  C:\Users\samue\AppData\Local\Temp\ccFFJToL.s 			page 10
+ 208              		.loc 1 66 48 view .LVU30
+ 209 002a 6378     		ldrb	r3, [r4, #1]	@ zero_extendqisi2
+ 210              		.loc 1 66 19 view .LVU31
+ 211 002c 43EA0223 		orr	r3, r3, r2, lsl #8
+ 212 0030 1BB2     		sxth	r3, r3
+ 213              		.loc 1 66 53 view .LVU32
+ 214 0032 07EE903A 		vmov	s15, r3	@ int
+ 215 0036 F8EEE77A 		vcvt.f32.s32	s15, s15
+ 216 003a 87EE887A 		vdiv.f32	s14, s15, s16
+ 217              		.loc 1 66 71 view .LVU33
+ 218 003e D5ED007A 		vldr.32	s15, [r5]
+ 219              		.loc 1 66 60 view .LVU34
+ 220 0042 77EE677A 		vsub.f32	s15, s14, s15
+ 221              		.loc 1 66 16 view .LVU35
+ 222 0046 1648     		ldr	r0, .L10+8
+ 223 0048 C0ED007A 		vstr.32	s15, [r0]
+  67:Core/Src/accelerometer_data.c **** 	accel_data[1] = ((int16_t)(data[2] << 8 | data[3]))/CONST - data_corr[1];
+ 224              		.loc 1 67 2 is_stmt 1 view .LVU36
+ 225              		.loc 1 67 33 is_stmt 0 view .LVU37
+ 226 004c A278     		ldrb	r2, [r4, #2]	@ zero_extendqisi2
+ 227              		.loc 1 67 48 view .LVU38
+ 228 004e E378     		ldrb	r3, [r4, #3]	@ zero_extendqisi2
+ 229              		.loc 1 67 19 view .LVU39
+ 230 0050 43EA0223 		orr	r3, r3, r2, lsl #8
+ 231 0054 1BB2     		sxth	r3, r3
+ 232              		.loc 1 67 53 view .LVU40
+ 233 0056 07EE903A 		vmov	s15, r3	@ int
+ 234 005a F8EEE77A 		vcvt.f32.s32	s15, s15
+ 235 005e 87EE887A 		vdiv.f32	s14, s15, s16
+ 236              		.loc 1 67 71 view .LVU41
+ 237 0062 D5ED017A 		vldr.32	s15, [r5, #4]
+ 238              		.loc 1 67 60 view .LVU42
+ 239 0066 77EE677A 		vsub.f32	s15, s14, s15
+ 240              		.loc 1 67 16 view .LVU43
+ 241 006a C0ED017A 		vstr.32	s15, [r0, #4]
+  68:Core/Src/accelerometer_data.c **** 	accel_data[2] = ((int16_t)(data[4] << 8 | data[5]))/CONST - data_corr[2];
+ 242              		.loc 1 68 2 is_stmt 1 view .LVU44
+ 243              		.loc 1 68 33 is_stmt 0 view .LVU45
+ 244 006e 2279     		ldrb	r2, [r4, #4]	@ zero_extendqisi2
+ 245              		.loc 1 68 48 view .LVU46
+ 246 0070 6379     		ldrb	r3, [r4, #5]	@ zero_extendqisi2
+ 247              		.loc 1 68 19 view .LVU47
+ 248 0072 43EA0223 		orr	r3, r3, r2, lsl #8
+ 249 0076 1BB2     		sxth	r3, r3
+ 250              		.loc 1 68 53 view .LVU48
+ 251 0078 07EE903A 		vmov	s15, r3	@ int
+ 252 007c F8EEE77A 		vcvt.f32.s32	s15, s15
+ 253 0080 87EE887A 		vdiv.f32	s14, s15, s16
+ 254              		.loc 1 68 71 view .LVU49
+ 255 0084 D5ED027A 		vldr.32	s15, [r5, #8]
+ 256              		.loc 1 68 60 view .LVU50
+ 257 0088 77EE677A 		vsub.f32	s15, s14, s15
+ 258              		.loc 1 68 16 view .LVU51
+ 259 008c C0ED027A 		vstr.32	s15, [r0, #8]
+  69:Core/Src/accelerometer_data.c **** 
+  70:Core/Src/accelerometer_data.c **** 	return accel_data;
+ 260              		.loc 1 70 2 is_stmt 1 view .LVU52
+ARM GAS  C:\Users\samue\AppData\Local\Temp\ccdq4mOc.s 			page 7
 
 
- 459              		.loc 1 62 47 view .LVU112
- 460 0054 9DF81310 		ldrb	r1, [sp, #19]	@ zero_extendqisi2
- 461              		.loc 1 62 18 view .LVU113
- 462 0058 41EA0321 		orr	r1, r1, r3, lsl #8
- 463 005c 09B2     		sxth	r1, r1
- 464              		.loc 1 62 52 view .LVU114
- 465 005e 07EE901A 		vmov	s15, r1	@ int
- 466 0062 F8EEE77A 		vcvt.f32.s32	s15, s15
- 467 0066 87EE887A 		vdiv.f32	s14, s15, s16
- 468              		.loc 1 62 73 view .LVU115
- 469 006a D5ED017A 		vldr.32	s15, [r5, #4]
- 470              		.loc 1 62 62 view .LVU116
- 471 006e 77EE677A 		vsub.f32	s15, s14, s15
- 472              		.loc 1 62 15 view .LVU117
- 473 0072 C4ED017A 		vstr.32	s15, [r4, #4]
-  63:Core/Src/accelerometer_data.c **** 	gyro_data[2] = ((int16_t)(data[4] << 8 | data[5]))/gyro_con - gyro_corr[2];
- 474              		.loc 1 63 2 is_stmt 1 view .LVU118
- 475              		.loc 1 63 32 is_stmt 0 view .LVU119
- 476 0076 9DF81430 		ldrb	r3, [sp, #20]	@ zero_extendqisi2
- 477              		.loc 1 63 47 view .LVU120
- 478 007a 9DF81510 		ldrb	r1, [sp, #21]	@ zero_extendqisi2
- 479              		.loc 1 63 18 view .LVU121
- 480 007e 41EA0321 		orr	r1, r1, r3, lsl #8
- 481 0082 09B2     		sxth	r1, r1
- 482              		.loc 1 63 52 view .LVU122
- 483 0084 07EE901A 		vmov	s15, r1	@ int
- 484 0088 F8EEE77A 		vcvt.f32.s32	s15, s15
- 485 008c 87EE887A 		vdiv.f32	s14, s15, s16
- 486              		.loc 1 63 73 view .LVU123
- 487 0090 D5ED027A 		vldr.32	s15, [r5, #8]
- 488              		.loc 1 63 62 view .LVU124
- 489 0094 77EE677A 		vsub.f32	s15, s14, s15
- 490              		.loc 1 63 15 view .LVU125
- 491 0098 C4ED027A 		vstr.32	s15, [r4, #8]
-  64:Core/Src/accelerometer_data.c **** 
-  65:Core/Src/accelerometer_data.c **** 	return gyro_data;
- 492              		.loc 1 65 2 is_stmt 1 view .LVU126
-  66:Core/Src/accelerometer_data.c **** }
- 493              		.loc 1 66 1 is_stmt 0 view .LVU127
- 494 009c 2046     		mov	r0, r4
- 495 009e 07B0     		add	sp, sp, #28
- 496              	.LCFI18:
- 497              		.cfi_def_cfa_offset 20
- 498              		@ sp needed
- 499 00a0 BDEC028B 		vldm	sp!, {d8}
- 500              	.LCFI19:
- 501              		.cfi_restore 80
- 502              		.cfi_restore 81
- 503              		.cfi_def_cfa_offset 12
- 504              	.LVL28:
- 505              		.loc 1 66 1 view .LVU128
- 506 00a4 30BD     		pop	{r4, r5, pc}
- 507              	.LVL29:
- 508              	.L16:
- 509              		.loc 1 66 1 view .LVU129
- 510 00a6 00BF     		.align	2
- 511              	.L15:
-ARM GAS  C:\Users\samue\AppData\Local\Temp\ccFFJToL.s 			page 11
-
-
- 512 00a8 00000000 		.word	hi2c1
- 513              		.cfi_endproc
- 514              	.LFE133:
- 516              		.text
- 517              	.Letext0:
- 518              		.file 2 "c:\\dev_tools\\gcc-arm-none-eabi-10.3-2021.10-win32\\gcc-arm-none-eabi-10.3-2021.10\\arm-
- 519              		.file 3 "c:\\dev_tools\\gcc-arm-none-eabi-10.3-2021.10-win32\\gcc-arm-none-eabi-10.3-2021.10\\arm-
- 520              		.file 4 "Drivers/CMSIS/Device/ST/STM32F4xx/Include/stm32f411xe.h"
- 521              		.file 5 "Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_def.h"
- 522              		.file 6 "Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_dma.h"
- 523              		.file 7 "Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_i2c.h"
-ARM GAS  C:\Users\samue\AppData\Local\Temp\ccFFJToL.s 			page 12
+  71:Core/Src/accelerometer_data.c **** }
+ 261              		.loc 1 71 1 is_stmt 0 view .LVU53
+ 262 0090 05B0     		add	sp, sp, #20
+ 263              	.LCFI7:
+ 264              		.cfi_def_cfa_offset 20
+ 265              		@ sp needed
+ 266 0092 BDEC028B 		vldm	sp!, {d8}
+ 267              	.LCFI8:
+ 268              		.cfi_restore 80
+ 269              		.cfi_restore 81
+ 270              		.cfi_def_cfa_offset 12
+ 271              	.LVL12:
+ 272              		.loc 1 71 1 view .LVU54
+ 273 0096 30BD     		pop	{r4, r5, pc}
+ 274              	.LVL13:
+ 275              	.L11:
+ 276              		.loc 1 71 1 view .LVU55
+ 277              		.align	2
+ 278              	.L10:
+ 279 0098 00000000 		.word	.LANCHOR0
+ 280 009c 00000000 		.word	hi2c1
+ 281 00a0 00000000 		.word	.LANCHOR1
+ 282              		.cfi_endproc
+ 283              	.LFE131:
+ 285              		.global	accel_data
+ 286              		.global	data
+ 287              		.section	.bss.accel_data,"aw",%nobits
+ 288              		.align	2
+ 289              		.set	.LANCHOR1,. + 0
+ 292              	accel_data:
+ 293 0000 00000000 		.space	12
+ 293      00000000 
+ 293      00000000 
+ 294              		.section	.bss.data,"aw",%nobits
+ 295              		.align	2
+ 296              		.set	.LANCHOR0,. + 0
+ 299              	data:
+ 300 0000 00000000 		.space	6
+ 300      0000
+ 301              		.text
+ 302              	.Letext0:
+ 303              		.file 2 "c:\\dev_tools\\gcc-arm-none-eabi-10.3-2021.10-win32\\gcc-arm-none-eabi-10.3-2021.10\\arm-
+ 304              		.file 3 "c:\\dev_tools\\gcc-arm-none-eabi-10.3-2021.10-win32\\gcc-arm-none-eabi-10.3-2021.10\\arm-
+ 305              		.file 4 "c:\\users\\samue\\documents\\projects\\bike data aquisition\\software\\bike-data-aquisiti
+ 306              		.file 5 "Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_def.h"
+ 307              		.file 6 "Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_dma.h"
+ 308              		.file 7 "Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_i2c.h"
+ 309              		.file 8 "Core/Inc/i2c-lcd.h"
+ 310              		.file 9 "Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h"
+ARM GAS  C:\Users\samue\AppData\Local\Temp\ccdq4mOc.s 			page 8
 
 
 DEFINED SYMBOLS
                             *ABS*:00000000 accelerometer_data.c
-C:\Users\samue\AppData\Local\Temp\ccFFJToL.s:20     .text.MPU6050_read_accel_raw:00000000 $t
-C:\Users\samue\AppData\Local\Temp\ccFFJToL.s:26     .text.MPU6050_read_accel_raw:00000000 MPU6050_read_accel_raw
-C:\Users\samue\AppData\Local\Temp\ccFFJToL.s:132    .text.MPU6050_read_accel_raw:0000008c $d
-C:\Users\samue\AppData\Local\Temp\ccFFJToL.s:137    .text.MPU6050_read_accel:00000000 $t
-C:\Users\samue\AppData\Local\Temp\ccFFJToL.s:143    .text.MPU6050_read_accel:00000000 MPU6050_read_accel
-C:\Users\samue\AppData\Local\Temp\ccFFJToL.s:264    .text.MPU6050_read_accel:000000a8 $d
-C:\Users\samue\AppData\Local\Temp\ccFFJToL.s:269    .text.MPU6050_read_gyro_raw:00000000 $t
-C:\Users\samue\AppData\Local\Temp\ccFFJToL.s:275    .text.MPU6050_read_gyro_raw:00000000 MPU6050_read_gyro_raw
-C:\Users\samue\AppData\Local\Temp\ccFFJToL.s:380    .text.MPU6050_read_gyro_raw:0000008c $d
-C:\Users\samue\AppData\Local\Temp\ccFFJToL.s:385    .text.MPU6050_read_gyro:00000000 $t
-C:\Users\samue\AppData\Local\Temp\ccFFJToL.s:391    .text.MPU6050_read_gyro:00000000 MPU6050_read_gyro
-C:\Users\samue\AppData\Local\Temp\ccFFJToL.s:512    .text.MPU6050_read_gyro:000000a8 $d
+C:\Users\samue\AppData\Local\Temp\ccdq4mOc.s:20     .rodata.MPU6050_Init.str1.4:00000000 $d
+C:\Users\samue\AppData\Local\Temp\ccdq4mOc.s:24     .text.MPU6050_Init:00000000 $t
+C:\Users\samue\AppData\Local\Temp\ccdq4mOc.s:30     .text.MPU6050_Init:00000000 MPU6050_Init
+C:\Users\samue\AppData\Local\Temp\ccdq4mOc.s:150    .text.MPU6050_Init:000000a8 $d
+C:\Users\samue\AppData\Local\Temp\ccdq4mOc.s:156    .text.MPU6050_read:00000000 $t
+C:\Users\samue\AppData\Local\Temp\ccdq4mOc.s:162    .text.MPU6050_read:00000000 MPU6050_read
+C:\Users\samue\AppData\Local\Temp\ccdq4mOc.s:279    .text.MPU6050_read:00000098 $d
+C:\Users\samue\AppData\Local\Temp\ccdq4mOc.s:292    .bss.accel_data:00000000 accel_data
+C:\Users\samue\AppData\Local\Temp\ccdq4mOc.s:299    .bss.data:00000000 data
+C:\Users\samue\AppData\Local\Temp\ccdq4mOc.s:288    .bss.accel_data:00000000 $d
+C:\Users\samue\AppData\Local\Temp\ccdq4mOc.s:295    .bss.data:00000000 $d
 
 UNDEFINED SYMBOLS
 HAL_I2C_Mem_Read
+lcd_send_string
+HAL_Delay
+HAL_I2C_Mem_Write
 hi2c1

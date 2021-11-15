@@ -27,7 +27,7 @@
 #endif
 
 /* Includes ------------------------------------------------------------------*/
-#include "stm32f4xx.h"
+#include "C:\\Users\\samue\\Documents\\Projects\\Bike Data Aquisition\\Software\\bike-data-aquisition-stm32f4\\Drivers\\CMSIS\\Device\\ST\\STM32F4xx\\Include\\stm32f4xx.h"
 #include "Legacy/stm32_hal_legacy.h"
 #include <stddef.h>
 

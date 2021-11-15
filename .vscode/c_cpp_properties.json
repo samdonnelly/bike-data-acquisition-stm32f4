@@ -4,12 +4,6 @@
             "name": "bike-data-aquisition-stm32f4",
             "includePath": [
                 "${workspaceFolder}/**"
-                // "C:\\Users\\samue\\Documents\\Projects\\Bike Data Aquisition\\Software\\bike-data-aquisition-stm32f4\\Core\\Inc",
-                // "C:\\Users\\samue\\Documents\\Projects\\Bike Data Aquisition\\Software\\bike-data-aquisition-stm32f4\\Drivers\\STM32F4xx_HAL_Driver\\Inc",
-                // "C:\\Users\\samue\\Documents\\Projects\\Bike Data Aquisition\\Software\\bike-data-aquisition-stm32f4\\Drivers\\STM32F4xx_HAL_Driver\\Inc",
-                // "C:\\Users\\samue\\Documents\\Projects\\Bike Data Aquisition\\Software\\bike-data-aquisition-stm32f4\\Drivers\\STM32F4xx_HAL_Driver\\Inc\\Legacy",
-                // "C:\\Users\\samue\\Documents\\Projects\\Bike Data Aquisition\\Software\\bike-data-aquisition-stm32f4\\Drivers\\CMSIS\\Device\\ST\\STM32F4xx\\Include",
-                // "C:\\Users\\samue\\Documents\\Projects\\Bike Data Aquisition\\Software\\bike-data-aquisition-stm32f4\\Drivers\\CMSIS\\Include"
             ],
             "defines": [
                 "_DEBUG",
@@ -18,15 +12,10 @@
                 "USE_HAL_DRIVER",
                 "STM32F411xE"
             ],
-            
-            "intelliSenseMode": "gcc-arm",
-            "compilerPath": "C:\\dev_tools\\gcc-arm-none-eabi-10.3-2021.10-win32\\gcc-arm-none-eabi-10.3-2021.10\\bin\\arm-none-eabi-gcc.exe",
-            "compilerArgs": [
-                "-mcpu=cortex-m4",
-                "-mthumb"
-            ],
-            "cStandard": "c11",
-            "cppStandard": "c++17"
+            "compilerPath": "C:\\Program Files\\mingw-w64\\x86_64-8.1.0-posix-seh-rt_v6-rev0\\mingw64\\bin\\gcc.exe",
+            "cStandard": "c17",
+            "cppStandard": "c++17",
+            "intelliSenseMode": "windows-gcc-x64"
         }
     ],
     "version": 4

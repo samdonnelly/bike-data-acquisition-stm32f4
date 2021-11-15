@@ -1,47 +1,24 @@
+/*
+ * File: i2c-lcd.c
+ * Purpose: Functions that interact with the systems LCD display
+ * 
+ * Created on: Sep 20, 2021
+ * Author: External
+ */
 
-// /** Put this in the src folder **/
+// Libraries 
 
+
+// Header Files 
 #include "main.h"
 #include "i2c-lcd.h"
 
-
+// Variables 
 extern I2C_HandleTypeDef hi2c1;  // change your handler here accordingly
 
+// Functions 
 
-#define SLAVE_ADDRESS_LCD 0x4E // change this according to your setup
-
-void lcd_send_cmd (char cmd) {
-  char data_u, data_l;
-	uint8_t data_t[4];
-	data_u = (cmd&0xf0);
-	data_l = ((cmd<<4)&0xf0);
-	data_t[0] = data_u|0x0C;  //en=1, rs=0
-	data_t[1] = data_u|0x08;  //en=0, rs=0
-	data_t[2] = data_l|0x0C;  //en=1, rs=0
-	data_t[3] = data_l|0x08;  //en=0, rs=0
-	HAL_I2C_Master_Transmit (&hi2c1, SLAVE_ADDRESS_LCD,(uint8_t *) data_t, 4, 100);
-}
-
-void lcd_send_data (char data) {
-	char data_u, data_l;
-	uint8_t data_t[4];
-	data_u = (data&0xf0);
-	data_l = ((data<<4)&0xf0);
-	data_t[0] = data_u|0x0D;  //en=1, rs=1
-	data_t[1] = data_u|0x09;  //en=0, rs=1
-	data_t[2] = data_l|0x0D;  //en=1, rs=1
-	data_t[3] = data_l|0x09;  //en=0, rs=1
-	HAL_I2C_Master_Transmit (&hi2c1, SLAVE_ADDRESS_LCD,(uint8_t *) data_t, 4, 100);
-}
-
-void lcd_clear (void) {
-	lcd_send_cmd (0x00);
-	for (int i=0; i<100; i++)
-	{
-		lcd_send_data (' ');
-	}
-}
-
+// Initialize the screen 
 void lcd_init (void) {
 	// 4 bit initialisation
 	HAL_Delay(50);  // wait for >40ms
@@ -74,6 +51,38 @@ void lcd_init (void) {
 
 	// Display on/off control --> D = 1, C and B = 0. (Cursor and blink, last two bits)
 	lcd_send_cmd (0x0C); 
+}
+
+// LCD send command 
+void lcd_send_cmd (char cmd) {
+  char data_u, data_l;
+	uint8_t data_t[4];
+	data_u = (cmd&0xf0);
+	data_l = ((cmd<<4)&0xf0);
+	data_t[0] = data_u|0x0C;  //en=1, rs=0
+	data_t[1] = data_u|0x08;  //en=0, rs=0
+	data_t[2] = data_l|0x0C;  //en=1, rs=0
+	data_t[3] = data_l|0x08;  //en=0, rs=0
+	HAL_I2C_Master_Transmit (&hi2c1, SLAVE_ADDRESS_LCD,(uint8_t *) data_t, 4, 100);
+}
+
+void lcd_send_data (char data) {
+	char data_u, data_l;
+	uint8_t data_t[4];
+	data_u = (data&0xf0);
+	data_l = ((data<<4)&0xf0);
+	data_t[0] = data_u|0x0D;  //en=1, rs=1
+	data_t[1] = data_u|0x09;  //en=0, rs=1
+	data_t[2] = data_l|0x0D;  //en=1, rs=1
+	data_t[3] = data_l|0x09;  //en=0, rs=1
+	HAL_I2C_Master_Transmit (&hi2c1, SLAVE_ADDRESS_LCD,(uint8_t *) data_t, 4, 100);
+}
+
+void lcd_clear (void) {
+	lcd_send_cmd (0x00);
+	for (int i=0; i<100; i++) {
+		lcd_send_data (' ');
+	}
 }
 
 void lcd_send_string (char *str) {
