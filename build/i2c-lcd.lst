@@ -1,4 +1,4 @@
-ARM GAS  C:\Users\samue\AppData\Local\Temp\ccofaxv6.s 			page 1
+ARM GAS  C:\Users\samue\AppData\Local\Temp\ccrayYKO.s 			page 1
 
 
    1              		.cpu cortex-m4
@@ -58,7 +58,7 @@ ARM GAS  C:\Users\samue\AppData\Local\Temp\ccofaxv6.s 			page 1
   27:Core/Src/i2c-lcd.c **** 	lcd_send_cmd (0x30);
   28:Core/Src/i2c-lcd.c **** 	HAL_Delay(1);  // wait for >100us
   29:Core/Src/i2c-lcd.c **** 	lcd_send_cmd (0x30);
-ARM GAS  C:\Users\samue\AppData\Local\Temp\ccofaxv6.s 			page 2
+ARM GAS  C:\Users\samue\AppData\Local\Temp\ccrayYKO.s 			page 2
 
 
   30:Core/Src/i2c-lcd.c **** 	HAL_Delay(10);
@@ -118,7 +118,7 @@ ARM GAS  C:\Users\samue\AppData\Local\Temp\ccofaxv6.s 			page 1
   52              		.loc 1 61 9 view .LVU8
   53 000a C0B2     		uxtb	r0, r0
   54              	.LVL3:
-ARM GAS  C:\Users\samue\AppData\Local\Temp\ccofaxv6.s 			page 3
+ARM GAS  C:\Users\samue\AppData\Local\Temp\ccrayYKO.s 			page 3
 
 
   62:Core/Src/i2c-lcd.c **** 	data_t[0] = data_u|0x0C;  //en=1, rs=0
@@ -178,7 +178,7 @@ ARM GAS  C:\Users\samue\AppData\Local\Temp\ccofaxv6.s 			page 1
  105              	.LFB130:
   22:Core/Src/i2c-lcd.c **** 	// 4 bit initialisation
  106              		.loc 1 22 22 is_stmt 1 view -0
-ARM GAS  C:\Users\samue\AppData\Local\Temp\ccofaxv6.s 			page 4
+ARM GAS  C:\Users\samue\AppData\Local\Temp\ccrayYKO.s 			page 4
 
 
  107              		.cfi_startproc
@@ -238,7 +238,7 @@ ARM GAS  C:\Users\samue\AppData\Local\Temp\ccofaxv6.s 			page 1
  151              		.loc 1 37 2 view .LVU31
  152 0038 2820     		movs	r0, #40
  153 003a FFF7FEFF 		bl	lcd_send_cmd
-ARM GAS  C:\Users\samue\AppData\Local\Temp\ccofaxv6.s 			page 5
+ARM GAS  C:\Users\samue\AppData\Local\Temp\ccrayYKO.s 			page 5
 
 
  154              	.LVL16:
@@ -298,7 +298,7 @@ ARM GAS  C:\Users\samue\AppData\Local\Temp\ccofaxv6.s 			page 1
  201              	.LFB132:
   68:Core/Src/i2c-lcd.c **** 
   69:Core/Src/i2c-lcd.c **** void lcd_send_data (char data) {
-ARM GAS  C:\Users\samue\AppData\Local\Temp\ccofaxv6.s 			page 6
+ARM GAS  C:\Users\samue\AppData\Local\Temp\ccrayYKO.s 			page 6
 
 
  202              		.loc 1 69 32 is_stmt 1 view -0
@@ -358,7 +358,7 @@ ARM GAS  C:\Users\samue\AppData\Local\Temp\ccofaxv6.s 			page 1
  247              		.loc 1 78 2 is_stmt 1 view .LVU60
  248 002c 6423     		movs	r3, #100
  249 002e 0093     		str	r3, [sp]
-ARM GAS  C:\Users\samue\AppData\Local\Temp\ccofaxv6.s 			page 7
+ARM GAS  C:\Users\samue\AppData\Local\Temp\ccrayYKO.s 			page 7
 
 
  250 0030 0423     		movs	r3, #4
@@ -418,7 +418,7 @@ ARM GAS  C:\Users\samue\AppData\Local\Temp\ccofaxv6.s 			page 1
  300              		.loc 1 84 3 is_stmt 1 discriminator 3 view .LVU68
  301 000c 2020     		movs	r0, #32
  302 000e FFF7FEFF 		bl	lcd_send_data
-ARM GAS  C:\Users\samue\AppData\Local\Temp\ccofaxv6.s 			page 8
+ARM GAS  C:\Users\samue\AppData\Local\Temp\ccrayYKO.s 			page 8
 
 
  303              	.LVL34:
@@ -478,7 +478,7 @@ ARM GAS  C:\Users\samue\AppData\Local\Temp\ccofaxv6.s 			page 1
  350              		.loc 1 89 15 discriminator 2 view .LVU81
  351 0008 FFF7FEFF 		bl	lcd_send_data
  352              	.LVL39:
-ARM GAS  C:\Users\samue\AppData\Local\Temp\ccofaxv6.s 			page 9
+ARM GAS  C:\Users\samue\AppData\Local\Temp\ccrayYKO.s 			page 9
 
 
  353              	.L16:
@@ -498,28 +498,28 @@ ARM GAS  C:\Users\samue\AppData\Local\Temp\ccofaxv6.s 			page 1
  367              	.Letext0:
  368              		.file 2 "c:\\dev_tools\\gcc-arm-none-eabi-10.3-2021.10-win32\\gcc-arm-none-eabi-10.3-2021.10\\arm-
  369              		.file 3 "c:\\dev_tools\\gcc-arm-none-eabi-10.3-2021.10-win32\\gcc-arm-none-eabi-10.3-2021.10\\arm-
- 370              		.file 4 "c:\\users\\samue\\documents\\projects\\bike data aquisition\\software\\bike-data-aquisiti
+ 370              		.file 4 "Drivers/CMSIS/Device/ST/STM32F4xx/Include/stm32f411xe.h"
  371              		.file 5 "Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_def.h"
  372              		.file 6 "Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_dma.h"
  373              		.file 7 "Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_i2c.h"
  374              		.file 8 "Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h"
-ARM GAS  C:\Users\samue\AppData\Local\Temp\ccofaxv6.s 			page 10
+ARM GAS  C:\Users\samue\AppData\Local\Temp\ccrayYKO.s 			page 10
 
 
 DEFINED SYMBOLS
                             *ABS*:00000000 i2c-lcd.c
-C:\Users\samue\AppData\Local\Temp\ccofaxv6.s:20     .text.lcd_send_cmd:00000000 $t
-C:\Users\samue\AppData\Local\Temp\ccofaxv6.s:26     .text.lcd_send_cmd:00000000 lcd_send_cmd
-C:\Users\samue\AppData\Local\Temp\ccofaxv6.s:93     .text.lcd_send_cmd:00000044 $d
-C:\Users\samue\AppData\Local\Temp\ccofaxv6.s:98     .text.lcd_init:00000000 $t
-C:\Users\samue\AppData\Local\Temp\ccofaxv6.s:104    .text.lcd_init:00000000 lcd_init
-C:\Users\samue\AppData\Local\Temp\ccofaxv6.s:193    .text.lcd_send_data:00000000 $t
-C:\Users\samue\AppData\Local\Temp\ccofaxv6.s:199    .text.lcd_send_data:00000000 lcd_send_data
-C:\Users\samue\AppData\Local\Temp\ccofaxv6.s:265    .text.lcd_send_data:00000044 $d
-C:\Users\samue\AppData\Local\Temp\ccofaxv6.s:270    .text.lcd_clear:00000000 $t
-C:\Users\samue\AppData\Local\Temp\ccofaxv6.s:276    .text.lcd_clear:00000000 lcd_clear
-C:\Users\samue\AppData\Local\Temp\ccofaxv6.s:321    .text.lcd_send_string:00000000 $t
-C:\Users\samue\AppData\Local\Temp\ccofaxv6.s:327    .text.lcd_send_string:00000000 lcd_send_string
+C:\Users\samue\AppData\Local\Temp\ccrayYKO.s:20     .text.lcd_send_cmd:00000000 $t
+C:\Users\samue\AppData\Local\Temp\ccrayYKO.s:26     .text.lcd_send_cmd:00000000 lcd_send_cmd
+C:\Users\samue\AppData\Local\Temp\ccrayYKO.s:93     .text.lcd_send_cmd:00000044 $d
+C:\Users\samue\AppData\Local\Temp\ccrayYKO.s:98     .text.lcd_init:00000000 $t
+C:\Users\samue\AppData\Local\Temp\ccrayYKO.s:104    .text.lcd_init:00000000 lcd_init
+C:\Users\samue\AppData\Local\Temp\ccrayYKO.s:193    .text.lcd_send_data:00000000 $t
+C:\Users\samue\AppData\Local\Temp\ccrayYKO.s:199    .text.lcd_send_data:00000000 lcd_send_data
+C:\Users\samue\AppData\Local\Temp\ccrayYKO.s:265    .text.lcd_send_data:00000044 $d
+C:\Users\samue\AppData\Local\Temp\ccrayYKO.s:270    .text.lcd_clear:00000000 $t
+C:\Users\samue\AppData\Local\Temp\ccrayYKO.s:276    .text.lcd_clear:00000000 lcd_clear
+C:\Users\samue\AppData\Local\Temp\ccrayYKO.s:321    .text.lcd_send_string:00000000 $t
+C:\Users\samue\AppData\Local\Temp\ccrayYKO.s:327    .text.lcd_send_string:00000000 lcd_send_string
 
 UNDEFINED SYMBOLS
 HAL_I2C_Master_Transmit

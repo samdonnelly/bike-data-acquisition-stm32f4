@@ -19,6 +19,13 @@
 // Function Prototypes 
 void main_function(void);
 
+// Buffer functions 
+int bufsize(char *buf);
+void bufclear(void);
+
+// UART functions 
+void send_uart(char *string);
+
 // Normal run mode
 void normal(void);
 

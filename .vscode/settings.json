@@ -3,6 +3,7 @@
         "i2c-lcd.h": "c",
         "accelerometer_data.h": "c",
         "stm32f4xx_hal.h": "c",
-        "stm32f4xx.h": "c"
+        "stm32f4xx.h": "c",
+        "diskio.h": "c"
     }
 }
