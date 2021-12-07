@@ -1,4 +1,4 @@
-ARM GAS  C:\Users\samue\AppData\Local\Temp\ccaOSeQg.s 			page 1
+ARM GAS  C:\Users\samue\AppData\Local\Temp\ccFrLRaM.s 			page 1
 
 
    1              		.cpu cortex-m4
@@ -58,7 +58,7 @@ ARM GAS  C:\Users\samue\AppData\Local\Temp\ccaOSeQg.s 			page 1
   28:FATFS/App/fatfs.c **** /* USER CODE END Variables */
   29:FATFS/App/fatfs.c **** 
   30:FATFS/App/fatfs.c **** void MX_FATFS_Init(void)
-ARM GAS  C:\Users\samue\AppData\Local\Temp\ccaOSeQg.s 			page 2
+ARM GAS  C:\Users\samue\AppData\Local\Temp\ccFrLRaM.s 			page 2
 
 
   31:FATFS/App/fatfs.c **** {
@@ -118,7 +118,7 @@ ARM GAS  C:\Users\samue\AppData\Local\Temp\ccaOSeQg.s 			page 1
   69              		@ args = 0, pretend = 0, frame = 0
   70              		@ frame_needed = 0, uses_anonymous_args = 0
   71              		@ link register save eliminated.
-ARM GAS  C:\Users\samue\AppData\Local\Temp\ccaOSeQg.s 			page 3
+ARM GAS  C:\Users\samue\AppData\Local\Temp\ccFrLRaM.s 			page 3
 
 
   47:FATFS/App/fatfs.c ****   /* USER CODE BEGIN get_fattime */
@@ -170,24 +170,24 @@ ARM GAS  C:\Users\samue\AppData\Local\Temp\ccaOSeQg.s 			page 1
  115              		.file 7 "Middlewares/Third_Party/FatFs/src/ff_gen_drv.h"
  116              		.file 8 "Core/Inc/user_diskio.h"
  117              		.file 9 "FATFS/App/fatfs.h"
-ARM GAS  C:\Users\samue\AppData\Local\Temp\ccaOSeQg.s 			page 4
+ARM GAS  C:\Users\samue\AppData\Local\Temp\ccFrLRaM.s 			page 4
 
 
 DEFINED SYMBOLS
                             *ABS*:00000000 fatfs.c
-C:\Users\samue\AppData\Local\Temp\ccaOSeQg.s:20     .text.MX_FATFS_Init:00000000 $t
-C:\Users\samue\AppData\Local\Temp\ccaOSeQg.s:26     .text.MX_FATFS_Init:00000000 MX_FATFS_Init
-C:\Users\samue\AppData\Local\Temp\ccaOSeQg.s:52     .text.MX_FATFS_Init:00000010 $d
-C:\Users\samue\AppData\Local\Temp\ccaOSeQg.s:59     .text.get_fattime:00000000 $t
-C:\Users\samue\AppData\Local\Temp\ccaOSeQg.s:65     .text.get_fattime:00000000 get_fattime
-C:\Users\samue\AppData\Local\Temp\ccaOSeQg.s:93     .bss.USERFile:00000000 USERFile
-C:\Users\samue\AppData\Local\Temp\ccaOSeQg.s:87     .bss.USERFatFS:00000000 USERFatFS
-C:\Users\samue\AppData\Local\Temp\ccaOSeQg.s:100    .bss.USERPath:00000000 USERPath
-C:\Users\samue\AppData\Local\Temp\ccaOSeQg.s:106    .bss.retUSER:00000000 retUSER
-C:\Users\samue\AppData\Local\Temp\ccaOSeQg.s:84     .bss.USERFatFS:00000000 $d
-C:\Users\samue\AppData\Local\Temp\ccaOSeQg.s:90     .bss.USERFile:00000000 $d
-C:\Users\samue\AppData\Local\Temp\ccaOSeQg.s:96     .bss.USERPath:00000000 $d
-C:\Users\samue\AppData\Local\Temp\ccaOSeQg.s:107    .bss.retUSER:00000000 $d
+C:\Users\samue\AppData\Local\Temp\ccFrLRaM.s:20     .text.MX_FATFS_Init:00000000 $t
+C:\Users\samue\AppData\Local\Temp\ccFrLRaM.s:26     .text.MX_FATFS_Init:00000000 MX_FATFS_Init
+C:\Users\samue\AppData\Local\Temp\ccFrLRaM.s:52     .text.MX_FATFS_Init:00000010 $d
+C:\Users\samue\AppData\Local\Temp\ccFrLRaM.s:59     .text.get_fattime:00000000 $t
+C:\Users\samue\AppData\Local\Temp\ccFrLRaM.s:65     .text.get_fattime:00000000 get_fattime
+C:\Users\samue\AppData\Local\Temp\ccFrLRaM.s:93     .bss.USERFile:00000000 USERFile
+C:\Users\samue\AppData\Local\Temp\ccFrLRaM.s:87     .bss.USERFatFS:00000000 USERFatFS
+C:\Users\samue\AppData\Local\Temp\ccFrLRaM.s:100    .bss.USERPath:00000000 USERPath
+C:\Users\samue\AppData\Local\Temp\ccFrLRaM.s:106    .bss.retUSER:00000000 retUSER
+C:\Users\samue\AppData\Local\Temp\ccFrLRaM.s:84     .bss.USERFatFS:00000000 $d
+C:\Users\samue\AppData\Local\Temp\ccFrLRaM.s:90     .bss.USERFile:00000000 $d
+C:\Users\samue\AppData\Local\Temp\ccFrLRaM.s:96     .bss.USERPath:00000000 $d
+C:\Users\samue\AppData\Local\Temp\ccFrLRaM.s:107    .bss.retUSER:00000000 $d
 
 UNDEFINED SYMBOLS
 FATFS_LinkDriver

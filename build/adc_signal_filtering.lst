@@ -1,0 +1,719 @@
+ARM GAS  C:\Users\samue\AppData\Local\Temp\ccqPYlIa.s 			page 1
+
+
+   1              		.cpu cortex-m4
+   2              		.arch armv7e-m
+   3              		.fpu fpv4-sp-d16
+   4              		.eabi_attribute 27, 1
+   5              		.eabi_attribute 28, 1
+   6              		.eabi_attribute 20, 1
+   7              		.eabi_attribute 21, 1
+   8              		.eabi_attribute 23, 3
+   9              		.eabi_attribute 24, 1
+  10              		.eabi_attribute 25, 1
+  11              		.eabi_attribute 26, 1
+  12              		.eabi_attribute 30, 1
+  13              		.eabi_attribute 34, 1
+  14              		.eabi_attribute 18, 4
+  15              		.file	"adc_signal_filtering.c"
+  16              		.text
+  17              	.Ltext0:
+  18              		.cfi_sections	.debug_frame
+  19              		.section	.text.butterworth_filter_ic,"ax",%progbits
+  20              		.align	1
+  21              		.global	butterworth_filter_ic
+  22              		.syntax unified
+  23              		.thumb
+  24              		.thumb_func
+  26              	butterworth_filter_ic:
+  27              	.LVL0:
+  28              	.LFB135:
+  29              		.file 1 "Tools/Src/adc_signal_filtering.c"
+   1:Tools/Src/adc_signal_filtering.c **** /*
+   2:Tools/Src/adc_signal_filtering.c ****  * File: adc_signal_filtering.c
+   3:Tools/Src/adc_signal_filtering.c ****  * Purpose: Implement a bufferworth filter on supplied data
+   4:Tools/Src/adc_signal_filtering.c ****  *
+   5:Tools/Src/adc_signal_filtering.c ****  * Date created: November 16, 2021
+   6:Tools/Src/adc_signal_filtering.c ****  * Author: Sam Donnelly 
+   7:Tools/Src/adc_signal_filtering.c ****  * 
+   8:Tools/Src/adc_signal_filtering.c ****  * Notes on this file and how to use it:
+   9:Tools/Src/adc_signal_filtering.c ****  *  - Go through each of the functions below and define information for each device using the 
+  10:Tools/Src/adc_signal_filtering.c ****  *    filter. There are comments saying where and how to define this information. 
+  11:Tools/Src/adc_signal_filtering.c ****  * 
+  12:Tools/Src/adc_signal_filtering.c ****  *  - In the 'butterworth_filter_setup()' function make sure to define the cutoff frequency (fc)
+  13:Tools/Src/adc_signal_filtering.c ****  *    and sampleing frequency (fs) correctly for each device. The cutoff frequency defines the 
+  14:Tools/Src/adc_signal_filtering.c ****  *    maximum frequency that will be let through the filter. The sample frequency is dependent 
+  15:Tools/Src/adc_signal_filtering.c ****  *    on how fast you run your code. It is recommended you throttle the code to a set sample 
+  16:Tools/Src/adc_signal_filtering.c ****  *    frequency or test the defined sample frequency until you get the correct results.
+  17:Tools/Src/adc_signal_filtering.c ****  * 
+  18:Tools/Src/adc_signal_filtering.c ****  *  - Make sure to call 'butterworth_filter(SETUP,...);' at the beginning of your code to 
+  19:Tools/Src/adc_signal_filtering.c ****  *    initialize all the filter equation constants so calculations are correct. After this 
+  20:Tools/Src/adc_signal_filtering.c ****  *    call 'butterworth_filter(FILTER,...);' each time you want to filter a device reading. 
+  21:Tools/Src/adc_signal_filtering.c ****  * 
+  22:Tools/Src/adc_signal_filtering.c ****  *  - The filtered signal values will have a slight phase delay from the raw signal values. 
+  23:Tools/Src/adc_signal_filtering.c ****  */
+  24:Tools/Src/adc_signal_filtering.c **** 
+  25:Tools/Src/adc_signal_filtering.c **** /*
+  26:Tools/Src/adc_signal_filtering.c ****  * ------------------------------------------------------------------------------------------------
+  27:Tools/Src/adc_signal_filtering.c ****  * Libraries and Header Files 
+  28:Tools/Src/adc_signal_filtering.c ****  * ------------------------------------------------------------------------------------------------
+  29:Tools/Src/adc_signal_filtering.c ****  */
+ARM GAS  C:\Users\samue\AppData\Local\Temp\ccqPYlIa.s 			page 2
+
+
+  30:Tools/Src/adc_signal_filtering.c **** 
+  31:Tools/Src/adc_signal_filtering.c **** #include "main.h"
+  32:Tools/Src/adc_signal_filtering.c **** #include "main_functions.h"
+  33:Tools/Src/adc_signal_filtering.c **** #include "adc_signal_filtering.h"
+  34:Tools/Src/adc_signal_filtering.c **** 
+  35:Tools/Src/adc_signal_filtering.c **** #include <stdint.h>
+  36:Tools/Src/adc_signal_filtering.c **** #include <stdio.h>
+  37:Tools/Src/adc_signal_filtering.c **** #include <stdlib.h>
+  38:Tools/Src/adc_signal_filtering.c **** #include <math.h>
+  39:Tools/Src/adc_signal_filtering.c **** 
+  40:Tools/Src/adc_signal_filtering.c **** 
+  41:Tools/Src/adc_signal_filtering.c **** /*
+  42:Tools/Src/adc_signal_filtering.c ****  * -----------------------------------------------------------------------------------------
+  43:Tools/Src/adc_signal_filtering.c ****  * Variables and Structures
+  44:Tools/Src/adc_signal_filtering.c ****  * -----------------------------------------------------------------------------------------
+  45:Tools/Src/adc_signal_filtering.c ****  */
+  46:Tools/Src/adc_signal_filtering.c **** 
+  47:Tools/Src/adc_signal_filtering.c **** typedef struct filter_eqn_const {
+  48:Tools/Src/adc_signal_filtering.c ****     // Filtered signal coefficients
+  49:Tools/Src/adc_signal_filtering.c ****     double a1;
+  50:Tools/Src/adc_signal_filtering.c ****     double a2;
+  51:Tools/Src/adc_signal_filtering.c **** 
+  52:Tools/Src/adc_signal_filtering.c ****     // Raw signal coefficients 
+  53:Tools/Src/adc_signal_filtering.c ****     double b0;
+  54:Tools/Src/adc_signal_filtering.c ****     double b1;
+  55:Tools/Src/adc_signal_filtering.c ****     double b2;
+  56:Tools/Src/adc_signal_filtering.c **** } filter_eqn_const;
+  57:Tools/Src/adc_signal_filtering.c **** 
+  58:Tools/Src/adc_signal_filtering.c **** typedef struct sensor_data {
+  59:Tools/Src/adc_signal_filtering.c ****     // Filtered signal coefficients
+  60:Tools/Src/adc_signal_filtering.c ****     double yn;
+  61:Tools/Src/adc_signal_filtering.c ****     double yn_1;
+  62:Tools/Src/adc_signal_filtering.c ****     double yn_2;
+  63:Tools/Src/adc_signal_filtering.c **** 
+  64:Tools/Src/adc_signal_filtering.c ****     // Raw signal coefficients
+  65:Tools/Src/adc_signal_filtering.c ****     double xn;
+  66:Tools/Src/adc_signal_filtering.c ****     double xn_1;
+  67:Tools/Src/adc_signal_filtering.c ****     double xn_2;
+  68:Tools/Src/adc_signal_filtering.c **** } sensor_data;
+  69:Tools/Src/adc_signal_filtering.c **** 
+  70:Tools/Src/adc_signal_filtering.c **** typedef struct sensor_list {
+  71:Tools/Src/adc_signal_filtering.c ****     filter_eqn_const sensor_const;
+  72:Tools/Src/adc_signal_filtering.c ****     sensor_data sensor_vals;
+  73:Tools/Src/adc_signal_filtering.c **** } sensor_list;
+  74:Tools/Src/adc_signal_filtering.c **** 
+  75:Tools/Src/adc_signal_filtering.c **** 
+  76:Tools/Src/adc_signal_filtering.c **** /*
+  77:Tools/Src/adc_signal_filtering.c ****  * -----------------------------------------------------------------------------------------
+  78:Tools/Src/adc_signal_filtering.c ****  * Functions
+  79:Tools/Src/adc_signal_filtering.c ****  * -----------------------------------------------------------------------------------------
+  80:Tools/Src/adc_signal_filtering.c ****  */ 
+  81:Tools/Src/adc_signal_filtering.c **** 
+  82:Tools/Src/adc_signal_filtering.c **** // Main filter function
+  83:Tools/Src/adc_signal_filtering.c **** double butterworth_filter(uint8_t function, uint8_t sensor_select, double sensor_raw) {
+  84:Tools/Src/adc_signal_filtering.c ****     // Define each sensor here 
+  85:Tools/Src/adc_signal_filtering.c ****     static sensor_list sensor;   // sensor_select == 0 
+  86:Tools/Src/adc_signal_filtering.c **** 
+ARM GAS  C:\Users\samue\AppData\Local\Temp\ccqPYlIa.s 			page 3
+
+
+  87:Tools/Src/adc_signal_filtering.c ****     switch(function) {
+  88:Tools/Src/adc_signal_filtering.c ****         case 0:
+  89:Tools/Src/adc_signal_filtering.c ****             // Define the constants 
+  90:Tools/Src/adc_signal_filtering.c ****             butterworth_filter_setup(&sensor);
+  91:Tools/Src/adc_signal_filtering.c ****             return 0;
+  92:Tools/Src/adc_signal_filtering.c ****         case 1:
+  93:Tools/Src/adc_signal_filtering.c ****             // Implement filter 
+  94:Tools/Src/adc_signal_filtering.c ****             switch (sensor_select) {
+  95:Tools/Src/adc_signal_filtering.c ****                 // Add a case for each device used
+  96:Tools/Src/adc_signal_filtering.c ****                 case 0:
+  97:Tools/Src/adc_signal_filtering.c ****                     // Calculate filtered value
+  98:Tools/Src/adc_signal_filtering.c ****                     sensor.sensor_vals.xn = sensor_raw;
+  99:Tools/Src/adc_signal_filtering.c ****                     butterworth_filter_equation(&sensor);
+ 100:Tools/Src/adc_signal_filtering.c ****                     return sensor.sensor_vals.yn;
+ 101:Tools/Src/adc_signal_filtering.c ****                 
+ 102:Tools/Src/adc_signal_filtering.c ****                 default: 
+ 103:Tools/Src/adc_signal_filtering.c ****                     // return unfiltered value
+ 104:Tools/Src/adc_signal_filtering.c ****                     return sensor_raw;
+ 105:Tools/Src/adc_signal_filtering.c ****         }
+ 106:Tools/Src/adc_signal_filtering.c ****     }
+ 107:Tools/Src/adc_signal_filtering.c **** }
+ 108:Tools/Src/adc_signal_filtering.c **** 
+ 109:Tools/Src/adc_signal_filtering.c **** // Generate butterworth filter constants based on cutoff frequency
+ 110:Tools/Src/adc_signal_filtering.c **** void butterworth_filter_setup(sensor_list *sensor_setup) {
+ 111:Tools/Src/adc_signal_filtering.c **** 
+ 112:Tools/Src/adc_signal_filtering.c ****     // Set the intial conditions 
+ 113:Tools/Src/adc_signal_filtering.c ****     // Call this function for each device 
+ 114:Tools/Src/adc_signal_filtering.c ****     butterworth_filter_ic(sensor_setup);
+ 115:Tools/Src/adc_signal_filtering.c **** 
+ 116:Tools/Src/adc_signal_filtering.c ****     // Define the cutoff frequencies (Hz)
+ 117:Tools/Src/adc_signal_filtering.c ****     // Add an appropriate fc_sensor for each device used. 
+ 118:Tools/Src/adc_signal_filtering.c ****     const uint16_t fc_sensor = 5;
+ 119:Tools/Src/adc_signal_filtering.c **** 
+ 120:Tools/Src/adc_signal_filtering.c ****     // Define the programs sampling frequency (Hz)
+ 121:Tools/Src/adc_signal_filtering.c ****     // (this depends on how fast you run your program loop)
+ 122:Tools/Src/adc_signal_filtering.c ****     const uint16_t fs_sensor = 1000;
+ 123:Tools/Src/adc_signal_filtering.c **** 
+ 124:Tools/Src/adc_signal_filtering.c ****     // Constant 1 
+ 125:Tools/Src/adc_signal_filtering.c ****     const double C1 = sqrt(2.0);
+ 126:Tools/Src/adc_signal_filtering.c **** 
+ 127:Tools/Src/adc_signal_filtering.c ****     // Constant 2 
+ 128:Tools/Src/adc_signal_filtering.c ****     // Add a new C2 with the appropriate fc_sensor for each device. 
+ 129:Tools/Src/adc_signal_filtering.c ****     const double C2_sensor = 1.0 / (M_PI*fc_sensor/fs_sensor);
+ 130:Tools/Src/adc_signal_filtering.c **** 
+ 131:Tools/Src/adc_signal_filtering.c ****     // Calculate constants for filter equation. 
+ 132:Tools/Src/adc_signal_filtering.c ****     // Call this function with the appropriate C2_sensor for each device. 
+ 133:Tools/Src/adc_signal_filtering.c ****     butterworth_filter_constants(sensor_setup, C1, C2_sensor);
+ 134:Tools/Src/adc_signal_filtering.c **** 
+ 135:Tools/Src/adc_signal_filtering.c **** }
+ 136:Tools/Src/adc_signal_filtering.c **** 
+ 137:Tools/Src/adc_signal_filtering.c **** // Set the initial conditions for the filter calculation 
+ 138:Tools/Src/adc_signal_filtering.c **** void butterworth_filter_ic(sensor_list *ic) {
+  30              		.loc 1 138 45 view -0
+  31              		.cfi_startproc
+  32              		@ args = 0, pretend = 0, frame = 0
+  33              		@ frame_needed = 0, uses_anonymous_args = 0
+  34              		@ link register save eliminated.
+ARM GAS  C:\Users\samue\AppData\Local\Temp\ccqPYlIa.s 			page 4
+
+
+ 139:Tools/Src/adc_signal_filtering.c ****     ic->sensor_vals.yn_1 = 0.0;
+  35              		.loc 1 139 5 view .LVU1
+  36              		.loc 1 139 26 is_stmt 0 view .LVU2
+  37 0000 0022     		movs	r2, #0
+  38 0002 0023     		movs	r3, #0
+  39 0004 C0E90C23 		strd	r2, [r0, #48]
+ 140:Tools/Src/adc_signal_filtering.c ****     ic->sensor_vals.yn_2 = 0.0;
+  40              		.loc 1 140 5 is_stmt 1 view .LVU3
+  41              		.loc 1 140 26 is_stmt 0 view .LVU4
+  42 0008 C0E90E23 		strd	r2, [r0, #56]
+ 141:Tools/Src/adc_signal_filtering.c ****     ic->sensor_vals.xn_1 = 0.0;
+  43              		.loc 1 141 5 is_stmt 1 view .LVU5
+  44              		.loc 1 141 26 is_stmt 0 view .LVU6
+  45 000c C0E91223 		strd	r2, [r0, #72]
+ 142:Tools/Src/adc_signal_filtering.c ****     ic->sensor_vals.xn_2 = 0.0;
+  46              		.loc 1 142 5 is_stmt 1 view .LVU7
+  47              		.loc 1 142 26 is_stmt 0 view .LVU8
+  48 0010 C0E91423 		strd	r2, [r0, #80]
+ 143:Tools/Src/adc_signal_filtering.c **** }
+  49              		.loc 1 143 1 view .LVU9
+  50 0014 7047     		bx	lr
+  51              		.cfi_endproc
+  52              	.LFE135:
+  54              		.global	__aeabi_dmul
+  55              		.global	__aeabi_dadd
+  56              		.global	__aeabi_ddiv
+  57              		.global	__aeabi_dsub
+  58              		.section	.text.butterworth_filter_constants,"ax",%progbits
+  59              		.align	1
+  60              		.global	butterworth_filter_constants
+  61              		.syntax unified
+  62              		.thumb
+  63              		.thumb_func
+  65              	butterworth_filter_constants:
+  66              	.LVL1:
+  67              	.LFB136:
+ 144:Tools/Src/adc_signal_filtering.c **** 
+ 145:Tools/Src/adc_signal_filtering.c **** // Calculate constants for the filter equation 
+ 146:Tools/Src/adc_signal_filtering.c **** void butterworth_filter_constants(sensor_list *constants, double c1, double c2) {
+  68              		.loc 1 146 81 is_stmt 1 view -0
+  69              		.cfi_startproc
+  70              		@ args = 0, pretend = 0, frame = 8
+  71              		@ frame_needed = 0, uses_anonymous_args = 0
+  72              		.loc 1 146 81 is_stmt 0 view .LVU11
+  73 0000 2DE9D04F 		push	{r4, r6, r7, r8, r9, r10, fp, lr}
+  74              	.LCFI0:
+  75              		.cfi_def_cfa_offset 32
+  76              		.cfi_offset 4, -32
+  77              		.cfi_offset 6, -28
+  78              		.cfi_offset 7, -24
+  79              		.cfi_offset 8, -20
+  80              		.cfi_offset 9, -16
+  81              		.cfi_offset 10, -12
+  82              		.cfi_offset 11, -8
+  83              		.cfi_offset 14, -4
+  84 0004 82B0     		sub	sp, sp, #8
+  85              	.LCFI1:
+ARM GAS  C:\Users\samue\AppData\Local\Temp\ccqPYlIa.s 			page 5
+
+
+  86              		.cfi_def_cfa_offset 40
+  87 0006 0446     		mov	r4, r0
+  88 0008 51EC100B 		vmov	r0, r1, d0
+  89              	.LVL2:
+  90              		.loc 1 146 81 view .LVU12
+  91 000c 57EC116B 		vmov	r6, r7, d1
+ 147:Tools/Src/adc_signal_filtering.c ****     constants->sensor_const.b0 = 1.0 / (1.0 + c1*c2 + c2*c2);
+  92              		.loc 1 147 5 is_stmt 1 view .LVU13
+  93              		.loc 1 147 49 is_stmt 0 view .LVU14
+  94 0010 11EE102A 		vmov	r2, s2	@ int
+  95 0014 3B46     		mov	r3, r7
+  96 0016 FFF7FEFF 		bl	__aeabi_dmul
+  97              	.LVL3:
+  98              		.loc 1 147 49 view .LVU15
+  99 001a 8246     		mov	r10, r0
+ 100 001c 8B46     		mov	fp, r1
+ 101 001e CDE900AB 		strd	r10, [sp]
+ 102              		.loc 1 147 45 view .LVU16
+ 103 0022 0022     		movs	r2, #0
+ 104 0024 264B     		ldr	r3, .L4
+ 105 0026 FFF7FEFF 		bl	__aeabi_dadd
+ 106              	.LVL4:
+ 107 002a 8046     		mov	r8, r0
+ 108 002c 8946     		mov	r9, r1
+ 109              		.loc 1 147 57 view .LVU17
+ 110 002e 3246     		mov	r2, r6
+ 111 0030 3B46     		mov	r3, r7
+ 112 0032 3046     		mov	r0, r6
+ 113 0034 3946     		mov	r1, r7
+ 114 0036 FFF7FEFF 		bl	__aeabi_dmul
+ 115              	.LVL5:
+ 116 003a 0646     		mov	r6, r0
+ 117              	.LVL6:
+ 118              		.loc 1 147 57 view .LVU18
+ 119 003c 0F46     		mov	r7, r1
+ 120              		.loc 1 147 53 view .LVU19
+ 121 003e 0246     		mov	r2, r0
+ 122 0040 0B46     		mov	r3, r1
+ 123 0042 4046     		mov	r0, r8
+ 124 0044 4946     		mov	r1, r9
+ 125 0046 FFF7FEFF 		bl	__aeabi_dadd
+ 126              	.LVL7:
+ 127 004a 0246     		mov	r2, r0
+ 128 004c 0B46     		mov	r3, r1
+ 129              		.loc 1 147 38 view .LVU20
+ 130 004e 0020     		movs	r0, #0
+ 131 0050 1B49     		ldr	r1, .L4
+ 132 0052 FFF7FEFF 		bl	__aeabi_ddiv
+ 133              	.LVL8:
+ 134 0056 8246     		mov	r10, r0
+ 135 0058 8B46     		mov	fp, r1
+ 136              		.loc 1 147 32 view .LVU21
+ 137 005a C4E904AB 		strd	r10, [r4, #16]
+ 148:Tools/Src/adc_signal_filtering.c ****     constants->sensor_const.b1 = (constants->sensor_const.b0)*2.0;
+ 138              		.loc 1 148 5 is_stmt 1 view .LVU22
+ 139              		.loc 1 148 62 is_stmt 0 view .LVU23
+ 140 005e 0246     		mov	r2, r0
+ARM GAS  C:\Users\samue\AppData\Local\Temp\ccqPYlIa.s 			page 6
+
+
+ 141 0060 0B46     		mov	r3, r1
+ 142 0062 FFF7FEFF 		bl	__aeabi_dadd
+ 143              	.LVL9:
+ 144 0066 8046     		mov	r8, r0
+ 145 0068 8946     		mov	r9, r1
+ 146              		.loc 1 148 32 view .LVU24
+ 147 006a C4E90689 		strd	r8, [r4, #24]
+ 149:Tools/Src/adc_signal_filtering.c ****     constants->sensor_const.b2 = (constants->sensor_const.b0);
+ 148              		.loc 1 149 5 is_stmt 1 view .LVU25
+ 149              		.loc 1 149 32 is_stmt 0 view .LVU26
+ 150 006e C4E908AB 		strd	r10, [r4, #32]
+ 150:Tools/Src/adc_signal_filtering.c ****     constants->sensor_const.a1 = (constants->sensor_const.b0)*2.0*(c2*c2 - 1.0);
+ 151              		.loc 1 150 5 is_stmt 1 view .LVU27
+ 152              		.loc 1 150 74 is_stmt 0 view .LVU28
+ 153 0072 0022     		movs	r2, #0
+ 154 0074 124B     		ldr	r3, .L4
+ 155 0076 3046     		mov	r0, r6
+ 156 0078 3946     		mov	r1, r7
+ 157 007a FFF7FEFF 		bl	__aeabi_dsub
+ 158              	.LVL10:
+ 159 007e 0246     		mov	r2, r0
+ 160 0080 0B46     		mov	r3, r1
+ 161              		.loc 1 150 66 view .LVU29
+ 162 0082 4046     		mov	r0, r8
+ 163 0084 4946     		mov	r1, r9
+ 164 0086 FFF7FEFF 		bl	__aeabi_dmul
+ 165              	.LVL11:
+ 166              		.loc 1 150 32 view .LVU30
+ 167 008a C4E90001 		strd	r0, [r4]
+ 151:Tools/Src/adc_signal_filtering.c ****     constants->sensor_const.a2 = (constants->sensor_const.b0)*(-1.0)*(1.0 - c1*c2 + c2*c2);
+ 168              		.loc 1 151 5 is_stmt 1 view .LVU31
+ 169              		.loc 1 151 62 is_stmt 0 view .LVU32
+ 170 008e 0BF10049 		add	r9, fp, #-2147483648
+ 171              		.loc 1 151 75 view .LVU33
+ 172 0092 DDE90023 		ldrd	r2, [sp]
+ 173 0096 0020     		movs	r0, #0
+ 174 0098 0949     		ldr	r1, .L4
+ 175 009a FFF7FEFF 		bl	__aeabi_dsub
+ 176              	.LVL12:
+ 177 009e 0246     		mov	r2, r0
+ 178 00a0 0B46     		mov	r3, r1
+ 179              		.loc 1 151 83 view .LVU34
+ 180 00a2 3046     		mov	r0, r6
+ 181 00a4 3946     		mov	r1, r7
+ 182 00a6 FFF7FEFF 		bl	__aeabi_dadd
+ 183              	.LVL13:
+ 184 00aa 0246     		mov	r2, r0
+ 185 00ac 0B46     		mov	r3, r1
+ 186              		.loc 1 151 69 view .LVU35
+ 187 00ae 5046     		mov	r0, r10
+ 188 00b0 4946     		mov	r1, r9
+ 189 00b2 FFF7FEFF 		bl	__aeabi_dmul
+ 190              	.LVL14:
+ 191              		.loc 1 151 32 view .LVU36
+ 192 00b6 C4E90201 		strd	r0, [r4, #8]
+ 152:Tools/Src/adc_signal_filtering.c **** }
+ 193              		.loc 1 152 1 view .LVU37
+ARM GAS  C:\Users\samue\AppData\Local\Temp\ccqPYlIa.s 			page 7
+
+
+ 194 00ba 02B0     		add	sp, sp, #8
+ 195              	.LCFI2:
+ 196              		.cfi_def_cfa_offset 32
+ 197              		@ sp needed
+ 198 00bc BDE8D08F 		pop	{r4, r6, r7, r8, r9, r10, fp, pc}
+ 199              	.LVL15:
+ 200              	.L5:
+ 201              		.loc 1 152 1 view .LVU38
+ 202              		.align	2
+ 203              	.L4:
+ 204 00c0 0000F03F 		.word	1072693248
+ 205              		.cfi_endproc
+ 206              	.LFE136:
+ 208              		.section	.text.butterworth_filter_setup,"ax",%progbits
+ 209              		.align	1
+ 210              		.global	butterworth_filter_setup
+ 211              		.syntax unified
+ 212              		.thumb
+ 213              		.thumb_func
+ 215              	butterworth_filter_setup:
+ 216              	.LVL16:
+ 217              	.LFB134:
+ 110:Tools/Src/adc_signal_filtering.c **** 
+ 218              		.loc 1 110 58 is_stmt 1 view -0
+ 219              		.cfi_startproc
+ 220              		@ args = 0, pretend = 0, frame = 0
+ 221              		@ frame_needed = 0, uses_anonymous_args = 0
+ 110:Tools/Src/adc_signal_filtering.c **** 
+ 222              		.loc 1 110 58 is_stmt 0 view .LVU40
+ 223 0000 10B5     		push	{r4, lr}
+ 224              	.LCFI3:
+ 225              		.cfi_def_cfa_offset 8
+ 226              		.cfi_offset 4, -8
+ 227              		.cfi_offset 14, -4
+ 228 0002 0446     		mov	r4, r0
+ 114:Tools/Src/adc_signal_filtering.c **** 
+ 229              		.loc 1 114 5 is_stmt 1 view .LVU41
+ 230 0004 FFF7FEFF 		bl	butterworth_filter_ic
+ 231              	.LVL17:
+ 118:Tools/Src/adc_signal_filtering.c **** 
+ 232              		.loc 1 118 5 view .LVU42
+ 122:Tools/Src/adc_signal_filtering.c **** 
+ 233              		.loc 1 122 5 view .LVU43
+ 125:Tools/Src/adc_signal_filtering.c **** 
+ 234              		.loc 1 125 5 view .LVU44
+ 129:Tools/Src/adc_signal_filtering.c **** 
+ 235              		.loc 1 129 5 view .LVU45
+ 133:Tools/Src/adc_signal_filtering.c **** 
+ 236              		.loc 1 133 5 view .LVU46
+ 237 0008 9FED031B 		vldr.64	d1, .L8
+ 238 000c 9FED040B 		vldr.64	d0, .L8+8
+ 239 0010 2046     		mov	r0, r4
+ 240 0012 FFF7FEFF 		bl	butterworth_filter_constants
+ 241              	.LVL18:
+ 135:Tools/Src/adc_signal_filtering.c **** 
+ 242              		.loc 1 135 1 is_stmt 0 view .LVU47
+ 243 0016 10BD     		pop	{r4, pc}
+ARM GAS  C:\Users\samue\AppData\Local\Temp\ccqPYlIa.s 			page 8
+
+
+ 244              	.LVL19:
+ 245              	.L9:
+ 135:Tools/Src/adc_signal_filtering.c **** 
+ 246              		.loc 1 135 1 view .LVU48
+ 247              		.align	3
+ 248              	.L8:
+ 249 0018 4C498BAB 		.word	-1416935092
+ 250 001c BBD44F40 		.word	1078973627
+ 251 0020 CD3B7F66 		.word	1719614413
+ 252 0024 9EA0F63F 		.word	1073127582
+ 253              		.cfi_endproc
+ 254              	.LFE134:
+ 256              		.section	.text.butterworth_filter_equation,"ax",%progbits
+ 257              		.align	1
+ 258              		.global	butterworth_filter_equation
+ 259              		.syntax unified
+ 260              		.thumb
+ 261              		.thumb_func
+ 263              	butterworth_filter_equation:
+ 264              	.LVL20:
+ 265              	.LFB137:
+ 153:Tools/Src/adc_signal_filtering.c **** 
+ 154:Tools/Src/adc_signal_filtering.c **** // Implement butterworth filter
+ 155:Tools/Src/adc_signal_filtering.c **** void butterworth_filter_equation(sensor_list *eqn) {
+ 266              		.loc 1 155 52 is_stmt 1 view -0
+ 267              		.cfi_startproc
+ 268              		@ args = 0, pretend = 0, frame = 0
+ 269              		@ frame_needed = 0, uses_anonymous_args = 0
+ 270              		.loc 1 155 52 is_stmt 0 view .LVU50
+ 271 0000 2DE9D04F 		push	{r4, r6, r7, r8, r9, r10, fp, lr}
+ 272              	.LCFI4:
+ 273              		.cfi_def_cfa_offset 32
+ 274              		.cfi_offset 4, -32
+ 275              		.cfi_offset 6, -28
+ 276              		.cfi_offset 7, -24
+ 277              		.cfi_offset 8, -20
+ 278              		.cfi_offset 9, -16
+ 279              		.cfi_offset 10, -12
+ 280              		.cfi_offset 11, -8
+ 281              		.cfi_offset 14, -4
+ 282 0004 2DED028B 		vpush.64	{d8}
+ 283              	.LCFI5:
+ 284              		.cfi_def_cfa_offset 40
+ 285              		.cfi_offset 80, -40
+ 286              		.cfi_offset 81, -36
+ 287 0008 0446     		mov	r4, r0
+ 156:Tools/Src/adc_signal_filtering.c ****     // Calculated filtered value 
+ 157:Tools/Src/adc_signal_filtering.c ****     eqn->sensor_vals.yn = (eqn->sensor_const.a1)*(eqn->sensor_vals.yn_1) +
+ 288              		.loc 1 157 5 is_stmt 1 view .LVU51
+ 289              		.loc 1 157 67 is_stmt 0 view .LVU52
+ 290 000a 90ED0C8B 		vldr.64	d8, [r0, #48]
+ 291              		.loc 1 157 49 view .LVU53
+ 292 000e 53EC182B 		vmov	r2, r3, d8
+ 293 0012 D0E90001 		ldrd	r0, [r0]
+ 294              	.LVL21:
+ 295              		.loc 1 157 49 view .LVU54
+ 296 0016 FFF7FEFF 		bl	__aeabi_dmul
+ARM GAS  C:\Users\samue\AppData\Local\Temp\ccqPYlIa.s 			page 9
+
+
+ 297              	.LVL22:
+ 298 001a 0646     		mov	r6, r0
+ 299 001c 0F46     		mov	r7, r1
+ 158:Tools/Src/adc_signal_filtering.c ****                           (eqn->sensor_const.a2)*(eqn->sensor_vals.yn_2) +
+ 300              		.loc 1 158 49 view .LVU55
+ 301 001e D4E90E23 		ldrd	r2, [r4, #56]
+ 302 0022 D4E90201 		ldrd	r0, [r4, #8]
+ 303 0026 FFF7FEFF 		bl	__aeabi_dmul
+ 304              	.LVL23:
+ 305 002a 0246     		mov	r2, r0
+ 306 002c 0B46     		mov	r3, r1
+ 157:Tools/Src/adc_signal_filtering.c ****                           (eqn->sensor_const.a2)*(eqn->sensor_vals.yn_2) +
+ 307              		.loc 1 157 74 view .LVU56
+ 308 002e 3046     		mov	r0, r6
+ 309 0030 3946     		mov	r1, r7
+ 310 0032 FFF7FEFF 		bl	__aeabi_dadd
+ 311              	.LVL24:
+ 312 0036 0646     		mov	r6, r0
+ 313 0038 0F46     		mov	r7, r1
+ 159:Tools/Src/adc_signal_filtering.c ****                           (eqn->sensor_const.b0)*(eqn->sensor_vals.xn)   +
+ 314              		.loc 1 159 67 view .LVU57
+ 315 003a D4E91089 		ldrd	r8, [r4, #64]
+ 316              		.loc 1 159 49 view .LVU58
+ 317 003e 4246     		mov	r2, r8
+ 318 0040 4B46     		mov	r3, r9
+ 319 0042 D4E90401 		ldrd	r0, [r4, #16]
+ 320 0046 FFF7FEFF 		bl	__aeabi_dmul
+ 321              	.LVL25:
+ 322 004a 0246     		mov	r2, r0
+ 323 004c 0B46     		mov	r3, r1
+ 158:Tools/Src/adc_signal_filtering.c ****                           (eqn->sensor_const.a2)*(eqn->sensor_vals.yn_2) +
+ 324              		.loc 1 158 74 view .LVU59
+ 325 004e 3046     		mov	r0, r6
+ 326 0050 3946     		mov	r1, r7
+ 327 0052 FFF7FEFF 		bl	__aeabi_dadd
+ 328              	.LVL26:
+ 329 0056 0646     		mov	r6, r0
+ 330 0058 0F46     		mov	r7, r1
+ 160:Tools/Src/adc_signal_filtering.c ****                           (eqn->sensor_const.b1)*(eqn->sensor_vals.xn_1) +
+ 331              		.loc 1 160 67 view .LVU60
+ 332 005a D4E912AB 		ldrd	r10, [r4, #72]
+ 333              		.loc 1 160 49 view .LVU61
+ 334 005e 5246     		mov	r2, r10
+ 335 0060 5B46     		mov	r3, fp
+ 336 0062 D4E90601 		ldrd	r0, [r4, #24]
+ 337 0066 FFF7FEFF 		bl	__aeabi_dmul
+ 338              	.LVL27:
+ 339 006a 0246     		mov	r2, r0
+ 340 006c 0B46     		mov	r3, r1
+ 159:Tools/Src/adc_signal_filtering.c ****                           (eqn->sensor_const.b0)*(eqn->sensor_vals.xn)   +
+ 341              		.loc 1 159 74 view .LVU62
+ 342 006e 3046     		mov	r0, r6
+ 343 0070 3946     		mov	r1, r7
+ 344 0072 FFF7FEFF 		bl	__aeabi_dadd
+ 345              	.LVL28:
+ 346 0076 0646     		mov	r6, r0
+ 347 0078 0F46     		mov	r7, r1
+ARM GAS  C:\Users\samue\AppData\Local\Temp\ccqPYlIa.s 			page 10
+
+
+ 161:Tools/Src/adc_signal_filtering.c ****                           (eqn->sensor_const.b2)*(eqn->sensor_vals.xn_2);
+ 348              		.loc 1 161 49 view .LVU63
+ 349 007a D4E91423 		ldrd	r2, [r4, #80]
+ 350 007e D4E90801 		ldrd	r0, [r4, #32]
+ 351 0082 FFF7FEFF 		bl	__aeabi_dmul
+ 352              	.LVL29:
+ 353 0086 0246     		mov	r2, r0
+ 354 0088 0B46     		mov	r3, r1
+ 160:Tools/Src/adc_signal_filtering.c ****                           (eqn->sensor_const.b1)*(eqn->sensor_vals.xn_1) +
+ 355              		.loc 1 160 74 view .LVU64
+ 356 008a 3046     		mov	r0, r6
+ 357 008c 3946     		mov	r1, r7
+ 358 008e FFF7FEFF 		bl	__aeabi_dadd
+ 359              	.LVL30:
+ 157:Tools/Src/adc_signal_filtering.c ****                           (eqn->sensor_const.a2)*(eqn->sensor_vals.yn_2) +
+ 360              		.loc 1 157 25 view .LVU65
+ 361 0092 C4E90A01 		strd	r0, [r4, #40]
+ 162:Tools/Src/adc_signal_filtering.c ****     
+ 163:Tools/Src/adc_signal_filtering.c ****     // Redefine previous values for the next function call 
+ 164:Tools/Src/adc_signal_filtering.c ****     eqn->sensor_vals.yn_2 = (eqn->sensor_vals.yn_1);
+ 362              		.loc 1 164 5 is_stmt 1 view .LVU66
+ 363              		.loc 1 164 27 is_stmt 0 view .LVU67
+ 364 0096 84ED0E8B 		vstr.64	d8, [r4, #56]
+ 165:Tools/Src/adc_signal_filtering.c ****     eqn->sensor_vals.yn_1 = (eqn->sensor_vals.yn);
+ 365              		.loc 1 165 5 is_stmt 1 view .LVU68
+ 366              		.loc 1 165 27 is_stmt 0 view .LVU69
+ 367 009a C4E90C01 		strd	r0, [r4, #48]
+ 166:Tools/Src/adc_signal_filtering.c ****     eqn->sensor_vals.xn_2 = (eqn->sensor_vals.xn_1);
+ 368              		.loc 1 166 5 is_stmt 1 view .LVU70
+ 369              		.loc 1 166 27 is_stmt 0 view .LVU71
+ 370 009e C4E914AB 		strd	r10, [r4, #80]
+ 167:Tools/Src/adc_signal_filtering.c ****     eqn->sensor_vals.xn_1 = (eqn->sensor_vals.xn);
+ 371              		.loc 1 167 5 is_stmt 1 view .LVU72
+ 372              		.loc 1 167 27 is_stmt 0 view .LVU73
+ 373 00a2 C4E91289 		strd	r8, [r4, #72]
+ 168:Tools/Src/adc_signal_filtering.c **** 
+ 169:Tools/Src/adc_signal_filtering.c **** }
+ 374              		.loc 1 169 1 view .LVU74
+ 375 00a6 BDEC028B 		vldm	sp!, {d8}
+ 376              	.LCFI6:
+ 377              		.cfi_restore 80
+ 378              		.cfi_restore 81
+ 379              		.cfi_def_cfa_offset 32
+ 380 00aa BDE8D08F 		pop	{r4, r6, r7, r8, r9, r10, fp, pc}
+ 381              		.loc 1 169 1 view .LVU75
+ 382              		.cfi_endproc
+ 383              	.LFE137:
+ 385              		.section	.text.butterworth_filter,"ax",%progbits
+ 386              		.align	1
+ 387              		.global	butterworth_filter
+ 388              		.syntax unified
+ 389              		.thumb
+ 390              		.thumb_func
+ 392              	butterworth_filter:
+ 393              	.LVL31:
+ 394              	.LFB133:
+  83:Tools/Src/adc_signal_filtering.c ****     // Define each sensor here 
+ARM GAS  C:\Users\samue\AppData\Local\Temp\ccqPYlIa.s 			page 11
+
+
+ 395              		.loc 1 83 87 is_stmt 1 view -0
+ 396              		.cfi_startproc
+ 397              		@ args = 0, pretend = 0, frame = 0
+ 398              		@ frame_needed = 0, uses_anonymous_args = 0
+  83:Tools/Src/adc_signal_filtering.c ****     // Define each sensor here 
+ 399              		.loc 1 83 87 is_stmt 0 view .LVU77
+ 400 0000 10B5     		push	{r4, lr}
+ 401              	.LCFI7:
+ 402              		.cfi_def_cfa_offset 8
+ 403              		.cfi_offset 4, -8
+ 404              		.cfi_offset 14, -4
+  85:Tools/Src/adc_signal_filtering.c **** 
+ 405              		.loc 1 85 5 is_stmt 1 view .LVU78
+  87:Tools/Src/adc_signal_filtering.c ****         case 0:
+ 406              		.loc 1 87 5 view .LVU79
+ 407 0002 10B1     		cbz	r0, .L13
+ 408 0004 0128     		cmp	r0, #1
+ 409 0006 06D0     		beq	.L14
+ 410              	.LVL32:
+ 411              	.L12:
+ 107:Tools/Src/adc_signal_filtering.c **** 
+ 412              		.loc 1 107 1 is_stmt 0 view .LVU80
+ 413 0008 10BD     		pop	{r4, pc}
+ 414              	.LVL33:
+ 415              	.L13:
+  90:Tools/Src/adc_signal_filtering.c ****             return 0;
+ 416              		.loc 1 90 13 is_stmt 1 view .LVU81
+ 417 000a 0B48     		ldr	r0, .L20+8
+ 418              	.LVL34:
+  90:Tools/Src/adc_signal_filtering.c ****             return 0;
+ 419              		.loc 1 90 13 is_stmt 0 view .LVU82
+ 420 000c FFF7FEFF 		bl	butterworth_filter_setup
+ 421              	.LVL35:
+  91:Tools/Src/adc_signal_filtering.c ****         case 1:
+ 422              		.loc 1 91 13 is_stmt 1 view .LVU83
+  91:Tools/Src/adc_signal_filtering.c ****         case 1:
+ 423              		.loc 1 91 20 is_stmt 0 view .LVU84
+ 424 0010 9FED070B 		vldr.64	d0, .L20
+ 425 0014 F8E7     		b	.L12
+ 426              	.LVL36:
+ 427              	.L14:
+  94:Tools/Src/adc_signal_filtering.c ****                 // Add a case for each device used
+ 428              		.loc 1 94 13 is_stmt 1 view .LVU85
+ 429 0016 0029     		cmp	r1, #0
+ 430 0018 F6D1     		bne	.L12
+  98:Tools/Src/adc_signal_filtering.c ****                     butterworth_filter_equation(&sensor);
+ 431              		.loc 1 98 21 view .LVU86
+  98:Tools/Src/adc_signal_filtering.c ****                     butterworth_filter_equation(&sensor);
+ 432              		.loc 1 98 43 is_stmt 0 view .LVU87
+ 433 001a 074C     		ldr	r4, .L20+8
+ 434 001c 84ED100B 		vstr.64	d0, [r4, #64]
+  99:Tools/Src/adc_signal_filtering.c ****                     return sensor.sensor_vals.yn;
+ 435              		.loc 1 99 21 is_stmt 1 view .LVU88
+ 436 0020 2046     		mov	r0, r4
+ 437              	.LVL37:
+  99:Tools/Src/adc_signal_filtering.c ****                     return sensor.sensor_vals.yn;
+ 438              		.loc 1 99 21 is_stmt 0 view .LVU89
+ARM GAS  C:\Users\samue\AppData\Local\Temp\ccqPYlIa.s 			page 12
+
+
+ 439 0022 FFF7FEFF 		bl	butterworth_filter_equation
+ 440              	.LVL38:
+ 100:Tools/Src/adc_signal_filtering.c ****                 
+ 441              		.loc 1 100 21 is_stmt 1 view .LVU90
+ 100:Tools/Src/adc_signal_filtering.c ****                 
+ 442              		.loc 1 100 46 is_stmt 0 view .LVU91
+ 443 0026 94ED0A0B 		vldr.64	d0, [r4, #40]
+ 444 002a EDE7     		b	.L12
+ 445              	.L21:
+ 446 002c AFF30080 		.align	3
+ 447              	.L20:
+ 448 0030 00000000 		.word	0
+ 449 0034 00000000 		.word	0
+ 450 0038 00000000 		.word	.LANCHOR0
+ 451              		.cfi_endproc
+ 452              	.LFE133:
+ 454              		.section	.bss.sensor.0,"aw",%nobits
+ 455              		.align	3
+ 456              		.set	.LANCHOR0,. + 0
+ 459              	sensor.0:
+ 460 0000 00000000 		.space	88
+ 460      00000000 
+ 460      00000000 
+ 460      00000000 
+ 460      00000000 
+ 461              		.text
+ 462              	.Letext0:
+ 463              		.file 2 "c:\\dev_tools\\gcc-arm-none-eabi-10.3-2021.10-win32\\gcc-arm-none-eabi-10.3-2021.10\\arm-
+ 464              		.file 3 "c:\\dev_tools\\gcc-arm-none-eabi-10.3-2021.10-win32\\gcc-arm-none-eabi-10.3-2021.10\\arm-
+ 465              		.file 4 "Tools/Inc/adc_signal_filtering.h"
+ARM GAS  C:\Users\samue\AppData\Local\Temp\ccqPYlIa.s 			page 13
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 adc_signal_filtering.c
+C:\Users\samue\AppData\Local\Temp\ccqPYlIa.s:20     .text.butterworth_filter_ic:00000000 $t
+C:\Users\samue\AppData\Local\Temp\ccqPYlIa.s:26     .text.butterworth_filter_ic:00000000 butterworth_filter_ic
+C:\Users\samue\AppData\Local\Temp\ccqPYlIa.s:59     .text.butterworth_filter_constants:00000000 $t
+C:\Users\samue\AppData\Local\Temp\ccqPYlIa.s:65     .text.butterworth_filter_constants:00000000 butterworth_filter_constants
+C:\Users\samue\AppData\Local\Temp\ccqPYlIa.s:204    .text.butterworth_filter_constants:000000c0 $d
+C:\Users\samue\AppData\Local\Temp\ccqPYlIa.s:209    .text.butterworth_filter_setup:00000000 $t
+C:\Users\samue\AppData\Local\Temp\ccqPYlIa.s:215    .text.butterworth_filter_setup:00000000 butterworth_filter_setup
+C:\Users\samue\AppData\Local\Temp\ccqPYlIa.s:249    .text.butterworth_filter_setup:00000018 $d
+C:\Users\samue\AppData\Local\Temp\ccqPYlIa.s:257    .text.butterworth_filter_equation:00000000 $t
+C:\Users\samue\AppData\Local\Temp\ccqPYlIa.s:263    .text.butterworth_filter_equation:00000000 butterworth_filter_equation
+C:\Users\samue\AppData\Local\Temp\ccqPYlIa.s:386    .text.butterworth_filter:00000000 $t
+C:\Users\samue\AppData\Local\Temp\ccqPYlIa.s:392    .text.butterworth_filter:00000000 butterworth_filter
+C:\Users\samue\AppData\Local\Temp\ccqPYlIa.s:448    .text.butterworth_filter:00000030 $d
+C:\Users\samue\AppData\Local\Temp\ccqPYlIa.s:455    .bss.sensor.0:00000000 $d
+C:\Users\samue\AppData\Local\Temp\ccqPYlIa.s:459    .bss.sensor.0:00000000 sensor.0
+
+UNDEFINED SYMBOLS
+__aeabi_dmul
+__aeabi_dadd
+__aeabi_ddiv
+__aeabi_dsub

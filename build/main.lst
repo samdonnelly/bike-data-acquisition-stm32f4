@@ -1,4 +1,4 @@
-ARM GAS  C:\Users\samue\AppData\Local\Temp\cceJTHmx.s 			page 1
+ARM GAS  C:\Users\samue\AppData\Local\Temp\ccjDAaBW.s 			page 1
 
 
    1              		.cpu cortex-m4
@@ -58,7 +58,7 @@ ARM GAS  C:\Users\samue\AppData\Local\Temp\cceJTHmx.s 			page 1
   29:Core/Src/main.c **** /* USER CODE END Includes */
   30:Core/Src/main.c **** 
   31:Core/Src/main.c **** /* Private typedef -----------------------------------------------------------*/
-ARM GAS  C:\Users\samue\AppData\Local\Temp\cceJTHmx.s 			page 2
+ARM GAS  C:\Users\samue\AppData\Local\Temp\ccjDAaBW.s 			page 2
 
 
   32:Core/Src/main.c **** /* USER CODE BEGIN PTD */
@@ -118,7 +118,7 @@ ARM GAS  C:\Users\samue\AppData\Local\Temp\cceJTHmx.s 			page 1
   86:Core/Src/main.c ****   /* MCU Configuration--------------------------------------------------------*/
   87:Core/Src/main.c **** 
   88:Core/Src/main.c ****   /* Reset of all peripherals, Initializes the Flash interface and the Systick. */
-ARM GAS  C:\Users\samue\AppData\Local\Temp\cceJTHmx.s 			page 3
+ARM GAS  C:\Users\samue\AppData\Local\Temp\ccjDAaBW.s 			page 3
 
 
   89:Core/Src/main.c ****   HAL_Init();
@@ -178,7 +178,7 @@ ARM GAS  C:\Users\samue\AppData\Local\Temp\cceJTHmx.s 			page 1
  143:Core/Src/main.c ****   RCC_OscInitStruct.OscillatorType = RCC_OSCILLATORTYPE_HSI;
  144:Core/Src/main.c ****   RCC_OscInitStruct.HSIState = RCC_HSI_ON;
  145:Core/Src/main.c ****   RCC_OscInitStruct.HSICalibrationValue = RCC_HSICALIBRATION_DEFAULT;
-ARM GAS  C:\Users\samue\AppData\Local\Temp\cceJTHmx.s 			page 4
+ARM GAS  C:\Users\samue\AppData\Local\Temp\ccjDAaBW.s 			page 4
 
 
  146:Core/Src/main.c ****   RCC_OscInitStruct.PLL.PLLState = RCC_PLL_ON;
@@ -238,7 +238,7 @@ ARM GAS  C:\Users\samue\AppData\Local\Temp\cceJTHmx.s 			page 1
  200:Core/Src/main.c **** 
  201:Core/Src/main.c ****   /* USER CODE END I2C1_Init 2 */
  202:Core/Src/main.c **** 
-ARM GAS  C:\Users\samue\AppData\Local\Temp\cceJTHmx.s 			page 5
+ARM GAS  C:\Users\samue\AppData\Local\Temp\ccjDAaBW.s 			page 5
 
 
  203:Core/Src/main.c **** }
@@ -298,7 +298,7 @@ ARM GAS  C:\Users\samue\AppData\Local\Temp\cceJTHmx.s 			page 1
  257:Core/Src/main.c ****   /* USER CODE END USART2_Init 1 */
  258:Core/Src/main.c ****   huart2.Instance = USART2;
  259:Core/Src/main.c ****   huart2.Init.BaudRate = 115200;
-ARM GAS  C:\Users\samue\AppData\Local\Temp\cceJTHmx.s 			page 6
+ARM GAS  C:\Users\samue\AppData\Local\Temp\ccjDAaBW.s 			page 6
 
 
  260:Core/Src/main.c ****   huart2.Init.WordLength = UART_WORDLENGTH_8B;
@@ -358,7 +358,7 @@ ARM GAS  C:\Users\samue\AppData\Local\Temp\cceJTHmx.s 			page 1
   43              		.cfi_def_cfa_offset 64
  299:Core/Src/main.c ****   GPIO_InitTypeDef GPIO_InitStruct = {0};
   44              		.loc 1 299 3 view .LVU1
-ARM GAS  C:\Users\samue\AppData\Local\Temp\cceJTHmx.s 			page 7
+ARM GAS  C:\Users\samue\AppData\Local\Temp\ccjDAaBW.s 			page 7
 
 
   45              		.loc 1 299 20 is_stmt 0 view .LVU2
@@ -418,7 +418,7 @@ ARM GAS  C:\Users\samue\AppData\Local\Temp\cceJTHmx.s 			page 1
   94 0046 1A6B     		ldr	r2, [r3, #48]
   95 0048 02F00102 		and	r2, r2, #1
   96 004c 0392     		str	r2, [sp, #12]
-ARM GAS  C:\Users\samue\AppData\Local\Temp\cceJTHmx.s 			page 8
+ARM GAS  C:\Users\samue\AppData\Local\Temp\ccjDAaBW.s 			page 8
 
 
   97              		.loc 1 304 3 view .LVU19
@@ -478,7 +478,7 @@ ARM GAS  C:\Users\samue\AppData\Local\Temp\cceJTHmx.s 			page 1
  139              		.loc 1 316 3 is_stmt 1 view .LVU33
  140              		.loc 1 316 24 is_stmt 0 view .LVU34
  141 008c 0794     		str	r4, [sp, #28]
-ARM GAS  C:\Users\samue\AppData\Local\Temp\cceJTHmx.s 			page 9
+ARM GAS  C:\Users\samue\AppData\Local\Temp\ccjDAaBW.s 			page 9
 
 
  317:Core/Src/main.c ****   HAL_GPIO_Init(B1_GPIO_Port, &GPIO_InitStruct);
@@ -538,7 +538,7 @@ ARM GAS  C:\Users\samue\AppData\Local\Temp\cceJTHmx.s 			page 1
  182              	.LVL4:
  331:Core/Src/main.c **** 
  332:Core/Src/main.c ****   /*Configure GPIO pin : PB13 */
-ARM GAS  C:\Users\samue\AppData\Local\Temp\cceJTHmx.s 			page 10
+ARM GAS  C:\Users\samue\AppData\Local\Temp\ccjDAaBW.s 			page 10
 
 
  333:Core/Src/main.c ****   GPIO_InitStruct.Pin = GPIO_PIN_13;
@@ -598,7 +598,7 @@ ARM GAS  C:\Users\samue\AppData\Local\Temp\cceJTHmx.s 			page 1
  227              		.align	1
  228              		.syntax unified
  229              		.thumb
-ARM GAS  C:\Users\samue\AppData\Local\Temp\cceJTHmx.s 			page 11
+ARM GAS  C:\Users\samue\AppData\Local\Temp\ccjDAaBW.s 			page 11
 
 
  230              		.thumb_func
@@ -658,7 +658,7 @@ ARM GAS  C:\Users\samue\AppData\Local\Temp\cceJTHmx.s 			page 1
  275              		.cfi_def_cfa_offset 4
  276              		@ sp needed
  277 002c 5DF804FB 		ldr	pc, [sp], #4
-ARM GAS  C:\Users\samue\AppData\Local\Temp\cceJTHmx.s 			page 12
+ARM GAS  C:\Users\samue\AppData\Local\Temp\ccjDAaBW.s 			page 12
 
 
  278              	.L8:
@@ -718,7 +718,7 @@ ARM GAS  C:\Users\samue\AppData\Local\Temp\cceJTHmx.s 			page 1
   17:Drivers/CMSIS/Include/cmsis_gcc.h ****  *
   18:Drivers/CMSIS/Include/cmsis_gcc.h ****  * Unless required by applicable law or agreed to in writing, software
   19:Drivers/CMSIS/Include/cmsis_gcc.h ****  * distributed under the License is distributed on an AS IS BASIS, WITHOUT
-ARM GAS  C:\Users\samue\AppData\Local\Temp\cceJTHmx.s 			page 13
+ARM GAS  C:\Users\samue\AppData\Local\Temp\ccjDAaBW.s 			page 13
 
 
   20:Drivers/CMSIS/Include/cmsis_gcc.h ****  * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -778,7 +778,7 @@ ARM GAS  C:\Users\samue\AppData\Local\Temp\cceJTHmx.s 			page 1
   74:Drivers/CMSIS/Include/cmsis_gcc.h ****   struct __attribute__((packed)) T_UINT32 { uint32_t v; };
   75:Drivers/CMSIS/Include/cmsis_gcc.h ****   #pragma GCC diagnostic pop
   76:Drivers/CMSIS/Include/cmsis_gcc.h ****   #define __UNALIGNED_UINT32(x)                  (((struct T_UINT32 *)(x))->v)
-ARM GAS  C:\Users\samue\AppData\Local\Temp\cceJTHmx.s 			page 14
+ARM GAS  C:\Users\samue\AppData\Local\Temp\ccjDAaBW.s 			page 14
 
 
   77:Drivers/CMSIS/Include/cmsis_gcc.h **** #endif
@@ -838,7 +838,7 @@ ARM GAS  C:\Users\samue\AppData\Local\Temp\cceJTHmx.s 			page 1
  131:Drivers/CMSIS/Include/cmsis_gcc.h ****   __ASM volatile ("cpsie i" : : : "memory");
  132:Drivers/CMSIS/Include/cmsis_gcc.h **** }
  133:Drivers/CMSIS/Include/cmsis_gcc.h **** 
-ARM GAS  C:\Users\samue\AppData\Local\Temp\cceJTHmx.s 			page 15
+ARM GAS  C:\Users\samue\AppData\Local\Temp\ccjDAaBW.s 			page 15
 
 
  134:Drivers/CMSIS/Include/cmsis_gcc.h **** 
@@ -898,7 +898,7 @@ ARM GAS  C:\Users\samue\AppData\Local\Temp\cceJTHmx.s 			page 1
  344 0006 0360     		str	r3, [r0]
  259:Core/Src/main.c ****   huart2.Init.WordLength = UART_WORDLENGTH_8B;
  345              		.loc 1 259 3 is_stmt 1 view .LVU84
-ARM GAS  C:\Users\samue\AppData\Local\Temp\cceJTHmx.s 			page 16
+ARM GAS  C:\Users\samue\AppData\Local\Temp\ccjDAaBW.s 			page 16
 
 
  259:Core/Src/main.c ****   huart2.Init.WordLength = UART_WORDLENGTH_8B;
@@ -958,7 +958,7 @@ ARM GAS  C:\Users\samue\AppData\Local\Temp\cceJTHmx.s 			page 1
  382 002a 00BF     		.align	2
  383              	.L15:
  384 002c 00000000 		.word	.LANCHOR0
-ARM GAS  C:\Users\samue\AppData\Local\Temp\cceJTHmx.s 			page 17
+ARM GAS  C:\Users\samue\AppData\Local\Temp\ccjDAaBW.s 			page 17
 
 
  385 0030 00440040 		.word	1073759232
@@ -1018,7 +1018,7 @@ ARM GAS  C:\Users\samue\AppData\Local\Temp\cceJTHmx.s 			page 1
  428 0018 4361     		str	r3, [r0, #20]
  192:Core/Src/main.c ****   hi2c1.Init.GeneralCallMode = I2C_GENERALCALL_DISABLE;
  429              		.loc 1 192 3 is_stmt 1 view .LVU116
-ARM GAS  C:\Users\samue\AppData\Local\Temp\cceJTHmx.s 			page 18
+ARM GAS  C:\Users\samue\AppData\Local\Temp\ccjDAaBW.s 			page 18
 
 
  192:Core/Src/main.c ****   hi2c1.Init.GeneralCallMode = I2C_GENERALCALL_DISABLE;
@@ -1078,7 +1078,7 @@ ARM GAS  C:\Users\samue\AppData\Local\Temp\cceJTHmx.s 			page 1
  475              		.cfi_offset 14, -4
  221:Core/Src/main.c ****   hspi2.Init.Mode = SPI_MODE_MASTER;
  476              		.loc 1 221 3 view .LVU128
-ARM GAS  C:\Users\samue\AppData\Local\Temp\cceJTHmx.s 			page 19
+ARM GAS  C:\Users\samue\AppData\Local\Temp\ccjDAaBW.s 			page 19
 
 
  221:Core/Src/main.c ****   hspi2.Init.Mode = SPI_MODE_MASTER;
@@ -1138,7 +1138,7 @@ ARM GAS  C:\Users\samue\AppData\Local\Temp\cceJTHmx.s 			page 1
  231:Core/Src/main.c ****   hspi2.Init.CRCPolynomial = 10;
  512              		.loc 1 231 3 is_stmt 1 view .LVU148
  231:Core/Src/main.c ****   hspi2.Init.CRCPolynomial = 10;
-ARM GAS  C:\Users\samue\AppData\Local\Temp\cceJTHmx.s 			page 20
+ARM GAS  C:\Users\samue\AppData\Local\Temp\ccjDAaBW.s 			page 20
 
 
  513              		.loc 1 231 29 is_stmt 0 view .LVU149
@@ -1198,7 +1198,7 @@ ARM GAS  C:\Users\samue\AppData\Local\Temp\cceJTHmx.s 			page 1
  133:Core/Src/main.c ****   RCC_ClkInitTypeDef RCC_ClkInitStruct = {0};
  560              		.loc 1 133 22 is_stmt 0 view .LVU159
  561 0004 3022     		movs	r2, #48
-ARM GAS  C:\Users\samue\AppData\Local\Temp\cceJTHmx.s 			page 21
+ARM GAS  C:\Users\samue\AppData\Local\Temp\ccjDAaBW.s 			page 21
 
 
  562 0006 0021     		movs	r1, #0
@@ -1258,7 +1258,7 @@ ARM GAS  C:\Users\samue\AppData\Local\Temp\cceJTHmx.s 			page 1
  139:Core/Src/main.c ****   /** Initializes the RCC Oscillators according to the specified parameters
  604              		.loc 1 139 3 view .LVU172
  605 0044 029A     		ldr	r2, [sp, #8]
-ARM GAS  C:\Users\samue\AppData\Local\Temp\cceJTHmx.s 			page 22
+ARM GAS  C:\Users\samue\AppData\Local\Temp\ccjDAaBW.s 			page 22
 
 
  606              	.LBE12:
@@ -1318,7 +1318,7 @@ ARM GAS  C:\Users\samue\AppData\Local\Temp\cceJTHmx.s 			page 1
  640              		.loc 1 152 3 is_stmt 1 view .LVU192
  152:Core/Src/main.c ****   {
  641              		.loc 1 152 7 is_stmt 0 view .LVU193
-ARM GAS  C:\Users\samue\AppData\Local\Temp\cceJTHmx.s 			page 23
+ARM GAS  C:\Users\samue\AppData\Local\Temp\ccjDAaBW.s 			page 23
 
 
  642 0064 08A8     		add	r0, sp, #32
@@ -1378,7 +1378,7 @@ ARM GAS  C:\Users\samue\AppData\Local\Temp\cceJTHmx.s 			page 1
  681              	.LCFI12:
  682              		.cfi_restore_state
  154:Core/Src/main.c ****   }
-ARM GAS  C:\Users\samue\AppData\Local\Temp\cceJTHmx.s 			page 24
+ARM GAS  C:\Users\samue\AppData\Local\Temp\ccjDAaBW.s 			page 24
 
 
  683              		.loc 1 154 5 is_stmt 1 view .LVU209
@@ -1438,7 +1438,7 @@ ARM GAS  C:\Users\samue\AppData\Local\Temp\cceJTHmx.s 			page 1
  106:Core/Src/main.c ****   MX_SPI2_Init();
  732              		.loc 1 106 3 view .LVU217
  733 0016 FFF7FEFF 		bl	MX_I2C1_Init
-ARM GAS  C:\Users\samue\AppData\Local\Temp\cceJTHmx.s 			page 25
+ARM GAS  C:\Users\samue\AppData\Local\Temp\ccjDAaBW.s 			page 25
 
 
  734              	.LVL26:
@@ -1498,7 +1498,7 @@ ARM GAS  C:\Users\samue\AppData\Local\Temp\cceJTHmx.s 			page 1
  780              	huart2:
  781 0000 00000000 		.space	68
  781      00000000 
-ARM GAS  C:\Users\samue\AppData\Local\Temp\cceJTHmx.s 			page 26
+ARM GAS  C:\Users\samue\AppData\Local\Temp\ccjDAaBW.s 			page 26
 
 
  781      00000000 
@@ -1522,41 +1522,41 @@ ARM GAS  C:\Users\samue\AppData\Local\Temp\cceJTHmx.s 			page 1
  797              		.file 16 "FATFS/App/fatfs.h"
  798              		.file 17 "Core/Inc/main_functions.h"
  799              		.file 18 "<built-in>"
-ARM GAS  C:\Users\samue\AppData\Local\Temp\cceJTHmx.s 			page 27
+ARM GAS  C:\Users\samue\AppData\Local\Temp\ccjDAaBW.s 			page 27
 
 
 DEFINED SYMBOLS
                             *ABS*:00000000 main.c
-C:\Users\samue\AppData\Local\Temp\cceJTHmx.s:20     .text.MX_GPIO_Init:00000000 $t
-C:\Users\samue\AppData\Local\Temp\cceJTHmx.s:25     .text.MX_GPIO_Init:00000000 MX_GPIO_Init
-C:\Users\samue\AppData\Local\Temp\cceJTHmx.s:219    .text.MX_GPIO_Init:000000e8 $d
-C:\Users\samue\AppData\Local\Temp\cceJTHmx.s:227    .text.MX_DMA_Init:00000000 $t
-C:\Users\samue\AppData\Local\Temp\cceJTHmx.s:232    .text.MX_DMA_Init:00000000 MX_DMA_Init
-C:\Users\samue\AppData\Local\Temp\cceJTHmx.s:281    .text.MX_DMA_Init:00000030 $d
-C:\Users\samue\AppData\Local\Temp\cceJTHmx.s:286    .text.Error_Handler:00000000 $t
-C:\Users\samue\AppData\Local\Temp\cceJTHmx.s:292    .text.Error_Handler:00000000 Error_Handler
-C:\Users\samue\AppData\Local\Temp\cceJTHmx.s:324    .text.MX_USART2_UART_Init:00000000 $t
-C:\Users\samue\AppData\Local\Temp\cceJTHmx.s:329    .text.MX_USART2_UART_Init:00000000 MX_USART2_UART_Init
-C:\Users\samue\AppData\Local\Temp\cceJTHmx.s:384    .text.MX_USART2_UART_Init:0000002c $d
-C:\Users\samue\AppData\Local\Temp\cceJTHmx.s:390    .text.MX_I2C1_Init:00000000 $t
-C:\Users\samue\AppData\Local\Temp\cceJTHmx.s:395    .text.MX_I2C1_Init:00000000 MX_I2C1_Init
-C:\Users\samue\AppData\Local\Temp\cceJTHmx.s:453    .text.MX_I2C1_Init:0000002c $d
-C:\Users\samue\AppData\Local\Temp\cceJTHmx.s:460    .text.MX_SPI2_Init:00000000 $t
-C:\Users\samue\AppData\Local\Temp\cceJTHmx.s:465    .text.MX_SPI2_Init:00000000 MX_SPI2_Init
-C:\Users\samue\AppData\Local\Temp\cceJTHmx.s:534    .text.MX_SPI2_Init:00000038 $d
-C:\Users\samue\AppData\Local\Temp\cceJTHmx.s:540    .text.SystemClock_Config:00000000 $t
-C:\Users\samue\AppData\Local\Temp\cceJTHmx.s:546    .text.SystemClock_Config:00000000 SystemClock_Config
-C:\Users\samue\AppData\Local\Temp\cceJTHmx.s:693    .text.SystemClock_Config:00000098 $d
-C:\Users\samue\AppData\Local\Temp\cceJTHmx.s:699    .text.main:00000000 $t
-C:\Users\samue\AppData\Local\Temp\cceJTHmx.s:705    .text.main:00000000 main
-C:\Users\samue\AppData\Local\Temp\cceJTHmx.s:759    .bss.hdma_usart2_tx:00000000 hdma_usart2_tx
-C:\Users\samue\AppData\Local\Temp\cceJTHmx.s:780    .bss.huart2:00000000 huart2
-C:\Users\samue\AppData\Local\Temp\cceJTHmx.s:773    .bss.hspi2:00000000 hspi2
-C:\Users\samue\AppData\Local\Temp\cceJTHmx.s:766    .bss.hi2c1:00000000 hi2c1
-C:\Users\samue\AppData\Local\Temp\cceJTHmx.s:756    .bss.hdma_usart2_tx:00000000 $d
-C:\Users\samue\AppData\Local\Temp\cceJTHmx.s:762    .bss.hi2c1:00000000 $d
-C:\Users\samue\AppData\Local\Temp\cceJTHmx.s:769    .bss.hspi2:00000000 $d
-C:\Users\samue\AppData\Local\Temp\cceJTHmx.s:776    .bss.huart2:00000000 $d
+C:\Users\samue\AppData\Local\Temp\ccjDAaBW.s:20     .text.MX_GPIO_Init:00000000 $t
+C:\Users\samue\AppData\Local\Temp\ccjDAaBW.s:25     .text.MX_GPIO_Init:00000000 MX_GPIO_Init
+C:\Users\samue\AppData\Local\Temp\ccjDAaBW.s:219    .text.MX_GPIO_Init:000000e8 $d
+C:\Users\samue\AppData\Local\Temp\ccjDAaBW.s:227    .text.MX_DMA_Init:00000000 $t
+C:\Users\samue\AppData\Local\Temp\ccjDAaBW.s:232    .text.MX_DMA_Init:00000000 MX_DMA_Init
+C:\Users\samue\AppData\Local\Temp\ccjDAaBW.s:281    .text.MX_DMA_Init:00000030 $d
+C:\Users\samue\AppData\Local\Temp\ccjDAaBW.s:286    .text.Error_Handler:00000000 $t
+C:\Users\samue\AppData\Local\Temp\ccjDAaBW.s:292    .text.Error_Handler:00000000 Error_Handler
+C:\Users\samue\AppData\Local\Temp\ccjDAaBW.s:324    .text.MX_USART2_UART_Init:00000000 $t
+C:\Users\samue\AppData\Local\Temp\ccjDAaBW.s:329    .text.MX_USART2_UART_Init:00000000 MX_USART2_UART_Init
+C:\Users\samue\AppData\Local\Temp\ccjDAaBW.s:384    .text.MX_USART2_UART_Init:0000002c $d
+C:\Users\samue\AppData\Local\Temp\ccjDAaBW.s:390    .text.MX_I2C1_Init:00000000 $t
+C:\Users\samue\AppData\Local\Temp\ccjDAaBW.s:395    .text.MX_I2C1_Init:00000000 MX_I2C1_Init
+C:\Users\samue\AppData\Local\Temp\ccjDAaBW.s:453    .text.MX_I2C1_Init:0000002c $d
+C:\Users\samue\AppData\Local\Temp\ccjDAaBW.s:460    .text.MX_SPI2_Init:00000000 $t
+C:\Users\samue\AppData\Local\Temp\ccjDAaBW.s:465    .text.MX_SPI2_Init:00000000 MX_SPI2_Init
+C:\Users\samue\AppData\Local\Temp\ccjDAaBW.s:534    .text.MX_SPI2_Init:00000038 $d
+C:\Users\samue\AppData\Local\Temp\ccjDAaBW.s:540    .text.SystemClock_Config:00000000 $t
+C:\Users\samue\AppData\Local\Temp\ccjDAaBW.s:546    .text.SystemClock_Config:00000000 SystemClock_Config
+C:\Users\samue\AppData\Local\Temp\ccjDAaBW.s:693    .text.SystemClock_Config:00000098 $d
+C:\Users\samue\AppData\Local\Temp\ccjDAaBW.s:699    .text.main:00000000 $t
+C:\Users\samue\AppData\Local\Temp\ccjDAaBW.s:705    .text.main:00000000 main
+C:\Users\samue\AppData\Local\Temp\ccjDAaBW.s:759    .bss.hdma_usart2_tx:00000000 hdma_usart2_tx
+C:\Users\samue\AppData\Local\Temp\ccjDAaBW.s:780    .bss.huart2:00000000 huart2
+C:\Users\samue\AppData\Local\Temp\ccjDAaBW.s:773    .bss.hspi2:00000000 hspi2
+C:\Users\samue\AppData\Local\Temp\ccjDAaBW.s:766    .bss.hi2c1:00000000 hi2c1
+C:\Users\samue\AppData\Local\Temp\ccjDAaBW.s:756    .bss.hdma_usart2_tx:00000000 $d
+C:\Users\samue\AppData\Local\Temp\ccjDAaBW.s:762    .bss.hi2c1:00000000 $d
+C:\Users\samue\AppData\Local\Temp\ccjDAaBW.s:769    .bss.hspi2:00000000 $d
+C:\Users\samue\AppData\Local\Temp\ccjDAaBW.s:776    .bss.huart2:00000000 $d
 
 UNDEFINED SYMBOLS
 HAL_GPIO_WritePin

@@ -1,4 +1,4 @@
-ARM GAS  C:\Users\samue\AppData\Local\Temp\ccpGuivd.s 			page 1
+ARM GAS  C:\Users\samue\AppData\Local\Temp\ccev3Cfh.s 			page 1
 
 
    1              		.cpu cortex-m4
@@ -58,7 +58,7 @@ ARM GAS  C:\Users\samue\AppData\Local\Temp\ccpGuivd.s 			page 1
    8:Core/Src/main_functions.c ****  */
    9:Core/Src/main_functions.c **** 
   10:Core/Src/main_functions.c **** /* 
-ARM GAS  C:\Users\samue\AppData\Local\Temp\ccpGuivd.s 			page 2
+ARM GAS  C:\Users\samue\AppData\Local\Temp\ccev3Cfh.s 			page 2
 
 
   11:Core/Src/main_functions.c ****  * ---------------------------------------------------------------------------------------------
@@ -118,7 +118,7 @@ ARM GAS  C:\Users\samue\AppData\Local\Temp\ccpGuivd.s 			page 1
   65:Core/Src/main_functions.c **** char Gx_string[] = "Gx=       ";
   66:Core/Src/main_functions.c **** char Gy_string[] = "Gy=       ";
   67:Core/Src/main_functions.c **** char Gz_string[] = "Gz=       ";
-ARM GAS  C:\Users\samue\AppData\Local\Temp\ccpGuivd.s 			page 3
+ARM GAS  C:\Users\samue\AppData\Local\Temp\ccev3Cfh.s 			page 3
 
 
   68:Core/Src/main_functions.c **** 
@@ -178,7 +178,7 @@ ARM GAS  C:\Users\samue\AppData\Local\Temp\ccpGuivd.s 			page 1
  122:Core/Src/main_functions.c ****     // Mount SD card
  123:Core/Src/main_functions.c ****     fresult = f_mount(&fs, "", 0);
  124:Core/Src/main_functions.c ****     if (fresult != FR_OK) {
-ARM GAS  C:\Users\samue\AppData\Local\Temp\ccpGuivd.s 			page 4
+ARM GAS  C:\Users\samue\AppData\Local\Temp\ccev3Cfh.s 			page 4
 
 
  125:Core/Src/main_functions.c ****         send_uart("Error in mounting SD card.\r\n");
@@ -238,7 +238,7 @@ ARM GAS  C:\Users\samue\AppData\Local\Temp\ccpGuivd.s 			page 1
  179:Core/Src/main_functions.c **** 
  180:Core/Src/main_functions.c ****     // Read data from file and save in buffer 
  181:Core/Src/main_functions.c ****     f_read(&fil, buffer, f_size(&fil), &br);
-ARM GAS  C:\Users\samue\AppData\Local\Temp\ccpGuivd.s 			page 5
+ARM GAS  C:\Users\samue\AppData\Local\Temp\ccev3Cfh.s 			page 5
 
 
  182:Core/Src/main_functions.c ****     // sizeof(buffer) is size of data in the file 
@@ -283,22 +283,22 @@ ARM GAS  C:\Users\samue\AppData\Local\Temp\ccpGuivd.s 			page 1
  221:Core/Src/main_functions.c **** 
  222:Core/Src/main_functions.c ****     fresult = f_unlink("/file1.txt");
  223:Core/Src/main_functions.c ****     if (fresult == FR_OK) {
- 224:Core/Src/main_functions.c ****         send_uart("file1.txt removed successfully\n");
+ 224:Core/Src/main_functions.c ****         send_uart("file1.txt removed successfully\r\n");
  225:Core/Src/main_functions.c ****     }
  226:Core/Src/main_functions.c **** 
  227:Core/Src/main_functions.c ****     fresult = f_unlink("/file2.txt");
  228:Core/Src/main_functions.c ****     if (fresult == FR_OK) {
- 229:Core/Src/main_functions.c ****         send_uart("file2.txt removed successfully\n");
+ 229:Core/Src/main_functions.c ****         send_uart("file2.txt removed successfully\r\n");
  230:Core/Src/main_functions.c ****     }
  231:Core/Src/main_functions.c **** 
  232:Core/Src/main_functions.c ****     // Unmount SD card 
  233:Core/Src/main_functions.c ****     fresult = f_mount(NULL, "/", 1);
  234:Core/Src/main_functions.c ****     if (fresult == FR_OK) {
- 235:Core/Src/main_functions.c ****         send_uart("SD card unmounted successfully\n");
+ 235:Core/Src/main_functions.c ****         send_uart("SD card unmounted successfully\r\n");
  236:Core/Src/main_functions.c ****     }
  237:Core/Src/main_functions.c **** 
  238:Core/Src/main_functions.c **** 
-ARM GAS  C:\Users\samue\AppData\Local\Temp\ccpGuivd.s 			page 6
+ARM GAS  C:\Users\samue\AppData\Local\Temp\ccev3Cfh.s 			page 6
 
 
  239:Core/Src/main_functions.c ****     // Main loop 
@@ -358,7 +358,7 @@ ARM GAS  C:\Users\samue\AppData\Local\Temp\ccpGuivd.s 			page 1
  293:Core/Src/main_functions.c **** 
  294:Core/Src/main_functions.c **** 	accel_data_value[3] = abs((int)accel_data_p[1]);
  295:Core/Src/main_functions.c **** 	accel_data_value[4] = abs((int)(10*accel_data_p[1])  % 10);
-ARM GAS  C:\Users\samue\AppData\Local\Temp\ccpGuivd.s 			page 7
+ARM GAS  C:\Users\samue\AppData\Local\Temp\ccev3Cfh.s 			page 7
 
 
  296:Core/Src/main_functions.c ****     accel_data_value[5] = abs((int)(100*accel_data_p[1]) % 10);
@@ -418,7 +418,7 @@ ARM GAS  C:\Users\samue\AppData\Local\Temp\ccpGuivd.s 			page 1
  350:Core/Src/main_functions.c ****         sprintf(buf, "%d.%d%d", data[index], data[index+1], data[index+2]);
  351:Core/Src/main_functions.c ****     }
  352:Core/Src/main_functions.c ****     else {
-ARM GAS  C:\Users\samue\AppData\Local\Temp\ccpGuivd.s 			page 8
+ARM GAS  C:\Users\samue\AppData\Local\Temp\ccev3Cfh.s 			page 8
 
 
  353:Core/Src/main_functions.c ****         line_pos = pos3;
@@ -478,7 +478,7 @@ ARM GAS  C:\Users\samue\AppData\Local\Temp\ccpGuivd.s 			page 1
   73 0022 9420     		movs	r0, #148
   74 0024 FFF7FEFF 		bl	lcd_send_cmd
   75              	.LVL4:
-ARM GAS  C:\Users\samue\AppData\Local\Temp\ccpGuivd.s 			page 9
+ARM GAS  C:\Users\samue\AppData\Local\Temp\ccev3Cfh.s 			page 9
 
 
  373:Core/Src/main_functions.c **** 	lcd_send_string("zero position");
@@ -538,7 +538,7 @@ ARM GAS  C:\Users\samue\AppData\Local\Temp\ccpGuivd.s 			page 1
  120              	.LCFI1:
  121              		.cfi_def_cfa_offset 8
  122              		.cfi_offset 4, -8
-ARM GAS  C:\Users\samue\AppData\Local\Temp\ccpGuivd.s 			page 10
+ARM GAS  C:\Users\samue\AppData\Local\Temp\ccev3Cfh.s 			page 10
 
 
  123              		.cfi_offset 14, -4
@@ -598,7 +598,7 @@ ARM GAS  C:\Users\samue\AppData\Local\Temp\ccpGuivd.s 			page 1
  166              		.loc 1 388 15 view .LVU30
  167 003c 0D4B     		ldr	r3, .L9+24
  168 003e 1860     		str	r0, [r3]
-ARM GAS  C:\Users\samue\AppData\Local\Temp\ccpGuivd.s 			page 11
+ARM GAS  C:\Users\samue\AppData\Local\Temp\ccev3Cfh.s 			page 11
 
 
  389:Core/Src/main_functions.c **** 
@@ -658,7 +658,7 @@ ARM GAS  C:\Users\samue\AppData\Local\Temp\ccpGuivd.s 			page 1
  217              	.LFB134:
  258:Core/Src/main_functions.c ****     int i = 0;
  218              		.loc 1 258 25 is_stmt 1 view -0
-ARM GAS  C:\Users\samue\AppData\Local\Temp\ccpGuivd.s 			page 12
+ARM GAS  C:\Users\samue\AppData\Local\Temp\ccev3Cfh.s 			page 12
 
 
  219              		.cfi_startproc
@@ -718,7 +718,7 @@ ARM GAS  C:\Users\samue\AppData\Local\Temp\ccpGuivd.s 			page 1
  262              		.loc 1 265 21 is_stmt 1 view -0
  263              		.cfi_startproc
  264              		@ args = 0, pretend = 0, frame = 0
-ARM GAS  C:\Users\samue\AppData\Local\Temp\ccpGuivd.s 			page 13
+ARM GAS  C:\Users\samue\AppData\Local\Temp\ccev3Cfh.s 			page 13
 
 
  265              		@ frame_needed = 0, uses_anonymous_args = 0
@@ -778,7 +778,7 @@ ARM GAS  C:\Users\samue\AppData\Local\Temp\ccpGuivd.s 			page 1
  310              	.LFB136:
  272:Core/Src/main_functions.c ****     uint8_t len = strlen(string);
  311              		.loc 1 272 30 is_stmt 1 view -0
-ARM GAS  C:\Users\samue\AppData\Local\Temp\ccpGuivd.s 			page 14
+ARM GAS  C:\Users\samue\AppData\Local\Temp\ccev3Cfh.s 			page 14
 
 
  312              		.cfi_startproc
@@ -838,7 +838,7 @@ ARM GAS  C:\Users\samue\AppData\Local\Temp\ccpGuivd.s 			page 1
  355      6E74696E 
  355      67205344 
  356 002d 000000   		.align	2
-ARM GAS  C:\Users\samue\AppData\Local\Temp\ccpGuivd.s 			page 15
+ARM GAS  C:\Users\samue\AppData\Local\Temp\ccev3Cfh.s 			page 15
 
 
  357              	.LC7:
@@ -898,7 +898,7 @@ ARM GAS  C:\Users\samue\AppData\Local\Temp\ccpGuivd.s 			page 1
  383 011d 00       		.ascii	"\000"
  384 011e 0000     		.align	2
  385              	.LC15:
-ARM GAS  C:\Users\samue\AppData\Local\Temp\ccpGuivd.s 			page 16
+ARM GAS  C:\Users\samue\AppData\Local\Temp\ccev3Cfh.s 			page 16
 
 
  386 0120 46696C65 		.ascii	"File2.txt created and data is written\015\012\000"
@@ -921,29 +921,29 @@ ARM GAS  C:\Users\samue\AppData\Local\Temp\ccpGuivd.s 			page 1
  393      787400
  394 0187 00       		.align	2
  395              	.LC18:
- 396 0188 66696C65 		.ascii	"file1.txt removed successfully\012\000"
+ 396 0188 66696C65 		.ascii	"file1.txt removed successfully\015\012\000"
  396      312E7478 
  396      74207265 
  396      6D6F7665 
  396      64207375 
- 397              		.align	2
+ 397 01a9 000000   		.align	2
  398              	.LC19:
- 399 01a8 2F66696C 		.ascii	"/file2.txt\000"
+ 399 01ac 2F66696C 		.ascii	"/file2.txt\000"
  399      65322E74 
  399      787400
- 400 01b3 00       		.align	2
+ 400 01b7 00       		.align	2
  401              	.LC20:
- 402 01b4 66696C65 		.ascii	"file2.txt removed successfully\012\000"
+ 402 01b8 66696C65 		.ascii	"file2.txt removed successfully\015\012\000"
  402      322E7478 
  402      74207265 
  402      6D6F7665 
  402      64207375 
- 403              		.align	2
+ 403 01d9 000000   		.align	2
  404              	.LC21:
- 405 01d4 2F00     		.ascii	"/\000"
- 406 01d6 0000     		.align	2
+ 405 01dc 2F00     		.ascii	"/\000"
+ 406 01de 0000     		.align	2
  407              	.LC22:
- 408 01d8 53442063 		.ascii	"SD card unmounted successfully\012\000"
+ 408 01e0 53442063 		.ascii	"SD card unmounted successfully\015\012\000"
  408      61726420 
  408      756E6D6F 
  408      756E7465 
@@ -958,7 +958,7 @@ ARM GAS  C:\Users\samue\AppData\Local\Temp\ccpGuivd.s 			page 1
  417              	.LFB133:
  110:Core/Src/main_functions.c ****      
  418              		.loc 1 110 26 is_stmt 1 view -0
-ARM GAS  C:\Users\samue\AppData\Local\Temp\ccpGuivd.s 			page 17
+ARM GAS  C:\Users\samue\AppData\Local\Temp\ccev3Cfh.s 			page 17
 
 
  419              		.cfi_startproc
@@ -1018,7 +1018,7 @@ ARM GAS  C:\Users\samue\AppData\Local\Temp\ccpGuivd.s 			page 1
  124:Core/Src/main_functions.c ****         send_uart("Error in mounting SD card.\r\n");
  462              		.loc 1 124 5 is_stmt 1 view .LVU86
  124:Core/Src/main_functions.c ****         send_uart("Error in mounting SD card.\r\n");
-ARM GAS  C:\Users\samue\AppData\Local\Temp\ccpGuivd.s 			page 18
+ARM GAS  C:\Users\samue\AppData\Local\Temp\ccev3Cfh.s 			page 18
 
 
  463              		.loc 1 124 8 is_stmt 0 view .LVU87
@@ -1078,7 +1078,7 @@ ARM GAS  C:\Users\samue\AppData\Local\Temp\ccpGuivd.s 			page 1
  507              	.LVL36:
  136:Core/Src/main_functions.c ****     bufclear();
  508              		.loc 1 136 5 view .LVU98
-ARM GAS  C:\Users\samue\AppData\Local\Temp\ccpGuivd.s 			page 19
+ARM GAS  C:\Users\samue\AppData\Local\Temp\ccev3Cfh.s 			page 19
 
 
  509 0078 3046     		mov	r0, r6
@@ -1138,7 +1138,7 @@ ARM GAS  C:\Users\samue\AppData\Local\Temp\ccpGuivd.s 			page 1
  552 00ba FFF7FEFF 		bl	f_open
  553              	.LVL44:
  145:Core/Src/main_functions.c ****     // FA_OPEN_ALWAYS is used for creating the file 
-ARM GAS  C:\Users\samue\AppData\Local\Temp\ccpGuivd.s 			page 20
+ARM GAS  C:\Users\samue\AppData\Local\Temp\ccev3Cfh.s 			page 20
 
 
  554              		.loc 1 145 13 view .LVU110
@@ -1198,7 +1198,7 @@ ARM GAS  C:\Users\samue\AppData\Local\Temp\ccpGuivd.s 			page 1
  595              		.loc 1 160 5 view .LVU123
  596 00f6 3046     		mov	r0, r6
  597 00f8 FFF7FEFF 		bl	send_uart
-ARM GAS  C:\Users\samue\AppData\Local\Temp\ccpGuivd.s 			page 21
+ARM GAS  C:\Users\samue\AppData\Local\Temp\ccev3Cfh.s 			page 21
 
 
  598              	.LVL51:
@@ -1258,7 +1258,7 @@ ARM GAS  C:\Users\samue\AppData\Local\Temp\ccpGuivd.s 			page 1
  641 0144 2046     		mov	r0, r4
  642 0146 FFF7FEFF 		bl	f_close
  643              	.LVL57:
-ARM GAS  C:\Users\samue\AppData\Local\Temp\ccpGuivd.s 			page 22
+ARM GAS  C:\Users\samue\AppData\Local\Temp\ccev3Cfh.s 			page 22
 
 
  175:Core/Src/main_functions.c **** 
@@ -1318,7 +1318,7 @@ ARM GAS  C:\Users\samue\AppData\Local\Temp\ccpGuivd.s 			page 1
  685              		.loc 1 200 15 is_stmt 0 view .LVU147
  686 0184 E168     		ldr	r1, [r4, #12]
  687 0186 2046     		mov	r0, r4
-ARM GAS  C:\Users\samue\AppData\Local\Temp\ccpGuivd.s 			page 23
+ARM GAS  C:\Users\samue\AppData\Local\Temp\ccev3Cfh.s 			page 23
 
 
  688 0188 FFF7FEFF 		bl	f_lseek
@@ -1378,7 +1378,7 @@ ARM GAS  C:\Users\samue\AppData\Local\Temp\ccpGuivd.s 			page 1
  730              	.LVL72:
  217:Core/Src/main_functions.c **** 
  731              		.loc 1 217 5 view .LVU160
-ARM GAS  C:\Users\samue\AppData\Local\Temp\ccpGuivd.s 			page 24
+ARM GAS  C:\Users\samue\AppData\Local\Temp\ccev3Cfh.s 			page 24
 
 
  732 01c6 FFF7FEFF 		bl	bufclear
@@ -1393,9 +1393,9 @@ ARM GAS  C:\Users\samue\AppData\Local\Temp\ccpGuivd.s 			page 1
  222:Core/Src/main_functions.c ****     if (fresult == FR_OK) {
  739              		.loc 1 222 13 view .LVU163
  740 01d0 3870     		strb	r0, [r7]
- 223:Core/Src/main_functions.c ****         send_uart("file1.txt removed successfully\n");
+ 223:Core/Src/main_functions.c ****         send_uart("file1.txt removed successfully\r\n");
  741              		.loc 1 223 5 is_stmt 1 view .LVU164
- 223:Core/Src/main_functions.c ****         send_uart("file1.txt removed successfully\n");
+ 223:Core/Src/main_functions.c ****         send_uart("file1.txt removed successfully\r\n");
  742              		.loc 1 223 8 is_stmt 0 view .LVU165
  743 01d2 38B3     		cbz	r0, .L31
  744              	.L26:
@@ -1410,9 +1410,9 @@ ARM GAS  C:\Users\samue\AppData\Local\Temp\ccpGuivd.s 			page 1
  750              		.loc 1 227 13 view .LVU168
  751 01da 1D4B     		ldr	r3, .L34+20
  752 01dc 1870     		strb	r0, [r3]
- 228:Core/Src/main_functions.c ****         send_uart("file2.txt removed successfully\n");
+ 228:Core/Src/main_functions.c ****         send_uart("file2.txt removed successfully\r\n");
  753              		.loc 1 228 5 is_stmt 1 view .LVU169
- 228:Core/Src/main_functions.c ****         send_uart("file2.txt removed successfully\n");
+ 228:Core/Src/main_functions.c ****         send_uart("file2.txt removed successfully\r\n");
  754              		.loc 1 228 8 is_stmt 0 view .LVU170
  755 01de 28B3     		cbz	r0, .L32
  756              	.L27:
@@ -1429,16 +1429,16 @@ ARM GAS  C:\Users\samue\AppData\Local\Temp\ccpGuivd.s 			page 1
  764              		.loc 1 233 13 view .LVU173
  765 01ea 194B     		ldr	r3, .L34+20
  766 01ec 1870     		strb	r0, [r3]
- 234:Core/Src/main_functions.c ****         send_uart("SD card unmounted successfully\n");
+ 234:Core/Src/main_functions.c ****         send_uart("SD card unmounted successfully\r\n");
  767              		.loc 1 234 5 is_stmt 1 view .LVU174
- 234:Core/Src/main_functions.c ****         send_uart("SD card unmounted successfully\n");
+ 234:Core/Src/main_functions.c ****         send_uart("SD card unmounted successfully\r\n");
  768              		.loc 1 234 8 is_stmt 0 view .LVU175
  769 01ee 08B3     		cbz	r0, .L33
  770              	.L29:
  240:Core/Src/main_functions.c **** 
  771              		.loc 1 240 5 is_stmt 1 discriminator 1 view .LVU176
  243:Core/Src/main_functions.c ****         HAL_Delay(FSM[state].time_delay);
-ARM GAS  C:\Users\samue\AppData\Local\Temp\ccpGuivd.s 			page 25
+ARM GAS  C:\Users\samue\AppData\Local\Temp\ccev3Cfh.s 			page 25
 
 
  772              		.loc 1 243 9 discriminator 1 view .LVU177
@@ -1498,7 +1498,7 @@ ARM GAS  C:\Users\samue\AppData\Local\Temp\ccpGuivd.s 			page 1
  817              	.L33:
  235:Core/Src/main_functions.c ****     }
  818              		.loc 1 235 9 view .LVU187
-ARM GAS  C:\Users\samue\AppData\Local\Temp\ccpGuivd.s 			page 26
+ARM GAS  C:\Users\samue\AppData\Local\Temp\ccev3Cfh.s 			page 26
 
 
  819 0234 1F48     		ldr	r0, .L34+120
@@ -1532,13 +1532,13 @@ ARM GAS  C:\Users\samue\AppData\Local\Temp\ccpGuivd.s 			page 1
  847 0290 00000000 		.word	.LANCHOR14
  848 0294 48010000 		.word	.LC16
  849 0298 7C010000 		.word	.LC17
- 850 029c A8010000 		.word	.LC19
- 851 02a0 D4010000 		.word	.LC21
+ 850 029c AC010000 		.word	.LC19
+ 851 02a0 DC010000 		.word	.LC21
  852 02a4 00000000 		.word	.LANCHOR15
  853 02a8 30000000 		.word	.LC7
  854 02ac 88010000 		.word	.LC18
- 855 02b0 B4010000 		.word	.LC20
- 856 02b4 D8010000 		.word	.LC22
+ 855 02b0 B8010000 		.word	.LC20
+ 856 02b4 E0010000 		.word	.LC22
  857 02b8 E4000000 		.word	.LC13
  858 02bc F0000000 		.word	.LC14
  859              		.cfi_endproc
@@ -1558,7 +1558,7 @@ ARM GAS  C:\Users\samue\AppData\Local\Temp\ccpGuivd.s 			page 1
  874              		@ args = 0, pretend = 0, frame = 0
  875              		@ frame_needed = 0, uses_anonymous_args = 0
  876              		@ link register save eliminated.
-ARM GAS  C:\Users\samue\AppData\Local\Temp\ccpGuivd.s 			page 27
+ARM GAS  C:\Users\samue\AppData\Local\Temp\ccev3Cfh.s 			page 27
 
 
  280:Core/Src/main_functions.c **** }
@@ -1618,7 +1618,7 @@ ARM GAS  C:\Users\samue\AppData\Local\Temp\ccpGuivd.s 			page 1
  925              		.cfi_offset 80, -32
  926              		.cfi_offset 81, -28
  927 0008 82B0     		sub	sp, sp, #8
-ARM GAS  C:\Users\samue\AppData\Local\Temp\ccpGuivd.s 			page 28
+ARM GAS  C:\Users\samue\AppData\Local\Temp\ccev3Cfh.s 			page 28
 
 
  928              	.LCFI6:
@@ -1678,7 +1678,7 @@ ARM GAS  C:\Users\samue\AppData\Local\Temp\ccpGuivd.s 			page 1
  970              		.loc 1 356 2 is_stmt 1 view .LVU205
  971 0052 0F4B     		ldr	r3, .L46
  972 0054 1878     		ldrb	r0, [r3]	@ zero_extendqisi2
-ARM GAS  C:\Users\samue\AppData\Local\Temp\ccpGuivd.s 			page 29
+ARM GAS  C:\Users\samue\AppData\Local\Temp\ccev3Cfh.s 			page 29
 
 
  973 0056 40F08000 		orr	r0, r0, #128
@@ -1738,7 +1738,7 @@ ARM GAS  C:\Users\samue\AppData\Local\Temp\ccpGuivd.s 			page 1
  1018 008e 00BF     		.align	2
  1019              	.L46:
  1020 0090 00000000 		.word	.LANCHOR16
-ARM GAS  C:\Users\samue\AppData\Local\Temp\ccpGuivd.s 			page 30
+ARM GAS  C:\Users\samue\AppData\Local\Temp\ccev3Cfh.s 			page 30
 
 
  1021 0094 00000000 		.word	.LC23
@@ -1798,7 +1798,7 @@ ARM GAS  C:\Users\samue\AppData\Local\Temp\ccpGuivd.s 			page 1
  287:Core/Src/main_functions.c **** 
  1070              		.loc 1 287 18 view .LVU218
  1071 0018 D24F     		ldr	r7, .L50+8
-ARM GAS  C:\Users\samue\AppData\Local\Temp\ccpGuivd.s 			page 31
+ARM GAS  C:\Users\samue\AppData\Local\Temp\ccev3Cfh.s 			page 31
 
 
  1072 001a 3860     		str	r0, [r7]
@@ -1858,7 +1858,7 @@ ARM GAS  C:\Users\samue\AppData\Local\Temp\ccpGuivd.s 			page 1
  1111              		.loc 1 292 40 view .LVU233
  1112 0066 9FEDC28A 		vldr.32	s16, .L50+20
  1113 006a 67EE887A 		vmul.f32	s15, s15, s16
-ARM GAS  C:\Users\samue\AppData\Local\Temp\ccpGuivd.s 			page 32
+ARM GAS  C:\Users\samue\AppData\Local\Temp\ccev3Cfh.s 			page 32
 
 
  292:Core/Src/main_functions.c **** 
@@ -1918,7 +1918,7 @@ ARM GAS  C:\Users\samue\AppData\Local\Temp\ccpGuivd.s 			page 1
  1154 00c2 A2EB4303 		sub	r3, r2, r3, lsl #1
  295:Core/Src/main_functions.c ****     accel_data_value[5] = abs((int)(100*accel_data_p[1]) % 10);
  1155              		.loc 1 295 24 view .LVU248
-ARM GAS  C:\Users\samue\AppData\Local\Temp\ccpGuivd.s 			page 33
+ARM GAS  C:\Users\samue\AppData\Local\Temp\ccev3Cfh.s 			page 33
 
 
  1156 00c6 002B     		cmp	r3, #0
@@ -1978,7 +1978,7 @@ ARM GAS  C:\Users\samue\AppData\Local\Temp\ccpGuivd.s 			page 1
  1195 010c D0ED027A 		vldr.32	s15, [r0, #8]
  299:Core/Src/main_functions.c ****     accel_data_value[8] = abs((int)(100*accel_data_p[2]) % 10);
  1196              		.loc 1 299 36 view .LVU264
-ARM GAS  C:\Users\samue\AppData\Local\Temp\ccpGuivd.s 			page 34
+ARM GAS  C:\Users\samue\AppData\Local\Temp\ccev3Cfh.s 			page 34
 
 
  1197 0110 67EEA87A 		vmul.f32	s15, s15, s17
@@ -2038,7 +2038,7 @@ ARM GAS  C:\Users\samue\AppData\Local\Temp\ccpGuivd.s 			page 1
  1238 0166 9FED840A 		vldr.32	s0, .L50+28
  1239 016a FFF7FEFF 		bl	MPU6050_read
  1240              	.LVL95:
-ARM GAS  C:\Users\samue\AppData\Local\Temp\ccpGuivd.s 			page 35
+ARM GAS  C:\Users\samue\AppData\Local\Temp\ccev3Cfh.s 			page 35
 
 
  303:Core/Src/main_functions.c **** 
@@ -2098,7 +2098,7 @@ ARM GAS  C:\Users\samue\AppData\Local\Temp\ccpGuivd.s 			page 1
  308:Core/Src/main_functions.c **** 
  1280              		.loc 1 308 39 view .LVU293
  1281 01ba 67EE887A 		vmul.f32	s15, s15, s16
-ARM GAS  C:\Users\samue\AppData\Local\Temp\ccpGuivd.s 			page 36
+ARM GAS  C:\Users\samue\AppData\Local\Temp\ccev3Cfh.s 			page 36
 
 
  308:Core/Src/main_functions.c **** 
@@ -2158,7 +2158,7 @@ ARM GAS  C:\Users\samue\AppData\Local\Temp\ccpGuivd.s 			page 1
  1322 0212 A2EB4303 		sub	r3, r2, r3, lsl #1
  311:Core/Src/main_functions.c ****     gyro_data_value[5] = abs((int)(100*gyro_data_p[1]) % 10);
  1323              		.loc 1 311 23 view .LVU308
-ARM GAS  C:\Users\samue\AppData\Local\Temp\ccpGuivd.s 			page 37
+ARM GAS  C:\Users\samue\AppData\Local\Temp\ccev3Cfh.s 			page 37
 
 
  1324 0216 002B     		cmp	r3, #0
@@ -2218,7 +2218,7 @@ ARM GAS  C:\Users\samue\AppData\Local\Temp\ccpGuivd.s 			page 1
  1363 025c D0ED027A 		vldr.32	s15, [r0, #8]
  315:Core/Src/main_functions.c ****     gyro_data_value[8] = abs((int)(100*gyro_data_p[2]) % 10);
  1364              		.loc 1 315 35 view .LVU324
-ARM GAS  C:\Users\samue\AppData\Local\Temp\ccpGuivd.s 			page 38
+ARM GAS  C:\Users\samue\AppData\Local\Temp\ccev3Cfh.s 			page 38
 
 
  1365 0260 67EEA87A 		vmul.f32	s15, s15, s17
@@ -2278,7 +2278,7 @@ ARM GAS  C:\Users\samue\AppData\Local\Temp\ccpGuivd.s 			page 1
  1407 02bc 304B     		ldr	r3, .L50+36
  1408 02be 0322     		movs	r2, #3
  1409 02c0 0421     		movs	r1, #4
-ARM GAS  C:\Users\samue\AppData\Local\Temp\ccpGuivd.s 			page 39
+ARM GAS  C:\Users\samue\AppData\Local\Temp\ccev3Cfh.s 			page 39
 
 
  1410 02c2 2046     		mov	r0, r4
@@ -2338,7 +2338,7 @@ ARM GAS  C:\Users\samue\AppData\Local\Temp\ccpGuivd.s 			page 1
  332:Core/Src/main_functions.c **** 
  1455              		.loc 1 332 5 view .LVU346
  1456 0318 93ED010A 		vldr.32	s0, [r3, #4]
-ARM GAS  C:\Users\samue\AppData\Local\Temp\ccpGuivd.s 			page 40
+ARM GAS  C:\Users\samue\AppData\Local\Temp\ccev3Cfh.s 			page 40
 
 
  1457 031c 0195     		str	r5, [sp, #4]
@@ -2398,7 +2398,7 @@ ARM GAS  C:\Users\samue\AppData\Local\Temp\ccpGuivd.s 			page 1
  1505 0370 0000C842 		.word	1120403456
  1506 0374 00000000 		.word	.LANCHOR5
  1507 0378 00000343 		.word	1124270080
-ARM GAS  C:\Users\samue\AppData\Local\Temp\ccpGuivd.s 			page 41
+ARM GAS  C:\Users\samue\AppData\Local\Temp\ccev3Cfh.s 			page 41
 
 
  1508 037c 00000000 		.word	.LANCHOR21
@@ -2458,7 +2458,7 @@ ARM GAS  C:\Users\samue\AppData\Local\Temp\ccpGuivd.s 			page 1
  1565              		.align	2
  1566              		.set	.LANCHOR18,. + 0
  1569              	accel_data_p:
-ARM GAS  C:\Users\samue\AppData\Local\Temp\ccpGuivd.s 			page 42
+ARM GAS  C:\Users\samue\AppData\Local\Temp\ccev3Cfh.s 			page 42
 
 
  1570 0000 00000000 		.space	4
@@ -2518,7 +2518,7 @@ ARM GAS  C:\Users\samue\AppData\Local\Temp\ccpGuivd.s 			page 1
  1627              		.set	.LANCHOR12,. + 0
  1630              	free_space:
  1631 0000 00000000 		.space	4
-ARM GAS  C:\Users\samue\AppData\Local\Temp\ccpGuivd.s 			page 43
+ARM GAS  C:\Users\samue\AppData\Local\Temp\ccev3Cfh.s 			page 43
 
 
  1632              		.section	.bss.fresult,"aw",%nobits
@@ -2578,7 +2578,7 @@ ARM GAS  C:\Users\samue\AppData\Local\Temp\ccpGuivd.s 			page 1
  1694              		.set	.LANCHOR11,. + 0
  1697              	total:
  1698 0000 00000000 		.space	4
-ARM GAS  C:\Users\samue\AppData\Local\Temp\ccpGuivd.s 			page 44
+ARM GAS  C:\Users\samue\AppData\Local\Temp\ccev3Cfh.s 			page 44
 
 
  1699              		.section	.bss.zero_corr,"aw",%nobits
@@ -2638,7 +2638,7 @@ ARM GAS  C:\Users\samue\AppData\Local\Temp\ccpGuivd.s 			page 1
  1755 0004 F4010000 		.word	500
  1756 0008 00000000 		.word	0
  1757 000c 01000000 		.word	1
-ARM GAS  C:\Users\samue\AppData\Local\Temp\ccpGuivd.s 			page 45
+ARM GAS  C:\Users\samue\AppData\Local\Temp\ccev3Cfh.s 			page 45
 
 
  1758 0010 00000000 		.word	accel_cal_prep
@@ -2664,105 +2664,105 @@ ARM GAS  C:\Users\samue\AppData\Local\Temp\ccpGuivd.s 			page 1
  1778              		.file 12 "c:\\dev_tools\\gcc-arm-none-eabi-10.3-2021.10-win32\\gcc-arm-none-eabi-10.3-2021.10\\arm
  1779              		.file 13 "c:\\dev_tools\\gcc-arm-none-eabi-10.3-2021.10-win32\\gcc-arm-none-eabi-10.3-2021.10\\arm
  1780              		.file 14 "Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h"
-ARM GAS  C:\Users\samue\AppData\Local\Temp\ccpGuivd.s 			page 46
+ARM GAS  C:\Users\samue\AppData\Local\Temp\ccev3Cfh.s 			page 46
 
 
 DEFINED SYMBOLS
                             *ABS*:00000000 main_functions.c
-C:\Users\samue\AppData\Local\Temp\ccpGuivd.s:20     .rodata.accel_cal_prep.str1.4:00000000 $d
-C:\Users\samue\AppData\Local\Temp\ccpGuivd.s:30     .text.accel_cal_prep:00000000 $t
-C:\Users\samue\AppData\Local\Temp\ccpGuivd.s:36     .text.accel_cal_prep:00000000 accel_cal_prep
-C:\Users\samue\AppData\Local\Temp\ccpGuivd.s:95     .text.accel_cal_prep:0000003c $d
-C:\Users\samue\AppData\Local\Temp\ccpGuivd.s:103    .rodata.accel_cal.str1.4:00000000 $d
-C:\Users\samue\AppData\Local\Temp\ccpGuivd.s:107    .text.accel_cal:00000000 $t
-C:\Users\samue\AppData\Local\Temp\ccpGuivd.s:113    .text.accel_cal:00000000 accel_cal
-C:\Users\samue\AppData\Local\Temp\ccpGuivd.s:196    .text.accel_cal:0000005c $d
-C:\Users\samue\AppData\Local\Temp\ccpGuivd.s:209    .text.bufsize:00000000 $t
-C:\Users\samue\AppData\Local\Temp\ccpGuivd.s:215    .text.bufsize:00000000 bufsize
-C:\Users\samue\AppData\Local\Temp\ccpGuivd.s:254    .text.bufclear:00000000 $t
-C:\Users\samue\AppData\Local\Temp\ccpGuivd.s:260    .text.bufclear:00000000 bufclear
-C:\Users\samue\AppData\Local\Temp\ccpGuivd.s:297    .text.bufclear:00000014 $d
-C:\Users\samue\AppData\Local\Temp\ccpGuivd.s:302    .text.send_uart:00000000 $t
-C:\Users\samue\AppData\Local\Temp\ccpGuivd.s:308    .text.send_uart:00000000 send_uart
-C:\Users\samue\AppData\Local\Temp\ccpGuivd.s:342    .text.send_uart:00000018 $d
-C:\Users\samue\AppData\Local\Temp\ccpGuivd.s:347    .rodata.main_function.str1.4:00000000 $d
-C:\Users\samue\AppData\Local\Temp\ccpGuivd.s:410    .text.main_function:00000000 $t
-C:\Users\samue\AppData\Local\Temp\ccpGuivd.s:416    .text.main_function:00000000 main_function
-C:\Users\samue\AppData\Local\Temp\ccpGuivd.s:826    .text.main_function:0000023c $d
-C:\Users\samue\AppData\Local\Temp\ccpGuivd.s:1642   .bss.fs:00000000 fs
-C:\Users\samue\AppData\Local\Temp\ccpGuivd.s:1610   .bss.fil:00000000 fil
-C:\Users\samue\AppData\Local\Temp\ccpGuivd.s:863    .text.HAL_GPIO_EXTI_Callback:00000000 $t
-C:\Users\samue\AppData\Local\Temp\ccpGuivd.s:869    .text.HAL_GPIO_EXTI_Callback:00000000 HAL_GPIO_EXTI_Callback
-C:\Users\samue\AppData\Local\Temp\ccpGuivd.s:887    .text.HAL_GPIO_EXTI_Callback:00000008 $d
-C:\Users\samue\AppData\Local\Temp\ccpGuivd.s:892    .rodata.print_data.str1.4:00000000 $d
-C:\Users\samue\AppData\Local\Temp\ccpGuivd.s:899    .text.print_data:00000000 $t
-C:\Users\samue\AppData\Local\Temp\ccpGuivd.s:905    .text.print_data:00000000 print_data
-C:\Users\samue\AppData\Local\Temp\ccpGuivd.s:1020   .text.print_data:00000090 $d
-C:\Users\samue\AppData\Local\Temp\ccpGuivd.s:1028   .rodata.normal.str1.4:00000000 $d
-C:\Users\samue\AppData\Local\Temp\ccpGuivd.s:1032   .text.normal:00000000 $t
-C:\Users\samue\AppData\Local\Temp\ccpGuivd.s:1038   .text.normal:00000000 normal
-C:\Users\samue\AppData\Local\Temp\ccpGuivd.s:1500   .text.normal:0000035c $d
-C:\Users\samue\AppData\Local\Temp\ccpGuivd.s:1753   .rodata.FSM:00000000 FSM
-C:\Users\samue\AppData\Local\Temp\ccpGuivd.s:1630   .bss.free_space:00000000 free_space
-C:\Users\samue\AppData\Local\Temp\ccpGuivd.s:1697   .bss.total:00000000 total
-C:\Users\samue\AppData\Local\Temp\ccpGuivd.s:1623   .bss.fre_clust:00000000 fre_clust
-C:\Users\samue\AppData\Local\Temp\ccpGuivd.s:1683   .bss.pfs:00000000 pfs
-C:\Users\samue\AppData\Local\Temp\ccpGuivd.s:1604   .bss.bw:00000000 bw
-C:\Users\samue\AppData\Local\Temp\ccpGuivd.s:1583   .bss.br:00000000 br
-C:\Users\samue\AppData\Local\Temp\ccpGuivd.s:1597   .bss.buffer:00000000 buffer
-C:\Users\samue\AppData\Local\Temp\ccpGuivd.s:1636   .bss.fresult:00000000 fresult
-C:\Users\samue\AppData\Local\Temp\ccpGuivd.s:1746   .data.Gz_string:00000000 Gz_string
-C:\Users\samue\AppData\Local\Temp\ccpGuivd.s:1739   .data.Gy_string:00000000 Gy_string
-C:\Users\samue\AppData\Local\Temp\ccpGuivd.s:1732   .data.Gx_string:00000000 Gx_string
-C:\Users\samue\AppData\Local\Temp\ccpGuivd.s:1725   .data.Az_string:00000000 Az_string
-C:\Users\samue\AppData\Local\Temp\ccpGuivd.s:1718   .data.Ay_string:00000000 Ay_string
-C:\Users\samue\AppData\Local\Temp\ccpGuivd.s:1711   .data.Ax_string:00000000 Ax_string
-C:\Users\samue\AppData\Local\Temp\ccpGuivd.s:1676   .bss.line_pos:00000000 line_pos
-C:\Users\samue\AppData\Local\Temp\ccpGuivd.s:1590   .bss.buf:00000000 buf
-C:\Users\samue\AppData\Local\Temp\ccpGuivd.s:1704   .bss.zero_corr:00000000 zero_corr
-C:\Users\samue\AppData\Local\Temp\ccpGuivd.s:1656   .bss.gyro_corr_p:00000000 gyro_corr_p
-C:\Users\samue\AppData\Local\Temp\ccpGuivd.s:1649   .bss.gyro_corr:00000000 gyro_corr
-C:\Users\samue\AppData\Local\Temp\ccpGuivd.s:1663   .bss.gyro_data_p:00000000 gyro_data_p
-C:\Users\samue\AppData\Local\Temp\ccpGuivd.s:1670   .bss.gyro_data_value:00000000 gyro_data_value
-ARM GAS  C:\Users\samue\AppData\Local\Temp\ccpGuivd.s 			page 47
+C:\Users\samue\AppData\Local\Temp\ccev3Cfh.s:20     .rodata.accel_cal_prep.str1.4:00000000 $d
+C:\Users\samue\AppData\Local\Temp\ccev3Cfh.s:30     .text.accel_cal_prep:00000000 $t
+C:\Users\samue\AppData\Local\Temp\ccev3Cfh.s:36     .text.accel_cal_prep:00000000 accel_cal_prep
+C:\Users\samue\AppData\Local\Temp\ccev3Cfh.s:95     .text.accel_cal_prep:0000003c $d
+C:\Users\samue\AppData\Local\Temp\ccev3Cfh.s:103    .rodata.accel_cal.str1.4:00000000 $d
+C:\Users\samue\AppData\Local\Temp\ccev3Cfh.s:107    .text.accel_cal:00000000 $t
+C:\Users\samue\AppData\Local\Temp\ccev3Cfh.s:113    .text.accel_cal:00000000 accel_cal
+C:\Users\samue\AppData\Local\Temp\ccev3Cfh.s:196    .text.accel_cal:0000005c $d
+C:\Users\samue\AppData\Local\Temp\ccev3Cfh.s:209    .text.bufsize:00000000 $t
+C:\Users\samue\AppData\Local\Temp\ccev3Cfh.s:215    .text.bufsize:00000000 bufsize
+C:\Users\samue\AppData\Local\Temp\ccev3Cfh.s:254    .text.bufclear:00000000 $t
+C:\Users\samue\AppData\Local\Temp\ccev3Cfh.s:260    .text.bufclear:00000000 bufclear
+C:\Users\samue\AppData\Local\Temp\ccev3Cfh.s:297    .text.bufclear:00000014 $d
+C:\Users\samue\AppData\Local\Temp\ccev3Cfh.s:302    .text.send_uart:00000000 $t
+C:\Users\samue\AppData\Local\Temp\ccev3Cfh.s:308    .text.send_uart:00000000 send_uart
+C:\Users\samue\AppData\Local\Temp\ccev3Cfh.s:342    .text.send_uart:00000018 $d
+C:\Users\samue\AppData\Local\Temp\ccev3Cfh.s:347    .rodata.main_function.str1.4:00000000 $d
+C:\Users\samue\AppData\Local\Temp\ccev3Cfh.s:410    .text.main_function:00000000 $t
+C:\Users\samue\AppData\Local\Temp\ccev3Cfh.s:416    .text.main_function:00000000 main_function
+C:\Users\samue\AppData\Local\Temp\ccev3Cfh.s:826    .text.main_function:0000023c $d
+C:\Users\samue\AppData\Local\Temp\ccev3Cfh.s:1642   .bss.fs:00000000 fs
+C:\Users\samue\AppData\Local\Temp\ccev3Cfh.s:1610   .bss.fil:00000000 fil
+C:\Users\samue\AppData\Local\Temp\ccev3Cfh.s:863    .text.HAL_GPIO_EXTI_Callback:00000000 $t
+C:\Users\samue\AppData\Local\Temp\ccev3Cfh.s:869    .text.HAL_GPIO_EXTI_Callback:00000000 HAL_GPIO_EXTI_Callback
+C:\Users\samue\AppData\Local\Temp\ccev3Cfh.s:887    .text.HAL_GPIO_EXTI_Callback:00000008 $d
+C:\Users\samue\AppData\Local\Temp\ccev3Cfh.s:892    .rodata.print_data.str1.4:00000000 $d
+C:\Users\samue\AppData\Local\Temp\ccev3Cfh.s:899    .text.print_data:00000000 $t
+C:\Users\samue\AppData\Local\Temp\ccev3Cfh.s:905    .text.print_data:00000000 print_data
+C:\Users\samue\AppData\Local\Temp\ccev3Cfh.s:1020   .text.print_data:00000090 $d
+C:\Users\samue\AppData\Local\Temp\ccev3Cfh.s:1028   .rodata.normal.str1.4:00000000 $d
+C:\Users\samue\AppData\Local\Temp\ccev3Cfh.s:1032   .text.normal:00000000 $t
+C:\Users\samue\AppData\Local\Temp\ccev3Cfh.s:1038   .text.normal:00000000 normal
+C:\Users\samue\AppData\Local\Temp\ccev3Cfh.s:1500   .text.normal:0000035c $d
+C:\Users\samue\AppData\Local\Temp\ccev3Cfh.s:1753   .rodata.FSM:00000000 FSM
+C:\Users\samue\AppData\Local\Temp\ccev3Cfh.s:1630   .bss.free_space:00000000 free_space
+C:\Users\samue\AppData\Local\Temp\ccev3Cfh.s:1697   .bss.total:00000000 total
+C:\Users\samue\AppData\Local\Temp\ccev3Cfh.s:1623   .bss.fre_clust:00000000 fre_clust
+C:\Users\samue\AppData\Local\Temp\ccev3Cfh.s:1683   .bss.pfs:00000000 pfs
+C:\Users\samue\AppData\Local\Temp\ccev3Cfh.s:1604   .bss.bw:00000000 bw
+C:\Users\samue\AppData\Local\Temp\ccev3Cfh.s:1583   .bss.br:00000000 br
+C:\Users\samue\AppData\Local\Temp\ccev3Cfh.s:1597   .bss.buffer:00000000 buffer
+C:\Users\samue\AppData\Local\Temp\ccev3Cfh.s:1636   .bss.fresult:00000000 fresult
+C:\Users\samue\AppData\Local\Temp\ccev3Cfh.s:1746   .data.Gz_string:00000000 Gz_string
+C:\Users\samue\AppData\Local\Temp\ccev3Cfh.s:1739   .data.Gy_string:00000000 Gy_string
+C:\Users\samue\AppData\Local\Temp\ccev3Cfh.s:1732   .data.Gx_string:00000000 Gx_string
+C:\Users\samue\AppData\Local\Temp\ccev3Cfh.s:1725   .data.Az_string:00000000 Az_string
+C:\Users\samue\AppData\Local\Temp\ccev3Cfh.s:1718   .data.Ay_string:00000000 Ay_string
+C:\Users\samue\AppData\Local\Temp\ccev3Cfh.s:1711   .data.Ax_string:00000000 Ax_string
+C:\Users\samue\AppData\Local\Temp\ccev3Cfh.s:1676   .bss.line_pos:00000000 line_pos
+C:\Users\samue\AppData\Local\Temp\ccev3Cfh.s:1590   .bss.buf:00000000 buf
+C:\Users\samue\AppData\Local\Temp\ccev3Cfh.s:1704   .bss.zero_corr:00000000 zero_corr
+C:\Users\samue\AppData\Local\Temp\ccev3Cfh.s:1656   .bss.gyro_corr_p:00000000 gyro_corr_p
+C:\Users\samue\AppData\Local\Temp\ccev3Cfh.s:1649   .bss.gyro_corr:00000000 gyro_corr
+C:\Users\samue\AppData\Local\Temp\ccev3Cfh.s:1663   .bss.gyro_data_p:00000000 gyro_data_p
+C:\Users\samue\AppData\Local\Temp\ccev3Cfh.s:1670   .bss.gyro_data_value:00000000 gyro_data_value
+ARM GAS  C:\Users\samue\AppData\Local\Temp\ccev3Cfh.s 			page 47
 
 
-C:\Users\samue\AppData\Local\Temp\ccpGuivd.s:1562   .bss.accel_corr_p:00000000 accel_corr_p
-C:\Users\samue\AppData\Local\Temp\ccpGuivd.s:1555   .bss.accel_corr:00000000 accel_corr
-C:\Users\samue\AppData\Local\Temp\ccpGuivd.s:1569   .bss.accel_data_p:00000000 accel_data_p
-C:\Users\samue\AppData\Local\Temp\ccpGuivd.s:1576   .bss.accel_data_value:00000000 accel_data_value
-C:\Users\samue\AppData\Local\Temp\ccpGuivd.s:1690   .bss.state:00000000 state
-C:\Users\samue\AppData\Local\Temp\ccpGuivd.s:1616   .bss.flag:00000000 flag
-C:\Users\samue\AppData\Local\Temp\ccpGuivd.s:1551   .bss.accel_corr:00000000 $d
-C:\Users\samue\AppData\Local\Temp\ccpGuivd.s:1558   .bss.accel_corr_p:00000000 $d
-C:\Users\samue\AppData\Local\Temp\ccpGuivd.s:1565   .bss.accel_data_p:00000000 $d
-C:\Users\samue\AppData\Local\Temp\ccpGuivd.s:1572   .bss.accel_data_value:00000000 $d
-C:\Users\samue\AppData\Local\Temp\ccpGuivd.s:1579   .bss.br:00000000 $d
-C:\Users\samue\AppData\Local\Temp\ccpGuivd.s:1586   .bss.buf:00000000 $d
-C:\Users\samue\AppData\Local\Temp\ccpGuivd.s:1593   .bss.buffer:00000000 $d
-C:\Users\samue\AppData\Local\Temp\ccpGuivd.s:1600   .bss.bw:00000000 $d
-C:\Users\samue\AppData\Local\Temp\ccpGuivd.s:1607   .bss.fil:00000000 $d
-C:\Users\samue\AppData\Local\Temp\ccpGuivd.s:1617   .bss.flag:00000000 $d
-C:\Users\samue\AppData\Local\Temp\ccpGuivd.s:1619   .bss.fre_clust:00000000 $d
-C:\Users\samue\AppData\Local\Temp\ccpGuivd.s:1626   .bss.free_space:00000000 $d
-C:\Users\samue\AppData\Local\Temp\ccpGuivd.s:1637   .bss.fresult:00000000 $d
-C:\Users\samue\AppData\Local\Temp\ccpGuivd.s:1639   .bss.fs:00000000 $d
-C:\Users\samue\AppData\Local\Temp\ccpGuivd.s:1645   .bss.gyro_corr:00000000 $d
-C:\Users\samue\AppData\Local\Temp\ccpGuivd.s:1652   .bss.gyro_corr_p:00000000 $d
-C:\Users\samue\AppData\Local\Temp\ccpGuivd.s:1659   .bss.gyro_data_p:00000000 $d
-C:\Users\samue\AppData\Local\Temp\ccpGuivd.s:1666   .bss.gyro_data_value:00000000 $d
-C:\Users\samue\AppData\Local\Temp\ccpGuivd.s:1677   .bss.line_pos:00000000 $d
-C:\Users\samue\AppData\Local\Temp\ccpGuivd.s:1679   .bss.pfs:00000000 $d
-C:\Users\samue\AppData\Local\Temp\ccpGuivd.s:1686   .bss.state:00000000 $d
-C:\Users\samue\AppData\Local\Temp\ccpGuivd.s:1693   .bss.total:00000000 $d
-C:\Users\samue\AppData\Local\Temp\ccpGuivd.s:1700   .bss.zero_corr:00000000 $d
-C:\Users\samue\AppData\Local\Temp\ccpGuivd.s:1707   .data.Ax_string:00000000 $d
-C:\Users\samue\AppData\Local\Temp\ccpGuivd.s:1714   .data.Ay_string:00000000 $d
-C:\Users\samue\AppData\Local\Temp\ccpGuivd.s:1721   .data.Az_string:00000000 $d
-C:\Users\samue\AppData\Local\Temp\ccpGuivd.s:1728   .data.Gx_string:00000000 $d
-C:\Users\samue\AppData\Local\Temp\ccpGuivd.s:1735   .data.Gy_string:00000000 $d
-C:\Users\samue\AppData\Local\Temp\ccpGuivd.s:1742   .data.Gz_string:00000000 $d
-C:\Users\samue\AppData\Local\Temp\ccpGuivd.s:1749   .rodata.FSM:00000000 $d
+C:\Users\samue\AppData\Local\Temp\ccev3Cfh.s:1562   .bss.accel_corr_p:00000000 accel_corr_p
+C:\Users\samue\AppData\Local\Temp\ccev3Cfh.s:1555   .bss.accel_corr:00000000 accel_corr
+C:\Users\samue\AppData\Local\Temp\ccev3Cfh.s:1569   .bss.accel_data_p:00000000 accel_data_p
+C:\Users\samue\AppData\Local\Temp\ccev3Cfh.s:1576   .bss.accel_data_value:00000000 accel_data_value
+C:\Users\samue\AppData\Local\Temp\ccev3Cfh.s:1690   .bss.state:00000000 state
+C:\Users\samue\AppData\Local\Temp\ccev3Cfh.s:1616   .bss.flag:00000000 flag
+C:\Users\samue\AppData\Local\Temp\ccev3Cfh.s:1551   .bss.accel_corr:00000000 $d
+C:\Users\samue\AppData\Local\Temp\ccev3Cfh.s:1558   .bss.accel_corr_p:00000000 $d
+C:\Users\samue\AppData\Local\Temp\ccev3Cfh.s:1565   .bss.accel_data_p:00000000 $d
+C:\Users\samue\AppData\Local\Temp\ccev3Cfh.s:1572   .bss.accel_data_value:00000000 $d
+C:\Users\samue\AppData\Local\Temp\ccev3Cfh.s:1579   .bss.br:00000000 $d
+C:\Users\samue\AppData\Local\Temp\ccev3Cfh.s:1586   .bss.buf:00000000 $d
+C:\Users\samue\AppData\Local\Temp\ccev3Cfh.s:1593   .bss.buffer:00000000 $d
+C:\Users\samue\AppData\Local\Temp\ccev3Cfh.s:1600   .bss.bw:00000000 $d
+C:\Users\samue\AppData\Local\Temp\ccev3Cfh.s:1607   .bss.fil:00000000 $d
+C:\Users\samue\AppData\Local\Temp\ccev3Cfh.s:1617   .bss.flag:00000000 $d
+C:\Users\samue\AppData\Local\Temp\ccev3Cfh.s:1619   .bss.fre_clust:00000000 $d
+C:\Users\samue\AppData\Local\Temp\ccev3Cfh.s:1626   .bss.free_space:00000000 $d
+C:\Users\samue\AppData\Local\Temp\ccev3Cfh.s:1637   .bss.fresult:00000000 $d
+C:\Users\samue\AppData\Local\Temp\ccev3Cfh.s:1639   .bss.fs:00000000 $d
+C:\Users\samue\AppData\Local\Temp\ccev3Cfh.s:1645   .bss.gyro_corr:00000000 $d
+C:\Users\samue\AppData\Local\Temp\ccev3Cfh.s:1652   .bss.gyro_corr_p:00000000 $d
+C:\Users\samue\AppData\Local\Temp\ccev3Cfh.s:1659   .bss.gyro_data_p:00000000 $d
+C:\Users\samue\AppData\Local\Temp\ccev3Cfh.s:1666   .bss.gyro_data_value:00000000 $d
+C:\Users\samue\AppData\Local\Temp\ccev3Cfh.s:1677   .bss.line_pos:00000000 $d
+C:\Users\samue\AppData\Local\Temp\ccev3Cfh.s:1679   .bss.pfs:00000000 $d
+C:\Users\samue\AppData\Local\Temp\ccev3Cfh.s:1686   .bss.state:00000000 $d
+C:\Users\samue\AppData\Local\Temp\ccev3Cfh.s:1693   .bss.total:00000000 $d
+C:\Users\samue\AppData\Local\Temp\ccev3Cfh.s:1700   .bss.zero_corr:00000000 $d
+C:\Users\samue\AppData\Local\Temp\ccev3Cfh.s:1707   .data.Ax_string:00000000 $d
+C:\Users\samue\AppData\Local\Temp\ccev3Cfh.s:1714   .data.Ay_string:00000000 $d
+C:\Users\samue\AppData\Local\Temp\ccev3Cfh.s:1721   .data.Az_string:00000000 $d
+C:\Users\samue\AppData\Local\Temp\ccev3Cfh.s:1728   .data.Gx_string:00000000 $d
+C:\Users\samue\AppData\Local\Temp\ccev3Cfh.s:1735   .data.Gy_string:00000000 $d
+C:\Users\samue\AppData\Local\Temp\ccev3Cfh.s:1742   .data.Gz_string:00000000 $d
+C:\Users\samue\AppData\Local\Temp\ccev3Cfh.s:1749   .rodata.FSM:00000000 $d
 
 UNDEFINED SYMBOLS
 lcd_send_cmd
@@ -2784,7 +2784,7 @@ sprintf
 f_open
 f_puts
 f_close
-ARM GAS  C:\Users\samue\AppData\Local\Temp\ccpGuivd.s 			page 48
+ARM GAS  C:\Users\samue\AppData\Local\Temp\ccev3Cfh.s 			page 48
 
 
 f_gets

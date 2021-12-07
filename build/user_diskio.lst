@@ -1,4 +1,4 @@
-ARM GAS  C:\Users\samue\AppData\Local\Temp\ccFZX2Dh.s 			page 1
+ARM GAS  C:\Users\samue\AppData\Local\Temp\ccsgoNXL.s 			page 1
 
 
    1              		.cpu cortex-m4
@@ -58,7 +58,7 @@ ARM GAS  C:\Users\samue\AppData\Local\Temp\ccFZX2Dh.s 			page 1
   27:Core/Src/user_diskio.c ****  * User code previously added there should be copied in the new user sections before
   28:Core/Src/user_diskio.c ****  * the section contents can be deleted.
   29:Core/Src/user_diskio.c ****  */
-ARM GAS  C:\Users\samue\AppData\Local\Temp\ccFZX2Dh.s 			page 2
+ARM GAS  C:\Users\samue\AppData\Local\Temp\ccsgoNXL.s 			page 2
 
 
   30:Core/Src/user_diskio.c **** /* USER CODE BEGIN 0 */
@@ -118,7 +118,7 @@ ARM GAS  C:\Users\samue\AppData\Local\Temp\ccFZX2Dh.s 			page 1
   84:Core/Src/user_diskio.c **** {
   30              		.loc 1 84 1 view -0
   31              		.cfi_startproc
-ARM GAS  C:\Users\samue\AppData\Local\Temp\ccFZX2Dh.s 			page 3
+ARM GAS  C:\Users\samue\AppData\Local\Temp\ccsgoNXL.s 			page 3
 
 
   32              		@ args = 0, pretend = 0, frame = 0
@@ -178,7 +178,7 @@ ARM GAS  C:\Users\samue\AppData\Local\Temp\ccFZX2Dh.s 			page 1
   72              	.LVL3:
  101:Core/Src/user_diskio.c ****   /* USER CODE END STATUS */
  102:Core/Src/user_diskio.c **** }
-ARM GAS  C:\Users\samue\AppData\Local\Temp\ccFZX2Dh.s 			page 4
+ARM GAS  C:\Users\samue\AppData\Local\Temp\ccsgoNXL.s 			page 4
 
 
   73              		.loc 1 102 1 view .LVU9
@@ -238,7 +238,7 @@ ARM GAS  C:\Users\samue\AppData\Local\Temp\ccFZX2Dh.s 			page 1
  110              		.syntax unified
  111              		.thumb
  112              		.thumb_func
-ARM GAS  C:\Users\samue\AppData\Local\Temp\ccFZX2Dh.s 			page 5
+ARM GAS  C:\Users\samue\AppData\Local\Temp\ccsgoNXL.s 			page 5
 
 
  114              	USER_write:
@@ -298,7 +298,7 @@ ARM GAS  C:\Users\samue\AppData\Local\Temp\ccFZX2Dh.s 			page 1
  147:Core/Src/user_diskio.c **** /**
  148:Core/Src/user_diskio.c ****   * @brief  I/O control operation
  149:Core/Src/user_diskio.c ****   * @param  pdrv: Physical drive number (0..)
-ARM GAS  C:\Users\samue\AppData\Local\Temp\ccFZX2Dh.s 			page 6
+ARM GAS  C:\Users\samue\AppData\Local\Temp\ccsgoNXL.s 			page 6
 
 
  150:Core/Src/user_diskio.c ****   * @param  cmd: Control code
@@ -352,24 +352,24 @@ ARM GAS  C:\Users\samue\AppData\Local\Temp\ccFZX2Dh.s 			page 1
  184              		.file 3 "Middlewares/Third_Party/FatFs/src/diskio.h"
  185              		.file 4 "Middlewares/Third_Party/FatFs/src/ff_gen_drv.h"
  186              		.file 5 "Core/Inc/fatfs_sd.h"
-ARM GAS  C:\Users\samue\AppData\Local\Temp\ccFZX2Dh.s 			page 7
+ARM GAS  C:\Users\samue\AppData\Local\Temp\ccsgoNXL.s 			page 7
 
 
 DEFINED SYMBOLS
                             *ABS*:00000000 user_diskio.c
-C:\Users\samue\AppData\Local\Temp\ccFZX2Dh.s:20     .text.USER_initialize:00000000 $t
-C:\Users\samue\AppData\Local\Temp\ccFZX2Dh.s:26     .text.USER_initialize:00000000 USER_initialize
-C:\Users\samue\AppData\Local\Temp\ccFZX2Dh.s:50     .text.USER_status:00000000 $t
-C:\Users\samue\AppData\Local\Temp\ccFZX2Dh.s:56     .text.USER_status:00000000 USER_status
-C:\Users\samue\AppData\Local\Temp\ccFZX2Dh.s:79     .text.USER_read:00000000 $t
-C:\Users\samue\AppData\Local\Temp\ccFZX2Dh.s:85     .text.USER_read:00000000 USER_read
-C:\Users\samue\AppData\Local\Temp\ccFZX2Dh.s:108    .text.USER_write:00000000 $t
-C:\Users\samue\AppData\Local\Temp\ccFZX2Dh.s:114    .text.USER_write:00000000 USER_write
-C:\Users\samue\AppData\Local\Temp\ccFZX2Dh.s:137    .text.USER_ioctl:00000000 $t
-C:\Users\samue\AppData\Local\Temp\ccFZX2Dh.s:143    .text.USER_ioctl:00000000 USER_ioctl
-C:\Users\samue\AppData\Local\Temp\ccFZX2Dh.s:175    .data.USER_Driver:00000000 USER_Driver
-C:\Users\samue\AppData\Local\Temp\ccFZX2Dh.s:169    .data.Stat:00000000 Stat
-C:\Users\samue\AppData\Local\Temp\ccFZX2Dh.s:172    .data.USER_Driver:00000000 $d
+C:\Users\samue\AppData\Local\Temp\ccsgoNXL.s:20     .text.USER_initialize:00000000 $t
+C:\Users\samue\AppData\Local\Temp\ccsgoNXL.s:26     .text.USER_initialize:00000000 USER_initialize
+C:\Users\samue\AppData\Local\Temp\ccsgoNXL.s:50     .text.USER_status:00000000 $t
+C:\Users\samue\AppData\Local\Temp\ccsgoNXL.s:56     .text.USER_status:00000000 USER_status
+C:\Users\samue\AppData\Local\Temp\ccsgoNXL.s:79     .text.USER_read:00000000 $t
+C:\Users\samue\AppData\Local\Temp\ccsgoNXL.s:85     .text.USER_read:00000000 USER_read
+C:\Users\samue\AppData\Local\Temp\ccsgoNXL.s:108    .text.USER_write:00000000 $t
+C:\Users\samue\AppData\Local\Temp\ccsgoNXL.s:114    .text.USER_write:00000000 USER_write
+C:\Users\samue\AppData\Local\Temp\ccsgoNXL.s:137    .text.USER_ioctl:00000000 $t
+C:\Users\samue\AppData\Local\Temp\ccsgoNXL.s:143    .text.USER_ioctl:00000000 USER_ioctl
+C:\Users\samue\AppData\Local\Temp\ccsgoNXL.s:175    .data.USER_Driver:00000000 USER_Driver
+C:\Users\samue\AppData\Local\Temp\ccsgoNXL.s:169    .data.Stat:00000000 Stat
+C:\Users\samue\AppData\Local\Temp\ccsgoNXL.s:172    .data.USER_Driver:00000000 $d
 
 UNDEFINED SYMBOLS
 SD_disk_initialize
