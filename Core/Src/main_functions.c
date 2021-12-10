@@ -15,6 +15,8 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <stdint.h>
+#include <string.h>
 
 #include "main.h"
 #include "main_functions.h"
@@ -22,7 +24,6 @@
 #include "accelerometer_data.h"
 #include "fatfs.h"
 #include "fatfs_sd.h"
-#include "string.h"
 
 
 /* 
@@ -67,12 +68,12 @@ char Gy_string[] = "Gy=       ";
 char Gz_string[] = "Gz=       ";
 
 // SPI variables --------------------
-FATFS fs;         // file system 
-FIL fil;          // file 
-FRESULT fresult;  // to store the result 
+FATFS fs;           // file system 
+FIL fil;            // file 
+FRESULT fresult;    // to store the result 
 char buffer[1024];  // to store data 
 
-UINT br, bw;  // file read/write count 
+UINT br, bw;        // file read/write count 
 
 // Capacity related variables 
 FATFS *pfs;

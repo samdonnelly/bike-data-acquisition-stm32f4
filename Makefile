@@ -40,8 +40,6 @@ Core/Src/main.c \
 Core/Src/main_functions.c \
 Core/Src/i2c-lcd.c \
 Core/Src/accelerometer_data.c \
-Core/Src/fatfs_sd.c \
-Core/Src/user_diskio.c \
 Core/Src/stm32f4xx_it.c \
 Core/Src/stm32f4xx_hal_msp.c \
 Core/Src/system_stm32f4xx.c \
@@ -70,7 +68,10 @@ Middlewares/Third_Party/FatFs/src/ff_gen_drv.c \
 Middlewares/Third_Party/FatFs/src/option/syscall.c \
 Middlewares/Third_Party/FatFs/src/option/ccsbcs.c  \
 FATFS/App/fatfs.c  \
-Tools/Src/adc_signal_filtering.c
+FATFS/Target/user_diskio.c \
+Tools/Src/adc_signal_filtering.c \
+Device-Drivers/Src/fatfs_sd.c \
+Device-Drivers/Src/sd-card-spi.c
 
 # FATFS/Target/user_diskio.c
 
@@ -131,6 +132,7 @@ AS_INCLUDES =
 C_INCLUDES =  \
 -ICore/Inc \
 -ITools/Inc \
+-IDevice-Drivers/Inc \
 -IDrivers/STM32F4xx_HAL_Driver/Inc \
 -IDrivers/STM32F4xx_HAL_Driver/Inc/Legacy \
 -IDrivers/CMSIS/Device/ST/STM32F4xx/Include \

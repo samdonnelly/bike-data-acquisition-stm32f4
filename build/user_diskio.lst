@@ -1,4 +1,4 @@
-ARM GAS  C:\Users\samue\AppData\Local\Temp\ccsgoNXL.s 			page 1
+ARM GAS  C:\Users\samue\AppData\Local\Temp\ccPFSYCc.s 			page 1
 
 
    1              		.cpu cortex-m4
@@ -28,97 +28,97 @@ ARM GAS  C:\Users\samue\AppData\Local\Temp\ccsgoNXL.s 			page 1
   26              	USER_initialize:
   27              	.LVL0:
   28              	.LFB130:
-  29              		.file 1 "Core/Src/user_diskio.c"
-   1:Core/Src/user_diskio.c **** /* USER CODE BEGIN Header */
-   2:Core/Src/user_diskio.c **** /**
-   3:Core/Src/user_diskio.c ****  ******************************************************************************
-   4:Core/Src/user_diskio.c ****   * @file    user_diskio.c
-   5:Core/Src/user_diskio.c ****   * @brief   This file includes a diskio driver skeleton to be completed by the user.
-   6:Core/Src/user_diskio.c ****   ******************************************************************************
-   7:Core/Src/user_diskio.c ****   * @attention
-   8:Core/Src/user_diskio.c ****   *
-   9:Core/Src/user_diskio.c ****   * <h2><center>&copy; Copyright (c) 2021 STMicroelectronics.
-  10:Core/Src/user_diskio.c ****   * All rights reserved.</center></h2>
-  11:Core/Src/user_diskio.c ****   *
-  12:Core/Src/user_diskio.c ****   * This software component is licensed by ST under Ultimate Liberty license
-  13:Core/Src/user_diskio.c ****   * SLA0044, the "License"; You may not use this file except in compliance with
-  14:Core/Src/user_diskio.c ****   * the License. You may obtain a copy of the License at:
-  15:Core/Src/user_diskio.c ****   *                             www.st.com/SLA0044
-  16:Core/Src/user_diskio.c ****   *
-  17:Core/Src/user_diskio.c ****   ******************************************************************************
-  18:Core/Src/user_diskio.c ****   */
-  19:Core/Src/user_diskio.c ****  /* USER CODE END Header */
-  20:Core/Src/user_diskio.c **** 
-  21:Core/Src/user_diskio.c **** #ifdef USE_OBSOLETE_USER_CODE_SECTION_0
-  22:Core/Src/user_diskio.c **** /*
-  23:Core/Src/user_diskio.c ****  * Warning: the user section 0 is no more in use (starting from CubeMx version 4.16.0)
-  24:Core/Src/user_diskio.c ****  * To be suppressed in the future.
-  25:Core/Src/user_diskio.c ****  * Kept to ensure backward compatibility with previous CubeMx versions when
-  26:Core/Src/user_diskio.c ****  * migrating projects.
-  27:Core/Src/user_diskio.c ****  * User code previously added there should be copied in the new user sections before
-  28:Core/Src/user_diskio.c ****  * the section contents can be deleted.
-  29:Core/Src/user_diskio.c ****  */
-ARM GAS  C:\Users\samue\AppData\Local\Temp\ccsgoNXL.s 			page 2
+  29              		.file 1 "FATFS/Target/user_diskio.c"
+   1:FATFS/Target/user_diskio.c **** /* USER CODE BEGIN Header */
+   2:FATFS/Target/user_diskio.c **** /**
+   3:FATFS/Target/user_diskio.c ****  ******************************************************************************
+   4:FATFS/Target/user_diskio.c ****   * @file    user_diskio.c
+   5:FATFS/Target/user_diskio.c ****   * @brief   This file includes a diskio driver skeleton to be completed by the user.
+   6:FATFS/Target/user_diskio.c ****   ******************************************************************************
+   7:FATFS/Target/user_diskio.c ****   * @attention
+   8:FATFS/Target/user_diskio.c ****   *
+   9:FATFS/Target/user_diskio.c ****   * <h2><center>&copy; Copyright (c) 2021 STMicroelectronics.
+  10:FATFS/Target/user_diskio.c ****   * All rights reserved.</center></h2>
+  11:FATFS/Target/user_diskio.c ****   *
+  12:FATFS/Target/user_diskio.c ****   * This software component is licensed by ST under Ultimate Liberty license
+  13:FATFS/Target/user_diskio.c ****   * SLA0044, the "License"; You may not use this file except in compliance with
+  14:FATFS/Target/user_diskio.c ****   * the License. You may obtain a copy of the License at:
+  15:FATFS/Target/user_diskio.c ****   *                             www.st.com/SLA0044
+  16:FATFS/Target/user_diskio.c ****   *
+  17:FATFS/Target/user_diskio.c ****   ******************************************************************************
+  18:FATFS/Target/user_diskio.c ****   */
+  19:FATFS/Target/user_diskio.c ****  /* USER CODE END Header */
+  20:FATFS/Target/user_diskio.c **** 
+  21:FATFS/Target/user_diskio.c **** #ifdef USE_OBSOLETE_USER_CODE_SECTION_0
+  22:FATFS/Target/user_diskio.c **** /*
+  23:FATFS/Target/user_diskio.c ****  * Warning: the user section 0 is no more in use (starting from CubeMx version 4.16.0)
+  24:FATFS/Target/user_diskio.c ****  * To be suppressed in the future.
+  25:FATFS/Target/user_diskio.c ****  * Kept to ensure backward compatibility with previous CubeMx versions when
+  26:FATFS/Target/user_diskio.c ****  * migrating projects.
+  27:FATFS/Target/user_diskio.c ****  * User code previously added there should be copied in the new user sections before
+  28:FATFS/Target/user_diskio.c ****  * the section contents can be deleted.
+  29:FATFS/Target/user_diskio.c ****  */
+ARM GAS  C:\Users\samue\AppData\Local\Temp\ccPFSYCc.s 			page 2
 
 
-  30:Core/Src/user_diskio.c **** /* USER CODE BEGIN 0 */
-  31:Core/Src/user_diskio.c **** /* USER CODE END 0 */
-  32:Core/Src/user_diskio.c **** #endif
-  33:Core/Src/user_diskio.c **** 
-  34:Core/Src/user_diskio.c **** /* USER CODE BEGIN DECL */
-  35:Core/Src/user_diskio.c **** 
-  36:Core/Src/user_diskio.c **** /* Includes ------------------------------------------------------------------*/
-  37:Core/Src/user_diskio.c **** #include <string.h>
-  38:Core/Src/user_diskio.c **** #include "ff_gen_drv.h"
-  39:Core/Src/user_diskio.c **** #include "fatfs_sd.h"
-  40:Core/Src/user_diskio.c **** 
-  41:Core/Src/user_diskio.c **** /* Private typedef -----------------------------------------------------------*/
-  42:Core/Src/user_diskio.c **** /* Private define ------------------------------------------------------------*/
-  43:Core/Src/user_diskio.c **** 
-  44:Core/Src/user_diskio.c **** /* Private variables ---------------------------------------------------------*/
-  45:Core/Src/user_diskio.c **** /* Disk status */
-  46:Core/Src/user_diskio.c **** static volatile DSTATUS Stat = STA_NOINIT;
-  47:Core/Src/user_diskio.c **** 
-  48:Core/Src/user_diskio.c **** /* USER CODE END DECL */
-  49:Core/Src/user_diskio.c **** 
-  50:Core/Src/user_diskio.c **** /* Private function prototypes -----------------------------------------------*/
-  51:Core/Src/user_diskio.c **** DSTATUS USER_initialize (BYTE pdrv);
-  52:Core/Src/user_diskio.c **** DSTATUS USER_status (BYTE pdrv);
-  53:Core/Src/user_diskio.c **** DRESULT USER_read (BYTE pdrv, BYTE *buff, DWORD sector, UINT count);
-  54:Core/Src/user_diskio.c **** #if _USE_WRITE == 1
-  55:Core/Src/user_diskio.c ****   DRESULT USER_write (BYTE pdrv, const BYTE *buff, DWORD sector, UINT count);
-  56:Core/Src/user_diskio.c **** #endif /* _USE_WRITE == 1 */
-  57:Core/Src/user_diskio.c **** #if _USE_IOCTL == 1
-  58:Core/Src/user_diskio.c ****   DRESULT USER_ioctl (BYTE pdrv, BYTE cmd, void *buff);
-  59:Core/Src/user_diskio.c **** #endif /* _USE_IOCTL == 1 */
-  60:Core/Src/user_diskio.c **** 
-  61:Core/Src/user_diskio.c **** Diskio_drvTypeDef  USER_Driver =
-  62:Core/Src/user_diskio.c **** {
-  63:Core/Src/user_diskio.c ****   USER_initialize,
-  64:Core/Src/user_diskio.c ****   USER_status,
-  65:Core/Src/user_diskio.c ****   USER_read,
-  66:Core/Src/user_diskio.c **** #if  _USE_WRITE
-  67:Core/Src/user_diskio.c ****   USER_write,
-  68:Core/Src/user_diskio.c **** #endif  /* _USE_WRITE == 1 */
-  69:Core/Src/user_diskio.c **** #if  _USE_IOCTL == 1
-  70:Core/Src/user_diskio.c ****   USER_ioctl,
-  71:Core/Src/user_diskio.c **** #endif /* _USE_IOCTL == 1 */
-  72:Core/Src/user_diskio.c **** };
-  73:Core/Src/user_diskio.c **** 
-  74:Core/Src/user_diskio.c **** /* Private functions ---------------------------------------------------------*/
-  75:Core/Src/user_diskio.c **** 
-  76:Core/Src/user_diskio.c **** /**
-  77:Core/Src/user_diskio.c ****   * @brief  Initializes a Drive
-  78:Core/Src/user_diskio.c ****   * @param  pdrv: Physical drive number (0..)
-  79:Core/Src/user_diskio.c ****   * @retval DSTATUS: Operation status
-  80:Core/Src/user_diskio.c ****   */
-  81:Core/Src/user_diskio.c **** DSTATUS USER_initialize (
-  82:Core/Src/user_diskio.c **** 	BYTE pdrv           /* Physical drive nmuber to identify the drive */
-  83:Core/Src/user_diskio.c **** )
-  84:Core/Src/user_diskio.c **** {
+  30:FATFS/Target/user_diskio.c **** /* USER CODE BEGIN 0 */
+  31:FATFS/Target/user_diskio.c **** /* USER CODE END 0 */
+  32:FATFS/Target/user_diskio.c **** #endif
+  33:FATFS/Target/user_diskio.c **** 
+  34:FATFS/Target/user_diskio.c **** /* USER CODE BEGIN DECL */
+  35:FATFS/Target/user_diskio.c **** 
+  36:FATFS/Target/user_diskio.c **** /* Includes ------------------------------------------------------------------*/
+  37:FATFS/Target/user_diskio.c **** #include <string.h>
+  38:FATFS/Target/user_diskio.c **** #include "ff_gen_drv.h"
+  39:FATFS/Target/user_diskio.c **** #include "fatfs_sd.h"
+  40:FATFS/Target/user_diskio.c **** 
+  41:FATFS/Target/user_diskio.c **** /* Private typedef -----------------------------------------------------------*/
+  42:FATFS/Target/user_diskio.c **** /* Private define ------------------------------------------------------------*/
+  43:FATFS/Target/user_diskio.c **** 
+  44:FATFS/Target/user_diskio.c **** /* Private variables ---------------------------------------------------------*/
+  45:FATFS/Target/user_diskio.c **** /* Disk status */
+  46:FATFS/Target/user_diskio.c **** static volatile DSTATUS Stat = STA_NOINIT;
+  47:FATFS/Target/user_diskio.c **** 
+  48:FATFS/Target/user_diskio.c **** /* USER CODE END DECL */
+  49:FATFS/Target/user_diskio.c **** 
+  50:FATFS/Target/user_diskio.c **** /* Private function prototypes -----------------------------------------------*/
+  51:FATFS/Target/user_diskio.c **** DSTATUS USER_initialize (BYTE pdrv);
+  52:FATFS/Target/user_diskio.c **** DSTATUS USER_status (BYTE pdrv);
+  53:FATFS/Target/user_diskio.c **** DRESULT USER_read (BYTE pdrv, BYTE *buff, DWORD sector, UINT count);
+  54:FATFS/Target/user_diskio.c **** #if _USE_WRITE == 1
+  55:FATFS/Target/user_diskio.c ****   DRESULT USER_write (BYTE pdrv, const BYTE *buff, DWORD sector, UINT count);
+  56:FATFS/Target/user_diskio.c **** #endif /* _USE_WRITE == 1 */
+  57:FATFS/Target/user_diskio.c **** #if _USE_IOCTL == 1
+  58:FATFS/Target/user_diskio.c ****   DRESULT USER_ioctl (BYTE pdrv, BYTE cmd, void *buff);
+  59:FATFS/Target/user_diskio.c **** #endif /* _USE_IOCTL == 1 */
+  60:FATFS/Target/user_diskio.c **** 
+  61:FATFS/Target/user_diskio.c **** Diskio_drvTypeDef  USER_Driver =
+  62:FATFS/Target/user_diskio.c **** {
+  63:FATFS/Target/user_diskio.c ****   USER_initialize,
+  64:FATFS/Target/user_diskio.c ****   USER_status,
+  65:FATFS/Target/user_diskio.c ****   USER_read,
+  66:FATFS/Target/user_diskio.c **** #if  _USE_WRITE
+  67:FATFS/Target/user_diskio.c ****   USER_write,
+  68:FATFS/Target/user_diskio.c **** #endif  /* _USE_WRITE == 1 */
+  69:FATFS/Target/user_diskio.c **** #if  _USE_IOCTL == 1
+  70:FATFS/Target/user_diskio.c ****   USER_ioctl,
+  71:FATFS/Target/user_diskio.c **** #endif /* _USE_IOCTL == 1 */
+  72:FATFS/Target/user_diskio.c **** };
+  73:FATFS/Target/user_diskio.c **** 
+  74:FATFS/Target/user_diskio.c **** /* Private functions ---------------------------------------------------------*/
+  75:FATFS/Target/user_diskio.c **** 
+  76:FATFS/Target/user_diskio.c **** /**
+  77:FATFS/Target/user_diskio.c ****   * @brief  Initializes a Drive
+  78:FATFS/Target/user_diskio.c ****   * @param  pdrv: Physical drive number (0..)
+  79:FATFS/Target/user_diskio.c ****   * @retval DSTATUS: Operation status
+  80:FATFS/Target/user_diskio.c ****   */
+  81:FATFS/Target/user_diskio.c **** DSTATUS USER_initialize (
+  82:FATFS/Target/user_diskio.c **** 	BYTE pdrv           /* Physical drive nmuber to identify the drive */
+  83:FATFS/Target/user_diskio.c **** )
+  84:FATFS/Target/user_diskio.c **** {
   30              		.loc 1 84 1 view -0
   31              		.cfi_startproc
-ARM GAS  C:\Users\samue\AppData\Local\Temp\ccsgoNXL.s 			page 3
+ARM GAS  C:\Users\samue\AppData\Local\Temp\ccPFSYCc.s 			page 3
 
 
   32              		@ args = 0, pretend = 0, frame = 0
@@ -129,14 +129,14 @@ ARM GAS  C:\Users\samue\AppData\Local\Temp\ccsgoNXL.s 			page 1
   37              		.cfi_def_cfa_offset 8
   38              		.cfi_offset 3, -8
   39              		.cfi_offset 14, -4
-  85:Core/Src/user_diskio.c ****   /* USER CODE BEGIN INIT */
-  86:Core/Src/user_diskio.c ****     return SD_disk_initialize (pdrv);
+  85:FATFS/Target/user_diskio.c ****   /* USER CODE BEGIN INIT */
+  86:FATFS/Target/user_diskio.c ****     return SD_disk_initialize (pdrv);
   40              		.loc 1 86 5 is_stmt 1 view .LVU2
   41              		.loc 1 86 12 is_stmt 0 view .LVU3
   42 0002 FFF7FEFF 		bl	SD_disk_initialize
   43              	.LVL1:
-  87:Core/Src/user_diskio.c ****   /* USER CODE END INIT */
-  88:Core/Src/user_diskio.c **** }
+  87:FATFS/Target/user_diskio.c ****   /* USER CODE END INIT */
+  88:FATFS/Target/user_diskio.c **** }
   44              		.loc 1 88 1 view .LVU4
   45 0006 08BD     		pop	{r3, pc}
   46              		.cfi_endproc
@@ -150,16 +150,16 @@ ARM GAS  C:\Users\samue\AppData\Local\Temp\ccsgoNXL.s 			page 1
   56              	USER_status:
   57              	.LVL2:
   58              	.LFB131:
-  89:Core/Src/user_diskio.c **** 
-  90:Core/Src/user_diskio.c **** /**
-  91:Core/Src/user_diskio.c ****   * @brief  Gets Disk Status
-  92:Core/Src/user_diskio.c ****   * @param  pdrv: Physical drive number (0..)
-  93:Core/Src/user_diskio.c ****   * @retval DSTATUS: Operation status
-  94:Core/Src/user_diskio.c ****   */
-  95:Core/Src/user_diskio.c **** DSTATUS USER_status (
-  96:Core/Src/user_diskio.c **** 	BYTE pdrv       /* Physical drive number to identify the drive */
-  97:Core/Src/user_diskio.c **** )
-  98:Core/Src/user_diskio.c **** {
+  89:FATFS/Target/user_diskio.c **** 
+  90:FATFS/Target/user_diskio.c **** /**
+  91:FATFS/Target/user_diskio.c ****   * @brief  Gets Disk Status
+  92:FATFS/Target/user_diskio.c ****   * @param  pdrv: Physical drive number (0..)
+  93:FATFS/Target/user_diskio.c ****   * @retval DSTATUS: Operation status
+  94:FATFS/Target/user_diskio.c ****   */
+  95:FATFS/Target/user_diskio.c **** DSTATUS USER_status (
+  96:FATFS/Target/user_diskio.c **** 	BYTE pdrv       /* Physical drive number to identify the drive */
+  97:FATFS/Target/user_diskio.c **** )
+  98:FATFS/Target/user_diskio.c **** {
   59              		.loc 1 98 1 is_stmt 1 view -0
   60              		.cfi_startproc
   61              		@ args = 0, pretend = 0, frame = 0
@@ -170,15 +170,15 @@ ARM GAS  C:\Users\samue\AppData\Local\Temp\ccsgoNXL.s 			page 1
   66              		.cfi_def_cfa_offset 8
   67              		.cfi_offset 3, -8
   68              		.cfi_offset 14, -4
-  99:Core/Src/user_diskio.c ****   /* USER CODE BEGIN STATUS */
- 100:Core/Src/user_diskio.c ****     return SD_disk_status (pdrv);
+  99:FATFS/Target/user_diskio.c ****   /* USER CODE BEGIN STATUS */
+ 100:FATFS/Target/user_diskio.c ****     return SD_disk_status (pdrv);
   69              		.loc 1 100 5 is_stmt 1 view .LVU7
   70              		.loc 1 100 12 is_stmt 0 view .LVU8
   71 0002 FFF7FEFF 		bl	SD_disk_status
   72              	.LVL3:
- 101:Core/Src/user_diskio.c ****   /* USER CODE END STATUS */
- 102:Core/Src/user_diskio.c **** }
-ARM GAS  C:\Users\samue\AppData\Local\Temp\ccsgoNXL.s 			page 4
+ 101:FATFS/Target/user_diskio.c ****   /* USER CODE END STATUS */
+ 102:FATFS/Target/user_diskio.c **** }
+ARM GAS  C:\Users\samue\AppData\Local\Temp\ccPFSYCc.s 			page 4
 
 
   73              		.loc 1 102 1 view .LVU9
@@ -194,22 +194,22 @@ ARM GAS  C:\Users\samue\AppData\Local\Temp\ccsgoNXL.s 			page 1
   85              	USER_read:
   86              	.LVL4:
   87              	.LFB132:
- 103:Core/Src/user_diskio.c **** 
- 104:Core/Src/user_diskio.c **** /**
- 105:Core/Src/user_diskio.c ****   * @brief  Reads Sector(s)
- 106:Core/Src/user_diskio.c ****   * @param  pdrv: Physical drive number (0..)
- 107:Core/Src/user_diskio.c ****   * @param  *buff: Data buffer to store read data
- 108:Core/Src/user_diskio.c ****   * @param  sector: Sector address (LBA)
- 109:Core/Src/user_diskio.c ****   * @param  count: Number of sectors to read (1..128)
- 110:Core/Src/user_diskio.c ****   * @retval DRESULT: Operation result
- 111:Core/Src/user_diskio.c ****   */
- 112:Core/Src/user_diskio.c **** DRESULT USER_read (
- 113:Core/Src/user_diskio.c **** 	BYTE pdrv,      /* Physical drive nmuber to identify the drive */
- 114:Core/Src/user_diskio.c **** 	BYTE *buff,     /* Data buffer to store read data */
- 115:Core/Src/user_diskio.c **** 	DWORD sector,   /* Sector address in LBA */
- 116:Core/Src/user_diskio.c **** 	UINT count      /* Number of sectors to read */
- 117:Core/Src/user_diskio.c **** )
- 118:Core/Src/user_diskio.c **** {
+ 103:FATFS/Target/user_diskio.c **** 
+ 104:FATFS/Target/user_diskio.c **** /**
+ 105:FATFS/Target/user_diskio.c ****   * @brief  Reads Sector(s)
+ 106:FATFS/Target/user_diskio.c ****   * @param  pdrv: Physical drive number (0..)
+ 107:FATFS/Target/user_diskio.c ****   * @param  *buff: Data buffer to store read data
+ 108:FATFS/Target/user_diskio.c ****   * @param  sector: Sector address (LBA)
+ 109:FATFS/Target/user_diskio.c ****   * @param  count: Number of sectors to read (1..128)
+ 110:FATFS/Target/user_diskio.c ****   * @retval DRESULT: Operation result
+ 111:FATFS/Target/user_diskio.c ****   */
+ 112:FATFS/Target/user_diskio.c **** DRESULT USER_read (
+ 113:FATFS/Target/user_diskio.c **** 	BYTE pdrv,      /* Physical drive nmuber to identify the drive */
+ 114:FATFS/Target/user_diskio.c **** 	BYTE *buff,     /* Data buffer to store read data */
+ 115:FATFS/Target/user_diskio.c **** 	DWORD sector,   /* Sector address in LBA */
+ 116:FATFS/Target/user_diskio.c **** 	UINT count      /* Number of sectors to read */
+ 117:FATFS/Target/user_diskio.c **** )
+ 118:FATFS/Target/user_diskio.c **** {
   88              		.loc 1 118 1 is_stmt 1 view -0
   89              		.cfi_startproc
   90              		@ args = 0, pretend = 0, frame = 0
@@ -220,14 +220,14 @@ ARM GAS  C:\Users\samue\AppData\Local\Temp\ccsgoNXL.s 			page 1
   95              		.cfi_def_cfa_offset 8
   96              		.cfi_offset 3, -8
   97              		.cfi_offset 14, -4
- 119:Core/Src/user_diskio.c ****   /* USER CODE BEGIN READ */
- 120:Core/Src/user_diskio.c ****     return SD_disk_read (pdrv, buff, sector, count);
+ 119:FATFS/Target/user_diskio.c ****   /* USER CODE BEGIN READ */
+ 120:FATFS/Target/user_diskio.c ****     return SD_disk_read (pdrv, buff, sector, count);
   98              		.loc 1 120 5 is_stmt 1 view .LVU12
   99              		.loc 1 120 12 is_stmt 0 view .LVU13
  100 0002 FFF7FEFF 		bl	SD_disk_read
  101              	.LVL5:
- 121:Core/Src/user_diskio.c ****   /* USER CODE END READ */
- 122:Core/Src/user_diskio.c **** }
+ 121:FATFS/Target/user_diskio.c ****   /* USER CODE END READ */
+ 122:FATFS/Target/user_diskio.c **** }
  102              		.loc 1 122 1 view .LVU14
  103 0006 08BD     		pop	{r3, pc}
  104              		.cfi_endproc
@@ -238,29 +238,29 @@ ARM GAS  C:\Users\samue\AppData\Local\Temp\ccsgoNXL.s 			page 1
  110              		.syntax unified
  111              		.thumb
  112              		.thumb_func
-ARM GAS  C:\Users\samue\AppData\Local\Temp\ccsgoNXL.s 			page 5
+ARM GAS  C:\Users\samue\AppData\Local\Temp\ccPFSYCc.s 			page 5
 
 
  114              	USER_write:
  115              	.LVL6:
  116              	.LFB133:
- 123:Core/Src/user_diskio.c **** 
- 124:Core/Src/user_diskio.c **** /**
- 125:Core/Src/user_diskio.c ****   * @brief  Writes Sector(s)
- 126:Core/Src/user_diskio.c ****   * @param  pdrv: Physical drive number (0..)
- 127:Core/Src/user_diskio.c ****   * @param  *buff: Data to be written
- 128:Core/Src/user_diskio.c ****   * @param  sector: Sector address (LBA)
- 129:Core/Src/user_diskio.c ****   * @param  count: Number of sectors to write (1..128)
- 130:Core/Src/user_diskio.c ****   * @retval DRESULT: Operation result
- 131:Core/Src/user_diskio.c ****   */
- 132:Core/Src/user_diskio.c **** #if _USE_WRITE == 1
- 133:Core/Src/user_diskio.c **** DRESULT USER_write (
- 134:Core/Src/user_diskio.c **** 	BYTE pdrv,          /* Physical drive nmuber to identify the drive */
- 135:Core/Src/user_diskio.c **** 	const BYTE *buff,   /* Data to be written */
- 136:Core/Src/user_diskio.c **** 	DWORD sector,       /* Sector address in LBA */
- 137:Core/Src/user_diskio.c **** 	UINT count          /* Number of sectors to write */
- 138:Core/Src/user_diskio.c **** )
- 139:Core/Src/user_diskio.c **** {
+ 123:FATFS/Target/user_diskio.c **** 
+ 124:FATFS/Target/user_diskio.c **** /**
+ 125:FATFS/Target/user_diskio.c ****   * @brief  Writes Sector(s)
+ 126:FATFS/Target/user_diskio.c ****   * @param  pdrv: Physical drive number (0..)
+ 127:FATFS/Target/user_diskio.c ****   * @param  *buff: Data to be written
+ 128:FATFS/Target/user_diskio.c ****   * @param  sector: Sector address (LBA)
+ 129:FATFS/Target/user_diskio.c ****   * @param  count: Number of sectors to write (1..128)
+ 130:FATFS/Target/user_diskio.c ****   * @retval DRESULT: Operation result
+ 131:FATFS/Target/user_diskio.c ****   */
+ 132:FATFS/Target/user_diskio.c **** #if _USE_WRITE == 1
+ 133:FATFS/Target/user_diskio.c **** DRESULT USER_write (
+ 134:FATFS/Target/user_diskio.c **** 	BYTE pdrv,          /* Physical drive nmuber to identify the drive */
+ 135:FATFS/Target/user_diskio.c **** 	const BYTE *buff,   /* Data to be written */
+ 136:FATFS/Target/user_diskio.c **** 	DWORD sector,       /* Sector address in LBA */
+ 137:FATFS/Target/user_diskio.c **** 	UINT count          /* Number of sectors to write */
+ 138:FATFS/Target/user_diskio.c **** )
+ 139:FATFS/Target/user_diskio.c **** {
  117              		.loc 1 139 1 is_stmt 1 view -0
  118              		.cfi_startproc
  119              		@ args = 0, pretend = 0, frame = 0
@@ -271,15 +271,15 @@ ARM GAS  C:\Users\samue\AppData\Local\Temp\ccsgoNXL.s 			page 1
  124              		.cfi_def_cfa_offset 8
  125              		.cfi_offset 3, -8
  126              		.cfi_offset 14, -4
- 140:Core/Src/user_diskio.c ****   /* USER CODE BEGIN WRITE */
- 141:Core/Src/user_diskio.c ****   /* USER CODE HERE */
- 142:Core/Src/user_diskio.c ****     return SD_disk_write (pdrv, buff, sector, count);
+ 140:FATFS/Target/user_diskio.c ****   /* USER CODE BEGIN WRITE */
+ 141:FATFS/Target/user_diskio.c ****   /* USER CODE HERE */
+ 142:FATFS/Target/user_diskio.c ****     return SD_disk_write (pdrv, buff, sector, count);
  127              		.loc 1 142 5 is_stmt 1 view .LVU17
  128              		.loc 1 142 12 is_stmt 0 view .LVU18
  129 0002 FFF7FEFF 		bl	SD_disk_write
  130              	.LVL7:
- 143:Core/Src/user_diskio.c ****   /* USER CODE END WRITE */
- 144:Core/Src/user_diskio.c **** }
+ 143:FATFS/Target/user_diskio.c ****   /* USER CODE END WRITE */
+ 144:FATFS/Target/user_diskio.c **** }
  131              		.loc 1 144 1 view .LVU19
  132 0006 08BD     		pop	{r3, pc}
  133              		.cfi_endproc
@@ -293,25 +293,25 @@ ARM GAS  C:\Users\samue\AppData\Local\Temp\ccsgoNXL.s 			page 1
  143              	USER_ioctl:
  144              	.LVL8:
  145              	.LFB134:
- 145:Core/Src/user_diskio.c **** #endif /* _USE_WRITE == 1 */
- 146:Core/Src/user_diskio.c **** 
- 147:Core/Src/user_diskio.c **** /**
- 148:Core/Src/user_diskio.c ****   * @brief  I/O control operation
- 149:Core/Src/user_diskio.c ****   * @param  pdrv: Physical drive number (0..)
-ARM GAS  C:\Users\samue\AppData\Local\Temp\ccsgoNXL.s 			page 6
+ 145:FATFS/Target/user_diskio.c **** #endif /* _USE_WRITE == 1 */
+ 146:FATFS/Target/user_diskio.c **** 
+ 147:FATFS/Target/user_diskio.c **** /**
+ 148:FATFS/Target/user_diskio.c ****   * @brief  I/O control operation
+ 149:FATFS/Target/user_diskio.c ****   * @param  pdrv: Physical drive number (0..)
+ARM GAS  C:\Users\samue\AppData\Local\Temp\ccPFSYCc.s 			page 6
 
 
- 150:Core/Src/user_diskio.c ****   * @param  cmd: Control code
- 151:Core/Src/user_diskio.c ****   * @param  *buff: Buffer to send/receive control data
- 152:Core/Src/user_diskio.c ****   * @retval DRESULT: Operation result
- 153:Core/Src/user_diskio.c ****   */
- 154:Core/Src/user_diskio.c **** #if _USE_IOCTL == 1
- 155:Core/Src/user_diskio.c **** DRESULT USER_ioctl (
- 156:Core/Src/user_diskio.c **** 	BYTE pdrv,      /* Physical drive nmuber (0..) */
- 157:Core/Src/user_diskio.c **** 	BYTE cmd,       /* Control code */
- 158:Core/Src/user_diskio.c **** 	void *buff      /* Buffer to send/receive control data */
- 159:Core/Src/user_diskio.c **** )
- 160:Core/Src/user_diskio.c **** {
+ 150:FATFS/Target/user_diskio.c ****   * @param  cmd: Control code
+ 151:FATFS/Target/user_diskio.c ****   * @param  *buff: Buffer to send/receive control data
+ 152:FATFS/Target/user_diskio.c ****   * @retval DRESULT: Operation result
+ 153:FATFS/Target/user_diskio.c ****   */
+ 154:FATFS/Target/user_diskio.c **** #if _USE_IOCTL == 1
+ 155:FATFS/Target/user_diskio.c **** DRESULT USER_ioctl (
+ 156:FATFS/Target/user_diskio.c **** 	BYTE pdrv,      /* Physical drive nmuber (0..) */
+ 157:FATFS/Target/user_diskio.c **** 	BYTE cmd,       /* Control code */
+ 158:FATFS/Target/user_diskio.c **** 	void *buff      /* Buffer to send/receive control data */
+ 159:FATFS/Target/user_diskio.c **** )
+ 160:FATFS/Target/user_diskio.c **** {
  146              		.loc 1 160 1 is_stmt 1 view -0
  147              		.cfi_startproc
  148              		@ args = 0, pretend = 0, frame = 0
@@ -322,14 +322,14 @@ ARM GAS  C:\Users\samue\AppData\Local\Temp\ccsgoNXL.s 			page 1
  153              		.cfi_def_cfa_offset 8
  154              		.cfi_offset 3, -8
  155              		.cfi_offset 14, -4
- 161:Core/Src/user_diskio.c ****   /* USER CODE BEGIN IOCTL */
- 162:Core/Src/user_diskio.c ****     return SD_disk_ioctl (pdrv, cmd, buff);
+ 161:FATFS/Target/user_diskio.c ****   /* USER CODE BEGIN IOCTL */
+ 162:FATFS/Target/user_diskio.c ****     return SD_disk_ioctl (pdrv, cmd, buff);
  156              		.loc 1 162 5 is_stmt 1 view .LVU22
  157              		.loc 1 162 12 is_stmt 0 view .LVU23
  158 0002 FFF7FEFF 		bl	SD_disk_ioctl
  159              	.LVL9:
- 163:Core/Src/user_diskio.c ****   /* USER CODE END IOCTL */
- 164:Core/Src/user_diskio.c **** }
+ 163:FATFS/Target/user_diskio.c ****   /* USER CODE END IOCTL */
+ 164:FATFS/Target/user_diskio.c **** }
  160              		.loc 1 164 1 view .LVU24
  161 0006 08BD     		pop	{r3, pc}
  162              		.cfi_endproc
@@ -351,25 +351,25 @@ ARM GAS  C:\Users\samue\AppData\Local\Temp\ccsgoNXL.s 			page 1
  183              		.file 2 "Middlewares/Third_Party/FatFs/src/integer.h"
  184              		.file 3 "Middlewares/Third_Party/FatFs/src/diskio.h"
  185              		.file 4 "Middlewares/Third_Party/FatFs/src/ff_gen_drv.h"
- 186              		.file 5 "Core/Inc/fatfs_sd.h"
-ARM GAS  C:\Users\samue\AppData\Local\Temp\ccsgoNXL.s 			page 7
+ 186              		.file 5 "Device-Drivers/Inc/fatfs_sd.h"
+ARM GAS  C:\Users\samue\AppData\Local\Temp\ccPFSYCc.s 			page 7
 
 
 DEFINED SYMBOLS
                             *ABS*:00000000 user_diskio.c
-C:\Users\samue\AppData\Local\Temp\ccsgoNXL.s:20     .text.USER_initialize:00000000 $t
-C:\Users\samue\AppData\Local\Temp\ccsgoNXL.s:26     .text.USER_initialize:00000000 USER_initialize
-C:\Users\samue\AppData\Local\Temp\ccsgoNXL.s:50     .text.USER_status:00000000 $t
-C:\Users\samue\AppData\Local\Temp\ccsgoNXL.s:56     .text.USER_status:00000000 USER_status
-C:\Users\samue\AppData\Local\Temp\ccsgoNXL.s:79     .text.USER_read:00000000 $t
-C:\Users\samue\AppData\Local\Temp\ccsgoNXL.s:85     .text.USER_read:00000000 USER_read
-C:\Users\samue\AppData\Local\Temp\ccsgoNXL.s:108    .text.USER_write:00000000 $t
-C:\Users\samue\AppData\Local\Temp\ccsgoNXL.s:114    .text.USER_write:00000000 USER_write
-C:\Users\samue\AppData\Local\Temp\ccsgoNXL.s:137    .text.USER_ioctl:00000000 $t
-C:\Users\samue\AppData\Local\Temp\ccsgoNXL.s:143    .text.USER_ioctl:00000000 USER_ioctl
-C:\Users\samue\AppData\Local\Temp\ccsgoNXL.s:175    .data.USER_Driver:00000000 USER_Driver
-C:\Users\samue\AppData\Local\Temp\ccsgoNXL.s:169    .data.Stat:00000000 Stat
-C:\Users\samue\AppData\Local\Temp\ccsgoNXL.s:172    .data.USER_Driver:00000000 $d
+C:\Users\samue\AppData\Local\Temp\ccPFSYCc.s:20     .text.USER_initialize:00000000 $t
+C:\Users\samue\AppData\Local\Temp\ccPFSYCc.s:26     .text.USER_initialize:00000000 USER_initialize
+C:\Users\samue\AppData\Local\Temp\ccPFSYCc.s:50     .text.USER_status:00000000 $t
+C:\Users\samue\AppData\Local\Temp\ccPFSYCc.s:56     .text.USER_status:00000000 USER_status
+C:\Users\samue\AppData\Local\Temp\ccPFSYCc.s:79     .text.USER_read:00000000 $t
+C:\Users\samue\AppData\Local\Temp\ccPFSYCc.s:85     .text.USER_read:00000000 USER_read
+C:\Users\samue\AppData\Local\Temp\ccPFSYCc.s:108    .text.USER_write:00000000 $t
+C:\Users\samue\AppData\Local\Temp\ccPFSYCc.s:114    .text.USER_write:00000000 USER_write
+C:\Users\samue\AppData\Local\Temp\ccPFSYCc.s:137    .text.USER_ioctl:00000000 $t
+C:\Users\samue\AppData\Local\Temp\ccPFSYCc.s:143    .text.USER_ioctl:00000000 USER_ioctl
+C:\Users\samue\AppData\Local\Temp\ccPFSYCc.s:175    .data.USER_Driver:00000000 USER_Driver
+C:\Users\samue\AppData\Local\Temp\ccPFSYCc.s:169    .data.Stat:00000000 Stat
+C:\Users\samue\AppData\Local\Temp\ccPFSYCc.s:172    .data.USER_Driver:00000000 $d
 
 UNDEFINED SYMBOLS
 SD_disk_initialize

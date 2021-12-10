@@ -1,4 +1,4 @@
-ARM GAS  C:\Users\samue\AppData\Local\Temp\cc8GjJ9b.s 			page 1
+ARM GAS  C:\Users\samue\AppData\Local\Temp\ccPObj7n.s 			page 1
 
 
    1              		.cpu cortex-m4
@@ -58,7 +58,7 @@ ARM GAS  C:\Users\samue\AppData\Local\Temp\cc8GjJ9b.s 			page 1
   21:Core/Src/accelerometer_data.c **** float accel_data[3];
   22:Core/Src/accelerometer_data.c **** 
   23:Core/Src/accelerometer_data.c **** 
-ARM GAS  C:\Users\samue\AppData\Local\Temp\cc8GjJ9b.s 			page 2
+ARM GAS  C:\Users\samue\AppData\Local\Temp\ccPObj7n.s 			page 2
 
 
   24:Core/Src/accelerometer_data.c **** // Accelerometer initialization
@@ -118,7 +118,7 @@ ARM GAS  C:\Users\samue\AppData\Local\Temp\cc8GjJ9b.s 			page 1
   42:Core/Src/accelerometer_data.c **** 
   43:Core/Src/accelerometer_data.c **** 		// Set accelerometer configuration in ACCEL_CONFIG register
   44:Core/Src/accelerometer_data.c **** 		// XA_ST = 0, YA_ST = 0, ZA_ST = 0, FS_SEL = 0 -> +/- 2g
-ARM GAS  C:\Users\samue\AppData\Local\Temp\cc8GjJ9b.s 			page 3
+ARM GAS  C:\Users\samue\AppData\Local\Temp\ccPObj7n.s 			page 3
 
 
   45:Core/Src/accelerometer_data.c **** 		Data = 0x00;
@@ -178,7 +178,7 @@ ARM GAS  C:\Users\samue\AppData\Local\Temp\cc8GjJ9b.s 			page 1
  104 005e FFF7FEFF 		bl	HAL_I2C_Mem_Write
  105              	.LVL3:
   40:Core/Src/accelerometer_data.c **** 		HAL_I2C_Mem_Write(&hi2c1, MPU6050_ADDR, SMPLRT_DIV_REG, 1, &Data, 1, 1000);
-ARM GAS  C:\Users\samue\AppData\Local\Temp\cc8GjJ9b.s 			page 4
+ARM GAS  C:\Users\samue\AppData\Local\Temp\ccPObj7n.s 			page 4
 
 
  106              		.loc 1 40 3 view .LVU13
@@ -238,7 +238,7 @@ ARM GAS  C:\Users\samue\AppData\Local\Temp\cc8GjJ9b.s 			page 1
  152              		.cfi_endproc
  153              	.LFE130:
  155              		.section	.text.MPU6050_read,"ax",%progbits
-ARM GAS  C:\Users\samue\AppData\Local\Temp\cc8GjJ9b.s 			page 5
+ARM GAS  C:\Users\samue\AppData\Local\Temp\ccPObj7n.s 			page 5
 
 
  156              		.align	1
@@ -298,7 +298,7 @@ ARM GAS  C:\Users\samue\AppData\Local\Temp\cc8GjJ9b.s 			page 1
  205              		.loc 1 66 2 is_stmt 1 view .LVU28
  206              		.loc 1 66 33 is_stmt 0 view .LVU29
  207 0028 2278     		ldrb	r2, [r4]	@ zero_extendqisi2
-ARM GAS  C:\Users\samue\AppData\Local\Temp\cc8GjJ9b.s 			page 6
+ARM GAS  C:\Users\samue\AppData\Local\Temp\ccPObj7n.s 			page 6
 
 
  208              		.loc 1 66 48 view .LVU30
@@ -358,7 +358,7 @@ ARM GAS  C:\Users\samue\AppData\Local\Temp\cc8GjJ9b.s 			page 1
   69:Core/Src/accelerometer_data.c **** 
   70:Core/Src/accelerometer_data.c **** 	return accel_data;
  260              		.loc 1 70 2 is_stmt 1 view .LVU52
-ARM GAS  C:\Users\samue\AppData\Local\Temp\cc8GjJ9b.s 			page 7
+ARM GAS  C:\Users\samue\AppData\Local\Temp\ccPObj7n.s 			page 7
 
 
   71:Core/Src/accelerometer_data.c **** }
@@ -410,22 +410,22 @@ ARM GAS  C:\Users\samue\AppData\Local\Temp\cc8GjJ9b.s 			page 1
  308              		.file 7 "Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_i2c.h"
  309              		.file 8 "Core/Inc/i2c-lcd.h"
  310              		.file 9 "Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h"
-ARM GAS  C:\Users\samue\AppData\Local\Temp\cc8GjJ9b.s 			page 8
+ARM GAS  C:\Users\samue\AppData\Local\Temp\ccPObj7n.s 			page 8
 
 
 DEFINED SYMBOLS
                             *ABS*:00000000 accelerometer_data.c
-C:\Users\samue\AppData\Local\Temp\cc8GjJ9b.s:20     .rodata.MPU6050_Init.str1.4:00000000 $d
-C:\Users\samue\AppData\Local\Temp\cc8GjJ9b.s:24     .text.MPU6050_Init:00000000 $t
-C:\Users\samue\AppData\Local\Temp\cc8GjJ9b.s:30     .text.MPU6050_Init:00000000 MPU6050_Init
-C:\Users\samue\AppData\Local\Temp\cc8GjJ9b.s:150    .text.MPU6050_Init:000000a8 $d
-C:\Users\samue\AppData\Local\Temp\cc8GjJ9b.s:156    .text.MPU6050_read:00000000 $t
-C:\Users\samue\AppData\Local\Temp\cc8GjJ9b.s:162    .text.MPU6050_read:00000000 MPU6050_read
-C:\Users\samue\AppData\Local\Temp\cc8GjJ9b.s:279    .text.MPU6050_read:00000098 $d
-C:\Users\samue\AppData\Local\Temp\cc8GjJ9b.s:292    .bss.accel_data:00000000 accel_data
-C:\Users\samue\AppData\Local\Temp\cc8GjJ9b.s:299    .bss.data:00000000 data
-C:\Users\samue\AppData\Local\Temp\cc8GjJ9b.s:288    .bss.accel_data:00000000 $d
-C:\Users\samue\AppData\Local\Temp\cc8GjJ9b.s:295    .bss.data:00000000 $d
+C:\Users\samue\AppData\Local\Temp\ccPObj7n.s:20     .rodata.MPU6050_Init.str1.4:00000000 $d
+C:\Users\samue\AppData\Local\Temp\ccPObj7n.s:24     .text.MPU6050_Init:00000000 $t
+C:\Users\samue\AppData\Local\Temp\ccPObj7n.s:30     .text.MPU6050_Init:00000000 MPU6050_Init
+C:\Users\samue\AppData\Local\Temp\ccPObj7n.s:150    .text.MPU6050_Init:000000a8 $d
+C:\Users\samue\AppData\Local\Temp\ccPObj7n.s:156    .text.MPU6050_read:00000000 $t
+C:\Users\samue\AppData\Local\Temp\ccPObj7n.s:162    .text.MPU6050_read:00000000 MPU6050_read
+C:\Users\samue\AppData\Local\Temp\ccPObj7n.s:279    .text.MPU6050_read:00000098 $d
+C:\Users\samue\AppData\Local\Temp\ccPObj7n.s:292    .bss.accel_data:00000000 accel_data
+C:\Users\samue\AppData\Local\Temp\ccPObj7n.s:299    .bss.data:00000000 data
+C:\Users\samue\AppData\Local\Temp\ccPObj7n.s:288    .bss.accel_data:00000000 $d
+C:\Users\samue\AppData\Local\Temp\ccPObj7n.s:295    .bss.data:00000000 $d
 
 UNDEFINED SYMBOLS
 HAL_I2C_Mem_Read

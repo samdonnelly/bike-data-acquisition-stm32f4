@@ -32,8 +32,8 @@ build/main_functions.o: Core/Src/main_functions.c Core/Inc/main.h \
  Middlewares/Third_Party/FatFs/src/integer.h FATFS/Target/ffconf.h \
  Middlewares/Third_Party/FatFs/src/ff_gen_drv.h \
  Middlewares/Third_Party/FatFs/src/diskio.h \
- Middlewares/Third_Party/FatFs/src/ff.h Core/Inc/user_diskio.h \
- Core/Inc/fatfs_sd.h
+ Middlewares/Third_Party/FatFs/src/ff.h FATFS/Target/user_diskio.h \
+ Device-Drivers/Inc/fatfs_sd.h
 Core/Inc/main.h:
 Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h:
 Core/Inc/stm32f4xx_hal_conf.h:
@@ -75,5 +75,5 @@ FATFS/Target/ffconf.h:
 Middlewares/Third_Party/FatFs/src/ff_gen_drv.h:
 Middlewares/Third_Party/FatFs/src/diskio.h:
 Middlewares/Third_Party/FatFs/src/ff.h:
-Core/Inc/user_diskio.h:
-Core/Inc/fatfs_sd.h:
+FATFS/Target/user_diskio.h:
+Device-Drivers/Inc/fatfs_sd.h:
