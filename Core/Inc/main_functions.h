@@ -6,25 +6,33 @@
  * Author: Sam Donnelly
  */
 
-// Libraries 
+/* 
+ * ---------------------------------------------------------------------------------------------
+ * Libraries and Header Files
+ * ---------------------------------------------------------------------------------------------
+ */
 
-
-// Header Files 
 #include "main.h"
 #include "stm32f4xx_hal.h"
 
+
+/* 
+ * ---------------------------------------------------------------------------------------------
+ * Include guards
+ * ---------------------------------------------------------------------------------------------
+ */
 #ifndef MAIN_FUNCTIONS
 #define MAIN_FUNCTIONS
 
-// Function Prototypes 
+
+/* 
+ * ---------------------------------------------------------------------------------------------
+ * Function Prototypes 
+ * ---------------------------------------------------------------------------------------------
+ */
+
+// Psudo main function 
 void main_function(void);
-
-// Buffer functions 
-int bufsize(char *buf);
-void bufclear(void);
-
-// UART functions 
-void send_uart(char *string);
 
 // Normal run mode
 void normal(void);
@@ -39,6 +47,12 @@ void accel_cal_prep(void);
 // Calibrate the accelerometer
 void accel_cal(void);
 
+
+/* 
+ * ---------------------------------------------------------------------------------------------
+ * End include guard
+ * ---------------------------------------------------------------------------------------------
+ */
 
 #endif   // MAIN_FUNCTIONS
 
