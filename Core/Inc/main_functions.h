@@ -47,6 +47,9 @@ void accel_cal_prep(void);
 // Calibrate the accelerometer
 void accel_cal(void);
 
+// Send information over UART
+void send_uart(char *string);
+
 
 /* 
  * ---------------------------------------------------------------------------------------------

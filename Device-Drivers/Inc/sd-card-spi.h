@@ -7,12 +7,6 @@
  * 
  */
 
-/* 
- * ---------------------------------------------------------------------------------------------
- * Libraries and Header Files
- * ---------------------------------------------------------------------------------------------
- */
-
 
 /* 
  * ---------------------------------------------------------------------------------------------
@@ -24,6 +18,32 @@
 #define SD_CARD_SPI
 
 
+/* 
+ * ---------------------------------------------------------------------------------------------
+ * Libraries and Header Files
+ * ---------------------------------------------------------------------------------------------
+ */
+
+#include <stdint.h>
+
+#include "integer.h"
+
+
+/* 
+ * ---------------------------------------------------------------------------------------------
+ * Variables 
+ * ---------------------------------------------------------------------------------------------
+ */
+
+typedef struct spi_vars spi_vars;
+
+typedef enum {
+    INIT,
+    CREATE,
+    UPDATE,
+    REMOVE
+} SD_card_functions;
+
 
 /* 
  * ---------------------------------------------------------------------------------------------
@@ -31,17 +51,11 @@
  * ---------------------------------------------------------------------------------------------
  */
 
-// Determine size of buffer up to which it is filled
-int bufsize(char *buf);
-
-// Clear buffer 
-void bufclear(void);
-
-// Send information over UART
-void send_uart(char *string);
+// Main SD card function 
+void sd_card(uint8_t func);
 
 // Initialize SD card 
-void sd_card_init(void);
+void sd_card_init(spi_vars *card);
 
 // Create file on SD card 
 void sd_card_create_file(void);
@@ -51,6 +65,12 @@ void sd_card_update_file(void);
 
 // Remove file
 void sd_card_remove_file(void);
+
+// Determine size of buffer up to which it is filled
+int bufsize(char *buf);
+
+// Clear buffer 
+void bufclear(spi_vars *card_buffer);
 
 
 

@@ -23,6 +23,7 @@
 #include "i2c-lcd.h"
 #include "accelerometer_data.h"
 #include "fatfs_sd.h"
+#include "sd-card-spi.h"
 
 
 /* 
@@ -66,20 +67,6 @@ char Gx_string[] = "Gx=       ";
 char Gy_string[] = "Gy=       ";
 char Gz_string[] = "Gz=       ";
 
-// SPI variables --------------------
-FATFS fs;           // file system 
-FIL fil;            // file 
-FRESULT fresult;    // to store the result 
-char buffer[1024];  // to store data 
-
-UINT br, bw;        // file read/write count 
-
-// Capacity related variables 
-FATFS *pfs;
-DWORD fre_clust;
-uint32_t total, free_space;
-// ----------------------------------
-
 
 /* 
  * ---------------------------------------------------------------------------------------------
@@ -117,6 +104,14 @@ void main_function(void) {
     lcd_send_string("Initialized");
     HAL_Delay(1500);
 
+    // SD card test 
+    sd_card(INIT);
+
+    // sd_card(CREATE);
+
+    // sd_card(UPDATE);
+
+    // sd_card(REMOVE);
     
     // Main loop 
     while(1) {
@@ -254,4 +249,12 @@ void accel_cal(void) {
 
 	lcd_send_cmd(0x80|0x00);
 	lcd_send_string("Calibration Complete");
+}
+
+
+// Send information over uart 
+void send_uart(char *string) {
+    uint8_t len = strlen(string);
+    // Transmit in blocking mode
+    HAL_UART_Transmit(&huart2, (uint8_t*)string, len, 2000);
 }

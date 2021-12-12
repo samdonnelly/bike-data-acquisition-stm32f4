@@ -28,7 +28,8 @@ build/fatfs_sd.o: Device-Drivers/Src/fatfs_sd.c \
  Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_uart.h \
  Middlewares/Third_Party/FatFs/src/diskio.h \
  Middlewares/Third_Party/FatFs/src/integer.h \
- Device-Drivers/Inc/fatfs_sd.h
+ Device-Drivers/Inc/fatfs_sd.h \
+ Middlewares/Third_Party/FatFs/src/integer.h
 Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h:
 Core/Inc/stm32f4xx_hal_conf.h:
 Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_rcc.h:
@@ -61,3 +62,4 @@ Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_uart.h:
 Middlewares/Third_Party/FatFs/src/diskio.h:
 Middlewares/Third_Party/FatFs/src/integer.h:
 Device-Drivers/Inc/fatfs_sd.h:
+Middlewares/Third_Party/FatFs/src/integer.h:
