@@ -1,4 +1,4 @@
-ARM GAS  C:\Users\samue\AppData\Local\Temp\ccizoA9K.s 			page 1
+ARM GAS  C:\Users\samue\AppData\Local\Temp\ccn5pQnk.s 			page 1
 
 
    1              		.cpu cortex-m4
@@ -53,570 +53,726 @@ ARM GAS  C:\Users\samue\AppData\Local\Temp\ccizoA9K.s 			page 1
   22:Device-Drivers/Src/sd-card-spi.c **** #include "sd-card-spi.h"
   23:Device-Drivers/Src/sd-card-spi.c **** #include "fatfs_sd.h"
   24:Device-Drivers/Src/sd-card-spi.c **** #include "ff.h"
-  25:Device-Drivers/Src/sd-card-spi.c **** 
+  25:Device-Drivers/Src/sd-card-spi.c **** #include "i2c-lcd.h"
   26:Device-Drivers/Src/sd-card-spi.c **** 
-  27:Device-Drivers/Src/sd-card-spi.c **** /* 
-  28:Device-Drivers/Src/sd-card-spi.c ****  * ---------------------------------------------------------------------------------------------
-  29:Device-Drivers/Src/sd-card-spi.c ****  * Variables
-ARM GAS  C:\Users\samue\AppData\Local\Temp\ccizoA9K.s 			page 2
+  27:Device-Drivers/Src/sd-card-spi.c **** 
+  28:Device-Drivers/Src/sd-card-spi.c **** /* 
+  29:Device-Drivers/Src/sd-card-spi.c ****  * ---------------------------------------------------------------------------------------------
+ARM GAS  C:\Users\samue\AppData\Local\Temp\ccn5pQnk.s 			page 2
 
 
-  30:Device-Drivers/Src/sd-card-spi.c ****  * ---------------------------------------------------------------------------------------------
-  31:Device-Drivers/Src/sd-card-spi.c ****  */
-  32:Device-Drivers/Src/sd-card-spi.c **** 
-  33:Device-Drivers/Src/sd-card-spi.c **** typedef struct spi_vars {
-  34:Device-Drivers/Src/sd-card-spi.c ****     //
-  35:Device-Drivers/Src/sd-card-spi.c ****     FATFS fs;           // file system 
-  36:Device-Drivers/Src/sd-card-spi.c ****     FIL fil;            // file 
-  37:Device-Drivers/Src/sd-card-spi.c ****     FRESULT fresult;    // to store the result 
-  38:Device-Drivers/Src/sd-card-spi.c ****     char buffer[1024];  // to store data 
-  39:Device-Drivers/Src/sd-card-spi.c **** 
-  40:Device-Drivers/Src/sd-card-spi.c ****     // file read/write count 
-  41:Device-Drivers/Src/sd-card-spi.c ****     UINT br, bw;
-  42:Device-Drivers/Src/sd-card-spi.c **** 
-  43:Device-Drivers/Src/sd-card-spi.c ****     // Capacity related variables 
-  44:Device-Drivers/Src/sd-card-spi.c ****     FATFS *pfs;
-  45:Device-Drivers/Src/sd-card-spi.c ****     DWORD fre_clust;
-  46:Device-Drivers/Src/sd-card-spi.c ****     uint32_t total;
-  47:Device-Drivers/Src/sd-card-spi.c ****     uint32_t free_space;
-  48:Device-Drivers/Src/sd-card-spi.c **** 
-  49:Device-Drivers/Src/sd-card-spi.c **** } spi_vars;
-  50:Device-Drivers/Src/sd-card-spi.c **** 
+  30:Device-Drivers/Src/sd-card-spi.c ****  * Variables
+  31:Device-Drivers/Src/sd-card-spi.c ****  * ---------------------------------------------------------------------------------------------
+  32:Device-Drivers/Src/sd-card-spi.c ****  */
+  33:Device-Drivers/Src/sd-card-spi.c **** 
+  34:Device-Drivers/Src/sd-card-spi.c **** typedef struct spi_vars {
+  35:Device-Drivers/Src/sd-card-spi.c ****     //
+  36:Device-Drivers/Src/sd-card-spi.c ****     FATFS    fs;            // file system 
+  37:Device-Drivers/Src/sd-card-spi.c ****     FIL      fil;           // file 
+  38:Device-Drivers/Src/sd-card-spi.c ****     FRESULT  fresult;       // to store the result 
+  39:Device-Drivers/Src/sd-card-spi.c ****     char     buffer[1024];  // to store data 
+  40:Device-Drivers/Src/sd-card-spi.c **** 
+  41:Device-Drivers/Src/sd-card-spi.c ****     // file read/write count 
+  42:Device-Drivers/Src/sd-card-spi.c ****     UINT br, bw;
+  43:Device-Drivers/Src/sd-card-spi.c **** 
+  44:Device-Drivers/Src/sd-card-spi.c ****     // Capacity related variables 
+  45:Device-Drivers/Src/sd-card-spi.c ****     FATFS     *pfs;
+  46:Device-Drivers/Src/sd-card-spi.c ****     DWORD     fre_clust;
+  47:Device-Drivers/Src/sd-card-spi.c ****     uint32_t  total;
+  48:Device-Drivers/Src/sd-card-spi.c ****     uint32_t  free_space;
+  49:Device-Drivers/Src/sd-card-spi.c **** 
+  50:Device-Drivers/Src/sd-card-spi.c **** } spi_vars;
   51:Device-Drivers/Src/sd-card-spi.c **** 
   52:Device-Drivers/Src/sd-card-spi.c **** 
   53:Device-Drivers/Src/sd-card-spi.c **** 
-  54:Device-Drivers/Src/sd-card-spi.c **** /* 
-  55:Device-Drivers/Src/sd-card-spi.c ****  * ---------------------------------------------------------------------------------------------
-  56:Device-Drivers/Src/sd-card-spi.c ****  * Functions 
-  57:Device-Drivers/Src/sd-card-spi.c ****  * ---------------------------------------------------------------------------------------------
-  58:Device-Drivers/Src/sd-card-spi.c ****  */
-  59:Device-Drivers/Src/sd-card-spi.c **** 
-  60:Device-Drivers/Src/sd-card-spi.c **** // Main SD card function 
-  61:Device-Drivers/Src/sd-card-spi.c **** void sd_card(uint8_t func) 
-  62:Device-Drivers/Src/sd-card-spi.c **** {
-  63:Device-Drivers/Src/sd-card-spi.c ****     // Initialize data for SD card 
-  64:Device-Drivers/Src/sd-card-spi.c ****     static spi_vars sd_card_1;
-  65:Device-Drivers/Src/sd-card-spi.c **** 
-  66:Device-Drivers/Src/sd-card-spi.c ****     // Choose SD card function 
-  67:Device-Drivers/Src/sd-card-spi.c ****     switch (func) 
-  68:Device-Drivers/Src/sd-card-spi.c ****     {
-  69:Device-Drivers/Src/sd-card-spi.c ****     case 0:
-  70:Device-Drivers/Src/sd-card-spi.c ****         sd_card_init(&sd_card_1);
-  71:Device-Drivers/Src/sd-card-spi.c ****         break;
-  72:Device-Drivers/Src/sd-card-spi.c **** 
-  73:Device-Drivers/Src/sd-card-spi.c ****     // case 1:
-  74:Device-Drivers/Src/sd-card-spi.c ****     //     sd_card_init(void);
-  75:Device-Drivers/Src/sd-card-spi.c ****     //     break;
-  76:Device-Drivers/Src/sd-card-spi.c **** 
-  77:Device-Drivers/Src/sd-card-spi.c ****     // case 2:
-  78:Device-Drivers/Src/sd-card-spi.c ****     //     sd_card_init(void);
-  79:Device-Drivers/Src/sd-card-spi.c ****     //     break;
-  80:Device-Drivers/Src/sd-card-spi.c **** 
-  81:Device-Drivers/Src/sd-card-spi.c ****     // case 3:
-  82:Device-Drivers/Src/sd-card-spi.c ****     //     sd_card_init(void);
-  83:Device-Drivers/Src/sd-card-spi.c ****     //     break;
-  84:Device-Drivers/Src/sd-card-spi.c ****     
-  85:Device-Drivers/Src/sd-card-spi.c ****     default:
-  86:Device-Drivers/Src/sd-card-spi.c ****         break;
-ARM GAS  C:\Users\samue\AppData\Local\Temp\ccizoA9K.s 			page 3
+  54:Device-Drivers/Src/sd-card-spi.c **** 
+  55:Device-Drivers/Src/sd-card-spi.c **** /* 
+  56:Device-Drivers/Src/sd-card-spi.c ****  * ---------------------------------------------------------------------------------------------
+  57:Device-Drivers/Src/sd-card-spi.c ****  * Functions 
+  58:Device-Drivers/Src/sd-card-spi.c ****  * ---------------------------------------------------------------------------------------------
+  59:Device-Drivers/Src/sd-card-spi.c ****  */
+  60:Device-Drivers/Src/sd-card-spi.c **** 
+  61:Device-Drivers/Src/sd-card-spi.c **** // Main SD card function 
+  62:Device-Drivers/Src/sd-card-spi.c **** void sd_card(uint8_t func) 
+  63:Device-Drivers/Src/sd-card-spi.c **** {
+  64:Device-Drivers/Src/sd-card-spi.c ****     // Initialize data for SD card 
+  65:Device-Drivers/Src/sd-card-spi.c ****     static spi_vars sd_card_1;
+  66:Device-Drivers/Src/sd-card-spi.c **** 
+  67:Device-Drivers/Src/sd-card-spi.c ****     // Choose SD card function 
+  68:Device-Drivers/Src/sd-card-spi.c ****     switch (func) 
+  69:Device-Drivers/Src/sd-card-spi.c ****     {
+  70:Device-Drivers/Src/sd-card-spi.c ****     case 0:
+  71:Device-Drivers/Src/sd-card-spi.c ****         sd_card_init(&sd_card_1);
+  72:Device-Drivers/Src/sd-card-spi.c ****         break;
+  73:Device-Drivers/Src/sd-card-spi.c **** 
+  74:Device-Drivers/Src/sd-card-spi.c ****     // case 1:
+  75:Device-Drivers/Src/sd-card-spi.c ****     //     sd_card_init(void);
+  76:Device-Drivers/Src/sd-card-spi.c ****     //     break;
+  77:Device-Drivers/Src/sd-card-spi.c **** 
+  78:Device-Drivers/Src/sd-card-spi.c ****     // case 2:
+  79:Device-Drivers/Src/sd-card-spi.c ****     //     sd_card_init(void);
+  80:Device-Drivers/Src/sd-card-spi.c ****     //     break;
+  81:Device-Drivers/Src/sd-card-spi.c **** 
+  82:Device-Drivers/Src/sd-card-spi.c ****     // case 3:
+  83:Device-Drivers/Src/sd-card-spi.c ****     //     sd_card_init(void);
+  84:Device-Drivers/Src/sd-card-spi.c ****     //     break;
+  85:Device-Drivers/Src/sd-card-spi.c ****     
+  86:Device-Drivers/Src/sd-card-spi.c ****     default:
+ARM GAS  C:\Users\samue\AppData\Local\Temp\ccn5pQnk.s 			page 3
 
 
-  87:Device-Drivers/Src/sd-card-spi.c ****     }
-  88:Device-Drivers/Src/sd-card-spi.c **** }
-  89:Device-Drivers/Src/sd-card-spi.c **** 
+  87:Device-Drivers/Src/sd-card-spi.c ****         break;
+  88:Device-Drivers/Src/sd-card-spi.c ****     }
+  89:Device-Drivers/Src/sd-card-spi.c **** }
   90:Device-Drivers/Src/sd-card-spi.c **** 
-  91:Device-Drivers/Src/sd-card-spi.c **** // Initialize SD Card
-  92:Device-Drivers/Src/sd-card-spi.c **** void sd_card_init(spi_vars *card) {
-  93:Device-Drivers/Src/sd-card-spi.c ****     // Mount SD card
-  94:Device-Drivers/Src/sd-card-spi.c ****     card->fresult = f_mount(&(card->fs), "", 0);
-  95:Device-Drivers/Src/sd-card-spi.c ****     if (card->fresult != FR_OK) {
-  96:Device-Drivers/Src/sd-card-spi.c ****         send_uart("Error in mounting SD card.\r\n");
-  97:Device-Drivers/Src/sd-card-spi.c ****     }
-  98:Device-Drivers/Src/sd-card-spi.c ****     else {
-  99:Device-Drivers/Src/sd-card-spi.c ****         send_uart("SD card mounted successfully.\r\n");
- 100:Device-Drivers/Src/sd-card-spi.c ****     }
- 101:Device-Drivers/Src/sd-card-spi.c **** 
- 102:Device-Drivers/Src/sd-card-spi.c ****     // Get capacity of SD card 
- 103:Device-Drivers/Src/sd-card-spi.c ****     f_getfree("", &(card->fre_clust), &(card->pfs));
- 104:Device-Drivers/Src/sd-card-spi.c **** 
- 105:Device-Drivers/Src/sd-card-spi.c ****     card->total = (uint32_t)((card->pfs->n_fatent - 2)*(card->pfs->csize)*0.5);
- 106:Device-Drivers/Src/sd-card-spi.c ****     sprintf(card->buffer, "SD card total size: \t%lu\r\n", card->total);
- 107:Device-Drivers/Src/sd-card-spi.c ****     send_uart(card->buffer);
- 108:Device-Drivers/Src/sd-card-spi.c **** 
- 109:Device-Drivers/Src/sd-card-spi.c ****     bufclear(card);
- 110:Device-Drivers/Src/sd-card-spi.c **** 
- 111:Device-Drivers/Src/sd-card-spi.c ****     card->free_space = (uint32_t)((card->fre_clust)*(card->pfs->csize)*0.5);
- 112:Device-Drivers/Src/sd-card-spi.c ****     sprintf(card->buffer, "SD card free space: \t%lu\r\n", card->free_space);
- 113:Device-Drivers/Src/sd-card-spi.c ****     send_uart(card->buffer);
- 114:Device-Drivers/Src/sd-card-spi.c **** }
- 115:Device-Drivers/Src/sd-card-spi.c **** 
- 116:Device-Drivers/Src/sd-card-spi.c **** 
- 117:Device-Drivers/Src/sd-card-spi.c **** // // Create file on SD card 
- 118:Device-Drivers/Src/sd-card-spi.c **** // void sd_card_create_file(void) {
- 119:Device-Drivers/Src/sd-card-spi.c **** //     // Open file to write/create a file if it doesn't exist 
- 120:Device-Drivers/Src/sd-card-spi.c **** //     fresult = f_open(&fil, "file1.txt", FA_OPEN_ALWAYS | FA_READ | FA_WRITE);
- 121:Device-Drivers/Src/sd-card-spi.c **** //     // FA_OPEN_ALWAYS is used for creating the file 
- 122:Device-Drivers/Src/sd-card-spi.c **** //     // FA_READ and FA_WRITE are used for setting the permissions of the file 
+  91:Device-Drivers/Src/sd-card-spi.c **** 
+  92:Device-Drivers/Src/sd-card-spi.c **** // Initialize SD Card
+  93:Device-Drivers/Src/sd-card-spi.c **** void sd_card_init(spi_vars *card) 
+  94:Device-Drivers/Src/sd-card-spi.c **** {
+  95:Device-Drivers/Src/sd-card-spi.c ****     // Mount SD card
+  96:Device-Drivers/Src/sd-card-spi.c ****     card->fresult = f_mount(&(card->fs), "", 0);
+  97:Device-Drivers/Src/sd-card-spi.c **** 
+  98:Device-Drivers/Src/sd-card-spi.c ****     if (card->fresult != FR_OK) 
+  99:Device-Drivers/Src/sd-card-spi.c ****     {
+ 100:Device-Drivers/Src/sd-card-spi.c ****         // send_uart("Error mounting SD card.\r\n");
+ 101:Device-Drivers/Src/sd-card-spi.c ****         lcd_send_cmd(0x80|0x00);
+ 102:Device-Drivers/Src/sd-card-spi.c **** 	    lcd_send_string("Error mounting SD");
+ 103:Device-Drivers/Src/sd-card-spi.c ****         lcd_send_cmd(0x80|0x40);
+ 104:Device-Drivers/Src/sd-card-spi.c **** 	    lcd_send_string("card");
+ 105:Device-Drivers/Src/sd-card-spi.c ****     }
+ 106:Device-Drivers/Src/sd-card-spi.c ****     else 
+ 107:Device-Drivers/Src/sd-card-spi.c ****     {
+ 108:Device-Drivers/Src/sd-card-spi.c ****         // send_uart("SD card mounted successfully.\r\n");
+ 109:Device-Drivers/Src/sd-card-spi.c ****         lcd_send_cmd(0x80|0x00);
+ 110:Device-Drivers/Src/sd-card-spi.c **** 	    lcd_send_string("SD card mounted");
+ 111:Device-Drivers/Src/sd-card-spi.c ****         lcd_send_cmd(0x80|0x40);
+ 112:Device-Drivers/Src/sd-card-spi.c **** 	    lcd_send_string("successfully");
+ 113:Device-Drivers/Src/sd-card-spi.c ****     }
+ 114:Device-Drivers/Src/sd-card-spi.c **** 
+ 115:Device-Drivers/Src/sd-card-spi.c ****     // Give time to read message 
+ 116:Device-Drivers/Src/sd-card-spi.c ****     HAL_Delay(1500);
+ 117:Device-Drivers/Src/sd-card-spi.c **** 
+ 118:Device-Drivers/Src/sd-card-spi.c ****     // Clear display 
+ 119:Device-Drivers/Src/sd-card-spi.c ****     lcd_clear();
+ 120:Device-Drivers/Src/sd-card-spi.c **** 
+ 121:Device-Drivers/Src/sd-card-spi.c ****     // Get capacity of SD card 
+ 122:Device-Drivers/Src/sd-card-spi.c ****     f_getfree("", &(card->fre_clust), &(card->pfs));
  123:Device-Drivers/Src/sd-card-spi.c **** 
- 124:Device-Drivers/Src/sd-card-spi.c **** //     // Writing text then close file 
- 125:Device-Drivers/Src/sd-card-spi.c **** //     fresult = f_puts("This data is from the First FILE\r\n", &fil);
- 126:Device-Drivers/Src/sd-card-spi.c **** //     fresult = f_close(&fil);
- 127:Device-Drivers/Src/sd-card-spi.c **** //     send_uart("File1.txt created and the data is written\r\n");
- 128:Device-Drivers/Src/sd-card-spi.c **** 
- 129:Device-Drivers/Src/sd-card-spi.c **** //     // Open file to read
- 130:Device-Drivers/Src/sd-card-spi.c **** //     fresult = f_open(&fil, "file1.txt", FA_READ);
+ 124:Device-Drivers/Src/sd-card-spi.c ****     card->total = (uint32_t)((card->pfs->n_fatent - 2)*(card->pfs->csize)*0.5);
+ 125:Device-Drivers/Src/sd-card-spi.c ****     // sprintf(card->buffer, "SD card total size: \t%lu\r\n", card->total);
+ 126:Device-Drivers/Src/sd-card-spi.c ****     // send_uart(card->buffer);
+ 127:Device-Drivers/Src/sd-card-spi.c ****     lcd_send_cmd(0x80|0x00);
+ 128:Device-Drivers/Src/sd-card-spi.c ****     lcd_send_string("SD card total size:");
+ 129:Device-Drivers/Src/sd-card-spi.c ****     sprintf(card->buffer, "%lu", card->total);
+ 130:Device-Drivers/Src/sd-card-spi.c ****     lcd_send_cmd(0x80|0x40);
  131:Device-Drivers/Src/sd-card-spi.c **** 
- 132:Device-Drivers/Src/sd-card-spi.c **** //     // Read string from file and close file 
- 133:Device-Drivers/Src/sd-card-spi.c **** //     f_gets(buffer, f_size(&fil), &fil);
- 134:Device-Drivers/Src/sd-card-spi.c **** //     f_close(&fil);
- 135:Device-Drivers/Src/sd-card-spi.c **** //     send_uart(buffer);
- 136:Device-Drivers/Src/sd-card-spi.c **** 
- 137:Device-Drivers/Src/sd-card-spi.c **** //     bufclear();
- 138:Device-Drivers/Src/sd-card-spi.c **** 
- 139:Device-Drivers/Src/sd-card-spi.c **** //     // Use f_write and f_read to do the same thing as above --------------------
+ 132:Device-Drivers/Src/sd-card-spi.c ****     // Give time to read message 
+ 133:Device-Drivers/Src/sd-card-spi.c ****     HAL_Delay(3000);
+ 134:Device-Drivers/Src/sd-card-spi.c **** 
+ 135:Device-Drivers/Src/sd-card-spi.c ****     // Clear display 
+ 136:Device-Drivers/Src/sd-card-spi.c ****     lcd_clear();
+ 137:Device-Drivers/Src/sd-card-spi.c **** 
+ 138:Device-Drivers/Src/sd-card-spi.c ****     // Clear buffer 
+ 139:Device-Drivers/Src/sd-card-spi.c ****     bufclear(card);
  140:Device-Drivers/Src/sd-card-spi.c **** 
- 141:Device-Drivers/Src/sd-card-spi.c **** //     // Create second file with read write access and open it 
- 142:Device-Drivers/Src/sd-card-spi.c **** //     fresult = f_open(&fil, "file2.txt", FA_OPEN_ALWAYS | FA_READ | FA_WRITE);
- 143:Device-Drivers/Src/sd-card-spi.c **** 
-ARM GAS  C:\Users\samue\AppData\Local\Temp\ccizoA9K.s 			page 4
+ 141:Device-Drivers/Src/sd-card-spi.c ****     card->free_space = (uint32_t)((card->fre_clust)*(card->pfs->csize)*0.5);
+ 142:Device-Drivers/Src/sd-card-spi.c ****     // sprintf(card->buffer, "SD card free space: \t%lu\r\n", card->free_space);
+ 143:Device-Drivers/Src/sd-card-spi.c ****     // send_uart(card->buffer);
+ARM GAS  C:\Users\samue\AppData\Local\Temp\ccn5pQnk.s 			page 4
 
 
- 144:Device-Drivers/Src/sd-card-spi.c **** //     // Write text - this will overwite existing data 
- 145:Device-Drivers/Src/sd-card-spi.c **** //     strcpy(buffer, "This is File 2 and it says Hello from S A M\r\n");
- 146:Device-Drivers/Src/sd-card-spi.c **** //     fresult = f_write(&fil, buffer, bufsize(buffer), &bw);  // Takes data from buffer -> file
- 147:Device-Drivers/Src/sd-card-spi.c **** //     // bw is pointer to counter for number of bytes written  
- 148:Device-Drivers/Src/sd-card-spi.c **** //     send_uart("File2.txt created and data is written\r\n");
- 149:Device-Drivers/Src/sd-card-spi.c **** //     f_close(&fil);
- 150:Device-Drivers/Src/sd-card-spi.c **** //     bufclear();
+ 144:Device-Drivers/Src/sd-card-spi.c ****     lcd_send_cmd(0x80|0x00);
+ 145:Device-Drivers/Src/sd-card-spi.c ****     lcd_send_string("SD card free space:");
+ 146:Device-Drivers/Src/sd-card-spi.c ****     sprintf(card->buffer, "%lu", card->free_space);
+ 147:Device-Drivers/Src/sd-card-spi.c ****     lcd_send_cmd(0x80|0x40);
+ 148:Device-Drivers/Src/sd-card-spi.c **** 
+ 149:Device-Drivers/Src/sd-card-spi.c ****     // Give time to read message 
+ 150:Device-Drivers/Src/sd-card-spi.c ****     HAL_Delay(3000);
  151:Device-Drivers/Src/sd-card-spi.c **** 
- 152:Device-Drivers/Src/sd-card-spi.c **** //     // Open second file for reading 
- 153:Device-Drivers/Src/sd-card-spi.c **** //     fresult = f_open(&fil, "file2.txt", FA_READ);
+ 152:Device-Drivers/Src/sd-card-spi.c ****     // Clear display 
+ 153:Device-Drivers/Src/sd-card-spi.c ****     lcd_clear();
  154:Device-Drivers/Src/sd-card-spi.c **** 
- 155:Device-Drivers/Src/sd-card-spi.c **** //     // Read data from file and save in buffer 
- 156:Device-Drivers/Src/sd-card-spi.c **** //     f_read(&fil, buffer, f_size(&fil), &br);
- 157:Device-Drivers/Src/sd-card-spi.c **** //     // sizeof(buffer) is size of data in the file 
- 158:Device-Drivers/Src/sd-card-spi.c **** //     // br is the pointer to the counter variables for number of bytes to read from the file 
- 159:Device-Drivers/Src/sd-card-spi.c **** //     send_uart(buffer);
- 160:Device-Drivers/Src/sd-card-spi.c **** //     f_close(&fil);
- 161:Device-Drivers/Src/sd-card-spi.c **** 
- 162:Device-Drivers/Src/sd-card-spi.c **** //     bufclear();
- 163:Device-Drivers/Src/sd-card-spi.c **** // }
- 164:Device-Drivers/Src/sd-card-spi.c **** 
- 165:Device-Drivers/Src/sd-card-spi.c **** 
- 166:Device-Drivers/Src/sd-card-spi.c **** // // Update an existing file - choose the second file ----------------------------
- 167:Device-Drivers/Src/sd-card-spi.c **** // // Update an existing file 
- 168:Device-Drivers/Src/sd-card-spi.c **** // void sd_card_update_file(void) {
- 169:Device-Drivers/Src/sd-card-spi.c **** //     // Take pointer to file and offset as arguments. The offset is where you want to 
- 170:Device-Drivers/Src/sd-card-spi.c **** //     // start writing in the file. If you want to start writing at the end then you can use 
- 171:Device-Drivers/Src/sd-card-spi.c **** //     // the file size as the offset. 
- 172:Device-Drivers/Src/sd-card-spi.c **** 
- 173:Device-Drivers/Src/sd-card-spi.c **** //     // Open the file with write access 
- 174:Device-Drivers/Src/sd-card-spi.c **** //     fresult = f_open(&fil, "file2.txt", FA_OPEN_EXISTING | FA_READ | FA_WRITE);
- 175:Device-Drivers/Src/sd-card-spi.c **** 
- 176:Device-Drivers/Src/sd-card-spi.c **** //     // Move to the offset at the end of the file 
- 177:Device-Drivers/Src/sd-card-spi.c **** //     fresult = f_lseek(&fil, f_size(&fil));
- 178:Device-Drivers/Src/sd-card-spi.c **** 
- 179:Device-Drivers/Src/sd-card-spi.c **** //     // Write the string to the file 
- 180:Device-Drivers/Src/sd-card-spi.c **** //     fresult = f_puts("This is updated data and it should be in the end\r\n", &fil);
- 181:Device-Drivers/Src/sd-card-spi.c **** //     f_close(&fil);
- 182:Device-Drivers/Src/sd-card-spi.c **** 
- 183:Device-Drivers/Src/sd-card-spi.c **** //     bufclear();
- 184:Device-Drivers/Src/sd-card-spi.c **** 
- 185:Device-Drivers/Src/sd-card-spi.c **** //     // Open to read the file 
- 186:Device-Drivers/Src/sd-card-spi.c **** //     fresult = f_open(&fil, "file2.txt", FA_READ);
- 187:Device-Drivers/Src/sd-card-spi.c **** 
- 188:Device-Drivers/Src/sd-card-spi.c **** //     // Read string from the file 
- 189:Device-Drivers/Src/sd-card-spi.c **** //     f_read(&fil, buffer, f_size(&fil), &br);
- 190:Device-Drivers/Src/sd-card-spi.c **** //     send_uart(buffer);
- 191:Device-Drivers/Src/sd-card-spi.c **** 
+ 155:Device-Drivers/Src/sd-card-spi.c ****     // Clear buffer 
+ 156:Device-Drivers/Src/sd-card-spi.c ****     bufclear(card);
+ 157:Device-Drivers/Src/sd-card-spi.c **** }
+ 158:Device-Drivers/Src/sd-card-spi.c **** 
+ 159:Device-Drivers/Src/sd-card-spi.c **** 
+ 160:Device-Drivers/Src/sd-card-spi.c **** // // Create file on SD card 
+ 161:Device-Drivers/Src/sd-card-spi.c **** // void sd_card_create_file(void) {
+ 162:Device-Drivers/Src/sd-card-spi.c **** //     // Open file to write/create a file if it doesn't exist 
+ 163:Device-Drivers/Src/sd-card-spi.c **** //     fresult = f_open(&fil, "file1.txt", FA_OPEN_ALWAYS | FA_READ | FA_WRITE);
+ 164:Device-Drivers/Src/sd-card-spi.c **** //     // FA_OPEN_ALWAYS is used for creating the file 
+ 165:Device-Drivers/Src/sd-card-spi.c **** //     // FA_READ and FA_WRITE are used for setting the permissions of the file 
+ 166:Device-Drivers/Src/sd-card-spi.c **** 
+ 167:Device-Drivers/Src/sd-card-spi.c **** //     // Writing text then close file 
+ 168:Device-Drivers/Src/sd-card-spi.c **** //     fresult = f_puts("This data is from the First FILE\r\n", &fil);
+ 169:Device-Drivers/Src/sd-card-spi.c **** //     fresult = f_close(&fil);
+ 170:Device-Drivers/Src/sd-card-spi.c **** //     send_uart("File1.txt created and the data is written\r\n");
+ 171:Device-Drivers/Src/sd-card-spi.c **** 
+ 172:Device-Drivers/Src/sd-card-spi.c **** //     // Open file to read
+ 173:Device-Drivers/Src/sd-card-spi.c **** //     fresult = f_open(&fil, "file1.txt", FA_READ);
+ 174:Device-Drivers/Src/sd-card-spi.c **** 
+ 175:Device-Drivers/Src/sd-card-spi.c **** //     // Read string from file and close file 
+ 176:Device-Drivers/Src/sd-card-spi.c **** //     f_gets(buffer, f_size(&fil), &fil);
+ 177:Device-Drivers/Src/sd-card-spi.c **** //     f_close(&fil);
+ 178:Device-Drivers/Src/sd-card-spi.c **** //     send_uart(buffer);
+ 179:Device-Drivers/Src/sd-card-spi.c **** 
+ 180:Device-Drivers/Src/sd-card-spi.c **** //     bufclear();
+ 181:Device-Drivers/Src/sd-card-spi.c **** 
+ 182:Device-Drivers/Src/sd-card-spi.c **** //     // Use f_write and f_read to do the same thing as above --------------------
+ 183:Device-Drivers/Src/sd-card-spi.c **** 
+ 184:Device-Drivers/Src/sd-card-spi.c **** //     // Create second file with read write access and open it 
+ 185:Device-Drivers/Src/sd-card-spi.c **** //     fresult = f_open(&fil, "file2.txt", FA_OPEN_ALWAYS | FA_READ | FA_WRITE);
+ 186:Device-Drivers/Src/sd-card-spi.c **** 
+ 187:Device-Drivers/Src/sd-card-spi.c **** //     // Write text - this will overwite existing data 
+ 188:Device-Drivers/Src/sd-card-spi.c **** //     strcpy(buffer, "This is File 2 and it says Hello from S A M\r\n");
+ 189:Device-Drivers/Src/sd-card-spi.c **** //     fresult = f_write(&fil, buffer, bufsize(buffer), &bw);  // Takes data from buffer -> file
+ 190:Device-Drivers/Src/sd-card-spi.c **** //     // bw is pointer to counter for number of bytes written  
+ 191:Device-Drivers/Src/sd-card-spi.c **** //     send_uart("File2.txt created and data is written\r\n");
  192:Device-Drivers/Src/sd-card-spi.c **** //     f_close(&fil);
- 193:Device-Drivers/Src/sd-card-spi.c **** 
- 194:Device-Drivers/Src/sd-card-spi.c **** //     bufclear();
- 195:Device-Drivers/Src/sd-card-spi.c **** // }
- 196:Device-Drivers/Src/sd-card-spi.c **** 
+ 193:Device-Drivers/Src/sd-card-spi.c **** //     bufclear();
+ 194:Device-Drivers/Src/sd-card-spi.c **** 
+ 195:Device-Drivers/Src/sd-card-spi.c **** //     // Open second file for reading 
+ 196:Device-Drivers/Src/sd-card-spi.c **** //     fresult = f_open(&fil, "file2.txt", FA_READ);
  197:Device-Drivers/Src/sd-card-spi.c **** 
- 198:Device-Drivers/Src/sd-card-spi.c **** // // Remove files
- 199:Device-Drivers/Src/sd-card-spi.c **** // void sd_card_remove_file(void) {
- 200:Device-Drivers/Src/sd-card-spi.c **** //     fresult = f_unlink("/file1.txt");
-ARM GAS  C:\Users\samue\AppData\Local\Temp\ccizoA9K.s 			page 5
+ 198:Device-Drivers/Src/sd-card-spi.c **** //     // Read data from file and save in buffer 
+ 199:Device-Drivers/Src/sd-card-spi.c **** //     f_read(&fil, buffer, f_size(&fil), &br);
+ 200:Device-Drivers/Src/sd-card-spi.c **** //     // sizeof(buffer) is size of data in the file 
+ARM GAS  C:\Users\samue\AppData\Local\Temp\ccn5pQnk.s 			page 5
 
 
- 201:Device-Drivers/Src/sd-card-spi.c **** //     if (fresult == FR_OK) {
- 202:Device-Drivers/Src/sd-card-spi.c **** //         send_uart("file1.txt removed successfully\r\n");
- 203:Device-Drivers/Src/sd-card-spi.c **** //     }
+ 201:Device-Drivers/Src/sd-card-spi.c **** //     // br is the pointer to the counter variables for number of bytes to read from the file 
+ 202:Device-Drivers/Src/sd-card-spi.c **** //     send_uart(buffer);
+ 203:Device-Drivers/Src/sd-card-spi.c **** //     f_close(&fil);
  204:Device-Drivers/Src/sd-card-spi.c **** 
- 205:Device-Drivers/Src/sd-card-spi.c **** //     fresult = f_unlink("/file2.txt");
- 206:Device-Drivers/Src/sd-card-spi.c **** //     if (fresult == FR_OK) {
- 207:Device-Drivers/Src/sd-card-spi.c **** //         send_uart("file2.txt removed successfully\r\n");
- 208:Device-Drivers/Src/sd-card-spi.c **** //     }
- 209:Device-Drivers/Src/sd-card-spi.c **** 
- 210:Device-Drivers/Src/sd-card-spi.c **** //     // Unmount SD card 
- 211:Device-Drivers/Src/sd-card-spi.c **** //     fresult = f_mount(NULL, "/", 1);
- 212:Device-Drivers/Src/sd-card-spi.c **** //     if (fresult == FR_OK) {
- 213:Device-Drivers/Src/sd-card-spi.c **** //         send_uart("SD card unmounted successfully\r\n");
- 214:Device-Drivers/Src/sd-card-spi.c **** //     }
- 215:Device-Drivers/Src/sd-card-spi.c **** // }
- 216:Device-Drivers/Src/sd-card-spi.c **** 
- 217:Device-Drivers/Src/sd-card-spi.c **** 
- 218:Device-Drivers/Src/sd-card-spi.c **** // // Determine size of buffer up to which it is filled
- 219:Device-Drivers/Src/sd-card-spi.c **** // int bufsize (char *buf) {
- 220:Device-Drivers/Src/sd-card-spi.c **** //     int i = 0;
- 221:Device-Drivers/Src/sd-card-spi.c **** //     while (*buf++ != '\0') { i++; }
- 222:Device-Drivers/Src/sd-card-spi.c **** //     return i; 
- 223:Device-Drivers/Src/sd-card-spi.c **** // }
- 224:Device-Drivers/Src/sd-card-spi.c **** 
- 225:Device-Drivers/Src/sd-card-spi.c **** // Clear buffer 
- 226:Device-Drivers/Src/sd-card-spi.c **** void bufclear(spi_vars *card_buffer) {
-  30              		.loc 1 226 38 view -0
+ 205:Device-Drivers/Src/sd-card-spi.c **** //     bufclear();
+ 206:Device-Drivers/Src/sd-card-spi.c **** // }
+ 207:Device-Drivers/Src/sd-card-spi.c **** 
+ 208:Device-Drivers/Src/sd-card-spi.c **** 
+ 209:Device-Drivers/Src/sd-card-spi.c **** // // Update an existing file - choose the second file ----------------------------
+ 210:Device-Drivers/Src/sd-card-spi.c **** // // Update an existing file 
+ 211:Device-Drivers/Src/sd-card-spi.c **** // void sd_card_update_file(void) {
+ 212:Device-Drivers/Src/sd-card-spi.c **** //     // Take pointer to file and offset as arguments. The offset is where you want to 
+ 213:Device-Drivers/Src/sd-card-spi.c **** //     // start writing in the file. If you want to start writing at the end then you can use 
+ 214:Device-Drivers/Src/sd-card-spi.c **** //     // the file size as the offset. 
+ 215:Device-Drivers/Src/sd-card-spi.c **** 
+ 216:Device-Drivers/Src/sd-card-spi.c **** //     // Open the file with write access 
+ 217:Device-Drivers/Src/sd-card-spi.c **** //     fresult = f_open(&fil, "file2.txt", FA_OPEN_EXISTING | FA_READ | FA_WRITE);
+ 218:Device-Drivers/Src/sd-card-spi.c **** 
+ 219:Device-Drivers/Src/sd-card-spi.c **** //     // Move to the offset at the end of the file 
+ 220:Device-Drivers/Src/sd-card-spi.c **** //     fresult = f_lseek(&fil, f_size(&fil));
+ 221:Device-Drivers/Src/sd-card-spi.c **** 
+ 222:Device-Drivers/Src/sd-card-spi.c **** //     // Write the string to the file 
+ 223:Device-Drivers/Src/sd-card-spi.c **** //     fresult = f_puts("This is updated data and it should be in the end\r\n", &fil);
+ 224:Device-Drivers/Src/sd-card-spi.c **** //     f_close(&fil);
+ 225:Device-Drivers/Src/sd-card-spi.c **** 
+ 226:Device-Drivers/Src/sd-card-spi.c **** //     bufclear();
+ 227:Device-Drivers/Src/sd-card-spi.c **** 
+ 228:Device-Drivers/Src/sd-card-spi.c **** //     // Open to read the file 
+ 229:Device-Drivers/Src/sd-card-spi.c **** //     fresult = f_open(&fil, "file2.txt", FA_READ);
+ 230:Device-Drivers/Src/sd-card-spi.c **** 
+ 231:Device-Drivers/Src/sd-card-spi.c **** //     // Read string from the file 
+ 232:Device-Drivers/Src/sd-card-spi.c **** //     f_read(&fil, buffer, f_size(&fil), &br);
+ 233:Device-Drivers/Src/sd-card-spi.c **** //     send_uart(buffer);
+ 234:Device-Drivers/Src/sd-card-spi.c **** 
+ 235:Device-Drivers/Src/sd-card-spi.c **** //     f_close(&fil);
+ 236:Device-Drivers/Src/sd-card-spi.c **** 
+ 237:Device-Drivers/Src/sd-card-spi.c **** //     bufclear();
+ 238:Device-Drivers/Src/sd-card-spi.c **** // }
+ 239:Device-Drivers/Src/sd-card-spi.c **** 
+ 240:Device-Drivers/Src/sd-card-spi.c **** 
+ 241:Device-Drivers/Src/sd-card-spi.c **** // // Remove files
+ 242:Device-Drivers/Src/sd-card-spi.c **** // void sd_card_remove_file(void) {
+ 243:Device-Drivers/Src/sd-card-spi.c **** //     fresult = f_unlink("/file1.txt");
+ 244:Device-Drivers/Src/sd-card-spi.c **** //     if (fresult == FR_OK) {
+ 245:Device-Drivers/Src/sd-card-spi.c **** //         send_uart("file1.txt removed successfully\r\n");
+ 246:Device-Drivers/Src/sd-card-spi.c **** //     }
+ 247:Device-Drivers/Src/sd-card-spi.c **** 
+ 248:Device-Drivers/Src/sd-card-spi.c **** //     fresult = f_unlink("/file2.txt");
+ 249:Device-Drivers/Src/sd-card-spi.c **** //     if (fresult == FR_OK) {
+ 250:Device-Drivers/Src/sd-card-spi.c **** //         send_uart("file2.txt removed successfully\r\n");
+ 251:Device-Drivers/Src/sd-card-spi.c **** //     }
+ 252:Device-Drivers/Src/sd-card-spi.c **** 
+ 253:Device-Drivers/Src/sd-card-spi.c **** //     // Unmount SD card 
+ 254:Device-Drivers/Src/sd-card-spi.c **** //     fresult = f_mount(NULL, "/", 1);
+ 255:Device-Drivers/Src/sd-card-spi.c **** //     if (fresult == FR_OK) {
+ 256:Device-Drivers/Src/sd-card-spi.c **** //         send_uart("SD card unmounted successfully\r\n");
+ 257:Device-Drivers/Src/sd-card-spi.c **** //     }
+ARM GAS  C:\Users\samue\AppData\Local\Temp\ccn5pQnk.s 			page 6
+
+
+ 258:Device-Drivers/Src/sd-card-spi.c **** // }
+ 259:Device-Drivers/Src/sd-card-spi.c **** 
+ 260:Device-Drivers/Src/sd-card-spi.c **** 
+ 261:Device-Drivers/Src/sd-card-spi.c **** // // Determine size of buffer up to which it is filled
+ 262:Device-Drivers/Src/sd-card-spi.c **** // int bufsize (char *buf) {
+ 263:Device-Drivers/Src/sd-card-spi.c **** //     int i = 0;
+ 264:Device-Drivers/Src/sd-card-spi.c **** //     while (*buf++ != '\0') { i++; }
+ 265:Device-Drivers/Src/sd-card-spi.c **** //     return i; 
+ 266:Device-Drivers/Src/sd-card-spi.c **** // }
+ 267:Device-Drivers/Src/sd-card-spi.c **** 
+ 268:Device-Drivers/Src/sd-card-spi.c **** // Clear buffer 
+ 269:Device-Drivers/Src/sd-card-spi.c **** void bufclear(spi_vars *card_buffer) {
+  30              		.loc 1 269 38 view -0
   31              		.cfi_startproc
   32              		@ args = 0, pretend = 0, frame = 0
   33              		@ frame_needed = 0, uses_anonymous_args = 0
   34              		@ link register save eliminated.
- 227:Device-Drivers/Src/sd-card-spi.c ****     for (int i=0; i < 1024; i++) {
-  35              		.loc 1 227 5 view .LVU1
+ 270:Device-Drivers/Src/sd-card-spi.c ****     for (int i=0; i < 1024; i++) {
+  35              		.loc 1 270 5 view .LVU1
   36              	.LBB2:
-  37              		.loc 1 227 10 view .LVU2
-  38              		.loc 1 227 14 is_stmt 0 view .LVU3
+  37              		.loc 1 270 10 view .LVU2
+  38              		.loc 1 270 14 is_stmt 0 view .LVU3
   39 0000 0023     		movs	r3, #0
-  40              		.loc 1 227 5 view .LVU4
+  40              		.loc 1 270 5 view .LVU4
   41 0002 07E0     		b	.L2
   42              	.LVL1:
   43              	.L3:
- 228:Device-Drivers/Src/sd-card-spi.c ****         card_buffer->buffer[i] = '\0';
-  44              		.loc 1 228 9 is_stmt 1 discriminator 3 view .LVU5
-  45              		.loc 1 228 32 is_stmt 0 discriminator 3 view .LVU6
+ 271:Device-Drivers/Src/sd-card-spi.c ****         card_buffer->buffer[i] = '\0';
+  44              		.loc 1 271 9 is_stmt 1 discriminator 3 view .LVU5
+  45              		.loc 1 271 32 is_stmt 0 discriminator 3 view .LVU6
   46 0004 C118     		adds	r1, r0, r3
   47 0006 42F26902 		movw	r2, #8297
   48 000a 4FF0000C 		mov	ip, #0
   49 000e 01F802C0 		strb	ip, [r1, r2]
- 227:Device-Drivers/Src/sd-card-spi.c ****     for (int i=0; i < 1024; i++) {
-  50              		.loc 1 227 29 is_stmt 1 discriminator 3 view .LVU7
- 227:Device-Drivers/Src/sd-card-spi.c ****     for (int i=0; i < 1024; i++) {
-  51              		.loc 1 227 30 is_stmt 0 discriminator 3 view .LVU8
+ 270:Device-Drivers/Src/sd-card-spi.c ****     for (int i=0; i < 1024; i++) {
+  50              		.loc 1 270 29 is_stmt 1 discriminator 3 view .LVU7
+ 270:Device-Drivers/Src/sd-card-spi.c ****     for (int i=0; i < 1024; i++) {
+  51              		.loc 1 270 30 is_stmt 0 discriminator 3 view .LVU8
   52 0012 0133     		adds	r3, r3, #1
   53              	.LVL2:
   54              	.L2:
- 227:Device-Drivers/Src/sd-card-spi.c ****     for (int i=0; i < 1024; i++) {
-  55              		.loc 1 227 19 is_stmt 1 discriminator 1 view .LVU9
-ARM GAS  C:\Users\samue\AppData\Local\Temp\ccizoA9K.s 			page 6
-
-
- 227:Device-Drivers/Src/sd-card-spi.c ****     for (int i=0; i < 1024; i++) {
-  56              		.loc 1 227 5 is_stmt 0 discriminator 1 view .LVU10
+ 270:Device-Drivers/Src/sd-card-spi.c ****     for (int i=0; i < 1024; i++) {
+  55              		.loc 1 270 19 is_stmt 1 discriminator 1 view .LVU9
+ 270:Device-Drivers/Src/sd-card-spi.c ****     for (int i=0; i < 1024; i++) {
+  56              		.loc 1 270 5 is_stmt 0 discriminator 1 view .LVU10
   57 0014 B3F5806F 		cmp	r3, #1024
   58 0018 F4DB     		blt	.L3
   59              	.LBE2:
- 229:Device-Drivers/Src/sd-card-spi.c ****     }
- 230:Device-Drivers/Src/sd-card-spi.c **** }
-  60              		.loc 1 230 1 view .LVU11
+ 272:Device-Drivers/Src/sd-card-spi.c ****     }
+ 273:Device-Drivers/Src/sd-card-spi.c **** }
+  60              		.loc 1 273 1 view .LVU11
   61 001a 7047     		bx	lr
   62              		.cfi_endproc
   63              	.LFE135:
   65              		.section	.rodata.sd_card_init.str1.4,"aMS",%progbits,1
   66              		.align	2
   67              	.LC0:
+ARM GAS  C:\Users\samue\AppData\Local\Temp\ccn5pQnk.s 			page 7
+
+
   68 0000 00       		.ascii	"\000"
   69 0001 000000   		.align	2
   70              	.LC1:
-  71 0004 4572726F 		.ascii	"Error in mounting SD card.\015\012\000"
-  71      7220696E 
-  71      206D6F75 
-  71      6E74696E 
-  71      67205344 
-  72 0021 000000   		.align	2
+  71 0004 4572726F 		.ascii	"Error mounting SD\000"
+  71      72206D6F 
+  71      756E7469 
+  71      6E672053 
+  71      4400
+  72 0016 0000     		.align	2
   73              	.LC2:
-  74 0024 53442063 		.ascii	"SD card mounted successfully.\015\012\000"
-  74      61726420 
-  74      6D6F756E 
-  74      74656420 
-  74      73756363 
-  75              		.global	__aeabi_ui2d
-  76              		.global	__aeabi_dmul
-  77              		.global	__aeabi_d2uiz
+  74 0018 63617264 		.ascii	"card\000"
+  74      00
+  75 001d 000000   		.align	2
+  76              	.LC3:
+  77 0020 53442063 		.ascii	"SD card mounted\000"
+  77      61726420 
+  77      6D6F756E 
+  77      74656400 
   78              		.align	2
-  79              	.LC3:
-  80 0044 53442063 		.ascii	"SD card total size: \011%lu\015\012\000"
-  80      61726420 
-  80      746F7461 
-  80      6C207369 
-  80      7A653A20 
-  81 005f 00       		.align	2
-  82              	.LC4:
-  83 0060 53442063 		.ascii	"SD card free space: \011%lu\015\012\000"
-  83      61726420 
-  83      66726565 
-  83      20737061 
-  83      63653A20 
-  84              		.section	.text.sd_card_init,"ax",%progbits
-  85              		.align	1
-  86              		.global	sd_card_init
-  87              		.syntax unified
-  88              		.thumb
-  89              		.thumb_func
-  91              	sd_card_init:
-  92              	.LVL3:
-  93              	.LFB134:
-  92:Device-Drivers/Src/sd-card-spi.c ****     // Mount SD card
-  94              		.loc 1 92 35 is_stmt 1 view -0
-ARM GAS  C:\Users\samue\AppData\Local\Temp\ccizoA9K.s 			page 7
+  79              	.LC4:
+  80 0030 73756363 		.ascii	"successfully\000"
+  80      65737366 
+  80      756C6C79 
+  80      00
+  81              		.global	__aeabi_ui2d
+  82              		.global	__aeabi_dmul
+  83              		.global	__aeabi_d2uiz
+  84 003d 000000   		.align	2
+  85              	.LC5:
+  86 0040 53442063 		.ascii	"SD card total size:\000"
+  86      61726420 
+  86      746F7461 
+  86      6C207369 
+  86      7A653A00 
+  87              		.align	2
+  88              	.LC6:
+  89 0054 256C7500 		.ascii	"%lu\000"
+  90              		.align	2
+  91              	.LC7:
+  92 0058 53442063 		.ascii	"SD card free space:\000"
+  92      61726420 
+  92      66726565 
+  92      20737061 
+  92      63653A00 
+  93              		.section	.text.sd_card_init,"ax",%progbits
+  94              		.align	1
+  95              		.global	sd_card_init
+  96              		.syntax unified
+  97              		.thumb
+  98              		.thumb_func
+ 100              	sd_card_init:
+ 101              	.LVL3:
+ 102              	.LFB134:
+  94:Device-Drivers/Src/sd-card-spi.c ****     // Mount SD card
+ 103              		.loc 1 94 1 is_stmt 1 view -0
+ 104              		.cfi_startproc
+ 105              		@ args = 0, pretend = 0, frame = 0
+ARM GAS  C:\Users\samue\AppData\Local\Temp\ccn5pQnk.s 			page 8
 
 
-  95              		.cfi_startproc
-  96              		@ args = 0, pretend = 0, frame = 0
-  97              		@ frame_needed = 0, uses_anonymous_args = 0
-  92:Device-Drivers/Src/sd-card-spi.c ****     // Mount SD card
-  98              		.loc 1 92 35 is_stmt 0 view .LVU13
-  99 0000 70B5     		push	{r4, r5, r6, lr}
- 100              	.LCFI0:
- 101              		.cfi_def_cfa_offset 16
- 102              		.cfi_offset 4, -16
- 103              		.cfi_offset 5, -12
- 104              		.cfi_offset 6, -8
- 105              		.cfi_offset 14, -4
- 106 0002 0446     		mov	r4, r0
-  94:Device-Drivers/Src/sd-card-spi.c ****     if (card->fresult != FR_OK) {
- 107              		.loc 1 94 5 is_stmt 1 view .LVU14
-  94:Device-Drivers/Src/sd-card-spi.c ****     if (card->fresult != FR_OK) {
- 108              		.loc 1 94 21 is_stmt 0 view .LVU15
- 109 0004 0022     		movs	r2, #0
- 110 0006 2A49     		ldr	r1, .L8
- 111 0008 FFF7FEFF 		bl	f_mount
- 112              	.LVL4:
-  94:Device-Drivers/Src/sd-card-spi.c ****     if (card->fresult != FR_OK) {
- 113              		.loc 1 94 19 view .LVU16
- 114 000c 04F50053 		add	r3, r4, #8192
- 115 0010 83F86800 		strb	r0, [r3, #104]
-  95:Device-Drivers/Src/sd-card-spi.c ****         send_uart("Error in mounting SD card.\r\n");
- 116              		.loc 1 95 5 is_stmt 1 view .LVU17
-  95:Device-Drivers/Src/sd-card-spi.c ****         send_uart("Error in mounting SD card.\r\n");
- 117              		.loc 1 95 8 is_stmt 0 view .LVU18
- 118 0014 0028     		cmp	r0, #0
- 119 0016 46D0     		beq	.L5
-  96:Device-Drivers/Src/sd-card-spi.c ****     }
- 120              		.loc 1 96 9 is_stmt 1 view .LVU19
- 121 0018 2648     		ldr	r0, .L8+4
- 122 001a FFF7FEFF 		bl	send_uart
- 123              	.LVL5:
- 124              	.L6:
- 103:Device-Drivers/Src/sd-card-spi.c **** 
- 125              		.loc 1 103 5 view .LVU20
- 126 001e 04F51152 		add	r2, r4, #9280
- 127 0022 3432     		adds	r2, r2, #52
- 128 0024 04F51151 		add	r1, r4, #9280
- 129 0028 3831     		adds	r1, r1, #56
- 130 002a 2148     		ldr	r0, .L8
- 131 002c FFF7FEFF 		bl	f_getfree
- 132              	.LVL6:
- 105:Device-Drivers/Src/sd-card-spi.c ****     sprintf(card->buffer, "SD card total size: \t%lu\r\n", card->total);
- 133              		.loc 1 105 5 view .LVU21
- 105:Device-Drivers/Src/sd-card-spi.c ****     sprintf(card->buffer, "SD card total size: \t%lu\r\n", card->total);
- 134              		.loc 1 105 35 is_stmt 0 view .LVU22
- 135 0030 04F50056 		add	r6, r4, #8192
- 136 0034 D6F87434 		ldr	r3, [r6, #1140]
- 105:Device-Drivers/Src/sd-card-spi.c ****     sprintf(card->buffer, "SD card total size: \t%lu\r\n", card->total);
- 137              		.loc 1 105 40 view .LVU23
- 138 0038 D869     		ldr	r0, [r3, #28]
- 105:Device-Drivers/Src/sd-card-spi.c ****     sprintf(card->buffer, "SD card total size: \t%lu\r\n", card->total);
- 139              		.loc 1 105 51 view .LVU24
-ARM GAS  C:\Users\samue\AppData\Local\Temp\ccizoA9K.s 			page 8
+ 106              		@ frame_needed = 0, uses_anonymous_args = 0
+  94:Device-Drivers/Src/sd-card-spi.c ****     // Mount SD card
+ 107              		.loc 1 94 1 is_stmt 0 view .LVU13
+ 108 0000 F8B5     		push	{r3, r4, r5, r6, r7, lr}
+ 109              	.LCFI0:
+ 110              		.cfi_def_cfa_offset 24
+ 111              		.cfi_offset 3, -24
+ 112              		.cfi_offset 4, -20
+ 113              		.cfi_offset 5, -16
+ 114              		.cfi_offset 6, -12
+ 115              		.cfi_offset 7, -8
+ 116              		.cfi_offset 14, -4
+ 117 0002 0446     		mov	r4, r0
+  96:Device-Drivers/Src/sd-card-spi.c **** 
+ 118              		.loc 1 96 5 is_stmt 1 view .LVU14
+  96:Device-Drivers/Src/sd-card-spi.c **** 
+ 119              		.loc 1 96 21 is_stmt 0 view .LVU15
+ 120 0004 0022     		movs	r2, #0
+ 121 0006 4549     		ldr	r1, .L8
+ 122 0008 FFF7FEFF 		bl	f_mount
+ 123              	.LVL4:
+  96:Device-Drivers/Src/sd-card-spi.c **** 
+ 124              		.loc 1 96 19 view .LVU16
+ 125 000c 04F50053 		add	r3, r4, #8192
+ 126 0010 83F86800 		strb	r0, [r3, #104]
+  98:Device-Drivers/Src/sd-card-spi.c ****     {
+ 127              		.loc 1 98 5 is_stmt 1 view .LVU17
+  98:Device-Drivers/Src/sd-card-spi.c ****     {
+ 128              		.loc 1 98 8 is_stmt 0 view .LVU18
+ 129 0014 0028     		cmp	r0, #0
+ 130 0016 73D0     		beq	.L5
+ 101:Device-Drivers/Src/sd-card-spi.c **** 	    lcd_send_string("Error mounting SD");
+ 131              		.loc 1 101 9 is_stmt 1 view .LVU19
+ 132 0018 8020     		movs	r0, #128
+ 133 001a FFF7FEFF 		bl	lcd_send_cmd
+ 134              	.LVL5:
+ 102:Device-Drivers/Src/sd-card-spi.c ****         lcd_send_cmd(0x80|0x40);
+ 135              		.loc 1 102 6 view .LVU20
+ 136 001e 4048     		ldr	r0, .L8+4
+ 137 0020 FFF7FEFF 		bl	lcd_send_string
+ 138              	.LVL6:
+ 103:Device-Drivers/Src/sd-card-spi.c **** 	    lcd_send_string("card");
+ 139              		.loc 1 103 9 view .LVU21
+ 140 0024 C020     		movs	r0, #192
+ 141 0026 FFF7FEFF 		bl	lcd_send_cmd
+ 142              	.LVL7:
+ 104:Device-Drivers/Src/sd-card-spi.c ****     }
+ 143              		.loc 1 104 6 view .LVU22
+ 144 002a 3E48     		ldr	r0, .L8+8
+ 145 002c FFF7FEFF 		bl	lcd_send_string
+ 146              	.LVL8:
+ 147              	.L6:
+ 116:Device-Drivers/Src/sd-card-spi.c **** 
+ 148              		.loc 1 116 5 view .LVU23
+ 149 0030 40F2DC50 		movw	r0, #1500
+ 150 0034 FFF7FEFF 		bl	HAL_Delay
+ 151              	.LVL9:
+ARM GAS  C:\Users\samue\AppData\Local\Temp\ccn5pQnk.s 			page 9
 
 
- 140 003a 0238     		subs	r0, r0, #2
- 105:Device-Drivers/Src/sd-card-spi.c ****     sprintf(card->buffer, "SD card total size: \t%lu\r\n", card->total);
- 141              		.loc 1 105 66 view .LVU25
- 142 003c 5B89     		ldrh	r3, [r3, #10]
- 105:Device-Drivers/Src/sd-card-spi.c ****     sprintf(card->buffer, "SD card total size: \t%lu\r\n", card->total);
- 143              		.loc 1 105 74 view .LVU26
- 144 003e 03FB00F0 		mul	r0, r3, r0
- 145 0042 FFF7FEFF 		bl	__aeabi_ui2d
- 146              	.LVL7:
- 147 0046 0022     		movs	r2, #0
- 148 0048 1B4B     		ldr	r3, .L8+8
- 149 004a FFF7FEFF 		bl	__aeabi_dmul
- 150              	.LVL8:
- 105:Device-Drivers/Src/sd-card-spi.c ****     sprintf(card->buffer, "SD card total size: \t%lu\r\n", card->total);
- 151              		.loc 1 105 19 view .LVU27
- 152 004e FFF7FEFF 		bl	__aeabi_d2uiz
- 153              	.LVL9:
- 154 0052 0246     		mov	r2, r0
- 105:Device-Drivers/Src/sd-card-spi.c ****     sprintf(card->buffer, "SD card total size: \t%lu\r\n", card->total);
- 155              		.loc 1 105 17 view .LVU28
- 156 0054 C6F87C04 		str	r0, [r6, #1148]
- 106:Device-Drivers/Src/sd-card-spi.c ****     send_uart(card->buffer);
- 157              		.loc 1 106 5 is_stmt 1 view .LVU29
- 106:Device-Drivers/Src/sd-card-spi.c ****     send_uart(card->buffer);
- 158              		.loc 1 106 17 is_stmt 0 view .LVU30
- 159 0058 04F50155 		add	r5, r4, #8256
- 160 005c 2935     		adds	r5, r5, #41
- 106:Device-Drivers/Src/sd-card-spi.c ****     send_uart(card->buffer);
- 161              		.loc 1 106 5 view .LVU31
- 162 005e 1749     		ldr	r1, .L8+12
- 163 0060 2846     		mov	r0, r5
- 164 0062 FFF7FEFF 		bl	sprintf
- 165              	.LVL10:
- 107:Device-Drivers/Src/sd-card-spi.c **** 
- 166              		.loc 1 107 5 is_stmt 1 view .LVU32
- 167 0066 2846     		mov	r0, r5
- 168 0068 FFF7FEFF 		bl	send_uart
- 169              	.LVL11:
- 109:Device-Drivers/Src/sd-card-spi.c **** 
- 170              		.loc 1 109 5 view .LVU33
- 171 006c 2046     		mov	r0, r4
- 172 006e FFF7FEFF 		bl	bufclear
- 173              	.LVL12:
- 111:Device-Drivers/Src/sd-card-spi.c ****     sprintf(card->buffer, "SD card free space: \t%lu\r\n", card->free_space);
- 174              		.loc 1 111 5 view .LVU34
- 111:Device-Drivers/Src/sd-card-spi.c ****     sprintf(card->buffer, "SD card free space: \t%lu\r\n", card->free_space);
- 175              		.loc 1 111 40 is_stmt 0 view .LVU35
- 176 0072 D6F87834 		ldr	r3, [r6, #1144]
- 111:Device-Drivers/Src/sd-card-spi.c ****     sprintf(card->buffer, "SD card free space: \t%lu\r\n", card->free_space);
- 177              		.loc 1 111 58 view .LVU36
- 178 0076 D6F87424 		ldr	r2, [r6, #1140]
- 111:Device-Drivers/Src/sd-card-spi.c ****     sprintf(card->buffer, "SD card free space: \t%lu\r\n", card->free_space);
- 179              		.loc 1 111 63 view .LVU37
- 180 007a 5089     		ldrh	r0, [r2, #10]
- 111:Device-Drivers/Src/sd-card-spi.c ****     sprintf(card->buffer, "SD card free space: \t%lu\r\n", card->free_space);
- 181              		.loc 1 111 71 view .LVU38
- 182 007c 03FB00F0 		mul	r0, r3, r0
-ARM GAS  C:\Users\samue\AppData\Local\Temp\ccizoA9K.s 			page 9
+ 119:Device-Drivers/Src/sd-card-spi.c **** 
+ 152              		.loc 1 119 5 view .LVU24
+ 153 0038 FFF7FEFF 		bl	lcd_clear
+ 154              	.LVL10:
+ 122:Device-Drivers/Src/sd-card-spi.c **** 
+ 155              		.loc 1 122 5 view .LVU25
+ 156 003c 04F51152 		add	r2, r4, #9280
+ 157 0040 3432     		adds	r2, r2, #52
+ 158 0042 04F51151 		add	r1, r4, #9280
+ 159 0046 3831     		adds	r1, r1, #56
+ 160 0048 3448     		ldr	r0, .L8
+ 161 004a FFF7FEFF 		bl	f_getfree
+ 162              	.LVL11:
+ 124:Device-Drivers/Src/sd-card-spi.c ****     // sprintf(card->buffer, "SD card total size: \t%lu\r\n", card->total);
+ 163              		.loc 1 124 5 view .LVU26
+ 124:Device-Drivers/Src/sd-card-spi.c ****     // sprintf(card->buffer, "SD card total size: \t%lu\r\n", card->total);
+ 164              		.loc 1 124 35 is_stmt 0 view .LVU27
+ 165 004e 04F50055 		add	r5, r4, #8192
+ 166 0052 D5F87434 		ldr	r3, [r5, #1140]
+ 124:Device-Drivers/Src/sd-card-spi.c ****     // sprintf(card->buffer, "SD card total size: \t%lu\r\n", card->total);
+ 167              		.loc 1 124 40 view .LVU28
+ 168 0056 D869     		ldr	r0, [r3, #28]
+ 124:Device-Drivers/Src/sd-card-spi.c ****     // sprintf(card->buffer, "SD card total size: \t%lu\r\n", card->total);
+ 169              		.loc 1 124 51 view .LVU29
+ 170 0058 0238     		subs	r0, r0, #2
+ 124:Device-Drivers/Src/sd-card-spi.c ****     // sprintf(card->buffer, "SD card total size: \t%lu\r\n", card->total);
+ 171              		.loc 1 124 66 view .LVU30
+ 172 005a 5B89     		ldrh	r3, [r3, #10]
+ 124:Device-Drivers/Src/sd-card-spi.c ****     // sprintf(card->buffer, "SD card total size: \t%lu\r\n", card->total);
+ 173              		.loc 1 124 74 view .LVU31
+ 174 005c 03FB00F0 		mul	r0, r3, r0
+ 175 0060 FFF7FEFF 		bl	__aeabi_ui2d
+ 176              	.LVL12:
+ 177 0064 0022     		movs	r2, #0
+ 178 0066 304B     		ldr	r3, .L8+12
+ 179 0068 FFF7FEFF 		bl	__aeabi_dmul
+ 180              	.LVL13:
+ 124:Device-Drivers/Src/sd-card-spi.c ****     // sprintf(card->buffer, "SD card total size: \t%lu\r\n", card->total);
+ 181              		.loc 1 124 19 view .LVU32
+ 182 006c FFF7FEFF 		bl	__aeabi_d2uiz
+ 183              	.LVL14:
+ 124:Device-Drivers/Src/sd-card-spi.c ****     // sprintf(card->buffer, "SD card total size: \t%lu\r\n", card->total);
+ 184              		.loc 1 124 17 view .LVU33
+ 185 0070 C5F87C04 		str	r0, [r5, #1148]
+ 127:Device-Drivers/Src/sd-card-spi.c ****     lcd_send_string("SD card total size:");
+ 186              		.loc 1 127 5 is_stmt 1 view .LVU34
+ 187 0074 8020     		movs	r0, #128
+ 188 0076 FFF7FEFF 		bl	lcd_send_cmd
+ 189              	.LVL15:
+ 128:Device-Drivers/Src/sd-card-spi.c ****     sprintf(card->buffer, "%lu", card->total);
+ 190              		.loc 1 128 5 view .LVU35
+ 191 007a 2C48     		ldr	r0, .L8+16
+ 192 007c FFF7FEFF 		bl	lcd_send_string
+ 193              	.LVL16:
+ 129:Device-Drivers/Src/sd-card-spi.c ****     lcd_send_cmd(0x80|0x40);
+ 194              		.loc 1 129 5 view .LVU36
+ 129:Device-Drivers/Src/sd-card-spi.c ****     lcd_send_cmd(0x80|0x40);
+ARM GAS  C:\Users\samue\AppData\Local\Temp\ccn5pQnk.s 			page 10
 
 
- 183 0080 FFF7FEFF 		bl	__aeabi_ui2d
- 184              	.LVL13:
- 185 0084 0022     		movs	r2, #0
- 186 0086 0C4B     		ldr	r3, .L8+8
- 187 0088 FFF7FEFF 		bl	__aeabi_dmul
- 188              	.LVL14:
- 111:Device-Drivers/Src/sd-card-spi.c ****     sprintf(card->buffer, "SD card free space: \t%lu\r\n", card->free_space);
- 189              		.loc 1 111 24 view .LVU39
- 190 008c FFF7FEFF 		bl	__aeabi_d2uiz
- 191              	.LVL15:
- 192 0090 0246     		mov	r2, r0
- 111:Device-Drivers/Src/sd-card-spi.c ****     sprintf(card->buffer, "SD card free space: \t%lu\r\n", card->free_space);
- 193              		.loc 1 111 22 view .LVU40
- 194 0092 C6F88004 		str	r0, [r6, #1152]
- 112:Device-Drivers/Src/sd-card-spi.c ****     send_uart(card->buffer);
- 195              		.loc 1 112 5 is_stmt 1 view .LVU41
- 196 0096 0A49     		ldr	r1, .L8+16
- 197 0098 2846     		mov	r0, r5
- 198 009a FFF7FEFF 		bl	sprintf
- 199              	.LVL16:
- 113:Device-Drivers/Src/sd-card-spi.c **** }
- 200              		.loc 1 113 5 view .LVU42
- 201 009e 2846     		mov	r0, r5
- 202 00a0 FFF7FEFF 		bl	send_uart
- 203              	.LVL17:
- 114:Device-Drivers/Src/sd-card-spi.c **** 
- 204              		.loc 1 114 1 is_stmt 0 view .LVU43
- 205 00a4 70BD     		pop	{r4, r5, r6, pc}
- 206              	.LVL18:
- 207              	.L5:
-  99:Device-Drivers/Src/sd-card-spi.c ****     }
- 208              		.loc 1 99 9 is_stmt 1 view .LVU44
- 209 00a6 0748     		ldr	r0, .L8+20
- 210 00a8 FFF7FEFF 		bl	send_uart
- 211              	.LVL19:
- 212 00ac B7E7     		b	.L6
- 213              	.L9:
- 214 00ae 00BF     		.align	2
- 215              	.L8:
- 216 00b0 00000000 		.word	.LC0
- 217 00b4 04000000 		.word	.LC1
- 218 00b8 0000E03F 		.word	1071644672
- 219 00bc 44000000 		.word	.LC3
- 220 00c0 60000000 		.word	.LC4
- 221 00c4 24000000 		.word	.LC2
- 222              		.cfi_endproc
- 223              	.LFE134:
- 225              		.section	.text.sd_card,"ax",%progbits
- 226              		.align	1
- 227              		.global	sd_card
- 228              		.syntax unified
- 229              		.thumb
- 230              		.thumb_func
- 232              	sd_card:
- 233              	.LVL20:
- 234              	.LFB133:
-  62:Device-Drivers/Src/sd-card-spi.c ****     // Initialize data for SD card 
-ARM GAS  C:\Users\samue\AppData\Local\Temp\ccizoA9K.s 			page 10
+ 195              		.loc 1 129 17 is_stmt 0 view .LVU37
+ 196 0080 04F50156 		add	r6, r4, #8256
+ 197 0084 2936     		adds	r6, r6, #41
+ 129:Device-Drivers/Src/sd-card-spi.c ****     lcd_send_cmd(0x80|0x40);
+ 198              		.loc 1 129 5 view .LVU38
+ 199 0086 2A4F     		ldr	r7, .L8+20
+ 200 0088 D5F87C24 		ldr	r2, [r5, #1148]
+ 201 008c 3946     		mov	r1, r7
+ 202 008e 3046     		mov	r0, r6
+ 203 0090 FFF7FEFF 		bl	sprintf
+ 204              	.LVL17:
+ 130:Device-Drivers/Src/sd-card-spi.c **** 
+ 205              		.loc 1 130 5 is_stmt 1 view .LVU39
+ 206 0094 C020     		movs	r0, #192
+ 207 0096 FFF7FEFF 		bl	lcd_send_cmd
+ 208              	.LVL18:
+ 133:Device-Drivers/Src/sd-card-spi.c **** 
+ 209              		.loc 1 133 5 view .LVU40
+ 210 009a 40F6B830 		movw	r0, #3000
+ 211 009e FFF7FEFF 		bl	HAL_Delay
+ 212              	.LVL19:
+ 136:Device-Drivers/Src/sd-card-spi.c **** 
+ 213              		.loc 1 136 5 view .LVU41
+ 214 00a2 FFF7FEFF 		bl	lcd_clear
+ 215              	.LVL20:
+ 139:Device-Drivers/Src/sd-card-spi.c **** 
+ 216              		.loc 1 139 5 view .LVU42
+ 217 00a6 2046     		mov	r0, r4
+ 218 00a8 FFF7FEFF 		bl	bufclear
+ 219              	.LVL21:
+ 141:Device-Drivers/Src/sd-card-spi.c ****     // sprintf(card->buffer, "SD card free space: \t%lu\r\n", card->free_space);
+ 220              		.loc 1 141 5 view .LVU43
+ 141:Device-Drivers/Src/sd-card-spi.c ****     // sprintf(card->buffer, "SD card free space: \t%lu\r\n", card->free_space);
+ 221              		.loc 1 141 40 is_stmt 0 view .LVU44
+ 222 00ac D5F87834 		ldr	r3, [r5, #1144]
+ 141:Device-Drivers/Src/sd-card-spi.c ****     // sprintf(card->buffer, "SD card free space: \t%lu\r\n", card->free_space);
+ 223              		.loc 1 141 58 view .LVU45
+ 224 00b0 D5F87424 		ldr	r2, [r5, #1140]
+ 141:Device-Drivers/Src/sd-card-spi.c ****     // sprintf(card->buffer, "SD card free space: \t%lu\r\n", card->free_space);
+ 225              		.loc 1 141 63 view .LVU46
+ 226 00b4 5089     		ldrh	r0, [r2, #10]
+ 141:Device-Drivers/Src/sd-card-spi.c ****     // sprintf(card->buffer, "SD card free space: \t%lu\r\n", card->free_space);
+ 227              		.loc 1 141 71 view .LVU47
+ 228 00b6 03FB00F0 		mul	r0, r3, r0
+ 229 00ba FFF7FEFF 		bl	__aeabi_ui2d
+ 230              	.LVL22:
+ 231 00be 0022     		movs	r2, #0
+ 232 00c0 194B     		ldr	r3, .L8+12
+ 233 00c2 FFF7FEFF 		bl	__aeabi_dmul
+ 234              	.LVL23:
+ 141:Device-Drivers/Src/sd-card-spi.c ****     // sprintf(card->buffer, "SD card free space: \t%lu\r\n", card->free_space);
+ 235              		.loc 1 141 24 view .LVU48
+ 236 00c6 FFF7FEFF 		bl	__aeabi_d2uiz
+ 237              	.LVL24:
+ 141:Device-Drivers/Src/sd-card-spi.c ****     // sprintf(card->buffer, "SD card free space: \t%lu\r\n", card->free_space);
+ 238              		.loc 1 141 22 view .LVU49
+ 239 00ca C5F88004 		str	r0, [r5, #1152]
+ARM GAS  C:\Users\samue\AppData\Local\Temp\ccn5pQnk.s 			page 11
 
 
- 235              		.loc 1 62 1 view -0
- 236              		.cfi_startproc
- 237              		@ args = 0, pretend = 0, frame = 0
- 238              		@ frame_needed = 0, uses_anonymous_args = 0
-  64:Device-Drivers/Src/sd-card-spi.c **** 
- 239              		.loc 1 64 5 view .LVU46
-  67:Device-Drivers/Src/sd-card-spi.c ****     {
- 240              		.loc 1 67 5 view .LVU47
- 241 0000 00B1     		cbz	r0, .L16
- 242 0002 7047     		bx	lr
- 243              	.L16:
-  62:Device-Drivers/Src/sd-card-spi.c ****     // Initialize data for SD card 
- 244              		.loc 1 62 1 is_stmt 0 view .LVU48
- 245 0004 08B5     		push	{r3, lr}
- 246              	.LCFI1:
- 247              		.cfi_def_cfa_offset 8
- 248              		.cfi_offset 3, -8
- 249              		.cfi_offset 14, -4
-  70:Device-Drivers/Src/sd-card-spi.c ****         break;
- 250              		.loc 1 70 9 is_stmt 1 view .LVU49
- 251 0006 0248     		ldr	r0, .L17
- 252              	.LVL21:
-  70:Device-Drivers/Src/sd-card-spi.c ****         break;
- 253              		.loc 1 70 9 is_stmt 0 view .LVU50
- 254 0008 FFF7FEFF 		bl	sd_card_init
- 255              	.LVL22:
-  71:Device-Drivers/Src/sd-card-spi.c **** 
- 256              		.loc 1 71 9 is_stmt 1 view .LVU51
-  88:Device-Drivers/Src/sd-card-spi.c **** 
- 257              		.loc 1 88 1 is_stmt 0 view .LVU52
- 258 000c 08BD     		pop	{r3, pc}
- 259              	.L18:
- 260 000e 00BF     		.align	2
- 261              	.L17:
- 262 0010 00000000 		.word	sd_card_1.0
- 263              		.cfi_endproc
- 264              	.LFE133:
- 266              		.section	.bss.sd_card_1.0,"aw",%nobits
- 267              		.align	2
- 270              	sd_card_1.0:
- 271 0000 00000000 		.space	9348
- 271      00000000 
- 271      00000000 
- 271      00000000 
- 271      00000000 
- 272              		.text
- 273              	.Letext0:
- 274              		.file 2 "c:\\dev_tools\\gcc-arm-none-eabi-10.3-2021.10-win32\\gcc-arm-none-eabi-10.3-2021.10\\arm-
- 275              		.file 3 "c:\\dev_tools\\gcc-arm-none-eabi-10.3-2021.10-win32\\gcc-arm-none-eabi-10.3-2021.10\\arm-
- 276              		.file 4 "Middlewares/Third_Party/FatFs/src/integer.h"
- 277              		.file 5 "Device-Drivers/Inc/sd-card-spi.h"
- 278              		.file 6 "Middlewares/Third_Party/FatFs/src/ff.h"
- 279              		.file 7 "Core/Inc/main_functions.h"
- 280              		.file 8 "c:\\dev_tools\\gcc-arm-none-eabi-10.3-2021.10-win32\\gcc-arm-none-eabi-10.3-2021.10\\arm-
-ARM GAS  C:\Users\samue\AppData\Local\Temp\ccizoA9K.s 			page 11
+ 144:Device-Drivers/Src/sd-card-spi.c ****     lcd_send_string("SD card free space:");
+ 240              		.loc 1 144 5 is_stmt 1 view .LVU50
+ 241 00ce 8020     		movs	r0, #128
+ 242 00d0 FFF7FEFF 		bl	lcd_send_cmd
+ 243              	.LVL25:
+ 145:Device-Drivers/Src/sd-card-spi.c ****     sprintf(card->buffer, "%lu", card->free_space);
+ 244              		.loc 1 145 5 view .LVU51
+ 245 00d4 1748     		ldr	r0, .L8+24
+ 246 00d6 FFF7FEFF 		bl	lcd_send_string
+ 247              	.LVL26:
+ 146:Device-Drivers/Src/sd-card-spi.c ****     lcd_send_cmd(0x80|0x40);
+ 248              		.loc 1 146 5 view .LVU52
+ 249 00da D5F88024 		ldr	r2, [r5, #1152]
+ 250 00de 3946     		mov	r1, r7
+ 251 00e0 3046     		mov	r0, r6
+ 252 00e2 FFF7FEFF 		bl	sprintf
+ 253              	.LVL27:
+ 147:Device-Drivers/Src/sd-card-spi.c **** 
+ 254              		.loc 1 147 5 view .LVU53
+ 255 00e6 C020     		movs	r0, #192
+ 256 00e8 FFF7FEFF 		bl	lcd_send_cmd
+ 257              	.LVL28:
+ 150:Device-Drivers/Src/sd-card-spi.c **** 
+ 258              		.loc 1 150 5 view .LVU54
+ 259 00ec 40F6B830 		movw	r0, #3000
+ 260 00f0 FFF7FEFF 		bl	HAL_Delay
+ 261              	.LVL29:
+ 153:Device-Drivers/Src/sd-card-spi.c **** 
+ 262              		.loc 1 153 5 view .LVU55
+ 263 00f4 FFF7FEFF 		bl	lcd_clear
+ 264              	.LVL30:
+ 156:Device-Drivers/Src/sd-card-spi.c **** }
+ 265              		.loc 1 156 5 view .LVU56
+ 266 00f8 2046     		mov	r0, r4
+ 267 00fa FFF7FEFF 		bl	bufclear
+ 268              	.LVL31:
+ 157:Device-Drivers/Src/sd-card-spi.c **** 
+ 269              		.loc 1 157 1 is_stmt 0 view .LVU57
+ 270 00fe F8BD     		pop	{r3, r4, r5, r6, r7, pc}
+ 271              	.LVL32:
+ 272              	.L5:
+ 109:Device-Drivers/Src/sd-card-spi.c **** 	    lcd_send_string("SD card mounted");
+ 273              		.loc 1 109 9 is_stmt 1 view .LVU58
+ 274 0100 8020     		movs	r0, #128
+ 275 0102 FFF7FEFF 		bl	lcd_send_cmd
+ 276              	.LVL33:
+ 110:Device-Drivers/Src/sd-card-spi.c ****         lcd_send_cmd(0x80|0x40);
+ 277              		.loc 1 110 6 view .LVU59
+ 278 0106 0C48     		ldr	r0, .L8+28
+ 279 0108 FFF7FEFF 		bl	lcd_send_string
+ 280              	.LVL34:
+ 111:Device-Drivers/Src/sd-card-spi.c **** 	    lcd_send_string("successfully");
+ 281              		.loc 1 111 9 view .LVU60
+ 282 010c C020     		movs	r0, #192
+ 283 010e FFF7FEFF 		bl	lcd_send_cmd
+ 284              	.LVL35:
+ 112:Device-Drivers/Src/sd-card-spi.c ****     }
+ARM GAS  C:\Users\samue\AppData\Local\Temp\ccn5pQnk.s 			page 12
+
+
+ 285              		.loc 1 112 6 view .LVU61
+ 286 0112 0A48     		ldr	r0, .L8+32
+ 287 0114 FFF7FEFF 		bl	lcd_send_string
+ 288              	.LVL36:
+ 289 0118 8AE7     		b	.L6
+ 290              	.L9:
+ 291 011a 00BF     		.align	2
+ 292              	.L8:
+ 293 011c 00000000 		.word	.LC0
+ 294 0120 04000000 		.word	.LC1
+ 295 0124 18000000 		.word	.LC2
+ 296 0128 0000E03F 		.word	1071644672
+ 297 012c 40000000 		.word	.LC5
+ 298 0130 54000000 		.word	.LC6
+ 299 0134 58000000 		.word	.LC7
+ 300 0138 20000000 		.word	.LC3
+ 301 013c 30000000 		.word	.LC4
+ 302              		.cfi_endproc
+ 303              	.LFE134:
+ 305              		.section	.text.sd_card,"ax",%progbits
+ 306              		.align	1
+ 307              		.global	sd_card
+ 308              		.syntax unified
+ 309              		.thumb
+ 310              		.thumb_func
+ 312              	sd_card:
+ 313              	.LVL37:
+ 314              	.LFB133:
+  63:Device-Drivers/Src/sd-card-spi.c ****     // Initialize data for SD card 
+ 315              		.loc 1 63 1 view -0
+ 316              		.cfi_startproc
+ 317              		@ args = 0, pretend = 0, frame = 0
+ 318              		@ frame_needed = 0, uses_anonymous_args = 0
+  65:Device-Drivers/Src/sd-card-spi.c **** 
+ 319              		.loc 1 65 5 view .LVU63
+  68:Device-Drivers/Src/sd-card-spi.c ****     {
+ 320              		.loc 1 68 5 view .LVU64
+ 321 0000 00B1     		cbz	r0, .L16
+ 322 0002 7047     		bx	lr
+ 323              	.L16:
+  63:Device-Drivers/Src/sd-card-spi.c ****     // Initialize data for SD card 
+ 324              		.loc 1 63 1 is_stmt 0 view .LVU65
+ 325 0004 08B5     		push	{r3, lr}
+ 326              	.LCFI1:
+ 327              		.cfi_def_cfa_offset 8
+ 328              		.cfi_offset 3, -8
+ 329              		.cfi_offset 14, -4
+  71:Device-Drivers/Src/sd-card-spi.c ****         break;
+ 330              		.loc 1 71 9 is_stmt 1 view .LVU66
+ 331 0006 0248     		ldr	r0, .L17
+ 332              	.LVL38:
+  71:Device-Drivers/Src/sd-card-spi.c ****         break;
+ 333              		.loc 1 71 9 is_stmt 0 view .LVU67
+ 334 0008 FFF7FEFF 		bl	sd_card_init
+ 335              	.LVL39:
+  72:Device-Drivers/Src/sd-card-spi.c **** 
+ 336              		.loc 1 72 9 is_stmt 1 view .LVU68
+ARM GAS  C:\Users\samue\AppData\Local\Temp\ccn5pQnk.s 			page 13
+
+
+  89:Device-Drivers/Src/sd-card-spi.c **** 
+ 337              		.loc 1 89 1 is_stmt 0 view .LVU69
+ 338 000c 08BD     		pop	{r3, pc}
+ 339              	.L18:
+ 340 000e 00BF     		.align	2
+ 341              	.L17:
+ 342 0010 00000000 		.word	sd_card_1.0
+ 343              		.cfi_endproc
+ 344              	.LFE133:
+ 346              		.section	.bss.sd_card_1.0,"aw",%nobits
+ 347              		.align	2
+ 350              	sd_card_1.0:
+ 351 0000 00000000 		.space	9348
+ 351      00000000 
+ 351      00000000 
+ 351      00000000 
+ 351      00000000 
+ 352              		.text
+ 353              	.Letext0:
+ 354              		.file 2 "c:\\dev_tools\\gcc-arm-none-eabi-10.3-2021.10-win32\\gcc-arm-none-eabi-10.3-2021.10\\arm-
+ 355              		.file 3 "c:\\dev_tools\\gcc-arm-none-eabi-10.3-2021.10-win32\\gcc-arm-none-eabi-10.3-2021.10\\arm-
+ 356              		.file 4 "Middlewares/Third_Party/FatFs/src/integer.h"
+ 357              		.file 5 "Device-Drivers/Inc/sd-card-spi.h"
+ 358              		.file 6 "Middlewares/Third_Party/FatFs/src/ff.h"
+ 359              		.file 7 "Core/Inc/i2c-lcd.h"
+ 360              		.file 8 "Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h"
+ 361              		.file 9 "c:\\dev_tools\\gcc-arm-none-eabi-10.3-2021.10-win32\\gcc-arm-none-eabi-10.3-2021.10\\arm-
+ARM GAS  C:\Users\samue\AppData\Local\Temp\ccn5pQnk.s 			page 14
 
 
 DEFINED SYMBOLS
                             *ABS*:00000000 sd-card-spi.c
-C:\Users\samue\AppData\Local\Temp\ccizoA9K.s:20     .text.bufclear:00000000 $t
-C:\Users\samue\AppData\Local\Temp\ccizoA9K.s:26     .text.bufclear:00000000 bufclear
-C:\Users\samue\AppData\Local\Temp\ccizoA9K.s:66     .rodata.sd_card_init.str1.4:00000000 $d
-C:\Users\samue\AppData\Local\Temp\ccizoA9K.s:85     .text.sd_card_init:00000000 $t
-C:\Users\samue\AppData\Local\Temp\ccizoA9K.s:91     .text.sd_card_init:00000000 sd_card_init
-C:\Users\samue\AppData\Local\Temp\ccizoA9K.s:216    .text.sd_card_init:000000b0 $d
-C:\Users\samue\AppData\Local\Temp\ccizoA9K.s:226    .text.sd_card:00000000 $t
-C:\Users\samue\AppData\Local\Temp\ccizoA9K.s:232    .text.sd_card:00000000 sd_card
-C:\Users\samue\AppData\Local\Temp\ccizoA9K.s:262    .text.sd_card:00000010 $d
-C:\Users\samue\AppData\Local\Temp\ccizoA9K.s:270    .bss.sd_card_1.0:00000000 sd_card_1.0
-C:\Users\samue\AppData\Local\Temp\ccizoA9K.s:267    .bss.sd_card_1.0:00000000 $d
+C:\Users\samue\AppData\Local\Temp\ccn5pQnk.s:20     .text.bufclear:00000000 $t
+C:\Users\samue\AppData\Local\Temp\ccn5pQnk.s:26     .text.bufclear:00000000 bufclear
+C:\Users\samue\AppData\Local\Temp\ccn5pQnk.s:66     .rodata.sd_card_init.str1.4:00000000 $d
+C:\Users\samue\AppData\Local\Temp\ccn5pQnk.s:94     .text.sd_card_init:00000000 $t
+C:\Users\samue\AppData\Local\Temp\ccn5pQnk.s:100    .text.sd_card_init:00000000 sd_card_init
+C:\Users\samue\AppData\Local\Temp\ccn5pQnk.s:293    .text.sd_card_init:0000011c $d
+C:\Users\samue\AppData\Local\Temp\ccn5pQnk.s:306    .text.sd_card:00000000 $t
+C:\Users\samue\AppData\Local\Temp\ccn5pQnk.s:312    .text.sd_card:00000000 sd_card
+C:\Users\samue\AppData\Local\Temp\ccn5pQnk.s:342    .text.sd_card:00000010 $d
+C:\Users\samue\AppData\Local\Temp\ccn5pQnk.s:350    .bss.sd_card_1.0:00000000 sd_card_1.0
+C:\Users\samue\AppData\Local\Temp\ccn5pQnk.s:347    .bss.sd_card_1.0:00000000 $d
 
 UNDEFINED SYMBOLS
 __aeabi_ui2d
 __aeabi_dmul
 __aeabi_d2uiz
 f_mount
-send_uart
+lcd_send_cmd
+lcd_send_string
+HAL_Delay
+lcd_clear
 f_getfree
 sprintf

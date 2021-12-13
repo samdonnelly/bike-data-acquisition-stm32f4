@@ -22,6 +22,7 @@
 #include "sd-card-spi.h"
 #include "fatfs_sd.h"
 #include "ff.h"
+#include "i2c-lcd.h"
 
 
 /* 
@@ -32,19 +33,19 @@
 
 typedef struct spi_vars {
     //
-    FATFS fs;           // file system 
-    FIL fil;            // file 
-    FRESULT fresult;    // to store the result 
-    char buffer[1024];  // to store data 
+    FATFS    fs;            // file system 
+    FIL      fil;           // file 
+    FRESULT  fresult;       // to store the result 
+    char     buffer[1024];  // to store data 
 
     // file read/write count 
     UINT br, bw;
 
     // Capacity related variables 
-    FATFS *pfs;
-    DWORD fre_clust;
-    uint32_t total;
-    uint32_t free_space;
+    FATFS     *pfs;
+    DWORD     fre_clust;
+    uint32_t  total;
+    uint32_t  free_space;
 
 } spi_vars;
 
@@ -89,28 +90,70 @@ void sd_card(uint8_t func)
 
 
 // Initialize SD Card
-void sd_card_init(spi_vars *card) {
+void sd_card_init(spi_vars *card) 
+{
     // Mount SD card
     card->fresult = f_mount(&(card->fs), "", 0);
-    if (card->fresult != FR_OK) {
-        send_uart("Error in mounting SD card.\r\n");
+
+    if (card->fresult != FR_OK) 
+    {
+        // send_uart("Error mounting SD card.\r\n");
+        lcd_send_cmd(0x80|0x00);
+	    lcd_send_string("Error mounting SD");
+        lcd_send_cmd(0x80|0x40);
+	    lcd_send_string("card");
     }
-    else {
-        send_uart("SD card mounted successfully.\r\n");
+    else 
+    {
+        // send_uart("SD card mounted successfully.\r\n");
+        lcd_send_cmd(0x80|0x00);
+	    lcd_send_string("SD card mounted");
+        lcd_send_cmd(0x80|0x40);
+	    lcd_send_string("successfully");
     }
+
+    // Give time to read message 
+    HAL_Delay(1500);
+
+    // Clear display 
+    lcd_clear();
 
     // Get capacity of SD card 
     f_getfree("", &(card->fre_clust), &(card->pfs));
 
     card->total = (uint32_t)((card->pfs->n_fatent - 2)*(card->pfs->csize)*0.5);
-    sprintf(card->buffer, "SD card total size: \t%lu\r\n", card->total);
-    send_uart(card->buffer);
+    // sprintf(card->buffer, "SD card total size: \t%lu\r\n", card->total);
+    // send_uart(card->buffer);
+    lcd_send_cmd(0x80|0x00);
+    lcd_send_string("SD card total size:");
+    sprintf(card->buffer, "%lu", card->total);
+    lcd_send_cmd(0x80|0x40);
 
+    // Give time to read message 
+    HAL_Delay(3000);
+
+    // Clear display 
+    lcd_clear();
+
+    // Clear buffer 
     bufclear(card);
 
     card->free_space = (uint32_t)((card->fre_clust)*(card->pfs->csize)*0.5);
-    sprintf(card->buffer, "SD card free space: \t%lu\r\n", card->free_space);
-    send_uart(card->buffer);
+    // sprintf(card->buffer, "SD card free space: \t%lu\r\n", card->free_space);
+    // send_uart(card->buffer);
+    lcd_send_cmd(0x80|0x00);
+    lcd_send_string("SD card free space:");
+    sprintf(card->buffer, "%lu", card->free_space);
+    lcd_send_cmd(0x80|0x40);
+
+    // Give time to read message 
+    HAL_Delay(3000);
+
+    // Clear display 
+    lcd_clear();
+
+    // Clear buffer 
+    bufclear(card);
 }
 
 

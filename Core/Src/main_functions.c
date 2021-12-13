@@ -196,8 +196,15 @@ void normal(void) {
 }
 
 // Print parsed data to the LCD display 
-void print_data(uint8_t pos1, uint8_t pos2, uint8_t pos3, char str[], uint8_t index, float val,
-    int data[]) {
+void print_data(
+    uint8_t pos1, 
+    uint8_t pos2, 
+    uint8_t pos3, 
+    char str[], 
+    uint8_t index, 
+    float val,
+    int data[]) 
+{
 
     lcd_send_cmd(0x80|pos1);
 	lcd_send_string(str);
@@ -214,8 +221,8 @@ void print_data(uint8_t pos1, uint8_t pos2, uint8_t pos3, char str[], uint8_t in
 }
 
 // Prepare to calibrate the accelerometer
-void accel_cal_prep(void) {
-
+void accel_cal_prep(void) 
+{
     if (flag == 1) {
         lcd_clear();
         flag = 0;
@@ -230,8 +237,8 @@ void accel_cal_prep(void) {
 }
 
 // Calibrate the accelerometer
-void accel_cal(void) {
-
+void accel_cal(void) 
+{
 	lcd_clear();
     flag = 0;
 	
@@ -253,7 +260,8 @@ void accel_cal(void) {
 
 
 // Send information over uart 
-void send_uart(char *string) {
+void send_uart(char *string) 
+{
     uint8_t len = strlen(string);
     // Transmit in blocking mode
     HAL_UART_Transmit(&huart2, (uint8_t*)string, len, 2000);
