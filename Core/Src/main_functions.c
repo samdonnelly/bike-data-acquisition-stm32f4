@@ -104,8 +104,13 @@ void main_function(void) {
     lcd_send_string("Initialized");
     HAL_Delay(1500);
 
-    // SD card test 
+    // SD tests ------------------------------------
+
+    // Initialize card  
     sd_card(INIT);
+
+    // Get available card space
+    sd_card(SPACE);
 
     // sd_card(CREATE);
 
@@ -256,13 +261,4 @@ void accel_cal(void)
 
 	lcd_send_cmd(0x80|0x00);
 	lcd_send_string("Calibration Complete");
-}
-
-
-// Send information over uart 
-void send_uart(char *string) 
-{
-    uint8_t len = strlen(string);
-    // Transmit in blocking mode
-    HAL_UART_Transmit(&huart2, (uint8_t*)string, len, 2000);
 }

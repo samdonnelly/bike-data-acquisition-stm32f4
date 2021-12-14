@@ -72,16 +72,20 @@ void sd_card(uint8_t func)
         break;
 
     // case 1:
-    //     sd_card_init(void);
+    //     sd_card_create_file(void);
     //     break;
 
     // case 2:
-    //     sd_card_init(void);
+    //     sd_card_update_file(void);
     //     break;
 
     // case 3:
-    //     sd_card_init(void);
+    //     sd_card_remove_file(void);
     //     break;
+
+    case 4:
+        sd_card_space(&sd_card_1);
+        break;
     
     default:
         break;
@@ -102,6 +106,8 @@ void sd_card_init(spi_vars *card)
 	    lcd_send_string("Error mounting SD");
         lcd_send_cmd(0x80|0x40);
 	    lcd_send_string("card");
+
+        // If there is an error then enter an error state 
     }
     else 
     {
@@ -117,7 +123,11 @@ void sd_card_init(spi_vars *card)
 
     // Clear display 
     lcd_clear();
+}
 
+void sd_card_space(spi_vars *card)
+{
+    // 
     // Get capacity of SD card 
     f_getfree("", &(card->fre_clust), &(card->pfs));
 
@@ -126,7 +136,8 @@ void sd_card_init(spi_vars *card)
     // send_uart(card->buffer);
     lcd_send_cmd(0x80|0x00);
     lcd_send_string("SD card total size:");
-    sprintf(card->buffer, "%lu", card->total);
+    // sprintf(card->buffer, "%lu", card->total);
+    sprintf(card->buffer, "%ld", card->total);
     lcd_send_cmd(0x80|0x40);
 
     // Give time to read message 

@@ -1,8 +1,8 @@
 /*
- * File: sd-card-spi.h
- * Purpose: header file to sd-card-spi.c  
+ * File: debug_tools.h
+ * Purpose: header file to debug_tools.c  
  * 
- * Created On: December 9, 2021
+ * Created On: December 13, 2021
  * Author: Sam Donnelly 
  * 
  */
@@ -14,8 +14,8 @@
  * ---------------------------------------------------------------------------------------------
  */
 
-#ifndef SD_CARD_SPI
-#define SD_CARD_SPI
+#ifndef DEBUG_TOOLS
+#define DEBUG_TOOLS
 
 
 /* 
@@ -24,9 +24,6 @@
  * ---------------------------------------------------------------------------------------------
  */
 
-#include <stdint.h>
-
-#include "integer.h"
 
 
 /* 
@@ -35,16 +32,6 @@
  * ---------------------------------------------------------------------------------------------
  */
 
-typedef struct spi_vars spi_vars;
-
-typedef enum {
-    INIT,
-    CREATE,
-    UPDATE,
-    REMOVE,
-    SPACE
-} SD_card_functions;
-
 
 /* 
  * ---------------------------------------------------------------------------------------------
@@ -52,30 +39,8 @@ typedef enum {
  * ---------------------------------------------------------------------------------------------
  */
 
-// Main SD card function 
-void sd_card(uint8_t func);
-
-// Initialize SD card 
-void sd_card_init(spi_vars *card);
-
-// Create file on SD card 
-void sd_card_create_file(void);
-
-// Update an existing file 
-void sd_card_update_file(void);
-
-// Remove file
-void sd_card_remove_file(void);
-
-// SD card total and free space 
-void sd_card_space(spi_vars *card);
-
-// Determine size of buffer up to which it is filled
-int bufsize(char *buf);
-
-// Clear buffer 
-void bufclear(spi_vars *card_buffer);
-
+// Send information over uart 
+void send_uart(char *string) ;
 
 
 /* 
@@ -84,4 +49,4 @@ void bufclear(spi_vars *card_buffer);
  * ---------------------------------------------------------------------------------------------
  */
 
-#endif  // SD_CARD_SPI
+#endif  // DEBUG_TOOLS
