@@ -1,4 +1,4 @@
-ARM GAS  C:\Users\samue\AppData\Local\Temp\ccxwy6p9.s 			page 1
+ARM GAS  C:\Users\samue\AppData\Local\Temp\cczngwaN.s 			page 1
 
 
    1              		.cpu cortex-m4
@@ -58,7 +58,7 @@ ARM GAS  C:\Users\samue\AppData\Local\Temp\ccxwy6p9.s 			page 1
    8:Core/Src/main_functions.c ****  */
    9:Core/Src/main_functions.c **** 
   10:Core/Src/main_functions.c **** /* 
-ARM GAS  C:\Users\samue\AppData\Local\Temp\ccxwy6p9.s 			page 2
+ARM GAS  C:\Users\samue\AppData\Local\Temp\cczngwaN.s 			page 2
 
 
   11:Core/Src/main_functions.c ****  * ---------------------------------------------------------------------------------------------
@@ -70,227 +70,278 @@ ARM GAS  C:\Users\samue\AppData\Local\Temp\ccxwy6p9.s 			page 1
   17:Core/Src/main_functions.c **** #include <stdlib.h>
   18:Core/Src/main_functions.c **** #include <stdint.h>
   19:Core/Src/main_functions.c **** #include <string.h>
-  20:Core/Src/main_functions.c **** 
-  21:Core/Src/main_functions.c **** #include "main.h"
-  22:Core/Src/main_functions.c **** #include "main_functions.h"
-  23:Core/Src/main_functions.c **** #include "i2c-lcd.h"
-  24:Core/Src/main_functions.c **** #include "accelerometer_data.h"
-  25:Core/Src/main_functions.c **** #include "fatfs_sd.h"
-  26:Core/Src/main_functions.c **** #include "sd-card-spi.h"
-  27:Core/Src/main_functions.c **** 
-  28:Core/Src/main_functions.c **** 
-  29:Core/Src/main_functions.c **** /* 
-  30:Core/Src/main_functions.c ****  * ---------------------------------------------------------------------------------------------
-  31:Core/Src/main_functions.c ****  * Variables
+  20:Core/Src/main_functions.c **** #include <inttypes.h>
+  21:Core/Src/main_functions.c **** #include <stdbool.h>
+  22:Core/Src/main_functions.c **** 
+  23:Core/Src/main_functions.c **** #include "main.h"
+  24:Core/Src/main_functions.c **** #include "main_functions.h"
+  25:Core/Src/main_functions.c **** #include "i2c-lcd.h"
+  26:Core/Src/main_functions.c **** #include "accelerometer_data.h"
+  27:Core/Src/main_functions.c **** #include "fatfs_sd.h"
+  28:Core/Src/main_functions.c **** #include "sd-card-spi.h"
+  29:Core/Src/main_functions.c **** 
+  30:Core/Src/main_functions.c **** 
+  31:Core/Src/main_functions.c **** /* 
   32:Core/Src/main_functions.c ****  * ---------------------------------------------------------------------------------------------
-  33:Core/Src/main_functions.c ****  */
-  34:Core/Src/main_functions.c **** 
-  35:Core/Src/main_functions.c **** // External global variables 
-  36:Core/Src/main_functions.c **** extern SPI_HandleTypeDef hspi2;
-  37:Core/Src/main_functions.c **** extern UART_HandleTypeDef huart2;
-  38:Core/Src/main_functions.c **** 
-  39:Core/Src/main_functions.c **** // Interrupt flag
-  40:Core/Src/main_functions.c **** uint8_t flag;
-  41:Core/Src/main_functions.c **** 
-  42:Core/Src/main_functions.c **** // Current state
-  43:Core/Src/main_functions.c **** unsigned long state;  
-  44:Core/Src/main_functions.c **** 
-  45:Core/Src/main_functions.c **** // Accelerometer data handlers 
-  46:Core/Src/main_functions.c **** int accel_data_value[9];
-  47:Core/Src/main_functions.c **** float *accel_data_p;
-  48:Core/Src/main_functions.c **** float accel_corr[3];
-  49:Core/Src/main_functions.c **** float *accel_corr_p;
-  50:Core/Src/main_functions.c **** int gyro_data_value[9];
-  51:Core/Src/main_functions.c **** float *gyro_data_p;
-  52:Core/Src/main_functions.c **** float gyro_corr[3];
-  53:Core/Src/main_functions.c **** float *gyro_corr_p;
-  54:Core/Src/main_functions.c **** float zero_corr[3] = {0.0, 0.0, 0.0};
-  55:Core/Src/main_functions.c **** 
-  56:Core/Src/main_functions.c **** // Accelerometer data buffer
-  57:Core/Src/main_functions.c **** char buf[6];
-  58:Core/Src/main_functions.c **** 
-  59:Core/Src/main_functions.c **** // Position of text on LCD display 
-  60:Core/Src/main_functions.c **** uint8_t line_pos;
-  61:Core/Src/main_functions.c **** 
-  62:Core/Src/main_functions.c **** // String to print to the LCD display 
-  63:Core/Src/main_functions.c **** char Ax_string[] = "Ax=       ";
-  64:Core/Src/main_functions.c **** char Ay_string[] = "Ay=       ";
-  65:Core/Src/main_functions.c **** char Az_string[] = "Az=       ";
-  66:Core/Src/main_functions.c **** char Gx_string[] = "Gx=       ";
-  67:Core/Src/main_functions.c **** char Gy_string[] = "Gy=       ";
-ARM GAS  C:\Users\samue\AppData\Local\Temp\ccxwy6p9.s 			page 3
+  33:Core/Src/main_functions.c ****  * Variables
+  34:Core/Src/main_functions.c ****  * ---------------------------------------------------------------------------------------------
+  35:Core/Src/main_functions.c ****  */
+  36:Core/Src/main_functions.c **** 
+  37:Core/Src/main_functions.c **** // External global variables 
+  38:Core/Src/main_functions.c **** extern SPI_HandleTypeDef hspi2;
+  39:Core/Src/main_functions.c **** extern UART_HandleTypeDef huart2;
+  40:Core/Src/main_functions.c **** 
+  41:Core/Src/main_functions.c **** // Interrupt flag
+  42:Core/Src/main_functions.c **** uint8_t flag;
+  43:Core/Src/main_functions.c **** 
+  44:Core/Src/main_functions.c **** // Current state
+  45:Core/Src/main_functions.c **** unsigned long state;  
+  46:Core/Src/main_functions.c **** 
+  47:Core/Src/main_functions.c **** // Accelerometer data handlers 
+  48:Core/Src/main_functions.c **** int accel_data_value[9];
+  49:Core/Src/main_functions.c **** float *accel_data_p;
+  50:Core/Src/main_functions.c **** float accel_corr[3];
+  51:Core/Src/main_functions.c **** float *accel_corr_p;
+  52:Core/Src/main_functions.c **** int gyro_data_value[9];
+  53:Core/Src/main_functions.c **** float *gyro_data_p;
+  54:Core/Src/main_functions.c **** float gyro_corr[3];
+  55:Core/Src/main_functions.c **** float *gyro_corr_p;
+  56:Core/Src/main_functions.c **** float zero_corr[3] = {0.0, 0.0, 0.0};
+  57:Core/Src/main_functions.c **** 
+  58:Core/Src/main_functions.c **** // Accelerometer data buffer
+  59:Core/Src/main_functions.c **** char buf[6];
+  60:Core/Src/main_functions.c **** 
+  61:Core/Src/main_functions.c **** // Position of text on LCD display 
+  62:Core/Src/main_functions.c **** uint8_t line_pos;
+  63:Core/Src/main_functions.c **** 
+  64:Core/Src/main_functions.c **** // String to print to the LCD display 
+  65:Core/Src/main_functions.c **** char Ax_string[] = "Ax=       ";
+  66:Core/Src/main_functions.c **** char Ay_string[] = "Ay=       ";
+  67:Core/Src/main_functions.c **** char Az_string[] = "Az=       ";
+ARM GAS  C:\Users\samue\AppData\Local\Temp\cczngwaN.s 			page 3
 
 
-  68:Core/Src/main_functions.c **** char Gz_string[] = "Gz=       ";
-  69:Core/Src/main_functions.c **** 
-  70:Core/Src/main_functions.c **** 
-  71:Core/Src/main_functions.c **** /* 
-  72:Core/Src/main_functions.c ****  * ---------------------------------------------------------------------------------------------
-  73:Core/Src/main_functions.c ****  * Structures and lists
+  68:Core/Src/main_functions.c **** char Gx_string[] = "Gx=       ";
+  69:Core/Src/main_functions.c **** char Gy_string[] = "Gy=       ";
+  70:Core/Src/main_functions.c **** char Gz_string[] = "Gz=       ";
+  71:Core/Src/main_functions.c **** 
+  72:Core/Src/main_functions.c **** 
+  73:Core/Src/main_functions.c **** /* 
   74:Core/Src/main_functions.c ****  * ---------------------------------------------------------------------------------------------
-  75:Core/Src/main_functions.c ****  */
-  76:Core/Src/main_functions.c **** 
-  77:Core/Src/main_functions.c **** // Primary state machine structure
-  78:Core/Src/main_functions.c **** typedef const struct BSDA {
-  79:Core/Src/main_functions.c **** 	void (*output_func)(void);
-  80:Core/Src/main_functions.c **** 	unsigned long time_delay;
-  81:Core/Src/main_functions.c **** 	unsigned long next_state[NUM_OPTIONS];
-  82:Core/Src/main_functions.c **** } BSDA;
-  83:Core/Src/main_functions.c **** 
-  84:Core/Src/main_functions.c **** // Primary state machine
-  85:Core/Src/main_functions.c **** BSDA FSM[NUM_STATES] = {
-  86:Core/Src/main_functions.c ****     {&normal,         S1_DELAY, {normal_state,         accel_cal_prep_state }},
-  87:Core/Src/main_functions.c ****     {&accel_cal_prep, S2_DELAY, {accel_cal_prep_state, accel_cal_state      }},
-  88:Core/Src/main_functions.c ****     {&accel_cal,      S3_DELAY, {normal_state,         normal_state         }}
-  89:Core/Src/main_functions.c **** };
-  90:Core/Src/main_functions.c **** 
-  91:Core/Src/main_functions.c **** 
-  92:Core/Src/main_functions.c **** /* 
-  93:Core/Src/main_functions.c ****  * ---------------------------------------------------------------------------------------------
-  94:Core/Src/main_functions.c ****  * Psudo Main Function 
+  75:Core/Src/main_functions.c ****  * Structures and lists
+  76:Core/Src/main_functions.c ****  * ---------------------------------------------------------------------------------------------
+  77:Core/Src/main_functions.c ****  */
+  78:Core/Src/main_functions.c **** 
+  79:Core/Src/main_functions.c **** // Primary state machine structure
+  80:Core/Src/main_functions.c **** typedef const struct BSDA {
+  81:Core/Src/main_functions.c **** 	void (*output_func)(void);
+  82:Core/Src/main_functions.c **** 	unsigned long time_delay;
+  83:Core/Src/main_functions.c **** 	unsigned long next_state[NUM_OPTIONS];
+  84:Core/Src/main_functions.c **** } BSDA;
+  85:Core/Src/main_functions.c **** 
+  86:Core/Src/main_functions.c **** // Primary state machine
+  87:Core/Src/main_functions.c **** BSDA FSM[NUM_STATES] = {
+  88:Core/Src/main_functions.c ****     {&normal,         S1_DELAY, {normal_state,         accel_cal_prep_state }},
+  89:Core/Src/main_functions.c ****     {&accel_cal_prep, S2_DELAY, {accel_cal_prep_state, accel_cal_state      }},
+  90:Core/Src/main_functions.c ****     {&accel_cal,      S3_DELAY, {normal_state,         normal_state         }}
+  91:Core/Src/main_functions.c **** };
+  92:Core/Src/main_functions.c **** 
+  93:Core/Src/main_functions.c **** 
+  94:Core/Src/main_functions.c **** /* 
   95:Core/Src/main_functions.c ****  * ---------------------------------------------------------------------------------------------
-  96:Core/Src/main_functions.c ****  */
-  97:Core/Src/main_functions.c **** void main_function(void) {
-  98:Core/Src/main_functions.c ****      
-  99:Core/Src/main_functions.c ****     flag = 0;
- 100:Core/Src/main_functions.c ****     state = accel_cal_state;
- 101:Core/Src/main_functions.c **** 
- 102:Core/Src/main_functions.c ****     lcd_init();
- 103:Core/Src/main_functions.c ****     MPU6050_Init();
- 104:Core/Src/main_functions.c ****     lcd_send_string("Initialized");
- 105:Core/Src/main_functions.c ****     HAL_Delay(1500);
- 106:Core/Src/main_functions.c **** 
- 107:Core/Src/main_functions.c ****     // SD tests ------------------------------------
+  96:Core/Src/main_functions.c ****  * Psudo Main Function 
+  97:Core/Src/main_functions.c ****  * ---------------------------------------------------------------------------------------------
+  98:Core/Src/main_functions.c ****  */
+  99:Core/Src/main_functions.c **** void main_function(void) {
+ 100:Core/Src/main_functions.c ****      
+ 101:Core/Src/main_functions.c ****     flag = 0;
+ 102:Core/Src/main_functions.c ****     state = accel_cal_state;
+ 103:Core/Src/main_functions.c **** 
+ 104:Core/Src/main_functions.c ****     lcd_init();
+ 105:Core/Src/main_functions.c ****     MPU6050_Init();
+ 106:Core/Src/main_functions.c ****     lcd_send_string("Initialized");
+ 107:Core/Src/main_functions.c ****     HAL_Delay(1500);
  108:Core/Src/main_functions.c **** 
- 109:Core/Src/main_functions.c ****     // Initialize card  
- 110:Core/Src/main_functions.c ****     sd_card(INIT);
- 111:Core/Src/main_functions.c **** 
- 112:Core/Src/main_functions.c ****     // Get available card space
- 113:Core/Src/main_functions.c ****     sd_card(SPACE);
- 114:Core/Src/main_functions.c **** 
- 115:Core/Src/main_functions.c ****     // sd_card(CREATE);
- 116:Core/Src/main_functions.c **** 
- 117:Core/Src/main_functions.c ****     // sd_card(UPDATE);
- 118:Core/Src/main_functions.c **** 
- 119:Core/Src/main_functions.c ****     // sd_card(REMOVE);
- 120:Core/Src/main_functions.c ****     
- 121:Core/Src/main_functions.c ****     // Main loop 
- 122:Core/Src/main_functions.c ****     while(1) {
- 123:Core/Src/main_functions.c **** 
- 124:Core/Src/main_functions.c ****         // Execute state machine 
-ARM GAS  C:\Users\samue\AppData\Local\Temp\ccxwy6p9.s 			page 4
+ 109:Core/Src/main_functions.c ****     // SD tests ------------------------------------
+ 110:Core/Src/main_functions.c **** 
+ 111:Core/Src/main_functions.c ****     // Initialize SD card 
+ 112:Core/Src/main_functions.c ****     bool sd_card_1_status = sd_card_init(); 
+ 113:Core/Src/main_functions.c **** 
+ 114:Core/Src/main_functions.c ****     if (sd_card_1_status)
+ 115:Core/Src/main_functions.c ****     {
+ 116:Core/Src/main_functions.c ****         lcd_send_cmd(0x80|0x00);
+ 117:Core/Src/main_functions.c **** 	    lcd_send_string("SD card mounted");
+ 118:Core/Src/main_functions.c ****         lcd_send_cmd(0x80|0x40);
+ 119:Core/Src/main_functions.c **** 	    lcd_send_string("successfully");
+ 120:Core/Src/main_functions.c ****         HAL_Delay(3000);
+ 121:Core/Src/main_functions.c ****         lcd_clear();
+ 122:Core/Src/main_functions.c ****     }
+ 123:Core/Src/main_functions.c ****     else 
+ 124:Core/Src/main_functions.c ****     {
+ARM GAS  C:\Users\samue\AppData\Local\Temp\cczngwaN.s 			page 4
 
 
- 125:Core/Src/main_functions.c ****         (FSM[state].output_func)();
- 126:Core/Src/main_functions.c ****         HAL_Delay(FSM[state].time_delay);
- 127:Core/Src/main_functions.c ****         state = FSM[state].next_state[flag];
- 128:Core/Src/main_functions.c **** 
- 129:Core/Src/main_functions.c ****     }
- 130:Core/Src/main_functions.c **** }
+ 125:Core/Src/main_functions.c ****         lcd_send_cmd(0x80|0x00);
+ 126:Core/Src/main_functions.c **** 	    lcd_send_string("Error mounting SD");
+ 127:Core/Src/main_functions.c ****         lcd_send_cmd(0x80|0x40);
+ 128:Core/Src/main_functions.c **** 	    lcd_send_string("card");
+ 129:Core/Src/main_functions.c ****         HAL_Delay(3000);
+ 130:Core/Src/main_functions.c ****         lcd_clear();
  131:Core/Src/main_functions.c **** 
- 132:Core/Src/main_functions.c **** 
- 133:Core/Src/main_functions.c **** /* 
- 134:Core/Src/main_functions.c ****  * ---------------------------------------------------------------------------------------------
- 135:Core/Src/main_functions.c ****  * Functions
- 136:Core/Src/main_functions.c ****  * ---------------------------------------------------------------------------------------------
- 137:Core/Src/main_functions.c ****  */
+ 132:Core/Src/main_functions.c ****         // TODO If there is an error then enter an error state 
+ 133:Core/Src/main_functions.c ****     }
+ 134:Core/Src/main_functions.c **** 
+ 135:Core/Src/main_functions.c ****     // Get available card space
+ 136:Core/Src/main_functions.c ****     uint16_t sd_card_total_space;
+ 137:Core/Src/main_functions.c ****     uint16_t sd_card_free_space;
  138:Core/Src/main_functions.c **** 
- 139:Core/Src/main_functions.c **** // External Interrupt
- 140:Core/Src/main_functions.c **** void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin) {
- 141:Core/Src/main_functions.c **** 	flag = 1;
- 142:Core/Src/main_functions.c **** }
- 143:Core/Src/main_functions.c **** 
- 144:Core/Src/main_functions.c **** // Normal run mode
- 145:Core/Src/main_functions.c **** void normal(void) {
- 146:Core/Src/main_functions.c **** 
- 147:Core/Src/main_functions.c ****     // Read linear acceleration data (x, y, z) - in units of gravity (g's)
- 148:Core/Src/main_functions.c ****     accel_data_p = MPU6050_read(ACCEL_CONST, MPU6050_ADDR, ACCEL_XOUT_H_REG, accel_corr);	
- 149:Core/Src/main_functions.c **** 
- 150:Core/Src/main_functions.c ****     // Parse linear acceleration data (x, y, z)
- 151:Core/Src/main_functions.c **** 	accel_data_value[0] = abs((int)accel_data_p[0]);
- 152:Core/Src/main_functions.c **** 	accel_data_value[1] = abs((int)(10*accel_data_p[0])  % 10);
- 153:Core/Src/main_functions.c ****     accel_data_value[2] = abs((int)(100*accel_data_p[0]) % 10);
+ 139:Core/Src/main_functions.c ****     sd_card_total_space = sd_card_space(TOTAL_SPACE);
+ 140:Core/Src/main_functions.c ****     sd_card_free_space  = sd_card_space(FREE_SPACE);
+ 141:Core/Src/main_functions.c **** 
+ 142:Core/Src/main_functions.c ****     lcd_send_cmd(0x80|0x00);
+ 143:Core/Src/main_functions.c ****     lcd_send_string("SD card total size:");
+ 144:Core/Src/main_functions.c ****     lcd_send_cmd(0x80|0x40);
+ 145:Core/Src/main_functions.c ****     // sprintf(buf, "%" PRIu16 "", sd_card_total_space);
+ 146:Core/Src/main_functions.c ****     sprintf(buf, "%d", (char)sd_card_total_space);
+ 147:Core/Src/main_functions.c ****     lcd_send_string(buf);
+ 148:Core/Src/main_functions.c ****         // (char)((sd_card_total_space / 1000)),
+ 149:Core/Src/main_functions.c ****         // (char)((sd_card_total_space / 100) % 10),
+ 150:Core/Src/main_functions.c ****         // (char)((sd_card_total_space / 10) % 10),
+ 151:Core/Src/main_functions.c ****         // (char)((sd_card_total_space) % 10));
+ 152:Core/Src/main_functions.c ****     HAL_Delay(3000);
+ 153:Core/Src/main_functions.c ****     lcd_clear();
  154:Core/Src/main_functions.c **** 
- 155:Core/Src/main_functions.c **** 	accel_data_value[3] = abs((int)accel_data_p[1]);
- 156:Core/Src/main_functions.c **** 	accel_data_value[4] = abs((int)(10*accel_data_p[1])  % 10);
- 157:Core/Src/main_functions.c ****     accel_data_value[5] = abs((int)(100*accel_data_p[1]) % 10);
- 158:Core/Src/main_functions.c **** 
- 159:Core/Src/main_functions.c **** 	accel_data_value[6] = abs((int)accel_data_p[2]);
- 160:Core/Src/main_functions.c **** 	accel_data_value[7] = abs((int)(10*accel_data_p[2])  % 10);
- 161:Core/Src/main_functions.c ****     accel_data_value[8] = abs((int)(100*accel_data_p[2]) % 10);
+ 155:Core/Src/main_functions.c ****     lcd_send_cmd(0x80|0x00);
+ 156:Core/Src/main_functions.c ****     lcd_send_string("SD card free space:");
+ 157:Core/Src/main_functions.c ****     lcd_send_cmd(0x80|0x40);
+ 158:Core/Src/main_functions.c ****     sprintf(buf, "%" PRIu16 "", sd_card_free_space);
+ 159:Core/Src/main_functions.c ****     lcd_send_string(buf);
+ 160:Core/Src/main_functions.c ****     HAL_Delay(3000);
+ 161:Core/Src/main_functions.c ****     lcd_clear();
  162:Core/Src/main_functions.c **** 
- 163:Core/Src/main_functions.c ****     // Read angular acceleration data (alpha, beta, gamma) - in units of deg/s
- 164:Core/Src/main_functions.c ****     gyro_data_p  = MPU6050_read(GYRO_CONST, MPU6050_ADDR, GYRO_XOUT_H_REG, gyro_corr);
- 165:Core/Src/main_functions.c **** 
- 166:Core/Src/main_functions.c ****      // Parse angular acceleration data (alpha, beta, gamma)
- 167:Core/Src/main_functions.c ****     gyro_data_value[0] = abs((int)gyro_data_p[0]);
- 168:Core/Src/main_functions.c **** 	gyro_data_value[1] = abs((int)(10*gyro_data_p[0])  % 10);
- 169:Core/Src/main_functions.c ****     gyro_data_value[2] = abs((int)(100*gyro_data_p[0]) % 10);
- 170:Core/Src/main_functions.c **** 
- 171:Core/Src/main_functions.c **** 	gyro_data_value[3] = abs((int)gyro_data_p[1]);
- 172:Core/Src/main_functions.c **** 	gyro_data_value[4] = abs((int)(10*gyro_data_p[1])  % 10);
- 173:Core/Src/main_functions.c ****     gyro_data_value[5] = abs((int)(100*gyro_data_p[1]) % 10);
- 174:Core/Src/main_functions.c **** 
- 175:Core/Src/main_functions.c **** 	gyro_data_value[6] = abs((int)gyro_data_p[2]);
- 176:Core/Src/main_functions.c **** 	gyro_data_value[7] = abs((int)(10*gyro_data_p[2])  % 10);
- 177:Core/Src/main_functions.c ****     gyro_data_value[8] = abs((int)(100*gyro_data_p[2]) % 10);
- 178:Core/Src/main_functions.c **** 
- 179:Core/Src/main_functions.c **** 	// Print parsed data to the screen
- 180:Core/Src/main_functions.c ****     // Ax
- 181:Core/Src/main_functions.c ****     print_data(0x00, 0x04, 0x03, Ax_string, 0, accel_data_p[0], accel_data_value);
-ARM GAS  C:\Users\samue\AppData\Local\Temp\ccxwy6p9.s 			page 5
+ 163:Core/Src/main_functions.c ****     // sd_card(CREATE);
+ 164:Core/Src/main_functions.c **** 
+ 165:Core/Src/main_functions.c ****     // sd_card(UPDATE);
+ 166:Core/Src/main_functions.c **** 
+ 167:Core/Src/main_functions.c ****     // sd_card(REMOVE);
+ 168:Core/Src/main_functions.c ****     
+ 169:Core/Src/main_functions.c ****     // Main loop 
+ 170:Core/Src/main_functions.c ****     while(1) {
+ 171:Core/Src/main_functions.c **** 
+ 172:Core/Src/main_functions.c ****         // Execute state machine 
+ 173:Core/Src/main_functions.c ****         (FSM[state].output_func)();
+ 174:Core/Src/main_functions.c ****         HAL_Delay(FSM[state].time_delay);
+ 175:Core/Src/main_functions.c ****         state = FSM[state].next_state[flag];
+ 176:Core/Src/main_functions.c **** 
+ 177:Core/Src/main_functions.c ****     }
+ 178:Core/Src/main_functions.c **** }
+ 179:Core/Src/main_functions.c **** 
+ 180:Core/Src/main_functions.c **** 
+ 181:Core/Src/main_functions.c **** /* 
+ARM GAS  C:\Users\samue\AppData\Local\Temp\cczngwaN.s 			page 5
 
 
- 182:Core/Src/main_functions.c **** 
- 183:Core/Src/main_functions.c ****     // Ay
- 184:Core/Src/main_functions.c ****     print_data(0x40, 0x44, 0x43, Ay_string, 3, accel_data_p[1], accel_data_value);
- 185:Core/Src/main_functions.c **** 
- 186:Core/Src/main_functions.c ****     // Az
- 187:Core/Src/main_functions.c ****     print_data(0x14, 0x18, 0x17, Az_string, 6, accel_data_p[2], accel_data_value);
- 188:Core/Src/main_functions.c **** 
- 189:Core/Src/main_functions.c ****     // Gx
- 190:Core/Src/main_functions.c ****     print_data(0x0A, 0x0E, 0x0D, Gx_string, 0, gyro_data_p[0], gyro_data_value);
+ 182:Core/Src/main_functions.c ****  * ---------------------------------------------------------------------------------------------
+ 183:Core/Src/main_functions.c ****  * Functions
+ 184:Core/Src/main_functions.c ****  * ---------------------------------------------------------------------------------------------
+ 185:Core/Src/main_functions.c ****  */
+ 186:Core/Src/main_functions.c **** 
+ 187:Core/Src/main_functions.c **** // External Interrupt
+ 188:Core/Src/main_functions.c **** void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin) {
+ 189:Core/Src/main_functions.c **** 	flag = 1;
+ 190:Core/Src/main_functions.c **** }
  191:Core/Src/main_functions.c **** 
- 192:Core/Src/main_functions.c ****     // Gy
- 193:Core/Src/main_functions.c ****     print_data(0x4A, 0x4E, 0x4D, Gy_string, 3, gyro_data_p[1], gyro_data_value);
+ 192:Core/Src/main_functions.c **** // Normal run mode
+ 193:Core/Src/main_functions.c **** void normal(void) {
  194:Core/Src/main_functions.c **** 
- 195:Core/Src/main_functions.c ****     // Gz
- 196:Core/Src/main_functions.c ****     print_data(0x1E, 0x22, 0x21, Gz_string, 6, gyro_data_p[2], gyro_data_value);
+ 195:Core/Src/main_functions.c ****     // Read linear acceleration data (x, y, z) - in units of gravity (g's)
+ 196:Core/Src/main_functions.c ****     accel_data_p = MPU6050_read(ACCEL_CONST, MPU6050_ADDR, ACCEL_XOUT_H_REG, accel_corr);	
  197:Core/Src/main_functions.c **** 
- 198:Core/Src/main_functions.c ****     // To ensure any additional text that was printed to the screen is cleared
- 199:Core/Src/main_functions.c **** 	lcd_send_cmd(0x80|0x54);
- 200:Core/Src/main_functions.c **** 	lcd_send_string("                    ");
- 201:Core/Src/main_functions.c **** }
+ 198:Core/Src/main_functions.c ****     // Parse linear acceleration data (x, y, z)
+ 199:Core/Src/main_functions.c **** 	accel_data_value[0] = abs((int)accel_data_p[0]);
+ 200:Core/Src/main_functions.c **** 	accel_data_value[1] = abs((int)(10*accel_data_p[0])  % 10);
+ 201:Core/Src/main_functions.c ****     accel_data_value[2] = abs((int)(100*accel_data_p[0]) % 10);
  202:Core/Src/main_functions.c **** 
- 203:Core/Src/main_functions.c **** // Print parsed data to the LCD display 
- 204:Core/Src/main_functions.c **** void print_data(
- 205:Core/Src/main_functions.c ****     uint8_t pos1, 
- 206:Core/Src/main_functions.c ****     uint8_t pos2, 
- 207:Core/Src/main_functions.c ****     uint8_t pos3, 
- 208:Core/Src/main_functions.c ****     char str[], 
- 209:Core/Src/main_functions.c ****     uint8_t index, 
- 210:Core/Src/main_functions.c ****     float val,
- 211:Core/Src/main_functions.c ****     int data[]) 
- 212:Core/Src/main_functions.c **** {
+ 203:Core/Src/main_functions.c **** 	accel_data_value[3] = abs((int)accel_data_p[1]);
+ 204:Core/Src/main_functions.c **** 	accel_data_value[4] = abs((int)(10*accel_data_p[1])  % 10);
+ 205:Core/Src/main_functions.c ****     accel_data_value[5] = abs((int)(100*accel_data_p[1]) % 10);
+ 206:Core/Src/main_functions.c **** 
+ 207:Core/Src/main_functions.c **** 	accel_data_value[6] = abs((int)accel_data_p[2]);
+ 208:Core/Src/main_functions.c **** 	accel_data_value[7] = abs((int)(10*accel_data_p[2])  % 10);
+ 209:Core/Src/main_functions.c ****     accel_data_value[8] = abs((int)(100*accel_data_p[2]) % 10);
+ 210:Core/Src/main_functions.c **** 
+ 211:Core/Src/main_functions.c ****     // Read angular acceleration data (alpha, beta, gamma) - in units of deg/s
+ 212:Core/Src/main_functions.c ****     gyro_data_p  = MPU6050_read(GYRO_CONST, MPU6050_ADDR, GYRO_XOUT_H_REG, gyro_corr);
  213:Core/Src/main_functions.c **** 
- 214:Core/Src/main_functions.c ****     lcd_send_cmd(0x80|pos1);
- 215:Core/Src/main_functions.c **** 	lcd_send_string(str);
- 216:Core/Src/main_functions.c ****     if (val >= 0) {
- 217:Core/Src/main_functions.c ****         line_pos = pos2;
- 218:Core/Src/main_functions.c ****         sprintf(buf, "%d.%d%d", data[index], data[index+1], data[index+2]);
- 219:Core/Src/main_functions.c ****     }
- 220:Core/Src/main_functions.c ****     else {
- 221:Core/Src/main_functions.c ****         line_pos = pos3;
- 222:Core/Src/main_functions.c ****         sprintf(buf, "-%d.%d%d", data[index], data[index+1], data[index+2]);
- 223:Core/Src/main_functions.c ****     }
- 224:Core/Src/main_functions.c **** 	lcd_send_cmd(0x80|line_pos);
- 225:Core/Src/main_functions.c **** 	lcd_send_string(buf);
- 226:Core/Src/main_functions.c **** }
- 227:Core/Src/main_functions.c **** 
- 228:Core/Src/main_functions.c **** // Prepare to calibrate the accelerometer
- 229:Core/Src/main_functions.c **** void accel_cal_prep(void) 
- 230:Core/Src/main_functions.c **** {
-  39              		.loc 1 230 1 view -0
+ 214:Core/Src/main_functions.c ****      // Parse angular acceleration data (alpha, beta, gamma)
+ 215:Core/Src/main_functions.c ****     gyro_data_value[0] = abs((int)gyro_data_p[0]);
+ 216:Core/Src/main_functions.c **** 	gyro_data_value[1] = abs((int)(10*gyro_data_p[0])  % 10);
+ 217:Core/Src/main_functions.c ****     gyro_data_value[2] = abs((int)(100*gyro_data_p[0]) % 10);
+ 218:Core/Src/main_functions.c **** 
+ 219:Core/Src/main_functions.c **** 	gyro_data_value[3] = abs((int)gyro_data_p[1]);
+ 220:Core/Src/main_functions.c **** 	gyro_data_value[4] = abs((int)(10*gyro_data_p[1])  % 10);
+ 221:Core/Src/main_functions.c ****     gyro_data_value[5] = abs((int)(100*gyro_data_p[1]) % 10);
+ 222:Core/Src/main_functions.c **** 
+ 223:Core/Src/main_functions.c **** 	gyro_data_value[6] = abs((int)gyro_data_p[2]);
+ 224:Core/Src/main_functions.c **** 	gyro_data_value[7] = abs((int)(10*gyro_data_p[2])  % 10);
+ 225:Core/Src/main_functions.c ****     gyro_data_value[8] = abs((int)(100*gyro_data_p[2]) % 10);
+ 226:Core/Src/main_functions.c **** 
+ 227:Core/Src/main_functions.c **** 	// Print parsed data to the screen
+ 228:Core/Src/main_functions.c ****     // Ax
+ 229:Core/Src/main_functions.c ****     print_data(0x00, 0x04, 0x03, Ax_string, 0, accel_data_p[0], accel_data_value);
+ 230:Core/Src/main_functions.c **** 
+ 231:Core/Src/main_functions.c ****     // Ay
+ 232:Core/Src/main_functions.c ****     print_data(0x40, 0x44, 0x43, Ay_string, 3, accel_data_p[1], accel_data_value);
+ 233:Core/Src/main_functions.c **** 
+ 234:Core/Src/main_functions.c ****     // Az
+ 235:Core/Src/main_functions.c ****     print_data(0x14, 0x18, 0x17, Az_string, 6, accel_data_p[2], accel_data_value);
+ 236:Core/Src/main_functions.c **** 
+ 237:Core/Src/main_functions.c ****     // Gx
+ 238:Core/Src/main_functions.c ****     print_data(0x0A, 0x0E, 0x0D, Gx_string, 0, gyro_data_p[0], gyro_data_value);
+ARM GAS  C:\Users\samue\AppData\Local\Temp\cczngwaN.s 			page 6
+
+
+ 239:Core/Src/main_functions.c **** 
+ 240:Core/Src/main_functions.c ****     // Gy
+ 241:Core/Src/main_functions.c ****     print_data(0x4A, 0x4E, 0x4D, Gy_string, 3, gyro_data_p[1], gyro_data_value);
+ 242:Core/Src/main_functions.c **** 
+ 243:Core/Src/main_functions.c ****     // Gz
+ 244:Core/Src/main_functions.c ****     print_data(0x1E, 0x22, 0x21, Gz_string, 6, gyro_data_p[2], gyro_data_value);
+ 245:Core/Src/main_functions.c **** 
+ 246:Core/Src/main_functions.c ****     // To ensure any additional text that was printed to the screen is cleared
+ 247:Core/Src/main_functions.c **** 	lcd_send_cmd(0x80|0x54);
+ 248:Core/Src/main_functions.c **** 	lcd_send_string("                    ");
+ 249:Core/Src/main_functions.c **** }
+ 250:Core/Src/main_functions.c **** 
+ 251:Core/Src/main_functions.c **** // Print parsed data to the LCD display 
+ 252:Core/Src/main_functions.c **** void print_data(
+ 253:Core/Src/main_functions.c ****     uint8_t pos1, 
+ 254:Core/Src/main_functions.c ****     uint8_t pos2, 
+ 255:Core/Src/main_functions.c ****     uint8_t pos3, 
+ 256:Core/Src/main_functions.c ****     char str[], 
+ 257:Core/Src/main_functions.c ****     uint8_t index, 
+ 258:Core/Src/main_functions.c ****     float val,
+ 259:Core/Src/main_functions.c ****     int data[]) 
+ 260:Core/Src/main_functions.c **** {
+ 261:Core/Src/main_functions.c **** 
+ 262:Core/Src/main_functions.c ****     lcd_send_cmd(0x80|pos1);
+ 263:Core/Src/main_functions.c **** 	lcd_send_string(str);
+ 264:Core/Src/main_functions.c ****     if (val >= 0) {
+ 265:Core/Src/main_functions.c ****         line_pos = pos2;
+ 266:Core/Src/main_functions.c ****         sprintf(buf, "%d.%d%d", data[index], data[index+1], data[index+2]);
+ 267:Core/Src/main_functions.c ****     }
+ 268:Core/Src/main_functions.c ****     else {
+ 269:Core/Src/main_functions.c ****         line_pos = pos3;
+ 270:Core/Src/main_functions.c ****         sprintf(buf, "-%d.%d%d", data[index], data[index+1], data[index+2]);
+ 271:Core/Src/main_functions.c ****     }
+ 272:Core/Src/main_functions.c **** 	lcd_send_cmd(0x80|line_pos);
+ 273:Core/Src/main_functions.c **** 	lcd_send_string(buf);
+ 274:Core/Src/main_functions.c **** }
+ 275:Core/Src/main_functions.c **** 
+ 276:Core/Src/main_functions.c **** // Prepare to calibrate the accelerometer
+ 277:Core/Src/main_functions.c **** void accel_cal_prep(void) 
+ 278:Core/Src/main_functions.c **** {
+  39              		.loc 1 278 1 view -0
   40              		.cfi_startproc
   41              		@ args = 0, pretend = 0, frame = 0
   42              		@ frame_needed = 0, uses_anonymous_args = 0
@@ -298,69 +349,66 @@ ARM GAS  C:\Users\samue\AppData\Local\Temp\ccxwy6p9.s 			page 1
   44              	.LCFI0:
   45              		.cfi_def_cfa_offset 8
   46              		.cfi_offset 3, -8
-ARM GAS  C:\Users\samue\AppData\Local\Temp\ccxwy6p9.s 			page 6
-
-
   47              		.cfi_offset 14, -4
- 231:Core/Src/main_functions.c ****     if (flag == 1) {
-  48              		.loc 1 231 5 view .LVU1
-  49              		.loc 1 231 14 is_stmt 0 view .LVU2
+ 279:Core/Src/main_functions.c ****     if (flag == 1) {
+  48              		.loc 1 279 5 view .LVU1
+  49              		.loc 1 279 14 is_stmt 0 view .LVU2
   50 0002 0E4B     		ldr	r3, .L5
   51 0004 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
-  52              		.loc 1 231 8 view .LVU3
+  52              		.loc 1 279 8 view .LVU3
   53 0006 012B     		cmp	r3, #1
   54 0008 12D0     		beq	.L4
+ARM GAS  C:\Users\samue\AppData\Local\Temp\cczngwaN.s 			page 7
+
+
   55              	.L2:
- 232:Core/Src/main_functions.c ****         lcd_clear();
- 233:Core/Src/main_functions.c ****         flag = 0;
- 234:Core/Src/main_functions.c ****     }
- 235:Core/Src/main_functions.c **** 
- 236:Core/Src/main_functions.c **** 	lcd_send_cmd(0x80|0x00);
-  56              		.loc 1 236 2 is_stmt 1 view .LVU4
+ 280:Core/Src/main_functions.c ****         lcd_clear();
+ 281:Core/Src/main_functions.c ****         flag = 0;
+ 282:Core/Src/main_functions.c ****     }
+ 283:Core/Src/main_functions.c **** 
+ 284:Core/Src/main_functions.c **** 	lcd_send_cmd(0x80|0x00);
+  56              		.loc 1 284 2 is_stmt 1 view .LVU4
   57 000a 8020     		movs	r0, #128
   58 000c FFF7FEFF 		bl	lcd_send_cmd
   59              	.LVL0:
- 237:Core/Src/main_functions.c **** 	lcd_send_string("Position the");
-  60              		.loc 1 237 2 view .LVU5
+ 285:Core/Src/main_functions.c **** 	lcd_send_string("Position the");
+  60              		.loc 1 285 2 view .LVU5
   61 0010 0B48     		ldr	r0, .L5+4
   62 0012 FFF7FEFF 		bl	lcd_send_string
   63              	.LVL1:
- 238:Core/Src/main_functions.c **** 	lcd_send_cmd(0x80|0x40);
-  64              		.loc 1 238 2 view .LVU6
+ 286:Core/Src/main_functions.c **** 	lcd_send_cmd(0x80|0x40);
+  64              		.loc 1 286 2 view .LVU6
   65 0016 C020     		movs	r0, #192
   66 0018 FFF7FEFF 		bl	lcd_send_cmd
   67              	.LVL2:
- 239:Core/Src/main_functions.c **** 	lcd_send_string("accelerometer to its");
-  68              		.loc 1 239 2 view .LVU7
+ 287:Core/Src/main_functions.c **** 	lcd_send_string("accelerometer to its");
+  68              		.loc 1 287 2 view .LVU7
   69 001c 0948     		ldr	r0, .L5+8
   70 001e FFF7FEFF 		bl	lcd_send_string
   71              	.LVL3:
- 240:Core/Src/main_functions.c **** 	lcd_send_cmd(0x80|0x14);
-  72              		.loc 1 240 2 view .LVU8
+ 288:Core/Src/main_functions.c **** 	lcd_send_cmd(0x80|0x14);
+  72              		.loc 1 288 2 view .LVU8
   73 0022 9420     		movs	r0, #148
   74 0024 FFF7FEFF 		bl	lcd_send_cmd
   75              	.LVL4:
- 241:Core/Src/main_functions.c **** 	lcd_send_string("zero position");
-  76              		.loc 1 241 2 view .LVU9
+ 289:Core/Src/main_functions.c **** 	lcd_send_string("zero position");
+  76              		.loc 1 289 2 view .LVU9
   77 0028 0748     		ldr	r0, .L5+12
   78 002a FFF7FEFF 		bl	lcd_send_string
   79              	.LVL5:
- 242:Core/Src/main_functions.c **** }
-  80              		.loc 1 242 1 is_stmt 0 view .LVU10
+ 290:Core/Src/main_functions.c **** }
+  80              		.loc 1 290 1 is_stmt 0 view .LVU10
   81 002e 08BD     		pop	{r3, pc}
   82              	.L4:
- 232:Core/Src/main_functions.c ****         flag = 0;
-  83              		.loc 1 232 9 is_stmt 1 view .LVU11
+ 280:Core/Src/main_functions.c ****         flag = 0;
+  83              		.loc 1 280 9 is_stmt 1 view .LVU11
   84 0030 FFF7FEFF 		bl	lcd_clear
   85              	.LVL6:
- 233:Core/Src/main_functions.c ****     }
-  86              		.loc 1 233 9 view .LVU12
- 233:Core/Src/main_functions.c ****     }
-  87              		.loc 1 233 14 is_stmt 0 view .LVU13
+ 281:Core/Src/main_functions.c ****     }
+  86              		.loc 1 281 9 view .LVU12
+ 281:Core/Src/main_functions.c ****     }
+  87              		.loc 1 281 14 is_stmt 0 view .LVU13
   88 0034 014B     		ldr	r3, .L5
-ARM GAS  C:\Users\samue\AppData\Local\Temp\ccxwy6p9.s 			page 7
-
-
   89 0036 0022     		movs	r2, #0
   90 0038 1A70     		strb	r2, [r3]
   91 003a E6E7     		b	.L2
@@ -370,6 +418,9 @@ ARM GAS  C:\Users\samue\AppData\Local\Temp\ccxwy6p9.s 			page 1
   95 003c 00000000 		.word	.LANCHOR0
   96 0040 00000000 		.word	.LC0
   97 0044 10000000 		.word	.LC1
+ARM GAS  C:\Users\samue\AppData\Local\Temp\cczngwaN.s 			page 8
+
+
   98 0048 28000000 		.word	.LC2
   99              		.cfi_endproc
  100              	.LFE137:
@@ -389,11 +440,11 @@ ARM GAS  C:\Users\samue\AppData\Local\Temp\ccxwy6p9.s 			page 1
  111              		.thumb_func
  113              	accel_cal:
  114              	.LFB138:
- 243:Core/Src/main_functions.c **** 
- 244:Core/Src/main_functions.c **** // Calibrate the accelerometer
- 245:Core/Src/main_functions.c **** void accel_cal(void) 
- 246:Core/Src/main_functions.c **** {
- 115              		.loc 1 246 1 is_stmt 1 view -0
+ 291:Core/Src/main_functions.c **** 
+ 292:Core/Src/main_functions.c **** // Calibrate the accelerometer
+ 293:Core/Src/main_functions.c **** void accel_cal(void) 
+ 294:Core/Src/main_functions.c **** {
+ 115              		.loc 1 294 1 is_stmt 1 view -0
  116              		.cfi_startproc
  117              		@ args = 0, pretend = 0, frame = 0
  118              		@ frame_needed = 0, uses_anonymous_args = 0
@@ -402,98 +453,98 @@ ARM GAS  C:\Users\samue\AppData\Local\Temp\ccxwy6p9.s 			page 1
  121              		.cfi_def_cfa_offset 8
  122              		.cfi_offset 4, -8
  123              		.cfi_offset 14, -4
- 247:Core/Src/main_functions.c **** 	lcd_clear();
- 124              		.loc 1 247 2 view .LVU15
+ 295:Core/Src/main_functions.c **** 	lcd_clear();
+ 124              		.loc 1 295 2 view .LVU15
  125 0002 FFF7FEFF 		bl	lcd_clear
  126              	.LVL7:
- 248:Core/Src/main_functions.c ****     flag = 0;
- 127              		.loc 1 248 5 view .LVU16
- 128              		.loc 1 248 10 is_stmt 0 view .LVU17
+ 296:Core/Src/main_functions.c ****     flag = 0;
+ 127              		.loc 1 296 5 view .LVU16
+ 128              		.loc 1 296 10 is_stmt 0 view .LVU17
  129 0006 154B     		ldr	r3, .L9
  130 0008 0022     		movs	r2, #0
  131 000a 1A70     		strb	r2, [r3]
- 249:Core/Src/main_functions.c **** 	
- 250:Core/Src/main_functions.c ****     accel_corr_p = MPU6050_read(ACCEL_CONST, MPU6050_ADDR, ACCEL_XOUT_H_REG, zero_corr);
- 132              		.loc 1 250 5 is_stmt 1 view .LVU18
- 133              		.loc 1 250 20 is_stmt 0 view .LVU19
+ 297:Core/Src/main_functions.c **** 	
+ 298:Core/Src/main_functions.c ****     accel_corr_p = MPU6050_read(ACCEL_CONST, MPU6050_ADDR, ACCEL_XOUT_H_REG, zero_corr);
+ 132              		.loc 1 298 5 is_stmt 1 view .LVU18
+ 133              		.loc 1 298 20 is_stmt 0 view .LVU19
  134 000c 144C     		ldr	r4, .L9+4
  135 000e 2246     		mov	r2, r4
-ARM GAS  C:\Users\samue\AppData\Local\Temp\ccxwy6p9.s 			page 8
-
-
  136 0010 3B21     		movs	r1, #59
  137 0012 D020     		movs	r0, #208
  138 0014 9FED130A 		vldr.32	s0, .L9+8
  139 0018 FFF7FEFF 		bl	MPU6050_read
  140              	.LVL8:
- 141              		.loc 1 250 18 view .LVU20
+ 141              		.loc 1 298 18 view .LVU20
  142 001c 124B     		ldr	r3, .L9+12
  143 001e 1860     		str	r0, [r3]
- 251:Core/Src/main_functions.c **** 
- 252:Core/Src/main_functions.c ****     accel_corr[0] = accel_corr_p[0];
- 144              		.loc 1 252 5 is_stmt 1 view .LVU21
- 145              		.loc 1 252 33 is_stmt 0 view .LVU22
+ 299:Core/Src/main_functions.c **** 
+ARM GAS  C:\Users\samue\AppData\Local\Temp\cczngwaN.s 			page 9
+
+
+ 300:Core/Src/main_functions.c ****     accel_corr[0] = accel_corr_p[0];
+ 144              		.loc 1 300 5 is_stmt 1 view .LVU21
+ 145              		.loc 1 300 33 is_stmt 0 view .LVU22
  146 0020 0268     		ldr	r2, [r0]	@ float
- 147              		.loc 1 252 19 view .LVU23
+ 147              		.loc 1 300 19 view .LVU23
  148 0022 124B     		ldr	r3, .L9+16
  149 0024 1A60     		str	r2, [r3]	@ float
- 253:Core/Src/main_functions.c **** 	accel_corr[1] = accel_corr_p[1];
- 150              		.loc 1 253 2 is_stmt 1 view .LVU24
- 151              		.loc 1 253 16 is_stmt 0 view .LVU25
+ 301:Core/Src/main_functions.c **** 	accel_corr[1] = accel_corr_p[1];
+ 150              		.loc 1 301 2 is_stmt 1 view .LVU24
+ 151              		.loc 1 301 16 is_stmt 0 view .LVU25
  152 0026 4268     		ldr	r2, [r0, #4]	@ float
  153 0028 5A60     		str	r2, [r3, #4]	@ float
- 254:Core/Src/main_functions.c **** 	accel_corr[2] = accel_corr_p[2];
- 154              		.loc 1 254 2 is_stmt 1 view .LVU26
- 155              		.loc 1 254 16 is_stmt 0 view .LVU27
+ 302:Core/Src/main_functions.c **** 	accel_corr[2] = accel_corr_p[2];
+ 154              		.loc 1 302 2 is_stmt 1 view .LVU26
+ 155              		.loc 1 302 16 is_stmt 0 view .LVU27
  156 002a 8268     		ldr	r2, [r0, #8]	@ float
  157 002c 9A60     		str	r2, [r3, #8]	@ float
- 255:Core/Src/main_functions.c **** 
- 256:Core/Src/main_functions.c **** 	gyro_corr_p  = MPU6050_read(GYRO_CONST, MPU6050_ADDR, GYRO_XOUT_H_REG, zero_corr);
- 158              		.loc 1 256 2 is_stmt 1 view .LVU28
- 159              		.loc 1 256 17 is_stmt 0 view .LVU29
+ 303:Core/Src/main_functions.c **** 
+ 304:Core/Src/main_functions.c **** 	gyro_corr_p  = MPU6050_read(GYRO_CONST, MPU6050_ADDR, GYRO_XOUT_H_REG, zero_corr);
+ 158              		.loc 1 304 2 is_stmt 1 view .LVU28
+ 159              		.loc 1 304 17 is_stmt 0 view .LVU29
  160 002e 2246     		mov	r2, r4
  161 0030 4321     		movs	r1, #67
  162 0032 D020     		movs	r0, #208
  163 0034 9FED0E0A 		vldr.32	s0, .L9+20
  164 0038 FFF7FEFF 		bl	MPU6050_read
  165              	.LVL9:
- 166              		.loc 1 256 15 view .LVU30
+ 166              		.loc 1 304 15 view .LVU30
  167 003c 0D4B     		ldr	r3, .L9+24
  168 003e 1860     		str	r0, [r3]
- 257:Core/Src/main_functions.c **** 
- 258:Core/Src/main_functions.c **** 	gyro_corr[0]  = gyro_corr_p[0];
- 169              		.loc 1 258 2 is_stmt 1 view .LVU31
- 170              		.loc 1 258 29 is_stmt 0 view .LVU32
+ 305:Core/Src/main_functions.c **** 
+ 306:Core/Src/main_functions.c **** 	gyro_corr[0]  = gyro_corr_p[0];
+ 169              		.loc 1 306 2 is_stmt 1 view .LVU31
+ 170              		.loc 1 306 29 is_stmt 0 view .LVU32
  171 0040 0268     		ldr	r2, [r0]	@ float
- 172              		.loc 1 258 16 view .LVU33
+ 172              		.loc 1 306 16 view .LVU33
  173 0042 0D4B     		ldr	r3, .L9+28
  174 0044 1A60     		str	r2, [r3]	@ float
- 259:Core/Src/main_functions.c **** 	gyro_corr[1]  = gyro_corr_p[1];
- 175              		.loc 1 259 2 is_stmt 1 view .LVU34
- 176              		.loc 1 259 16 is_stmt 0 view .LVU35
+ 307:Core/Src/main_functions.c **** 	gyro_corr[1]  = gyro_corr_p[1];
+ 175              		.loc 1 307 2 is_stmt 1 view .LVU34
+ 176              		.loc 1 307 16 is_stmt 0 view .LVU35
  177 0046 4268     		ldr	r2, [r0, #4]	@ float
  178 0048 5A60     		str	r2, [r3, #4]	@ float
- 260:Core/Src/main_functions.c **** 	gyro_corr[2]  = gyro_corr_p[2];
- 179              		.loc 1 260 2 is_stmt 1 view .LVU36
- 180              		.loc 1 260 16 is_stmt 0 view .LVU37
+ 308:Core/Src/main_functions.c **** 	gyro_corr[2]  = gyro_corr_p[2];
+ 179              		.loc 1 308 2 is_stmt 1 view .LVU36
+ 180              		.loc 1 308 16 is_stmt 0 view .LVU37
  181 004a 8268     		ldr	r2, [r0, #8]	@ float
  182 004c 9A60     		str	r2, [r3, #8]	@ float
-ARM GAS  C:\Users\samue\AppData\Local\Temp\ccxwy6p9.s 			page 9
-
-
- 261:Core/Src/main_functions.c **** 
- 262:Core/Src/main_functions.c **** 	lcd_send_cmd(0x80|0x00);
- 183              		.loc 1 262 2 is_stmt 1 view .LVU38
+ 309:Core/Src/main_functions.c **** 
+ 310:Core/Src/main_functions.c **** 	lcd_send_cmd(0x80|0x00);
+ 183              		.loc 1 310 2 is_stmt 1 view .LVU38
  184 004e 8020     		movs	r0, #128
  185 0050 FFF7FEFF 		bl	lcd_send_cmd
  186              	.LVL10:
- 263:Core/Src/main_functions.c **** 	lcd_send_string("Calibration Complete");
- 187              		.loc 1 263 2 view .LVU39
+ 311:Core/Src/main_functions.c **** 	lcd_send_string("Calibration Complete");
+ 187              		.loc 1 311 2 view .LVU39
  188 0054 0948     		ldr	r0, .L9+32
+ARM GAS  C:\Users\samue\AppData\Local\Temp\cczngwaN.s 			page 10
+
+
  189 0056 FFF7FEFF 		bl	lcd_send_string
  190              	.LVL11:
- 264:Core/Src/main_functions.c **** }
- 191              		.loc 1 264 1 is_stmt 0 view .LVU40
+ 312:Core/Src/main_functions.c **** }
+ 191              		.loc 1 312 1 is_stmt 0 view .LVU40
  192 005a 10BD     		pop	{r4, pc}
  193              	.L10:
  194              		.align	2
@@ -515,1230 +566,1460 @@ ARM GAS  C:\Users\samue\AppData\Local\Temp\ccxwy6p9.s 			page 1
  211 0000 496E6974 		.ascii	"Initialized\000"
  211      69616C69 
  211      7A656400 
- 212              		.section	.text.main_function,"ax",%progbits
- 213              		.align	1
- 214              		.global	main_function
- 215              		.syntax unified
- 216              		.thumb
- 217              		.thumb_func
- 219              	main_function:
- 220              	.LFB133:
-  97:Core/Src/main_functions.c ****      
- 221              		.loc 1 97 26 is_stmt 1 view -0
- 222              		.cfi_startproc
- 223              		@ Volatile: function does not return.
- 224              		@ args = 0, pretend = 0, frame = 0
- 225              		@ frame_needed = 0, uses_anonymous_args = 0
- 226 0000 08B5     		push	{r3, lr}
- 227              	.LCFI2:
- 228              		.cfi_def_cfa_offset 8
- 229              		.cfi_offset 3, -8
- 230              		.cfi_offset 14, -4
-  99:Core/Src/main_functions.c ****     state = accel_cal_state;
- 231              		.loc 1 99 5 view .LVU42
-  99:Core/Src/main_functions.c ****     state = accel_cal_state;
- 232              		.loc 1 99 10 is_stmt 0 view .LVU43
-ARM GAS  C:\Users\samue\AppData\Local\Temp\ccxwy6p9.s 			page 10
+ 212              		.align	2
+ 213              	.LC5:
+ 214 000c 53442063 		.ascii	"SD card mounted\000"
+ 214      61726420 
+ 214      6D6F756E 
+ 214      74656400 
+ 215              		.align	2
+ 216              	.LC6:
+ 217 001c 73756363 		.ascii	"successfully\000"
+ 217      65737366 
+ 217      756C6C79 
+ 217      00
+ 218 0029 000000   		.align	2
+ 219              	.LC7:
+ 220 002c 4572726F 		.ascii	"Error mounting SD\000"
+ 220      72206D6F 
+ 220      756E7469 
+ 220      6E672053 
+ 220      4400
+ 221 003e 0000     		.align	2
+ 222              	.LC8:
+ 223 0040 63617264 		.ascii	"card\000"
+ 223      00
+ 224 0045 000000   		.align	2
+ 225              	.LC9:
+ 226 0048 53442063 		.ascii	"SD card total size:\000"
+ 226      61726420 
+ 226      746F7461 
+ 226      6C207369 
+ 226      7A653A00 
+ 227              		.align	2
+ 228              	.LC10:
+ARM GAS  C:\Users\samue\AppData\Local\Temp\cczngwaN.s 			page 11
 
 
- 233 0002 0024     		movs	r4, #0
- 234 0004 154B     		ldr	r3, .L14
- 235 0006 1C70     		strb	r4, [r3]
- 100:Core/Src/main_functions.c **** 
- 236              		.loc 1 100 5 is_stmt 1 view .LVU44
- 100:Core/Src/main_functions.c **** 
- 237              		.loc 1 100 11 is_stmt 0 view .LVU45
- 238 0008 154B     		ldr	r3, .L14+4
- 239 000a 0222     		movs	r2, #2
- 240 000c 1A60     		str	r2, [r3]
- 102:Core/Src/main_functions.c ****     MPU6050_Init();
- 241              		.loc 1 102 5 is_stmt 1 view .LVU46
- 242 000e FFF7FEFF 		bl	lcd_init
- 243              	.LVL12:
- 103:Core/Src/main_functions.c ****     lcd_send_string("Initialized");
- 244              		.loc 1 103 5 view .LVU47
- 245 0012 FFF7FEFF 		bl	MPU6050_Init
- 246              	.LVL13:
- 104:Core/Src/main_functions.c ****     HAL_Delay(1500);
- 247              		.loc 1 104 5 view .LVU48
- 248 0016 1348     		ldr	r0, .L14+8
- 249 0018 FFF7FEFF 		bl	lcd_send_string
- 250              	.LVL14:
- 105:Core/Src/main_functions.c **** 
- 251              		.loc 1 105 5 view .LVU49
- 252 001c 40F2DC50 		movw	r0, #1500
- 253 0020 FFF7FEFF 		bl	HAL_Delay
- 254              	.LVL15:
- 110:Core/Src/main_functions.c **** 
- 255              		.loc 1 110 5 view .LVU50
- 256 0024 2046     		mov	r0, r4
- 257 0026 FFF7FEFF 		bl	sd_card
- 258              	.LVL16:
- 113:Core/Src/main_functions.c **** 
- 259              		.loc 1 113 5 view .LVU51
- 260 002a 0420     		movs	r0, #4
- 261 002c FFF7FEFF 		bl	sd_card
- 262              	.LVL17:
- 263              	.L12:
- 122:Core/Src/main_functions.c **** 
- 264              		.loc 1 122 5 discriminator 1 view .LVU52
- 125:Core/Src/main_functions.c ****         HAL_Delay(FSM[state].time_delay);
- 265              		.loc 1 125 9 discriminator 1 view .LVU53
- 125:Core/Src/main_functions.c ****         HAL_Delay(FSM[state].time_delay);
- 266              		.loc 1 125 20 is_stmt 0 discriminator 1 view .LVU54
- 267 0030 0D4D     		ldr	r5, .L14+12
- 268 0032 0B4C     		ldr	r4, .L14+4
- 269 0034 2368     		ldr	r3, [r4]
- 270 0036 1B01     		lsls	r3, r3, #4
- 271 0038 EB58     		ldr	r3, [r5, r3]
- 272 003a 9847     		blx	r3
- 273              	.LVL18:
- 126:Core/Src/main_functions.c ****         state = FSM[state].next_state[flag];
- 274              		.loc 1 126 9 is_stmt 1 discriminator 1 view .LVU55
- 275 003c 2368     		ldr	r3, [r4]
- 276 003e 05EB0313 		add	r3, r5, r3, lsl #4
- 277 0042 5868     		ldr	r0, [r3, #4]
-ARM GAS  C:\Users\samue\AppData\Local\Temp\ccxwy6p9.s 			page 11
+ 229 005c 256400   		.ascii	"%d\000"
+ 230 005f 00       		.align	2
+ 231              	.LC11:
+ 232 0060 53442063 		.ascii	"SD card free space:\000"
+ 232      61726420 
+ 232      66726565 
+ 232      20737061 
+ 232      63653A00 
+ 233              		.align	2
+ 234              	.LC12:
+ 235 0074 25687500 		.ascii	"%hu\000"
+ 236              		.section	.text.main_function,"ax",%progbits
+ 237              		.align	1
+ 238              		.global	main_function
+ 239              		.syntax unified
+ 240              		.thumb
+ 241              		.thumb_func
+ 243              	main_function:
+ 244              	.LFB133:
+  99:Core/Src/main_functions.c ****      
+ 245              		.loc 1 99 26 is_stmt 1 view -0
+ 246              		.cfi_startproc
+ 247              		@ args = 0, pretend = 0, frame = 0
+ 248              		@ frame_needed = 0, uses_anonymous_args = 0
+ 249 0000 70B5     		push	{r4, r5, r6, lr}
+ 250              	.LCFI2:
+ 251              		.cfi_def_cfa_offset 16
+ 252              		.cfi_offset 4, -16
+ 253              		.cfi_offset 5, -12
+ 254              		.cfi_offset 6, -8
+ 255              		.cfi_offset 14, -4
+ 101:Core/Src/main_functions.c ****     state = accel_cal_state;
+ 256              		.loc 1 101 5 view .LVU42
+ 101:Core/Src/main_functions.c ****     state = accel_cal_state;
+ 257              		.loc 1 101 10 is_stmt 0 view .LVU43
+ 258 0002 434B     		ldr	r3, .L16
+ 259 0004 0022     		movs	r2, #0
+ 260 0006 1A70     		strb	r2, [r3]
+ 102:Core/Src/main_functions.c **** 
+ 261              		.loc 1 102 5 is_stmt 1 view .LVU44
+ 102:Core/Src/main_functions.c **** 
+ 262              		.loc 1 102 11 is_stmt 0 view .LVU45
+ 263 0008 424B     		ldr	r3, .L16+4
+ 264 000a 0222     		movs	r2, #2
+ 265 000c 1A60     		str	r2, [r3]
+ 104:Core/Src/main_functions.c ****     MPU6050_Init();
+ 266              		.loc 1 104 5 is_stmt 1 view .LVU46
+ 267 000e FFF7FEFF 		bl	lcd_init
+ 268              	.LVL12:
+ 105:Core/Src/main_functions.c ****     lcd_send_string("Initialized");
+ 269              		.loc 1 105 5 view .LVU47
+ 270 0012 FFF7FEFF 		bl	MPU6050_Init
+ 271              	.LVL13:
+ 106:Core/Src/main_functions.c ****     HAL_Delay(1500);
+ 272              		.loc 1 106 5 view .LVU48
+ 273 0016 4048     		ldr	r0, .L16+8
+ 274 0018 FFF7FEFF 		bl	lcd_send_string
+ARM GAS  C:\Users\samue\AppData\Local\Temp\cczngwaN.s 			page 12
 
 
- 278 0044 FFF7FEFF 		bl	HAL_Delay
- 279              	.LVL19:
- 127:Core/Src/main_functions.c **** 
- 280              		.loc 1 127 9 discriminator 1 view .LVU56
- 127:Core/Src/main_functions.c **** 
- 281              		.loc 1 127 38 is_stmt 0 discriminator 1 view .LVU57
- 282 0048 2268     		ldr	r2, [r4]
- 283 004a 044B     		ldr	r3, .L14
- 284 004c 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
- 285 004e 03EB8203 		add	r3, r3, r2, lsl #2
- 286 0052 0233     		adds	r3, r3, #2
- 287 0054 55F82330 		ldr	r3, [r5, r3, lsl #2]
- 127:Core/Src/main_functions.c **** 
- 288              		.loc 1 127 15 discriminator 1 view .LVU58
- 289 0058 2360     		str	r3, [r4]
- 122:Core/Src/main_functions.c **** 
- 290              		.loc 1 122 10 is_stmt 1 discriminator 1 view .LVU59
- 291 005a E9E7     		b	.L12
- 292              	.L15:
- 293              		.align	2
- 294              	.L14:
- 295 005c 00000000 		.word	.LANCHOR0
- 296 0060 00000000 		.word	.LANCHOR6
- 297 0064 00000000 		.word	.LC4
- 298 0068 00000000 		.word	.LANCHOR7
- 299              		.cfi_endproc
- 300              	.LFE133:
- 302              		.section	.text.HAL_GPIO_EXTI_Callback,"ax",%progbits
- 303              		.align	1
- 304              		.global	HAL_GPIO_EXTI_Callback
- 305              		.syntax unified
- 306              		.thumb
- 307              		.thumb_func
- 309              	HAL_GPIO_EXTI_Callback:
- 310              	.LVL20:
- 311              	.LFB134:
- 140:Core/Src/main_functions.c **** 	flag = 1;
- 312              		.loc 1 140 48 view -0
- 313              		.cfi_startproc
- 314              		@ args = 0, pretend = 0, frame = 0
- 315              		@ frame_needed = 0, uses_anonymous_args = 0
- 316              		@ link register save eliminated.
- 141:Core/Src/main_functions.c **** }
- 317              		.loc 1 141 2 view .LVU61
- 141:Core/Src/main_functions.c **** }
- 318              		.loc 1 141 7 is_stmt 0 view .LVU62
- 319 0000 014B     		ldr	r3, .L17
- 320 0002 0122     		movs	r2, #1
- 321 0004 1A70     		strb	r2, [r3]
- 142:Core/Src/main_functions.c **** 
- 322              		.loc 1 142 1 view .LVU63
- 323 0006 7047     		bx	lr
- 324              	.L18:
- 325              		.align	2
- 326              	.L17:
- 327 0008 00000000 		.word	.LANCHOR0
- 328              		.cfi_endproc
-ARM GAS  C:\Users\samue\AppData\Local\Temp\ccxwy6p9.s 			page 12
+ 275              	.LVL14:
+ 107:Core/Src/main_functions.c **** 
+ 276              		.loc 1 107 5 view .LVU49
+ 277 001c 40F2DC50 		movw	r0, #1500
+ 278 0020 FFF7FEFF 		bl	HAL_Delay
+ 279              	.LVL15:
+ 112:Core/Src/main_functions.c **** 
+ 280              		.loc 1 112 5 view .LVU50
+ 112:Core/Src/main_functions.c **** 
+ 281              		.loc 1 112 29 is_stmt 0 view .LVU51
+ 282 0024 FFF7FEFF 		bl	sd_card_init
+ 283              	.LVL16:
+ 114:Core/Src/main_functions.c ****     {
+ 284              		.loc 1 114 5 is_stmt 1 view .LVU52
+ 114:Core/Src/main_functions.c ****     {
+ 285              		.loc 1 114 8 is_stmt 0 view .LVU53
+ 286 0028 0028     		cmp	r0, #0
+ 287 002a 5ED0     		beq	.L12
+ 116:Core/Src/main_functions.c **** 	    lcd_send_string("SD card mounted");
+ 288              		.loc 1 116 9 is_stmt 1 view .LVU54
+ 289 002c 8020     		movs	r0, #128
+ 290              	.LVL17:
+ 116:Core/Src/main_functions.c **** 	    lcd_send_string("SD card mounted");
+ 291              		.loc 1 116 9 is_stmt 0 view .LVU55
+ 292 002e FFF7FEFF 		bl	lcd_send_cmd
+ 293              	.LVL18:
+ 117:Core/Src/main_functions.c ****         lcd_send_cmd(0x80|0x40);
+ 294              		.loc 1 117 6 is_stmt 1 view .LVU56
+ 295 0032 3A48     		ldr	r0, .L16+12
+ 296 0034 FFF7FEFF 		bl	lcd_send_string
+ 297              	.LVL19:
+ 118:Core/Src/main_functions.c **** 	    lcd_send_string("successfully");
+ 298              		.loc 1 118 9 view .LVU57
+ 299 0038 C020     		movs	r0, #192
+ 300 003a FFF7FEFF 		bl	lcd_send_cmd
+ 301              	.LVL20:
+ 119:Core/Src/main_functions.c ****         HAL_Delay(3000);
+ 302              		.loc 1 119 6 view .LVU58
+ 303 003e 3848     		ldr	r0, .L16+16
+ 304 0040 FFF7FEFF 		bl	lcd_send_string
+ 305              	.LVL21:
+ 120:Core/Src/main_functions.c ****         lcd_clear();
+ 306              		.loc 1 120 9 view .LVU59
+ 307 0044 40F6B830 		movw	r0, #3000
+ 308 0048 FFF7FEFF 		bl	HAL_Delay
+ 309              	.LVL22:
+ 121:Core/Src/main_functions.c ****     }
+ 310              		.loc 1 121 9 view .LVU60
+ 311 004c FFF7FEFF 		bl	lcd_clear
+ 312              	.LVL23:
+ 313              	.L13:
+ 136:Core/Src/main_functions.c ****     uint16_t sd_card_free_space;
+ 314              		.loc 1 136 5 view .LVU61
+ 137:Core/Src/main_functions.c **** 
+ 315              		.loc 1 137 5 view .LVU62
+ 139:Core/Src/main_functions.c ****     sd_card_free_space  = sd_card_space(FREE_SPACE);
+ 316              		.loc 1 139 5 view .LVU63
+ARM GAS  C:\Users\samue\AppData\Local\Temp\cczngwaN.s 			page 13
 
 
- 329              	.LFE134:
- 331              		.section	.rodata.print_data.str1.4,"aMS",%progbits,1
- 332              		.align	2
- 333              	.LC5:
- 334 0000 25642E25 		.ascii	"%d.%d%d\000"
- 334      64256400 
- 335              		.align	2
- 336              	.LC6:
- 337 0008 2D25642E 		.ascii	"-%d.%d%d\000"
- 337      25642564 
- 337      00
- 338              		.section	.text.print_data,"ax",%progbits
- 339              		.align	1
- 340              		.global	print_data
- 341              		.syntax unified
- 342              		.thumb
- 343              		.thumb_func
- 345              	print_data:
- 346              	.LVL21:
- 347              	.LFB136:
- 212:Core/Src/main_functions.c **** 
- 348              		.loc 1 212 1 is_stmt 1 view -0
- 349              		.cfi_startproc
- 350              		@ args = 8, pretend = 0, frame = 0
- 351              		@ frame_needed = 0, uses_anonymous_args = 0
- 212:Core/Src/main_functions.c **** 
- 352              		.loc 1 212 1 is_stmt 0 view .LVU65
- 353 0000 2DE9F041 		push	{r4, r5, r6, r7, r8, lr}
- 354              	.LCFI3:
- 355              		.cfi_def_cfa_offset 24
- 356              		.cfi_offset 4, -24
- 357              		.cfi_offset 5, -20
- 358              		.cfi_offset 6, -16
- 359              		.cfi_offset 7, -12
- 360              		.cfi_offset 8, -8
- 361              		.cfi_offset 14, -4
- 362 0004 2DED028B 		vpush.64	{d8}
- 363              	.LCFI4:
- 364              		.cfi_def_cfa_offset 32
- 365              		.cfi_offset 80, -32
- 366              		.cfi_offset 81, -28
- 367 0008 82B0     		sub	sp, sp, #8
- 368              	.LCFI5:
- 369              		.cfi_def_cfa_offset 40
- 370 000a 8846     		mov	r8, r1
- 371 000c 1746     		mov	r7, r2
- 372 000e 1E46     		mov	r6, r3
- 373 0010 9DF82850 		ldrb	r5, [sp, #40]	@ zero_extendqisi2
- 374 0014 B0EE408A 		vmov.f32	s16, s0
- 375 0018 0B9C     		ldr	r4, [sp, #44]
- 214:Core/Src/main_functions.c **** 	lcd_send_string(str);
- 376              		.loc 1 214 5 is_stmt 1 view .LVU66
- 377 001a 40F08000 		orr	r0, r0, #128
- 378              	.LVL22:
- 214:Core/Src/main_functions.c **** 	lcd_send_string(str);
- 379              		.loc 1 214 5 is_stmt 0 view .LVU67
- 380 001e FFF7FEFF 		bl	lcd_send_cmd
-ARM GAS  C:\Users\samue\AppData\Local\Temp\ccxwy6p9.s 			page 13
-
-
- 381              	.LVL23:
- 215:Core/Src/main_functions.c ****     if (val >= 0) {
- 382              		.loc 1 215 2 is_stmt 1 view .LVU68
- 383 0022 3046     		mov	r0, r6
- 384 0024 FFF7FEFF 		bl	lcd_send_string
- 385              	.LVL24:
- 216:Core/Src/main_functions.c ****         line_pos = pos2;
- 386              		.loc 1 216 5 view .LVU69
- 216:Core/Src/main_functions.c ****         line_pos = pos2;
- 387              		.loc 1 216 8 is_stmt 0 view .LVU70
- 388 0028 B5EEC08A 		vcmpe.f32	s16, #0
- 389 002c F1EE10FA 		vmrs	APSR_nzcv, FPSCR
- 390 0030 1DDB     		blt	.L24
- 217:Core/Src/main_functions.c ****         sprintf(buf, "%d.%d%d", data[index], data[index+1], data[index+2]);
- 391              		.loc 1 217 9 is_stmt 1 view .LVU71
- 217:Core/Src/main_functions.c ****         sprintf(buf, "%d.%d%d", data[index], data[index+1], data[index+2]);
- 392              		.loc 1 217 18 is_stmt 0 view .LVU72
- 393 0032 174B     		ldr	r3, .L26
- 394 0034 83F80080 		strb	r8, [r3]
- 218:Core/Src/main_functions.c ****     }
- 395              		.loc 1 218 9 is_stmt 1 view .LVU73
- 218:Core/Src/main_functions.c ****     }
- 396              		.loc 1 218 50 is_stmt 0 view .LVU74
- 397 0038 6B1C     		adds	r3, r5, #1
- 218:Core/Src/main_functions.c ****     }
- 398              		.loc 1 218 65 view .LVU75
- 399 003a AA1C     		adds	r2, r5, #2
- 218:Core/Src/main_functions.c ****     }
- 400              		.loc 1 218 9 view .LVU76
- 401 003c 54F82220 		ldr	r2, [r4, r2, lsl #2]
- 402 0040 0092     		str	r2, [sp]
- 403 0042 54F82330 		ldr	r3, [r4, r3, lsl #2]
- 404 0046 54F82520 		ldr	r2, [r4, r5, lsl #2]
- 405 004a 1249     		ldr	r1, .L26+4
- 406 004c 1248     		ldr	r0, .L26+8
- 407 004e FFF7FEFF 		bl	sprintf
- 408              	.LVL25:
- 409              	.L22:
- 224:Core/Src/main_functions.c **** 	lcd_send_string(buf);
- 410              		.loc 1 224 2 is_stmt 1 view .LVU77
- 411 0052 0F4B     		ldr	r3, .L26
- 412 0054 1878     		ldrb	r0, [r3]	@ zero_extendqisi2
- 413 0056 40F08000 		orr	r0, r0, #128
- 414 005a FFF7FEFF 		bl	lcd_send_cmd
- 415              	.LVL26:
- 225:Core/Src/main_functions.c **** }
- 416              		.loc 1 225 2 view .LVU78
- 417 005e 0E48     		ldr	r0, .L26+8
- 418 0060 FFF7FEFF 		bl	lcd_send_string
- 419              	.LVL27:
- 226:Core/Src/main_functions.c **** 
- 420              		.loc 1 226 1 is_stmt 0 view .LVU79
- 421 0064 02B0     		add	sp, sp, #8
- 422              	.LCFI6:
- 423              		.cfi_remember_state
- 424              		.cfi_def_cfa_offset 32
- 425              		@ sp needed
-ARM GAS  C:\Users\samue\AppData\Local\Temp\ccxwy6p9.s 			page 14
-
-
- 426 0066 BDEC028B 		vldm	sp!, {d8}
- 427              	.LCFI7:
- 428              		.cfi_restore 80
- 429              		.cfi_restore 81
- 430              		.cfi_def_cfa_offset 24
- 431              	.LVL28:
- 226:Core/Src/main_functions.c **** 
- 432              		.loc 1 226 1 view .LVU80
- 433 006a BDE8F081 		pop	{r4, r5, r6, r7, r8, pc}
- 434              	.LVL29:
- 435              	.L24:
- 436              	.LCFI8:
- 437              		.cfi_restore_state
- 221:Core/Src/main_functions.c ****         sprintf(buf, "-%d.%d%d", data[index], data[index+1], data[index+2]);
- 438              		.loc 1 221 9 is_stmt 1 view .LVU81
- 221:Core/Src/main_functions.c ****         sprintf(buf, "-%d.%d%d", data[index], data[index+1], data[index+2]);
- 439              		.loc 1 221 18 is_stmt 0 view .LVU82
- 440 006e 084B     		ldr	r3, .L26
- 441 0070 1F70     		strb	r7, [r3]
- 222:Core/Src/main_functions.c ****     }
- 442              		.loc 1 222 9 is_stmt 1 view .LVU83
- 222:Core/Src/main_functions.c ****     }
- 443              		.loc 1 222 51 is_stmt 0 view .LVU84
- 444 0072 6B1C     		adds	r3, r5, #1
- 222:Core/Src/main_functions.c ****     }
- 445              		.loc 1 222 66 view .LVU85
- 446 0074 AA1C     		adds	r2, r5, #2
- 222:Core/Src/main_functions.c ****     }
- 447              		.loc 1 222 9 view .LVU86
- 448 0076 54F82220 		ldr	r2, [r4, r2, lsl #2]
- 449 007a 0092     		str	r2, [sp]
- 450 007c 54F82330 		ldr	r3, [r4, r3, lsl #2]
- 451 0080 54F82520 		ldr	r2, [r4, r5, lsl #2]
- 452 0084 0549     		ldr	r1, .L26+12
- 453 0086 0448     		ldr	r0, .L26+8
- 454 0088 FFF7FEFF 		bl	sprintf
- 455              	.LVL30:
- 456 008c E1E7     		b	.L22
- 457              	.L27:
- 458 008e 00BF     		.align	2
- 459              	.L26:
- 460 0090 00000000 		.word	.LANCHOR8
- 461 0094 00000000 		.word	.LC5
- 462 0098 00000000 		.word	.LANCHOR9
- 463 009c 08000000 		.word	.LC6
- 464              		.cfi_endproc
- 465              	.LFE136:
- 467              		.section	.rodata.normal.str1.4,"aMS",%progbits,1
- 468              		.align	2
- 469              	.LC7:
- 470 0000 20202020 		.ascii	"                    \000"
- 470      20202020 
- 470      20202020 
- 470      20202020 
- 470      20202020 
- 471              		.section	.text.normal,"ax",%progbits
- 472              		.align	1
-ARM GAS  C:\Users\samue\AppData\Local\Temp\ccxwy6p9.s 			page 15
-
-
- 473              		.global	normal
- 474              		.syntax unified
- 475              		.thumb
- 476              		.thumb_func
- 478              	normal:
- 479              	.LFB135:
- 145:Core/Src/main_functions.c **** 
- 480              		.loc 1 145 19 is_stmt 1 view -0
- 481              		.cfi_startproc
- 482              		@ args = 0, pretend = 0, frame = 0
- 483              		@ frame_needed = 0, uses_anonymous_args = 0
- 484 0000 2DE9F043 		push	{r4, r5, r6, r7, r8, r9, lr}
- 485              	.LCFI9:
- 486              		.cfi_def_cfa_offset 28
- 487              		.cfi_offset 4, -28
- 488              		.cfi_offset 5, -24
- 489              		.cfi_offset 6, -20
- 490              		.cfi_offset 7, -16
- 491              		.cfi_offset 8, -12
- 492              		.cfi_offset 9, -8
- 493              		.cfi_offset 14, -4
- 494 0004 2DED028B 		vpush.64	{d8}
- 495              	.LCFI10:
- 496              		.cfi_def_cfa_offset 36
- 497              		.cfi_offset 80, -36
- 498              		.cfi_offset 81, -32
- 499 0008 83B0     		sub	sp, sp, #12
- 500              	.LCFI11:
- 501              		.cfi_def_cfa_offset 48
- 148:Core/Src/main_functions.c **** 
- 502              		.loc 1 148 5 view .LVU88
- 148:Core/Src/main_functions.c **** 
- 503              		.loc 1 148 20 is_stmt 0 view .LVU89
- 504 000a D44A     		ldr	r2, .L30
- 505 000c 3B21     		movs	r1, #59
- 506 000e D020     		movs	r0, #208
- 507 0010 9FEDD30A 		vldr.32	s0, .L30+4
- 508 0014 FFF7FEFF 		bl	MPU6050_read
- 509              	.LVL31:
- 148:Core/Src/main_functions.c **** 
- 510              		.loc 1 148 18 view .LVU90
- 511 0018 D24F     		ldr	r7, .L30+8
- 512 001a 3860     		str	r0, [r7]
- 151:Core/Src/main_functions.c **** 	accel_data_value[1] = abs((int)(10*accel_data_p[0])  % 10);
- 513              		.loc 1 151 2 is_stmt 1 view .LVU91
- 151:Core/Src/main_functions.c **** 	accel_data_value[1] = abs((int)(10*accel_data_p[0])  % 10);
- 514              		.loc 1 151 45 is_stmt 0 view .LVU92
- 515 001c D0ED007A 		vldr.32	s15, [r0]
- 151:Core/Src/main_functions.c **** 	accel_data_value[1] = abs((int)(10*accel_data_p[0])  % 10);
- 516              		.loc 1 151 28 view .LVU93
- 517 0020 FDEEE77A 		vcvt.s32.f32	s15, s15
- 518 0024 17EE903A 		vmov	r3, s15	@ int
- 151:Core/Src/main_functions.c **** 	accel_data_value[1] = abs((int)(10*accel_data_p[0])  % 10);
- 519              		.loc 1 151 24 view .LVU94
- 520 0028 002B     		cmp	r3, #0
- 521 002a B8BF     		it	lt
- 522 002c 5B42     		rsblt	r3, r3, #0
-ARM GAS  C:\Users\samue\AppData\Local\Temp\ccxwy6p9.s 			page 16
-
-
- 151:Core/Src/main_functions.c **** 	accel_data_value[1] = abs((int)(10*accel_data_p[0])  % 10);
- 523              		.loc 1 151 22 view .LVU95
- 524 002e CE4E     		ldr	r6, .L30+12
- 525 0030 3360     		str	r3, [r6]
- 152:Core/Src/main_functions.c ****     accel_data_value[2] = abs((int)(100*accel_data_p[0]) % 10);
- 526              		.loc 1 152 2 is_stmt 1 view .LVU96
- 152:Core/Src/main_functions.c ****     accel_data_value[2] = abs((int)(100*accel_data_p[0]) % 10);
- 527              		.loc 1 152 49 is_stmt 0 view .LVU97
- 528 0032 D0ED007A 		vldr.32	s15, [r0]
- 152:Core/Src/main_functions.c ****     accel_data_value[2] = abs((int)(100*accel_data_p[0]) % 10);
- 529              		.loc 1 152 36 view .LVU98
- 530 0036 F2EE048A 		vmov.f32	s17, #1.0e+1
- 531 003a 67EEA87A 		vmul.f32	s15, s15, s17
- 152:Core/Src/main_functions.c ****     accel_data_value[2] = abs((int)(100*accel_data_p[0]) % 10);
- 532              		.loc 1 152 28 view .LVU99
- 533 003e FDEEE77A 		vcvt.s32.f32	s15, s15
- 534 0042 17EE902A 		vmov	r2, s15	@ int
- 152:Core/Src/main_functions.c ****     accel_data_value[2] = abs((int)(100*accel_data_p[0]) % 10);
- 535              		.loc 1 152 55 view .LVU100
- 536 0046 C94C     		ldr	r4, .L30+16
- 537 0048 84FB0231 		smull	r3, r1, r4, r2
- 538 004c D317     		asrs	r3, r2, #31
- 539 004e C3EBA103 		rsb	r3, r3, r1, asr #2
- 540 0052 03EB8303 		add	r3, r3, r3, lsl #2
- 541 0056 A2EB4303 		sub	r3, r2, r3, lsl #1
- 152:Core/Src/main_functions.c ****     accel_data_value[2] = abs((int)(100*accel_data_p[0]) % 10);
- 542              		.loc 1 152 24 view .LVU101
- 543 005a 002B     		cmp	r3, #0
- 544 005c B8BF     		it	lt
- 545 005e 5B42     		rsblt	r3, r3, #0
- 152:Core/Src/main_functions.c ****     accel_data_value[2] = abs((int)(100*accel_data_p[0]) % 10);
- 546              		.loc 1 152 22 view .LVU102
- 547 0060 7360     		str	r3, [r6, #4]
+ 139:Core/Src/main_functions.c ****     sd_card_free_space  = sd_card_space(FREE_SPACE);
+ 317              		.loc 1 139 27 is_stmt 0 view .LVU64
+ 318 0050 0020     		movs	r0, #0
+ 319 0052 FFF7FEFF 		bl	sd_card_space
+ 320              	.LVL24:
+ 321 0056 0646     		mov	r6, r0
+ 322              	.LVL25:
+ 140:Core/Src/main_functions.c **** 
+ 323              		.loc 1 140 5 is_stmt 1 view .LVU65
+ 140:Core/Src/main_functions.c **** 
+ 324              		.loc 1 140 27 is_stmt 0 view .LVU66
+ 325 0058 0120     		movs	r0, #1
+ 326 005a FFF7FEFF 		bl	sd_card_space
+ 327              	.LVL26:
+ 328 005e 0546     		mov	r5, r0
+ 329              	.LVL27:
+ 142:Core/Src/main_functions.c ****     lcd_send_string("SD card total size:");
+ 330              		.loc 1 142 5 is_stmt 1 view .LVU67
+ 331 0060 8020     		movs	r0, #128
+ 332 0062 FFF7FEFF 		bl	lcd_send_cmd
+ 333              	.LVL28:
+ 143:Core/Src/main_functions.c ****     lcd_send_cmd(0x80|0x40);
+ 334              		.loc 1 143 5 view .LVU68
+ 335 0066 2F48     		ldr	r0, .L16+20
+ 336 0068 FFF7FEFF 		bl	lcd_send_string
+ 337              	.LVL29:
+ 144:Core/Src/main_functions.c ****     // sprintf(buf, "%" PRIu16 "", sd_card_total_space);
+ 338              		.loc 1 144 5 view .LVU69
+ 339 006c C020     		movs	r0, #192
+ 340 006e FFF7FEFF 		bl	lcd_send_cmd
+ 341              	.LVL30:
+ 146:Core/Src/main_functions.c ****     lcd_send_string(buf);
+ 342              		.loc 1 146 5 view .LVU70
+ 343 0072 2D4C     		ldr	r4, .L16+24
+ 344 0074 F2B2     		uxtb	r2, r6
+ 345 0076 2D49     		ldr	r1, .L16+28
+ 346 0078 2046     		mov	r0, r4
+ 347 007a FFF7FEFF 		bl	sprintf
+ 348              	.LVL31:
+ 147:Core/Src/main_functions.c ****         // (char)((sd_card_total_space / 1000)),
+ 349              		.loc 1 147 5 view .LVU71
+ 350 007e 2046     		mov	r0, r4
+ 351 0080 FFF7FEFF 		bl	lcd_send_string
+ 352              	.LVL32:
+ 152:Core/Src/main_functions.c ****     lcd_clear();
+ 353              		.loc 1 152 5 view .LVU72
+ 354 0084 40F6B830 		movw	r0, #3000
+ 355 0088 FFF7FEFF 		bl	HAL_Delay
+ 356              	.LVL33:
  153:Core/Src/main_functions.c **** 
- 548              		.loc 1 153 5 is_stmt 1 view .LVU103
- 153:Core/Src/main_functions.c **** 
- 549              		.loc 1 153 53 is_stmt 0 view .LVU104
- 550 0062 D0ED007A 		vldr.32	s15, [r0]
- 153:Core/Src/main_functions.c **** 
- 551              		.loc 1 153 40 view .LVU105
- 552 0066 9FEDC28A 		vldr.32	s16, .L30+20
- 553 006a 67EE887A 		vmul.f32	s15, s15, s16
- 153:Core/Src/main_functions.c **** 
- 554              		.loc 1 153 31 view .LVU106
- 555 006e FDEEE77A 		vcvt.s32.f32	s15, s15
- 556 0072 17EE902A 		vmov	r2, s15	@ int
- 153:Core/Src/main_functions.c **** 
- 557              		.loc 1 153 58 view .LVU107
- 558 0076 84FB0231 		smull	r3, r1, r4, r2
- 559 007a D317     		asrs	r3, r2, #31
- 560 007c C3EBA103 		rsb	r3, r3, r1, asr #2
- 561 0080 03EB8303 		add	r3, r3, r3, lsl #2
- 562 0084 A2EB4303 		sub	r3, r2, r3, lsl #1
- 153:Core/Src/main_functions.c **** 
- 563              		.loc 1 153 27 view .LVU108
- 564 0088 002B     		cmp	r3, #0
- 565 008a B8BF     		it	lt
-ARM GAS  C:\Users\samue\AppData\Local\Temp\ccxwy6p9.s 			page 17
+ 357              		.loc 1 153 5 view .LVU73
+ 358 008c FFF7FEFF 		bl	lcd_clear
+ 359              	.LVL34:
+ 155:Core/Src/main_functions.c ****     lcd_send_string("SD card free space:");
+ 360              		.loc 1 155 5 view .LVU74
+ 361 0090 8020     		movs	r0, #128
+ 362 0092 FFF7FEFF 		bl	lcd_send_cmd
+ARM GAS  C:\Users\samue\AppData\Local\Temp\cczngwaN.s 			page 14
 
 
- 566 008c 5B42     		rsblt	r3, r3, #0
- 153:Core/Src/main_functions.c **** 
- 567              		.loc 1 153 25 view .LVU109
- 568 008e B360     		str	r3, [r6, #8]
- 155:Core/Src/main_functions.c **** 	accel_data_value[4] = abs((int)(10*accel_data_p[1])  % 10);
- 569              		.loc 1 155 2 is_stmt 1 view .LVU110
- 155:Core/Src/main_functions.c **** 	accel_data_value[4] = abs((int)(10*accel_data_p[1])  % 10);
- 570              		.loc 1 155 45 is_stmt 0 view .LVU111
- 571 0090 D0ED017A 		vldr.32	s15, [r0, #4]
- 155:Core/Src/main_functions.c **** 	accel_data_value[4] = abs((int)(10*accel_data_p[1])  % 10);
- 572              		.loc 1 155 28 view .LVU112
- 573 0094 FDEEE77A 		vcvt.s32.f32	s15, s15
- 574 0098 17EE903A 		vmov	r3, s15	@ int
- 155:Core/Src/main_functions.c **** 	accel_data_value[4] = abs((int)(10*accel_data_p[1])  % 10);
- 575              		.loc 1 155 24 view .LVU113
- 576 009c 002B     		cmp	r3, #0
- 577 009e B8BF     		it	lt
- 578 00a0 5B42     		rsblt	r3, r3, #0
- 155:Core/Src/main_functions.c **** 	accel_data_value[4] = abs((int)(10*accel_data_p[1])  % 10);
- 579              		.loc 1 155 22 view .LVU114
- 580 00a2 F360     		str	r3, [r6, #12]
- 156:Core/Src/main_functions.c ****     accel_data_value[5] = abs((int)(100*accel_data_p[1]) % 10);
- 581              		.loc 1 156 2 is_stmt 1 view .LVU115
- 156:Core/Src/main_functions.c ****     accel_data_value[5] = abs((int)(100*accel_data_p[1]) % 10);
- 582              		.loc 1 156 49 is_stmt 0 view .LVU116
- 583 00a4 D0ED017A 		vldr.32	s15, [r0, #4]
- 156:Core/Src/main_functions.c ****     accel_data_value[5] = abs((int)(100*accel_data_p[1]) % 10);
- 584              		.loc 1 156 36 view .LVU117
- 585 00a8 67EEA87A 		vmul.f32	s15, s15, s17
- 156:Core/Src/main_functions.c ****     accel_data_value[5] = abs((int)(100*accel_data_p[1]) % 10);
- 586              		.loc 1 156 28 view .LVU118
- 587 00ac FDEEE77A 		vcvt.s32.f32	s15, s15
- 588 00b0 17EE902A 		vmov	r2, s15	@ int
- 156:Core/Src/main_functions.c ****     accel_data_value[5] = abs((int)(100*accel_data_p[1]) % 10);
- 589              		.loc 1 156 55 view .LVU119
- 590 00b4 84FB0231 		smull	r3, r1, r4, r2
- 591 00b8 D317     		asrs	r3, r2, #31
- 592 00ba C3EBA103 		rsb	r3, r3, r1, asr #2
- 593 00be 03EB8303 		add	r3, r3, r3, lsl #2
- 594 00c2 A2EB4303 		sub	r3, r2, r3, lsl #1
- 156:Core/Src/main_functions.c ****     accel_data_value[5] = abs((int)(100*accel_data_p[1]) % 10);
- 595              		.loc 1 156 24 view .LVU120
- 596 00c6 002B     		cmp	r3, #0
- 597 00c8 B8BF     		it	lt
- 598 00ca 5B42     		rsblt	r3, r3, #0
- 156:Core/Src/main_functions.c ****     accel_data_value[5] = abs((int)(100*accel_data_p[1]) % 10);
- 599              		.loc 1 156 22 view .LVU121
- 600 00cc 3361     		str	r3, [r6, #16]
- 157:Core/Src/main_functions.c **** 
- 601              		.loc 1 157 5 is_stmt 1 view .LVU122
- 157:Core/Src/main_functions.c **** 
- 602              		.loc 1 157 53 is_stmt 0 view .LVU123
- 603 00ce D0ED017A 		vldr.32	s15, [r0, #4]
- 157:Core/Src/main_functions.c **** 
- 604              		.loc 1 157 40 view .LVU124
- 605 00d2 67EE887A 		vmul.f32	s15, s15, s16
- 157:Core/Src/main_functions.c **** 
-ARM GAS  C:\Users\samue\AppData\Local\Temp\ccxwy6p9.s 			page 18
-
-
- 606              		.loc 1 157 31 view .LVU125
- 607 00d6 FDEEE77A 		vcvt.s32.f32	s15, s15
- 608 00da 17EE902A 		vmov	r2, s15	@ int
- 157:Core/Src/main_functions.c **** 
- 609              		.loc 1 157 58 view .LVU126
- 610 00de 84FB0231 		smull	r3, r1, r4, r2
- 611 00e2 D317     		asrs	r3, r2, #31
- 612 00e4 C3EBA103 		rsb	r3, r3, r1, asr #2
- 613 00e8 03EB8303 		add	r3, r3, r3, lsl #2
- 614 00ec A2EB4303 		sub	r3, r2, r3, lsl #1
- 157:Core/Src/main_functions.c **** 
- 615              		.loc 1 157 27 view .LVU127
- 616 00f0 002B     		cmp	r3, #0
- 617 00f2 B8BF     		it	lt
- 618 00f4 5B42     		rsblt	r3, r3, #0
- 157:Core/Src/main_functions.c **** 
- 619              		.loc 1 157 25 view .LVU128
- 620 00f6 7361     		str	r3, [r6, #20]
- 159:Core/Src/main_functions.c **** 	accel_data_value[7] = abs((int)(10*accel_data_p[2])  % 10);
- 621              		.loc 1 159 2 is_stmt 1 view .LVU129
- 159:Core/Src/main_functions.c **** 	accel_data_value[7] = abs((int)(10*accel_data_p[2])  % 10);
- 622              		.loc 1 159 45 is_stmt 0 view .LVU130
- 623 00f8 D0ED027A 		vldr.32	s15, [r0, #8]
- 159:Core/Src/main_functions.c **** 	accel_data_value[7] = abs((int)(10*accel_data_p[2])  % 10);
- 624              		.loc 1 159 28 view .LVU131
- 625 00fc FDEEE77A 		vcvt.s32.f32	s15, s15
- 626 0100 17EE903A 		vmov	r3, s15	@ int
- 159:Core/Src/main_functions.c **** 	accel_data_value[7] = abs((int)(10*accel_data_p[2])  % 10);
- 627              		.loc 1 159 24 view .LVU132
- 628 0104 002B     		cmp	r3, #0
- 629 0106 B8BF     		it	lt
- 630 0108 5B42     		rsblt	r3, r3, #0
- 159:Core/Src/main_functions.c **** 	accel_data_value[7] = abs((int)(10*accel_data_p[2])  % 10);
- 631              		.loc 1 159 22 view .LVU133
- 632 010a B361     		str	r3, [r6, #24]
- 160:Core/Src/main_functions.c ****     accel_data_value[8] = abs((int)(100*accel_data_p[2]) % 10);
- 633              		.loc 1 160 2 is_stmt 1 view .LVU134
- 160:Core/Src/main_functions.c ****     accel_data_value[8] = abs((int)(100*accel_data_p[2]) % 10);
- 634              		.loc 1 160 49 is_stmt 0 view .LVU135
- 635 010c D0ED027A 		vldr.32	s15, [r0, #8]
- 160:Core/Src/main_functions.c ****     accel_data_value[8] = abs((int)(100*accel_data_p[2]) % 10);
- 636              		.loc 1 160 36 view .LVU136
- 637 0110 67EEA87A 		vmul.f32	s15, s15, s17
- 160:Core/Src/main_functions.c ****     accel_data_value[8] = abs((int)(100*accel_data_p[2]) % 10);
- 638              		.loc 1 160 28 view .LVU137
- 639 0114 FDEEE77A 		vcvt.s32.f32	s15, s15
- 640 0118 17EE902A 		vmov	r2, s15	@ int
- 160:Core/Src/main_functions.c ****     accel_data_value[8] = abs((int)(100*accel_data_p[2]) % 10);
- 641              		.loc 1 160 55 view .LVU138
- 642 011c 84FB0231 		smull	r3, r1, r4, r2
- 643 0120 D317     		asrs	r3, r2, #31
- 644 0122 C3EBA103 		rsb	r3, r3, r1, asr #2
- 645 0126 03EB8303 		add	r3, r3, r3, lsl #2
- 646 012a A2EB4303 		sub	r3, r2, r3, lsl #1
- 160:Core/Src/main_functions.c ****     accel_data_value[8] = abs((int)(100*accel_data_p[2]) % 10);
- 647              		.loc 1 160 24 view .LVU139
- 648 012e 002B     		cmp	r3, #0
-ARM GAS  C:\Users\samue\AppData\Local\Temp\ccxwy6p9.s 			page 19
-
-
- 649 0130 B8BF     		it	lt
- 650 0132 5B42     		rsblt	r3, r3, #0
- 160:Core/Src/main_functions.c ****     accel_data_value[8] = abs((int)(100*accel_data_p[2]) % 10);
- 651              		.loc 1 160 22 view .LVU140
- 652 0134 F361     		str	r3, [r6, #28]
+ 363              	.LVL35:
+ 156:Core/Src/main_functions.c ****     lcd_send_cmd(0x80|0x40);
+ 364              		.loc 1 156 5 view .LVU75
+ 365 0096 2648     		ldr	r0, .L16+32
+ 366 0098 FFF7FEFF 		bl	lcd_send_string
+ 367              	.LVL36:
+ 157:Core/Src/main_functions.c ****     sprintf(buf, "%" PRIu16 "", sd_card_free_space);
+ 368              		.loc 1 157 5 view .LVU76
+ 369 009c C020     		movs	r0, #192
+ 370 009e FFF7FEFF 		bl	lcd_send_cmd
+ 371              	.LVL37:
+ 158:Core/Src/main_functions.c ****     lcd_send_string(buf);
+ 372              		.loc 1 158 5 view .LVU77
+ 373 00a2 2A46     		mov	r2, r5
+ 374 00a4 2349     		ldr	r1, .L16+36
+ 375 00a6 2046     		mov	r0, r4
+ 376 00a8 FFF7FEFF 		bl	sprintf
+ 377              	.LVL38:
+ 159:Core/Src/main_functions.c ****     HAL_Delay(3000);
+ 378              		.loc 1 159 5 view .LVU78
+ 379 00ac 2046     		mov	r0, r4
+ 380 00ae FFF7FEFF 		bl	lcd_send_string
+ 381              	.LVL39:
+ 160:Core/Src/main_functions.c ****     lcd_clear();
+ 382              		.loc 1 160 5 view .LVU79
+ 383 00b2 40F6B830 		movw	r0, #3000
+ 384 00b6 FFF7FEFF 		bl	HAL_Delay
+ 385              	.LVL40:
  161:Core/Src/main_functions.c **** 
- 653              		.loc 1 161 5 is_stmt 1 view .LVU141
- 161:Core/Src/main_functions.c **** 
- 654              		.loc 1 161 53 is_stmt 0 view .LVU142
- 655 0136 D0ED027A 		vldr.32	s15, [r0, #8]
- 161:Core/Src/main_functions.c **** 
- 656              		.loc 1 161 40 view .LVU143
- 657 013a 67EE887A 		vmul.f32	s15, s15, s16
- 161:Core/Src/main_functions.c **** 
- 658              		.loc 1 161 31 view .LVU144
- 659 013e FDEEE77A 		vcvt.s32.f32	s15, s15
- 660 0142 17EE902A 		vmov	r2, s15	@ int
- 161:Core/Src/main_functions.c **** 
- 661              		.loc 1 161 58 view .LVU145
- 662 0146 84FB0231 		smull	r3, r1, r4, r2
- 663 014a D317     		asrs	r3, r2, #31
- 664 014c C3EBA103 		rsb	r3, r3, r1, asr #2
- 665 0150 03EB8303 		add	r3, r3, r3, lsl #2
- 666 0154 A2EB4303 		sub	r3, r2, r3, lsl #1
- 161:Core/Src/main_functions.c **** 
- 667              		.loc 1 161 27 view .LVU146
- 668 0158 002B     		cmp	r3, #0
- 669 015a B8BF     		it	lt
- 670 015c 5B42     		rsblt	r3, r3, #0
- 161:Core/Src/main_functions.c **** 
- 671              		.loc 1 161 25 view .LVU147
- 672 015e 3362     		str	r3, [r6, #32]
- 164:Core/Src/main_functions.c **** 
- 673              		.loc 1 164 5 is_stmt 1 view .LVU148
- 164:Core/Src/main_functions.c **** 
- 674              		.loc 1 164 20 is_stmt 0 view .LVU149
- 675 0160 844A     		ldr	r2, .L30+24
- 676 0162 4321     		movs	r1, #67
- 677 0164 D020     		movs	r0, #208
- 678 0166 9FED840A 		vldr.32	s0, .L30+28
- 679 016a FFF7FEFF 		bl	MPU6050_read
- 680              	.LVL32:
- 164:Core/Src/main_functions.c **** 
- 681              		.loc 1 164 18 view .LVU150
- 682 016e DFF82C82 		ldr	r8, .L30+64
- 683 0172 C8F80000 		str	r0, [r8]
- 167:Core/Src/main_functions.c **** 	gyro_data_value[1] = abs((int)(10*gyro_data_p[0])  % 10);
- 684              		.loc 1 167 5 is_stmt 1 view .LVU151
- 167:Core/Src/main_functions.c **** 	gyro_data_value[1] = abs((int)(10*gyro_data_p[0])  % 10);
- 685              		.loc 1 167 46 is_stmt 0 view .LVU152
- 686 0176 D0ED007A 		vldr.32	s15, [r0]
- 167:Core/Src/main_functions.c **** 	gyro_data_value[1] = abs((int)(10*gyro_data_p[0])  % 10);
- 687              		.loc 1 167 30 view .LVU153
- 688 017a FDEEE77A 		vcvt.s32.f32	s15, s15
- 689 017e 17EE903A 		vmov	r3, s15	@ int
- 167:Core/Src/main_functions.c **** 	gyro_data_value[1] = abs((int)(10*gyro_data_p[0])  % 10);
- 690              		.loc 1 167 26 view .LVU154
-ARM GAS  C:\Users\samue\AppData\Local\Temp\ccxwy6p9.s 			page 20
+ 386              		.loc 1 161 5 view .LVU80
+ 387 00ba FFF7FEFF 		bl	lcd_clear
+ 388              	.LVL41:
+ 389              	.L14:
+ 170:Core/Src/main_functions.c **** 
+ 390              		.loc 1 170 5 discriminator 1 view .LVU81
+ 173:Core/Src/main_functions.c ****         HAL_Delay(FSM[state].time_delay);
+ 391              		.loc 1 173 9 discriminator 1 view .LVU82
+ 173:Core/Src/main_functions.c ****         HAL_Delay(FSM[state].time_delay);
+ 392              		.loc 1 173 20 is_stmt 0 discriminator 1 view .LVU83
+ 393 00be 1E4D     		ldr	r5, .L16+40
+ 394 00c0 144C     		ldr	r4, .L16+4
+ 395 00c2 2368     		ldr	r3, [r4]
+ 396 00c4 1B01     		lsls	r3, r3, #4
+ 397 00c6 EB58     		ldr	r3, [r5, r3]
+ 398 00c8 9847     		blx	r3
+ 399              	.LVL42:
+ 174:Core/Src/main_functions.c ****         state = FSM[state].next_state[flag];
+ 400              		.loc 1 174 9 is_stmt 1 discriminator 1 view .LVU84
+ 401 00ca 2368     		ldr	r3, [r4]
+ 402 00cc 05EB0313 		add	r3, r5, r3, lsl #4
+ 403 00d0 5868     		ldr	r0, [r3, #4]
+ 404 00d2 FFF7FEFF 		bl	HAL_Delay
+ 405              	.LVL43:
+ 175:Core/Src/main_functions.c **** 
+ 406              		.loc 1 175 9 discriminator 1 view .LVU85
+ 175:Core/Src/main_functions.c **** 
+ 407              		.loc 1 175 38 is_stmt 0 discriminator 1 view .LVU86
+ARM GAS  C:\Users\samue\AppData\Local\Temp\cczngwaN.s 			page 15
 
 
- 691 0182 002B     		cmp	r3, #0
- 692 0184 B8BF     		it	lt
- 693 0186 5B42     		rsblt	r3, r3, #0
- 167:Core/Src/main_functions.c **** 	gyro_data_value[1] = abs((int)(10*gyro_data_p[0])  % 10);
- 694              		.loc 1 167 24 view .LVU155
- 695 0188 7C4D     		ldr	r5, .L30+32
- 696 018a 2B60     		str	r3, [r5]
- 168:Core/Src/main_functions.c ****     gyro_data_value[2] = abs((int)(100*gyro_data_p[0]) % 10);
- 697              		.loc 1 168 2 is_stmt 1 view .LVU156
- 168:Core/Src/main_functions.c ****     gyro_data_value[2] = abs((int)(100*gyro_data_p[0]) % 10);
- 698              		.loc 1 168 47 is_stmt 0 view .LVU157
- 699 018c D0ED007A 		vldr.32	s15, [r0]
- 168:Core/Src/main_functions.c ****     gyro_data_value[2] = abs((int)(100*gyro_data_p[0]) % 10);
- 700              		.loc 1 168 35 view .LVU158
- 701 0190 67EEA87A 		vmul.f32	s15, s15, s17
- 168:Core/Src/main_functions.c ****     gyro_data_value[2] = abs((int)(100*gyro_data_p[0]) % 10);
- 702              		.loc 1 168 27 view .LVU159
- 703 0194 FDEEE77A 		vcvt.s32.f32	s15, s15
- 704 0198 17EE902A 		vmov	r2, s15	@ int
- 168:Core/Src/main_functions.c ****     gyro_data_value[2] = abs((int)(100*gyro_data_p[0]) % 10);
- 705              		.loc 1 168 53 view .LVU160
- 706 019c 84FB0231 		smull	r3, r1, r4, r2
- 707 01a0 D317     		asrs	r3, r2, #31
- 708 01a2 C3EBA103 		rsb	r3, r3, r1, asr #2
- 709 01a6 03EB8303 		add	r3, r3, r3, lsl #2
- 710 01aa A2EB4303 		sub	r3, r2, r3, lsl #1
- 168:Core/Src/main_functions.c ****     gyro_data_value[2] = abs((int)(100*gyro_data_p[0]) % 10);
- 711              		.loc 1 168 23 view .LVU161
- 712 01ae 002B     		cmp	r3, #0
- 713 01b0 B8BF     		it	lt
- 714 01b2 5B42     		rsblt	r3, r3, #0
- 168:Core/Src/main_functions.c ****     gyro_data_value[2] = abs((int)(100*gyro_data_p[0]) % 10);
- 715              		.loc 1 168 21 view .LVU162
- 716 01b4 6B60     		str	r3, [r5, #4]
- 169:Core/Src/main_functions.c **** 
- 717              		.loc 1 169 5 is_stmt 1 view .LVU163
- 169:Core/Src/main_functions.c **** 
- 718              		.loc 1 169 51 is_stmt 0 view .LVU164
- 719 01b6 D0ED007A 		vldr.32	s15, [r0]
- 169:Core/Src/main_functions.c **** 
- 720              		.loc 1 169 39 view .LVU165
- 721 01ba 67EE887A 		vmul.f32	s15, s15, s16
- 169:Core/Src/main_functions.c **** 
- 722              		.loc 1 169 30 view .LVU166
- 723 01be FDEEE77A 		vcvt.s32.f32	s15, s15
- 724 01c2 17EE902A 		vmov	r2, s15	@ int
- 169:Core/Src/main_functions.c **** 
- 725              		.loc 1 169 56 view .LVU167
- 726 01c6 84FB0231 		smull	r3, r1, r4, r2
- 727 01ca D317     		asrs	r3, r2, #31
- 728 01cc C3EBA103 		rsb	r3, r3, r1, asr #2
- 729 01d0 03EB8303 		add	r3, r3, r3, lsl #2
- 730 01d4 A2EB4303 		sub	r3, r2, r3, lsl #1
- 169:Core/Src/main_functions.c **** 
- 731              		.loc 1 169 26 view .LVU168
- 732 01d8 002B     		cmp	r3, #0
- 733 01da B8BF     		it	lt
-ARM GAS  C:\Users\samue\AppData\Local\Temp\ccxwy6p9.s 			page 21
+ 408 00d6 2268     		ldr	r2, [r4]
+ 409 00d8 0D4B     		ldr	r3, .L16
+ 410 00da 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 411 00dc 03EB8203 		add	r3, r3, r2, lsl #2
+ 412 00e0 0233     		adds	r3, r3, #2
+ 413 00e2 55F82330 		ldr	r3, [r5, r3, lsl #2]
+ 175:Core/Src/main_functions.c **** 
+ 414              		.loc 1 175 15 discriminator 1 view .LVU87
+ 415 00e6 2360     		str	r3, [r4]
+ 170:Core/Src/main_functions.c **** 
+ 416              		.loc 1 170 10 is_stmt 1 discriminator 1 view .LVU88
+ 417 00e8 E9E7     		b	.L14
+ 418              	.LVL44:
+ 419              	.L12:
+ 125:Core/Src/main_functions.c **** 	    lcd_send_string("Error mounting SD");
+ 420              		.loc 1 125 9 view .LVU89
+ 421 00ea 8020     		movs	r0, #128
+ 422              	.LVL45:
+ 125:Core/Src/main_functions.c **** 	    lcd_send_string("Error mounting SD");
+ 423              		.loc 1 125 9 is_stmt 0 view .LVU90
+ 424 00ec FFF7FEFF 		bl	lcd_send_cmd
+ 425              	.LVL46:
+ 126:Core/Src/main_functions.c ****         lcd_send_cmd(0x80|0x40);
+ 426              		.loc 1 126 6 is_stmt 1 view .LVU91
+ 427 00f0 1248     		ldr	r0, .L16+44
+ 428 00f2 FFF7FEFF 		bl	lcd_send_string
+ 429              	.LVL47:
+ 127:Core/Src/main_functions.c **** 	    lcd_send_string("card");
+ 430              		.loc 1 127 9 view .LVU92
+ 431 00f6 C020     		movs	r0, #192
+ 432 00f8 FFF7FEFF 		bl	lcd_send_cmd
+ 433              	.LVL48:
+ 128:Core/Src/main_functions.c ****         HAL_Delay(3000);
+ 434              		.loc 1 128 6 view .LVU93
+ 435 00fc 1048     		ldr	r0, .L16+48
+ 436 00fe FFF7FEFF 		bl	lcd_send_string
+ 437              	.LVL49:
+ 129:Core/Src/main_functions.c ****         lcd_clear();
+ 438              		.loc 1 129 9 view .LVU94
+ 439 0102 40F6B830 		movw	r0, #3000
+ 440 0106 FFF7FEFF 		bl	HAL_Delay
+ 441              	.LVL50:
+ 130:Core/Src/main_functions.c **** 
+ 442              		.loc 1 130 9 view .LVU95
+ 443 010a FFF7FEFF 		bl	lcd_clear
+ 444              	.LVL51:
+ 445 010e 9FE7     		b	.L13
+ 446              	.L17:
+ 447              		.align	2
+ 448              	.L16:
+ 449 0110 00000000 		.word	.LANCHOR0
+ 450 0114 00000000 		.word	.LANCHOR6
+ 451 0118 00000000 		.word	.LC4
+ 452 011c 0C000000 		.word	.LC5
+ 453 0120 1C000000 		.word	.LC6
+ 454 0124 48000000 		.word	.LC9
+ 455 0128 00000000 		.word	.LANCHOR7
+ARM GAS  C:\Users\samue\AppData\Local\Temp\cczngwaN.s 			page 16
 
 
- 734 01dc 5B42     		rsblt	r3, r3, #0
- 169:Core/Src/main_functions.c **** 
- 735              		.loc 1 169 24 view .LVU169
- 736 01de AB60     		str	r3, [r5, #8]
- 171:Core/Src/main_functions.c **** 	gyro_data_value[4] = abs((int)(10*gyro_data_p[1])  % 10);
- 737              		.loc 1 171 2 is_stmt 1 view .LVU170
- 171:Core/Src/main_functions.c **** 	gyro_data_value[4] = abs((int)(10*gyro_data_p[1])  % 10);
- 738              		.loc 1 171 43 is_stmt 0 view .LVU171
- 739 01e0 D0ED017A 		vldr.32	s15, [r0, #4]
- 171:Core/Src/main_functions.c **** 	gyro_data_value[4] = abs((int)(10*gyro_data_p[1])  % 10);
- 740              		.loc 1 171 27 view .LVU172
- 741 01e4 FDEEE77A 		vcvt.s32.f32	s15, s15
- 742 01e8 17EE903A 		vmov	r3, s15	@ int
- 171:Core/Src/main_functions.c **** 	gyro_data_value[4] = abs((int)(10*gyro_data_p[1])  % 10);
- 743              		.loc 1 171 23 view .LVU173
- 744 01ec 002B     		cmp	r3, #0
- 745 01ee B8BF     		it	lt
- 746 01f0 5B42     		rsblt	r3, r3, #0
- 171:Core/Src/main_functions.c **** 	gyro_data_value[4] = abs((int)(10*gyro_data_p[1])  % 10);
- 747              		.loc 1 171 21 view .LVU174
- 748 01f2 EB60     		str	r3, [r5, #12]
- 172:Core/Src/main_functions.c ****     gyro_data_value[5] = abs((int)(100*gyro_data_p[1]) % 10);
- 749              		.loc 1 172 2 is_stmt 1 view .LVU175
- 172:Core/Src/main_functions.c ****     gyro_data_value[5] = abs((int)(100*gyro_data_p[1]) % 10);
- 750              		.loc 1 172 47 is_stmt 0 view .LVU176
- 751 01f4 D0ED017A 		vldr.32	s15, [r0, #4]
- 172:Core/Src/main_functions.c ****     gyro_data_value[5] = abs((int)(100*gyro_data_p[1]) % 10);
- 752              		.loc 1 172 35 view .LVU177
- 753 01f8 67EEA87A 		vmul.f32	s15, s15, s17
- 172:Core/Src/main_functions.c ****     gyro_data_value[5] = abs((int)(100*gyro_data_p[1]) % 10);
- 754              		.loc 1 172 27 view .LVU178
- 755 01fc FDEEE77A 		vcvt.s32.f32	s15, s15
- 756 0200 17EE902A 		vmov	r2, s15	@ int
- 172:Core/Src/main_functions.c ****     gyro_data_value[5] = abs((int)(100*gyro_data_p[1]) % 10);
- 757              		.loc 1 172 53 view .LVU179
- 758 0204 84FB0231 		smull	r3, r1, r4, r2
- 759 0208 D317     		asrs	r3, r2, #31
- 760 020a C3EBA103 		rsb	r3, r3, r1, asr #2
- 761 020e 03EB8303 		add	r3, r3, r3, lsl #2
- 762 0212 A2EB4303 		sub	r3, r2, r3, lsl #1
- 172:Core/Src/main_functions.c ****     gyro_data_value[5] = abs((int)(100*gyro_data_p[1]) % 10);
- 763              		.loc 1 172 23 view .LVU180
- 764 0216 002B     		cmp	r3, #0
- 765 0218 B8BF     		it	lt
- 766 021a 5B42     		rsblt	r3, r3, #0
- 172:Core/Src/main_functions.c ****     gyro_data_value[5] = abs((int)(100*gyro_data_p[1]) % 10);
- 767              		.loc 1 172 21 view .LVU181
- 768 021c 2B61     		str	r3, [r5, #16]
- 173:Core/Src/main_functions.c **** 
- 769              		.loc 1 173 5 is_stmt 1 view .LVU182
- 173:Core/Src/main_functions.c **** 
- 770              		.loc 1 173 51 is_stmt 0 view .LVU183
- 771 021e D0ED017A 		vldr.32	s15, [r0, #4]
- 173:Core/Src/main_functions.c **** 
- 772              		.loc 1 173 39 view .LVU184
- 773 0222 67EE887A 		vmul.f32	s15, s15, s16
- 173:Core/Src/main_functions.c **** 
-ARM GAS  C:\Users\samue\AppData\Local\Temp\ccxwy6p9.s 			page 22
-
-
- 774              		.loc 1 173 30 view .LVU185
- 775 0226 FDEEE77A 		vcvt.s32.f32	s15, s15
- 776 022a 17EE902A 		vmov	r2, s15	@ int
- 173:Core/Src/main_functions.c **** 
- 777              		.loc 1 173 56 view .LVU186
- 778 022e 84FB0231 		smull	r3, r1, r4, r2
- 779 0232 D317     		asrs	r3, r2, #31
- 780 0234 C3EBA103 		rsb	r3, r3, r1, asr #2
- 781 0238 03EB8303 		add	r3, r3, r3, lsl #2
- 782 023c A2EB4303 		sub	r3, r2, r3, lsl #1
- 173:Core/Src/main_functions.c **** 
- 783              		.loc 1 173 26 view .LVU187
- 784 0240 002B     		cmp	r3, #0
- 785 0242 B8BF     		it	lt
- 786 0244 5B42     		rsblt	r3, r3, #0
- 173:Core/Src/main_functions.c **** 
- 787              		.loc 1 173 24 view .LVU188
- 788 0246 6B61     		str	r3, [r5, #20]
- 175:Core/Src/main_functions.c **** 	gyro_data_value[7] = abs((int)(10*gyro_data_p[2])  % 10);
- 789              		.loc 1 175 2 is_stmt 1 view .LVU189
- 175:Core/Src/main_functions.c **** 	gyro_data_value[7] = abs((int)(10*gyro_data_p[2])  % 10);
- 790              		.loc 1 175 43 is_stmt 0 view .LVU190
- 791 0248 D0ED027A 		vldr.32	s15, [r0, #8]
- 175:Core/Src/main_functions.c **** 	gyro_data_value[7] = abs((int)(10*gyro_data_p[2])  % 10);
- 792              		.loc 1 175 27 view .LVU191
- 793 024c FDEEE77A 		vcvt.s32.f32	s15, s15
- 794 0250 17EE903A 		vmov	r3, s15	@ int
- 175:Core/Src/main_functions.c **** 	gyro_data_value[7] = abs((int)(10*gyro_data_p[2])  % 10);
- 795              		.loc 1 175 23 view .LVU192
- 796 0254 002B     		cmp	r3, #0
- 797 0256 B8BF     		it	lt
- 798 0258 5B42     		rsblt	r3, r3, #0
- 175:Core/Src/main_functions.c **** 	gyro_data_value[7] = abs((int)(10*gyro_data_p[2])  % 10);
- 799              		.loc 1 175 21 view .LVU193
- 800 025a AB61     		str	r3, [r5, #24]
- 176:Core/Src/main_functions.c ****     gyro_data_value[8] = abs((int)(100*gyro_data_p[2]) % 10);
- 801              		.loc 1 176 2 is_stmt 1 view .LVU194
- 176:Core/Src/main_functions.c ****     gyro_data_value[8] = abs((int)(100*gyro_data_p[2]) % 10);
- 802              		.loc 1 176 47 is_stmt 0 view .LVU195
- 803 025c D0ED027A 		vldr.32	s15, [r0, #8]
- 176:Core/Src/main_functions.c ****     gyro_data_value[8] = abs((int)(100*gyro_data_p[2]) % 10);
- 804              		.loc 1 176 35 view .LVU196
- 805 0260 67EEA87A 		vmul.f32	s15, s15, s17
- 176:Core/Src/main_functions.c ****     gyro_data_value[8] = abs((int)(100*gyro_data_p[2]) % 10);
- 806              		.loc 1 176 27 view .LVU197
- 807 0264 FDEEE77A 		vcvt.s32.f32	s15, s15
- 808 0268 17EE902A 		vmov	r2, s15	@ int
- 176:Core/Src/main_functions.c ****     gyro_data_value[8] = abs((int)(100*gyro_data_p[2]) % 10);
- 809              		.loc 1 176 53 view .LVU198
- 810 026c 84FB0231 		smull	r3, r1, r4, r2
- 811 0270 D317     		asrs	r3, r2, #31
- 812 0272 C3EBA103 		rsb	r3, r3, r1, asr #2
- 813 0276 03EB8303 		add	r3, r3, r3, lsl #2
- 814 027a A2EB4303 		sub	r3, r2, r3, lsl #1
- 176:Core/Src/main_functions.c ****     gyro_data_value[8] = abs((int)(100*gyro_data_p[2]) % 10);
- 815              		.loc 1 176 23 view .LVU199
- 816 027e 002B     		cmp	r3, #0
-ARM GAS  C:\Users\samue\AppData\Local\Temp\ccxwy6p9.s 			page 23
-
-
- 817 0280 B8BF     		it	lt
- 818 0282 5B42     		rsblt	r3, r3, #0
- 176:Core/Src/main_functions.c ****     gyro_data_value[8] = abs((int)(100*gyro_data_p[2]) % 10);
- 819              		.loc 1 176 21 view .LVU200
- 820 0284 EB61     		str	r3, [r5, #28]
- 177:Core/Src/main_functions.c **** 
- 821              		.loc 1 177 5 is_stmt 1 view .LVU201
- 177:Core/Src/main_functions.c **** 
- 822              		.loc 1 177 51 is_stmt 0 view .LVU202
- 823 0286 D0ED027A 		vldr.32	s15, [r0, #8]
- 177:Core/Src/main_functions.c **** 
- 824              		.loc 1 177 39 view .LVU203
- 825 028a 67EE887A 		vmul.f32	s15, s15, s16
- 177:Core/Src/main_functions.c **** 
- 826              		.loc 1 177 30 view .LVU204
- 827 028e FDEEE77A 		vcvt.s32.f32	s15, s15
- 828 0292 17EE902A 		vmov	r2, s15	@ int
- 177:Core/Src/main_functions.c **** 
- 829              		.loc 1 177 56 view .LVU205
- 830 0296 84FB0234 		smull	r3, r4, r4, r2
- 831 029a D317     		asrs	r3, r2, #31
- 832 029c C3EBA404 		rsb	r4, r3, r4, asr #2
- 833 02a0 04EB8404 		add	r4, r4, r4, lsl #2
- 834 02a4 A2EB4404 		sub	r4, r2, r4, lsl #1
- 177:Core/Src/main_functions.c **** 
- 835              		.loc 1 177 26 view .LVU206
- 836 02a8 002C     		cmp	r4, #0
- 837 02aa B8BF     		it	lt
- 838 02ac 6442     		rsblt	r4, r4, #0
- 177:Core/Src/main_functions.c **** 
- 839              		.loc 1 177 24 view .LVU207
- 840 02ae 2C62     		str	r4, [r5, #32]
- 181:Core/Src/main_functions.c **** 
- 841              		.loc 1 181 5 is_stmt 1 view .LVU208
- 842 02b0 3B68     		ldr	r3, [r7]
- 843 02b2 93ED000A 		vldr.32	s0, [r3]
- 844 02b6 0196     		str	r6, [sp, #4]
- 845 02b8 0024     		movs	r4, #0
- 846 02ba 0094     		str	r4, [sp]
- 847 02bc 304B     		ldr	r3, .L30+36
- 848 02be 0322     		movs	r2, #3
- 849 02c0 0421     		movs	r1, #4
- 850 02c2 2046     		mov	r0, r4
- 851 02c4 FFF7FEFF 		bl	print_data
- 852              	.LVL33:
- 184:Core/Src/main_functions.c **** 
- 853              		.loc 1 184 5 view .LVU209
- 184:Core/Src/main_functions.c **** 
- 854              		.loc 1 184 60 is_stmt 0 view .LVU210
- 855 02c8 3B68     		ldr	r3, [r7]
- 184:Core/Src/main_functions.c **** 
- 856              		.loc 1 184 5 view .LVU211
- 857 02ca 93ED010A 		vldr.32	s0, [r3, #4]
- 858 02ce 0196     		str	r6, [sp, #4]
- 859 02d0 4FF00309 		mov	r9, #3
- 860 02d4 CDF80090 		str	r9, [sp]
- 861 02d8 2A4B     		ldr	r3, .L30+40
-ARM GAS  C:\Users\samue\AppData\Local\Temp\ccxwy6p9.s 			page 24
-
-
- 862 02da 4322     		movs	r2, #67
- 863 02dc 4421     		movs	r1, #68
- 864 02de 4020     		movs	r0, #64
- 865 02e0 FFF7FEFF 		bl	print_data
- 866              	.LVL34:
- 187:Core/Src/main_functions.c **** 
- 867              		.loc 1 187 5 is_stmt 1 view .LVU212
- 187:Core/Src/main_functions.c **** 
- 868              		.loc 1 187 60 is_stmt 0 view .LVU213
- 869 02e4 3B68     		ldr	r3, [r7]
- 187:Core/Src/main_functions.c **** 
- 870              		.loc 1 187 5 view .LVU214
- 871 02e6 93ED020A 		vldr.32	s0, [r3, #8]
- 872 02ea 0196     		str	r6, [sp, #4]
- 873 02ec 0626     		movs	r6, #6
- 874 02ee 0096     		str	r6, [sp]
- 875 02f0 254B     		ldr	r3, .L30+44
- 876 02f2 1722     		movs	r2, #23
- 877 02f4 1821     		movs	r1, #24
- 878 02f6 1420     		movs	r0, #20
- 879 02f8 FFF7FEFF 		bl	print_data
- 880              	.LVL35:
+ 456 012c 5C000000 		.word	.LC10
+ 457 0130 60000000 		.word	.LC11
+ 458 0134 74000000 		.word	.LC12
+ 459 0138 00000000 		.word	.LANCHOR8
+ 460 013c 2C000000 		.word	.LC7
+ 461 0140 40000000 		.word	.LC8
+ 462              		.cfi_endproc
+ 463              	.LFE133:
+ 465              		.section	.text.HAL_GPIO_EXTI_Callback,"ax",%progbits
+ 466              		.align	1
+ 467              		.global	HAL_GPIO_EXTI_Callback
+ 468              		.syntax unified
+ 469              		.thumb
+ 470              		.thumb_func
+ 472              	HAL_GPIO_EXTI_Callback:
+ 473              	.LVL52:
+ 474              	.LFB134:
+ 188:Core/Src/main_functions.c **** 	flag = 1;
+ 475              		.loc 1 188 48 view -0
+ 476              		.cfi_startproc
+ 477              		@ args = 0, pretend = 0, frame = 0
+ 478              		@ frame_needed = 0, uses_anonymous_args = 0
+ 479              		@ link register save eliminated.
+ 189:Core/Src/main_functions.c **** }
+ 480              		.loc 1 189 2 view .LVU97
+ 189:Core/Src/main_functions.c **** }
+ 481              		.loc 1 189 7 is_stmt 0 view .LVU98
+ 482 0000 014B     		ldr	r3, .L19
+ 483 0002 0122     		movs	r2, #1
+ 484 0004 1A70     		strb	r2, [r3]
  190:Core/Src/main_functions.c **** 
- 881              		.loc 1 190 5 is_stmt 1 view .LVU215
- 882 02fc D8F80030 		ldr	r3, [r8]
- 883 0300 93ED000A 		vldr.32	s0, [r3]
- 884 0304 0195     		str	r5, [sp, #4]
- 885 0306 0094     		str	r4, [sp]
- 886 0308 204B     		ldr	r3, .L30+48
- 887 030a 0D22     		movs	r2, #13
- 888 030c 0E21     		movs	r1, #14
- 889 030e 0A20     		movs	r0, #10
- 890 0310 FFF7FEFF 		bl	print_data
- 891              	.LVL36:
- 193:Core/Src/main_functions.c **** 
- 892              		.loc 1 193 5 view .LVU216
- 193:Core/Src/main_functions.c **** 
- 893              		.loc 1 193 59 is_stmt 0 view .LVU217
- 894 0314 D8F80030 		ldr	r3, [r8]
- 193:Core/Src/main_functions.c **** 
- 895              		.loc 1 193 5 view .LVU218
- 896 0318 93ED010A 		vldr.32	s0, [r3, #4]
- 897 031c 0195     		str	r5, [sp, #4]
- 898 031e CDF80090 		str	r9, [sp]
- 899 0322 1B4B     		ldr	r3, .L30+52
- 900 0324 4D22     		movs	r2, #77
- 901 0326 4E21     		movs	r1, #78
- 902 0328 4A20     		movs	r0, #74
- 903 032a FFF7FEFF 		bl	print_data
- 904              	.LVL37:
- 196:Core/Src/main_functions.c **** 
- 905              		.loc 1 196 5 is_stmt 1 view .LVU219
- 196:Core/Src/main_functions.c **** 
- 906              		.loc 1 196 59 is_stmt 0 view .LVU220
- 907 032e D8F80030 		ldr	r3, [r8]
- 196:Core/Src/main_functions.c **** 
- 908              		.loc 1 196 5 view .LVU221
-ARM GAS  C:\Users\samue\AppData\Local\Temp\ccxwy6p9.s 			page 25
+ 485              		.loc 1 190 1 view .LVU99
+ 486 0006 7047     		bx	lr
+ 487              	.L20:
+ 488              		.align	2
+ 489              	.L19:
+ 490 0008 00000000 		.word	.LANCHOR0
+ 491              		.cfi_endproc
+ 492              	.LFE134:
+ 494              		.section	.rodata.print_data.str1.4,"aMS",%progbits,1
+ 495              		.align	2
+ 496              	.LC13:
+ 497 0000 25642E25 		.ascii	"%d.%d%d\000"
+ 497      64256400 
+ 498              		.align	2
+ 499              	.LC14:
+ 500 0008 2D25642E 		.ascii	"-%d.%d%d\000"
+ 500      25642564 
+ 500      00
+ 501              		.section	.text.print_data,"ax",%progbits
+ 502              		.align	1
+ 503              		.global	print_data
+ 504              		.syntax unified
+ 505              		.thumb
+ 506              		.thumb_func
+ 508              	print_data:
+ 509              	.LVL53:
+ARM GAS  C:\Users\samue\AppData\Local\Temp\cczngwaN.s 			page 17
 
 
- 909 0332 93ED020A 		vldr.32	s0, [r3, #8]
- 910 0336 0195     		str	r5, [sp, #4]
- 911 0338 0096     		str	r6, [sp]
- 912 033a 164B     		ldr	r3, .L30+56
- 913 033c 2122     		movs	r2, #33
- 914 033e 2221     		movs	r1, #34
- 915 0340 1E20     		movs	r0, #30
- 916 0342 FFF7FEFF 		bl	print_data
- 917              	.LVL38:
- 199:Core/Src/main_functions.c **** 	lcd_send_string("                    ");
- 918              		.loc 1 199 2 is_stmt 1 view .LVU222
- 919 0346 D420     		movs	r0, #212
- 920 0348 FFF7FEFF 		bl	lcd_send_cmd
- 921              	.LVL39:
- 200:Core/Src/main_functions.c **** }
- 922              		.loc 1 200 2 view .LVU223
- 923 034c 1248     		ldr	r0, .L30+60
- 924 034e FFF7FEFF 		bl	lcd_send_string
- 925              	.LVL40:
+ 510              	.LFB136:
+ 260:Core/Src/main_functions.c **** 
+ 511              		.loc 1 260 1 is_stmt 1 view -0
+ 512              		.cfi_startproc
+ 513              		@ args = 8, pretend = 0, frame = 0
+ 514              		@ frame_needed = 0, uses_anonymous_args = 0
+ 260:Core/Src/main_functions.c **** 
+ 515              		.loc 1 260 1 is_stmt 0 view .LVU101
+ 516 0000 2DE9F041 		push	{r4, r5, r6, r7, r8, lr}
+ 517              	.LCFI3:
+ 518              		.cfi_def_cfa_offset 24
+ 519              		.cfi_offset 4, -24
+ 520              		.cfi_offset 5, -20
+ 521              		.cfi_offset 6, -16
+ 522              		.cfi_offset 7, -12
+ 523              		.cfi_offset 8, -8
+ 524              		.cfi_offset 14, -4
+ 525 0004 2DED028B 		vpush.64	{d8}
+ 526              	.LCFI4:
+ 527              		.cfi_def_cfa_offset 32
+ 528              		.cfi_offset 80, -32
+ 529              		.cfi_offset 81, -28
+ 530 0008 82B0     		sub	sp, sp, #8
+ 531              	.LCFI5:
+ 532              		.cfi_def_cfa_offset 40
+ 533 000a 8846     		mov	r8, r1
+ 534 000c 1746     		mov	r7, r2
+ 535 000e 1E46     		mov	r6, r3
+ 536 0010 9DF82850 		ldrb	r5, [sp, #40]	@ zero_extendqisi2
+ 537 0014 B0EE408A 		vmov.f32	s16, s0
+ 538 0018 0B9C     		ldr	r4, [sp, #44]
+ 262:Core/Src/main_functions.c **** 	lcd_send_string(str);
+ 539              		.loc 1 262 5 is_stmt 1 view .LVU102
+ 540 001a 40F08000 		orr	r0, r0, #128
+ 541              	.LVL54:
+ 262:Core/Src/main_functions.c **** 	lcd_send_string(str);
+ 542              		.loc 1 262 5 is_stmt 0 view .LVU103
+ 543 001e FFF7FEFF 		bl	lcd_send_cmd
+ 544              	.LVL55:
+ 263:Core/Src/main_functions.c ****     if (val >= 0) {
+ 545              		.loc 1 263 2 is_stmt 1 view .LVU104
+ 546 0022 3046     		mov	r0, r6
+ 547 0024 FFF7FEFF 		bl	lcd_send_string
+ 548              	.LVL56:
+ 264:Core/Src/main_functions.c ****         line_pos = pos2;
+ 549              		.loc 1 264 5 view .LVU105
+ 264:Core/Src/main_functions.c ****         line_pos = pos2;
+ 550              		.loc 1 264 8 is_stmt 0 view .LVU106
+ 551 0028 B5EEC08A 		vcmpe.f32	s16, #0
+ 552 002c F1EE10FA 		vmrs	APSR_nzcv, FPSCR
+ 553 0030 1DDB     		blt	.L26
+ 265:Core/Src/main_functions.c ****         sprintf(buf, "%d.%d%d", data[index], data[index+1], data[index+2]);
+ 554              		.loc 1 265 9 is_stmt 1 view .LVU107
+ 265:Core/Src/main_functions.c ****         sprintf(buf, "%d.%d%d", data[index], data[index+1], data[index+2]);
+ 555              		.loc 1 265 18 is_stmt 0 view .LVU108
+ 556 0032 174B     		ldr	r3, .L28
+ 557 0034 83F80080 		strb	r8, [r3]
+ARM GAS  C:\Users\samue\AppData\Local\Temp\cczngwaN.s 			page 18
+
+
+ 266:Core/Src/main_functions.c ****     }
+ 558              		.loc 1 266 9 is_stmt 1 view .LVU109
+ 266:Core/Src/main_functions.c ****     }
+ 559              		.loc 1 266 50 is_stmt 0 view .LVU110
+ 560 0038 6B1C     		adds	r3, r5, #1
+ 266:Core/Src/main_functions.c ****     }
+ 561              		.loc 1 266 65 view .LVU111
+ 562 003a AA1C     		adds	r2, r5, #2
+ 266:Core/Src/main_functions.c ****     }
+ 563              		.loc 1 266 9 view .LVU112
+ 564 003c 54F82220 		ldr	r2, [r4, r2, lsl #2]
+ 565 0040 0092     		str	r2, [sp]
+ 566 0042 54F82330 		ldr	r3, [r4, r3, lsl #2]
+ 567 0046 54F82520 		ldr	r2, [r4, r5, lsl #2]
+ 568 004a 1249     		ldr	r1, .L28+4
+ 569 004c 1248     		ldr	r0, .L28+8
+ 570 004e FFF7FEFF 		bl	sprintf
+ 571              	.LVL57:
+ 572              	.L24:
+ 272:Core/Src/main_functions.c **** 	lcd_send_string(buf);
+ 573              		.loc 1 272 2 is_stmt 1 view .LVU113
+ 574 0052 0F4B     		ldr	r3, .L28
+ 575 0054 1878     		ldrb	r0, [r3]	@ zero_extendqisi2
+ 576 0056 40F08000 		orr	r0, r0, #128
+ 577 005a FFF7FEFF 		bl	lcd_send_cmd
+ 578              	.LVL58:
+ 273:Core/Src/main_functions.c **** }
+ 579              		.loc 1 273 2 view .LVU114
+ 580 005e 0E48     		ldr	r0, .L28+8
+ 581 0060 FFF7FEFF 		bl	lcd_send_string
+ 582              	.LVL59:
+ 274:Core/Src/main_functions.c **** 
+ 583              		.loc 1 274 1 is_stmt 0 view .LVU115
+ 584 0064 02B0     		add	sp, sp, #8
+ 585              	.LCFI6:
+ 586              		.cfi_remember_state
+ 587              		.cfi_def_cfa_offset 32
+ 588              		@ sp needed
+ 589 0066 BDEC028B 		vldm	sp!, {d8}
+ 590              	.LCFI7:
+ 591              		.cfi_restore 80
+ 592              		.cfi_restore 81
+ 593              		.cfi_def_cfa_offset 24
+ 594              	.LVL60:
+ 274:Core/Src/main_functions.c **** 
+ 595              		.loc 1 274 1 view .LVU116
+ 596 006a BDE8F081 		pop	{r4, r5, r6, r7, r8, pc}
+ 597              	.LVL61:
+ 598              	.L26:
+ 599              	.LCFI8:
+ 600              		.cfi_restore_state
+ 269:Core/Src/main_functions.c ****         sprintf(buf, "-%d.%d%d", data[index], data[index+1], data[index+2]);
+ 601              		.loc 1 269 9 is_stmt 1 view .LVU117
+ 269:Core/Src/main_functions.c ****         sprintf(buf, "-%d.%d%d", data[index], data[index+1], data[index+2]);
+ 602              		.loc 1 269 18 is_stmt 0 view .LVU118
+ 603 006e 084B     		ldr	r3, .L28
+ 604 0070 1F70     		strb	r7, [r3]
+ARM GAS  C:\Users\samue\AppData\Local\Temp\cczngwaN.s 			page 19
+
+
+ 270:Core/Src/main_functions.c ****     }
+ 605              		.loc 1 270 9 is_stmt 1 view .LVU119
+ 270:Core/Src/main_functions.c ****     }
+ 606              		.loc 1 270 51 is_stmt 0 view .LVU120
+ 607 0072 6B1C     		adds	r3, r5, #1
+ 270:Core/Src/main_functions.c ****     }
+ 608              		.loc 1 270 66 view .LVU121
+ 609 0074 AA1C     		adds	r2, r5, #2
+ 270:Core/Src/main_functions.c ****     }
+ 610              		.loc 1 270 9 view .LVU122
+ 611 0076 54F82220 		ldr	r2, [r4, r2, lsl #2]
+ 612 007a 0092     		str	r2, [sp]
+ 613 007c 54F82330 		ldr	r3, [r4, r3, lsl #2]
+ 614 0080 54F82520 		ldr	r2, [r4, r5, lsl #2]
+ 615 0084 0549     		ldr	r1, .L28+12
+ 616 0086 0448     		ldr	r0, .L28+8
+ 617 0088 FFF7FEFF 		bl	sprintf
+ 618              	.LVL62:
+ 619 008c E1E7     		b	.L24
+ 620              	.L29:
+ 621 008e 00BF     		.align	2
+ 622              	.L28:
+ 623 0090 00000000 		.word	.LANCHOR9
+ 624 0094 00000000 		.word	.LC13
+ 625 0098 00000000 		.word	.LANCHOR7
+ 626 009c 08000000 		.word	.LC14
+ 627              		.cfi_endproc
+ 628              	.LFE136:
+ 630              		.section	.rodata.normal.str1.4,"aMS",%progbits,1
+ 631              		.align	2
+ 632              	.LC15:
+ 633 0000 20202020 		.ascii	"                    \000"
+ 633      20202020 
+ 633      20202020 
+ 633      20202020 
+ 633      20202020 
+ 634              		.section	.text.normal,"ax",%progbits
+ 635              		.align	1
+ 636              		.global	normal
+ 637              		.syntax unified
+ 638              		.thumb
+ 639              		.thumb_func
+ 641              	normal:
+ 642              	.LFB135:
+ 193:Core/Src/main_functions.c **** 
+ 643              		.loc 1 193 19 is_stmt 1 view -0
+ 644              		.cfi_startproc
+ 645              		@ args = 0, pretend = 0, frame = 0
+ 646              		@ frame_needed = 0, uses_anonymous_args = 0
+ 647 0000 2DE9F043 		push	{r4, r5, r6, r7, r8, r9, lr}
+ 648              	.LCFI9:
+ 649              		.cfi_def_cfa_offset 28
+ 650              		.cfi_offset 4, -28
+ 651              		.cfi_offset 5, -24
+ 652              		.cfi_offset 6, -20
+ 653              		.cfi_offset 7, -16
+ 654              		.cfi_offset 8, -12
+ARM GAS  C:\Users\samue\AppData\Local\Temp\cczngwaN.s 			page 20
+
+
+ 655              		.cfi_offset 9, -8
+ 656              		.cfi_offset 14, -4
+ 657 0004 2DED028B 		vpush.64	{d8}
+ 658              	.LCFI10:
+ 659              		.cfi_def_cfa_offset 36
+ 660              		.cfi_offset 80, -36
+ 661              		.cfi_offset 81, -32
+ 662 0008 83B0     		sub	sp, sp, #12
+ 663              	.LCFI11:
+ 664              		.cfi_def_cfa_offset 48
+ 196:Core/Src/main_functions.c **** 
+ 665              		.loc 1 196 5 view .LVU124
+ 196:Core/Src/main_functions.c **** 
+ 666              		.loc 1 196 20 is_stmt 0 view .LVU125
+ 667 000a D44A     		ldr	r2, .L32
+ 668 000c 3B21     		movs	r1, #59
+ 669 000e D020     		movs	r0, #208
+ 670 0010 9FEDD30A 		vldr.32	s0, .L32+4
+ 671 0014 FFF7FEFF 		bl	MPU6050_read
+ 672              	.LVL63:
+ 196:Core/Src/main_functions.c **** 
+ 673              		.loc 1 196 18 view .LVU126
+ 674 0018 D24F     		ldr	r7, .L32+8
+ 675 001a 3860     		str	r0, [r7]
+ 199:Core/Src/main_functions.c **** 	accel_data_value[1] = abs((int)(10*accel_data_p[0])  % 10);
+ 676              		.loc 1 199 2 is_stmt 1 view .LVU127
+ 199:Core/Src/main_functions.c **** 	accel_data_value[1] = abs((int)(10*accel_data_p[0])  % 10);
+ 677              		.loc 1 199 45 is_stmt 0 view .LVU128
+ 678 001c D0ED007A 		vldr.32	s15, [r0]
+ 199:Core/Src/main_functions.c **** 	accel_data_value[1] = abs((int)(10*accel_data_p[0])  % 10);
+ 679              		.loc 1 199 28 view .LVU129
+ 680 0020 FDEEE77A 		vcvt.s32.f32	s15, s15
+ 681 0024 17EE903A 		vmov	r3, s15	@ int
+ 199:Core/Src/main_functions.c **** 	accel_data_value[1] = abs((int)(10*accel_data_p[0])  % 10);
+ 682              		.loc 1 199 24 view .LVU130
+ 683 0028 002B     		cmp	r3, #0
+ 684 002a B8BF     		it	lt
+ 685 002c 5B42     		rsblt	r3, r3, #0
+ 199:Core/Src/main_functions.c **** 	accel_data_value[1] = abs((int)(10*accel_data_p[0])  % 10);
+ 686              		.loc 1 199 22 view .LVU131
+ 687 002e CE4E     		ldr	r6, .L32+12
+ 688 0030 3360     		str	r3, [r6]
+ 200:Core/Src/main_functions.c ****     accel_data_value[2] = abs((int)(100*accel_data_p[0]) % 10);
+ 689              		.loc 1 200 2 is_stmt 1 view .LVU132
+ 200:Core/Src/main_functions.c ****     accel_data_value[2] = abs((int)(100*accel_data_p[0]) % 10);
+ 690              		.loc 1 200 49 is_stmt 0 view .LVU133
+ 691 0032 D0ED007A 		vldr.32	s15, [r0]
+ 200:Core/Src/main_functions.c ****     accel_data_value[2] = abs((int)(100*accel_data_p[0]) % 10);
+ 692              		.loc 1 200 36 view .LVU134
+ 693 0036 F2EE048A 		vmov.f32	s17, #1.0e+1
+ 694 003a 67EEA87A 		vmul.f32	s15, s15, s17
+ 200:Core/Src/main_functions.c ****     accel_data_value[2] = abs((int)(100*accel_data_p[0]) % 10);
+ 695              		.loc 1 200 28 view .LVU135
+ 696 003e FDEEE77A 		vcvt.s32.f32	s15, s15
+ 697 0042 17EE902A 		vmov	r2, s15	@ int
+ 200:Core/Src/main_functions.c ****     accel_data_value[2] = abs((int)(100*accel_data_p[0]) % 10);
+ 698              		.loc 1 200 55 view .LVU136
+ARM GAS  C:\Users\samue\AppData\Local\Temp\cczngwaN.s 			page 21
+
+
+ 699 0046 C94C     		ldr	r4, .L32+16
+ 700 0048 84FB0231 		smull	r3, r1, r4, r2
+ 701 004c D317     		asrs	r3, r2, #31
+ 702 004e C3EBA103 		rsb	r3, r3, r1, asr #2
+ 703 0052 03EB8303 		add	r3, r3, r3, lsl #2
+ 704 0056 A2EB4303 		sub	r3, r2, r3, lsl #1
+ 200:Core/Src/main_functions.c ****     accel_data_value[2] = abs((int)(100*accel_data_p[0]) % 10);
+ 705              		.loc 1 200 24 view .LVU137
+ 706 005a 002B     		cmp	r3, #0
+ 707 005c B8BF     		it	lt
+ 708 005e 5B42     		rsblt	r3, r3, #0
+ 200:Core/Src/main_functions.c ****     accel_data_value[2] = abs((int)(100*accel_data_p[0]) % 10);
+ 709              		.loc 1 200 22 view .LVU138
+ 710 0060 7360     		str	r3, [r6, #4]
  201:Core/Src/main_functions.c **** 
- 926              		.loc 1 201 1 is_stmt 0 view .LVU224
- 927 0352 03B0     		add	sp, sp, #12
- 928              	.LCFI12:
- 929              		.cfi_def_cfa_offset 36
- 930              		@ sp needed
- 931 0354 BDEC028B 		vldm	sp!, {d8}
- 932              	.LCFI13:
- 933              		.cfi_restore 80
- 934              		.cfi_restore 81
- 935              		.cfi_def_cfa_offset 28
- 936 0358 BDE8F083 		pop	{r4, r5, r6, r7, r8, r9, pc}
- 937              	.L31:
- 938              		.align	2
- 939              	.L30:
- 940 035c 00000000 		.word	.LANCHOR3
- 941 0360 00008046 		.word	1182793728
- 942 0364 00000000 		.word	.LANCHOR10
- 943 0368 00000000 		.word	.LANCHOR11
- 944 036c 67666666 		.word	1717986919
- 945 0370 0000C842 		.word	1120403456
- 946 0374 00000000 		.word	.LANCHOR5
- 947 0378 00000343 		.word	1124270080
- 948 037c 00000000 		.word	.LANCHOR13
- 949 0380 00000000 		.word	.LANCHOR14
- 950 0384 00000000 		.word	.LANCHOR15
- 951 0388 00000000 		.word	.LANCHOR16
- 952 038c 00000000 		.word	.LANCHOR17
- 953 0390 00000000 		.word	.LANCHOR18
- 954 0394 00000000 		.word	.LANCHOR19
- 955 0398 00000000 		.word	.LC7
- 956 039c 00000000 		.word	.LANCHOR12
- 957              		.cfi_endproc
- 958              	.LFE135:
- 960              		.global	FSM
- 961              		.global	Gz_string
- 962              		.global	Gy_string
- 963              		.global	Gx_string
-ARM GAS  C:\Users\samue\AppData\Local\Temp\ccxwy6p9.s 			page 26
+ 711              		.loc 1 201 5 is_stmt 1 view .LVU139
+ 201:Core/Src/main_functions.c **** 
+ 712              		.loc 1 201 53 is_stmt 0 view .LVU140
+ 713 0062 D0ED007A 		vldr.32	s15, [r0]
+ 201:Core/Src/main_functions.c **** 
+ 714              		.loc 1 201 40 view .LVU141
+ 715 0066 9FEDC28A 		vldr.32	s16, .L32+20
+ 716 006a 67EE887A 		vmul.f32	s15, s15, s16
+ 201:Core/Src/main_functions.c **** 
+ 717              		.loc 1 201 31 view .LVU142
+ 718 006e FDEEE77A 		vcvt.s32.f32	s15, s15
+ 719 0072 17EE902A 		vmov	r2, s15	@ int
+ 201:Core/Src/main_functions.c **** 
+ 720              		.loc 1 201 58 view .LVU143
+ 721 0076 84FB0231 		smull	r3, r1, r4, r2
+ 722 007a D317     		asrs	r3, r2, #31
+ 723 007c C3EBA103 		rsb	r3, r3, r1, asr #2
+ 724 0080 03EB8303 		add	r3, r3, r3, lsl #2
+ 725 0084 A2EB4303 		sub	r3, r2, r3, lsl #1
+ 201:Core/Src/main_functions.c **** 
+ 726              		.loc 1 201 27 view .LVU144
+ 727 0088 002B     		cmp	r3, #0
+ 728 008a B8BF     		it	lt
+ 729 008c 5B42     		rsblt	r3, r3, #0
+ 201:Core/Src/main_functions.c **** 
+ 730              		.loc 1 201 25 view .LVU145
+ 731 008e B360     		str	r3, [r6, #8]
+ 203:Core/Src/main_functions.c **** 	accel_data_value[4] = abs((int)(10*accel_data_p[1])  % 10);
+ 732              		.loc 1 203 2 is_stmt 1 view .LVU146
+ 203:Core/Src/main_functions.c **** 	accel_data_value[4] = abs((int)(10*accel_data_p[1])  % 10);
+ 733              		.loc 1 203 45 is_stmt 0 view .LVU147
+ 734 0090 D0ED017A 		vldr.32	s15, [r0, #4]
+ 203:Core/Src/main_functions.c **** 	accel_data_value[4] = abs((int)(10*accel_data_p[1])  % 10);
+ 735              		.loc 1 203 28 view .LVU148
+ 736 0094 FDEEE77A 		vcvt.s32.f32	s15, s15
+ 737 0098 17EE903A 		vmov	r3, s15	@ int
+ 203:Core/Src/main_functions.c **** 	accel_data_value[4] = abs((int)(10*accel_data_p[1])  % 10);
+ 738              		.loc 1 203 24 view .LVU149
+ 739 009c 002B     		cmp	r3, #0
+ 740 009e B8BF     		it	lt
+ 741 00a0 5B42     		rsblt	r3, r3, #0
+ 203:Core/Src/main_functions.c **** 	accel_data_value[4] = abs((int)(10*accel_data_p[1])  % 10);
+ARM GAS  C:\Users\samue\AppData\Local\Temp\cczngwaN.s 			page 22
 
 
- 964              		.global	Az_string
- 965              		.global	Ay_string
- 966              		.global	Ax_string
- 967              		.global	line_pos
- 968              		.global	buf
- 969              		.global	zero_corr
- 970              		.global	gyro_corr_p
- 971              		.global	gyro_corr
- 972              		.global	gyro_data_p
- 973              		.global	gyro_data_value
- 974              		.global	accel_corr_p
- 975              		.global	accel_corr
- 976              		.global	accel_data_p
- 977              		.global	accel_data_value
- 978              		.global	state
- 979              		.global	flag
- 980              		.section	.bss.accel_corr,"aw",%nobits
- 981              		.align	2
- 982              		.set	.LANCHOR3,. + 0
- 985              	accel_corr:
- 986 0000 00000000 		.space	12
- 986      00000000 
- 986      00000000 
- 987              		.section	.bss.accel_corr_p,"aw",%nobits
- 988              		.align	2
- 989              		.set	.LANCHOR2,. + 0
- 992              	accel_corr_p:
- 993 0000 00000000 		.space	4
- 994              		.section	.bss.accel_data_p,"aw",%nobits
- 995              		.align	2
- 996              		.set	.LANCHOR10,. + 0
- 999              	accel_data_p:
- 1000 0000 00000000 		.space	4
- 1001              		.section	.bss.accel_data_value,"aw",%nobits
- 1002              		.align	2
- 1003              		.set	.LANCHOR11,. + 0
- 1006              	accel_data_value:
- 1007 0000 00000000 		.space	36
- 1007      00000000 
- 1007      00000000 
- 1007      00000000 
- 1007      00000000 
- 1008              		.section	.bss.buf,"aw",%nobits
- 1009              		.align	2
- 1010              		.set	.LANCHOR9,. + 0
- 1013              	buf:
- 1014 0000 00000000 		.space	6
- 1014      0000
- 1015              		.section	.bss.flag,"aw",%nobits
- 1016              		.set	.LANCHOR0,. + 0
- 1019              	flag:
- 1020 0000 00       		.space	1
- 1021              		.section	.bss.gyro_corr,"aw",%nobits
- 1022              		.align	2
- 1023              		.set	.LANCHOR5,. + 0
- 1026              	gyro_corr:
- 1027 0000 00000000 		.space	12
-ARM GAS  C:\Users\samue\AppData\Local\Temp\ccxwy6p9.s 			page 27
+ 742              		.loc 1 203 22 view .LVU150
+ 743 00a2 F360     		str	r3, [r6, #12]
+ 204:Core/Src/main_functions.c ****     accel_data_value[5] = abs((int)(100*accel_data_p[1]) % 10);
+ 744              		.loc 1 204 2 is_stmt 1 view .LVU151
+ 204:Core/Src/main_functions.c ****     accel_data_value[5] = abs((int)(100*accel_data_p[1]) % 10);
+ 745              		.loc 1 204 49 is_stmt 0 view .LVU152
+ 746 00a4 D0ED017A 		vldr.32	s15, [r0, #4]
+ 204:Core/Src/main_functions.c ****     accel_data_value[5] = abs((int)(100*accel_data_p[1]) % 10);
+ 747              		.loc 1 204 36 view .LVU153
+ 748 00a8 67EEA87A 		vmul.f32	s15, s15, s17
+ 204:Core/Src/main_functions.c ****     accel_data_value[5] = abs((int)(100*accel_data_p[1]) % 10);
+ 749              		.loc 1 204 28 view .LVU154
+ 750 00ac FDEEE77A 		vcvt.s32.f32	s15, s15
+ 751 00b0 17EE902A 		vmov	r2, s15	@ int
+ 204:Core/Src/main_functions.c ****     accel_data_value[5] = abs((int)(100*accel_data_p[1]) % 10);
+ 752              		.loc 1 204 55 view .LVU155
+ 753 00b4 84FB0231 		smull	r3, r1, r4, r2
+ 754 00b8 D317     		asrs	r3, r2, #31
+ 755 00ba C3EBA103 		rsb	r3, r3, r1, asr #2
+ 756 00be 03EB8303 		add	r3, r3, r3, lsl #2
+ 757 00c2 A2EB4303 		sub	r3, r2, r3, lsl #1
+ 204:Core/Src/main_functions.c ****     accel_data_value[5] = abs((int)(100*accel_data_p[1]) % 10);
+ 758              		.loc 1 204 24 view .LVU156
+ 759 00c6 002B     		cmp	r3, #0
+ 760 00c8 B8BF     		it	lt
+ 761 00ca 5B42     		rsblt	r3, r3, #0
+ 204:Core/Src/main_functions.c ****     accel_data_value[5] = abs((int)(100*accel_data_p[1]) % 10);
+ 762              		.loc 1 204 22 view .LVU157
+ 763 00cc 3361     		str	r3, [r6, #16]
+ 205:Core/Src/main_functions.c **** 
+ 764              		.loc 1 205 5 is_stmt 1 view .LVU158
+ 205:Core/Src/main_functions.c **** 
+ 765              		.loc 1 205 53 is_stmt 0 view .LVU159
+ 766 00ce D0ED017A 		vldr.32	s15, [r0, #4]
+ 205:Core/Src/main_functions.c **** 
+ 767              		.loc 1 205 40 view .LVU160
+ 768 00d2 67EE887A 		vmul.f32	s15, s15, s16
+ 205:Core/Src/main_functions.c **** 
+ 769              		.loc 1 205 31 view .LVU161
+ 770 00d6 FDEEE77A 		vcvt.s32.f32	s15, s15
+ 771 00da 17EE902A 		vmov	r2, s15	@ int
+ 205:Core/Src/main_functions.c **** 
+ 772              		.loc 1 205 58 view .LVU162
+ 773 00de 84FB0231 		smull	r3, r1, r4, r2
+ 774 00e2 D317     		asrs	r3, r2, #31
+ 775 00e4 C3EBA103 		rsb	r3, r3, r1, asr #2
+ 776 00e8 03EB8303 		add	r3, r3, r3, lsl #2
+ 777 00ec A2EB4303 		sub	r3, r2, r3, lsl #1
+ 205:Core/Src/main_functions.c **** 
+ 778              		.loc 1 205 27 view .LVU163
+ 779 00f0 002B     		cmp	r3, #0
+ 780 00f2 B8BF     		it	lt
+ 781 00f4 5B42     		rsblt	r3, r3, #0
+ 205:Core/Src/main_functions.c **** 
+ 782              		.loc 1 205 25 view .LVU164
+ 783 00f6 7361     		str	r3, [r6, #20]
+ 207:Core/Src/main_functions.c **** 	accel_data_value[7] = abs((int)(10*accel_data_p[2])  % 10);
+ARM GAS  C:\Users\samue\AppData\Local\Temp\cczngwaN.s 			page 23
 
 
- 1027      00000000 
- 1027      00000000 
- 1028              		.section	.bss.gyro_corr_p,"aw",%nobits
- 1029              		.align	2
- 1030              		.set	.LANCHOR4,. + 0
- 1033              	gyro_corr_p:
- 1034 0000 00000000 		.space	4
- 1035              		.section	.bss.gyro_data_p,"aw",%nobits
- 1036              		.align	2
- 1037              		.set	.LANCHOR12,. + 0
- 1040              	gyro_data_p:
- 1041 0000 00000000 		.space	4
- 1042              		.section	.bss.gyro_data_value,"aw",%nobits
- 1043              		.align	2
- 1044              		.set	.LANCHOR13,. + 0
- 1047              	gyro_data_value:
- 1048 0000 00000000 		.space	36
- 1048      00000000 
- 1048      00000000 
- 1048      00000000 
- 1048      00000000 
- 1049              		.section	.bss.line_pos,"aw",%nobits
- 1050              		.set	.LANCHOR8,. + 0
- 1053              	line_pos:
- 1054 0000 00       		.space	1
- 1055              		.section	.bss.state,"aw",%nobits
- 1056              		.align	2
- 1057              		.set	.LANCHOR6,. + 0
- 1060              	state:
- 1061 0000 00000000 		.space	4
- 1062              		.section	.bss.zero_corr,"aw",%nobits
- 1063              		.align	2
- 1064              		.set	.LANCHOR1,. + 0
- 1067              	zero_corr:
- 1068 0000 00000000 		.space	12
- 1068      00000000 
- 1068      00000000 
- 1069              		.section	.data.Ax_string,"aw"
- 1070              		.align	2
- 1071              		.set	.LANCHOR14,. + 0
- 1074              	Ax_string:
- 1075 0000 41783D20 		.ascii	"Ax=       \000"
- 1075      20202020 
- 1075      202000
- 1076              		.section	.data.Ay_string,"aw"
- 1077              		.align	2
- 1078              		.set	.LANCHOR15,. + 0
- 1081              	Ay_string:
- 1082 0000 41793D20 		.ascii	"Ay=       \000"
- 1082      20202020 
- 1082      202000
- 1083              		.section	.data.Az_string,"aw"
- 1084              		.align	2
- 1085              		.set	.LANCHOR16,. + 0
- 1088              	Az_string:
- 1089 0000 417A3D20 		.ascii	"Az=       \000"
- 1089      20202020 
-ARM GAS  C:\Users\samue\AppData\Local\Temp\ccxwy6p9.s 			page 28
+ 784              		.loc 1 207 2 is_stmt 1 view .LVU165
+ 207:Core/Src/main_functions.c **** 	accel_data_value[7] = abs((int)(10*accel_data_p[2])  % 10);
+ 785              		.loc 1 207 45 is_stmt 0 view .LVU166
+ 786 00f8 D0ED027A 		vldr.32	s15, [r0, #8]
+ 207:Core/Src/main_functions.c **** 	accel_data_value[7] = abs((int)(10*accel_data_p[2])  % 10);
+ 787              		.loc 1 207 28 view .LVU167
+ 788 00fc FDEEE77A 		vcvt.s32.f32	s15, s15
+ 789 0100 17EE903A 		vmov	r3, s15	@ int
+ 207:Core/Src/main_functions.c **** 	accel_data_value[7] = abs((int)(10*accel_data_p[2])  % 10);
+ 790              		.loc 1 207 24 view .LVU168
+ 791 0104 002B     		cmp	r3, #0
+ 792 0106 B8BF     		it	lt
+ 793 0108 5B42     		rsblt	r3, r3, #0
+ 207:Core/Src/main_functions.c **** 	accel_data_value[7] = abs((int)(10*accel_data_p[2])  % 10);
+ 794              		.loc 1 207 22 view .LVU169
+ 795 010a B361     		str	r3, [r6, #24]
+ 208:Core/Src/main_functions.c ****     accel_data_value[8] = abs((int)(100*accel_data_p[2]) % 10);
+ 796              		.loc 1 208 2 is_stmt 1 view .LVU170
+ 208:Core/Src/main_functions.c ****     accel_data_value[8] = abs((int)(100*accel_data_p[2]) % 10);
+ 797              		.loc 1 208 49 is_stmt 0 view .LVU171
+ 798 010c D0ED027A 		vldr.32	s15, [r0, #8]
+ 208:Core/Src/main_functions.c ****     accel_data_value[8] = abs((int)(100*accel_data_p[2]) % 10);
+ 799              		.loc 1 208 36 view .LVU172
+ 800 0110 67EEA87A 		vmul.f32	s15, s15, s17
+ 208:Core/Src/main_functions.c ****     accel_data_value[8] = abs((int)(100*accel_data_p[2]) % 10);
+ 801              		.loc 1 208 28 view .LVU173
+ 802 0114 FDEEE77A 		vcvt.s32.f32	s15, s15
+ 803 0118 17EE902A 		vmov	r2, s15	@ int
+ 208:Core/Src/main_functions.c ****     accel_data_value[8] = abs((int)(100*accel_data_p[2]) % 10);
+ 804              		.loc 1 208 55 view .LVU174
+ 805 011c 84FB0231 		smull	r3, r1, r4, r2
+ 806 0120 D317     		asrs	r3, r2, #31
+ 807 0122 C3EBA103 		rsb	r3, r3, r1, asr #2
+ 808 0126 03EB8303 		add	r3, r3, r3, lsl #2
+ 809 012a A2EB4303 		sub	r3, r2, r3, lsl #1
+ 208:Core/Src/main_functions.c ****     accel_data_value[8] = abs((int)(100*accel_data_p[2]) % 10);
+ 810              		.loc 1 208 24 view .LVU175
+ 811 012e 002B     		cmp	r3, #0
+ 812 0130 B8BF     		it	lt
+ 813 0132 5B42     		rsblt	r3, r3, #0
+ 208:Core/Src/main_functions.c ****     accel_data_value[8] = abs((int)(100*accel_data_p[2]) % 10);
+ 814              		.loc 1 208 22 view .LVU176
+ 815 0134 F361     		str	r3, [r6, #28]
+ 209:Core/Src/main_functions.c **** 
+ 816              		.loc 1 209 5 is_stmt 1 view .LVU177
+ 209:Core/Src/main_functions.c **** 
+ 817              		.loc 1 209 53 is_stmt 0 view .LVU178
+ 818 0136 D0ED027A 		vldr.32	s15, [r0, #8]
+ 209:Core/Src/main_functions.c **** 
+ 819              		.loc 1 209 40 view .LVU179
+ 820 013a 67EE887A 		vmul.f32	s15, s15, s16
+ 209:Core/Src/main_functions.c **** 
+ 821              		.loc 1 209 31 view .LVU180
+ 822 013e FDEEE77A 		vcvt.s32.f32	s15, s15
+ 823 0142 17EE902A 		vmov	r2, s15	@ int
+ 209:Core/Src/main_functions.c **** 
+ 824              		.loc 1 209 58 view .LVU181
+ARM GAS  C:\Users\samue\AppData\Local\Temp\cczngwaN.s 			page 24
 
 
- 1089      202000
- 1090              		.section	.data.Gx_string,"aw"
- 1091              		.align	2
- 1092              		.set	.LANCHOR17,. + 0
- 1095              	Gx_string:
- 1096 0000 47783D20 		.ascii	"Gx=       \000"
- 1096      20202020 
- 1096      202000
- 1097              		.section	.data.Gy_string,"aw"
- 1098              		.align	2
- 1099              		.set	.LANCHOR18,. + 0
- 1102              	Gy_string:
- 1103 0000 47793D20 		.ascii	"Gy=       \000"
- 1103      20202020 
- 1103      202000
- 1104              		.section	.data.Gz_string,"aw"
- 1105              		.align	2
- 1106              		.set	.LANCHOR19,. + 0
- 1109              	Gz_string:
- 1110 0000 477A3D20 		.ascii	"Gz=       \000"
- 1110      20202020 
- 1110      202000
- 1111              		.section	.rodata.FSM,"a"
- 1112              		.align	2
- 1113              		.set	.LANCHOR7,. + 0
- 1116              	FSM:
- 1117 0000 00000000 		.word	normal
- 1118 0004 F4010000 		.word	500
- 1119 0008 00000000 		.word	0
- 1120 000c 01000000 		.word	1
- 1121 0010 00000000 		.word	accel_cal_prep
- 1122 0014 E8030000 		.word	1000
- 1123 0018 01000000 		.word	1
- 1124 001c 02000000 		.word	2
- 1125 0020 00000000 		.word	accel_cal
- 1126 0024 D0070000 		.word	2000
- 1127 0028 00000000 		.word	0
- 1128 002c 00000000 		.word	0
- 1129              		.text
- 1130              	.Letext0:
- 1131              		.file 2 "c:\\dev_tools\\gcc-arm-none-eabi-10.3-2021.10-win32\\gcc-arm-none-eabi-10.3-2021.10\\arm-
- 1132              		.file 3 "c:\\dev_tools\\gcc-arm-none-eabi-10.3-2021.10-win32\\gcc-arm-none-eabi-10.3-2021.10\\arm-
- 1133              		.file 4 "Core/Inc/i2c-lcd.h"
- 1134              		.file 5 "Core/Inc/accelerometer_data.h"
- 1135              		.file 6 "c:\\dev_tools\\gcc-arm-none-eabi-10.3-2021.10-win32\\gcc-arm-none-eabi-10.3-2021.10\\arm-
- 1136              		.file 7 "Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h"
- 1137              		.file 8 "Device-Drivers/Inc/sd-card-spi.h"
-ARM GAS  C:\Users\samue\AppData\Local\Temp\ccxwy6p9.s 			page 29
+ 825 0146 84FB0231 		smull	r3, r1, r4, r2
+ 826 014a D317     		asrs	r3, r2, #31
+ 827 014c C3EBA103 		rsb	r3, r3, r1, asr #2
+ 828 0150 03EB8303 		add	r3, r3, r3, lsl #2
+ 829 0154 A2EB4303 		sub	r3, r2, r3, lsl #1
+ 209:Core/Src/main_functions.c **** 
+ 830              		.loc 1 209 27 view .LVU182
+ 831 0158 002B     		cmp	r3, #0
+ 832 015a B8BF     		it	lt
+ 833 015c 5B42     		rsblt	r3, r3, #0
+ 209:Core/Src/main_functions.c **** 
+ 834              		.loc 1 209 25 view .LVU183
+ 835 015e 3362     		str	r3, [r6, #32]
+ 212:Core/Src/main_functions.c **** 
+ 836              		.loc 1 212 5 is_stmt 1 view .LVU184
+ 212:Core/Src/main_functions.c **** 
+ 837              		.loc 1 212 20 is_stmt 0 view .LVU185
+ 838 0160 844A     		ldr	r2, .L32+24
+ 839 0162 4321     		movs	r1, #67
+ 840 0164 D020     		movs	r0, #208
+ 841 0166 9FED840A 		vldr.32	s0, .L32+28
+ 842 016a FFF7FEFF 		bl	MPU6050_read
+ 843              	.LVL64:
+ 212:Core/Src/main_functions.c **** 
+ 844              		.loc 1 212 18 view .LVU186
+ 845 016e DFF82C82 		ldr	r8, .L32+64
+ 846 0172 C8F80000 		str	r0, [r8]
+ 215:Core/Src/main_functions.c **** 	gyro_data_value[1] = abs((int)(10*gyro_data_p[0])  % 10);
+ 847              		.loc 1 215 5 is_stmt 1 view .LVU187
+ 215:Core/Src/main_functions.c **** 	gyro_data_value[1] = abs((int)(10*gyro_data_p[0])  % 10);
+ 848              		.loc 1 215 46 is_stmt 0 view .LVU188
+ 849 0176 D0ED007A 		vldr.32	s15, [r0]
+ 215:Core/Src/main_functions.c **** 	gyro_data_value[1] = abs((int)(10*gyro_data_p[0])  % 10);
+ 850              		.loc 1 215 30 view .LVU189
+ 851 017a FDEEE77A 		vcvt.s32.f32	s15, s15
+ 852 017e 17EE903A 		vmov	r3, s15	@ int
+ 215:Core/Src/main_functions.c **** 	gyro_data_value[1] = abs((int)(10*gyro_data_p[0])  % 10);
+ 853              		.loc 1 215 26 view .LVU190
+ 854 0182 002B     		cmp	r3, #0
+ 855 0184 B8BF     		it	lt
+ 856 0186 5B42     		rsblt	r3, r3, #0
+ 215:Core/Src/main_functions.c **** 	gyro_data_value[1] = abs((int)(10*gyro_data_p[0])  % 10);
+ 857              		.loc 1 215 24 view .LVU191
+ 858 0188 7C4D     		ldr	r5, .L32+32
+ 859 018a 2B60     		str	r3, [r5]
+ 216:Core/Src/main_functions.c ****     gyro_data_value[2] = abs((int)(100*gyro_data_p[0]) % 10);
+ 860              		.loc 1 216 2 is_stmt 1 view .LVU192
+ 216:Core/Src/main_functions.c ****     gyro_data_value[2] = abs((int)(100*gyro_data_p[0]) % 10);
+ 861              		.loc 1 216 47 is_stmt 0 view .LVU193
+ 862 018c D0ED007A 		vldr.32	s15, [r0]
+ 216:Core/Src/main_functions.c ****     gyro_data_value[2] = abs((int)(100*gyro_data_p[0]) % 10);
+ 863              		.loc 1 216 35 view .LVU194
+ 864 0190 67EEA87A 		vmul.f32	s15, s15, s17
+ 216:Core/Src/main_functions.c ****     gyro_data_value[2] = abs((int)(100*gyro_data_p[0]) % 10);
+ 865              		.loc 1 216 27 view .LVU195
+ 866 0194 FDEEE77A 		vcvt.s32.f32	s15, s15
+ 867 0198 17EE902A 		vmov	r2, s15	@ int
+ARM GAS  C:\Users\samue\AppData\Local\Temp\cczngwaN.s 			page 25
+
+
+ 216:Core/Src/main_functions.c ****     gyro_data_value[2] = abs((int)(100*gyro_data_p[0]) % 10);
+ 868              		.loc 1 216 53 view .LVU196
+ 869 019c 84FB0231 		smull	r3, r1, r4, r2
+ 870 01a0 D317     		asrs	r3, r2, #31
+ 871 01a2 C3EBA103 		rsb	r3, r3, r1, asr #2
+ 872 01a6 03EB8303 		add	r3, r3, r3, lsl #2
+ 873 01aa A2EB4303 		sub	r3, r2, r3, lsl #1
+ 216:Core/Src/main_functions.c ****     gyro_data_value[2] = abs((int)(100*gyro_data_p[0]) % 10);
+ 874              		.loc 1 216 23 view .LVU197
+ 875 01ae 002B     		cmp	r3, #0
+ 876 01b0 B8BF     		it	lt
+ 877 01b2 5B42     		rsblt	r3, r3, #0
+ 216:Core/Src/main_functions.c ****     gyro_data_value[2] = abs((int)(100*gyro_data_p[0]) % 10);
+ 878              		.loc 1 216 21 view .LVU198
+ 879 01b4 6B60     		str	r3, [r5, #4]
+ 217:Core/Src/main_functions.c **** 
+ 880              		.loc 1 217 5 is_stmt 1 view .LVU199
+ 217:Core/Src/main_functions.c **** 
+ 881              		.loc 1 217 51 is_stmt 0 view .LVU200
+ 882 01b6 D0ED007A 		vldr.32	s15, [r0]
+ 217:Core/Src/main_functions.c **** 
+ 883              		.loc 1 217 39 view .LVU201
+ 884 01ba 67EE887A 		vmul.f32	s15, s15, s16
+ 217:Core/Src/main_functions.c **** 
+ 885              		.loc 1 217 30 view .LVU202
+ 886 01be FDEEE77A 		vcvt.s32.f32	s15, s15
+ 887 01c2 17EE902A 		vmov	r2, s15	@ int
+ 217:Core/Src/main_functions.c **** 
+ 888              		.loc 1 217 56 view .LVU203
+ 889 01c6 84FB0231 		smull	r3, r1, r4, r2
+ 890 01ca D317     		asrs	r3, r2, #31
+ 891 01cc C3EBA103 		rsb	r3, r3, r1, asr #2
+ 892 01d0 03EB8303 		add	r3, r3, r3, lsl #2
+ 893 01d4 A2EB4303 		sub	r3, r2, r3, lsl #1
+ 217:Core/Src/main_functions.c **** 
+ 894              		.loc 1 217 26 view .LVU204
+ 895 01d8 002B     		cmp	r3, #0
+ 896 01da B8BF     		it	lt
+ 897 01dc 5B42     		rsblt	r3, r3, #0
+ 217:Core/Src/main_functions.c **** 
+ 898              		.loc 1 217 24 view .LVU205
+ 899 01de AB60     		str	r3, [r5, #8]
+ 219:Core/Src/main_functions.c **** 	gyro_data_value[4] = abs((int)(10*gyro_data_p[1])  % 10);
+ 900              		.loc 1 219 2 is_stmt 1 view .LVU206
+ 219:Core/Src/main_functions.c **** 	gyro_data_value[4] = abs((int)(10*gyro_data_p[1])  % 10);
+ 901              		.loc 1 219 43 is_stmt 0 view .LVU207
+ 902 01e0 D0ED017A 		vldr.32	s15, [r0, #4]
+ 219:Core/Src/main_functions.c **** 	gyro_data_value[4] = abs((int)(10*gyro_data_p[1])  % 10);
+ 903              		.loc 1 219 27 view .LVU208
+ 904 01e4 FDEEE77A 		vcvt.s32.f32	s15, s15
+ 905 01e8 17EE903A 		vmov	r3, s15	@ int
+ 219:Core/Src/main_functions.c **** 	gyro_data_value[4] = abs((int)(10*gyro_data_p[1])  % 10);
+ 906              		.loc 1 219 23 view .LVU209
+ 907 01ec 002B     		cmp	r3, #0
+ 908 01ee B8BF     		it	lt
+ 909 01f0 5B42     		rsblt	r3, r3, #0
+ 219:Core/Src/main_functions.c **** 	gyro_data_value[4] = abs((int)(10*gyro_data_p[1])  % 10);
+ARM GAS  C:\Users\samue\AppData\Local\Temp\cczngwaN.s 			page 26
+
+
+ 910              		.loc 1 219 21 view .LVU210
+ 911 01f2 EB60     		str	r3, [r5, #12]
+ 220:Core/Src/main_functions.c ****     gyro_data_value[5] = abs((int)(100*gyro_data_p[1]) % 10);
+ 912              		.loc 1 220 2 is_stmt 1 view .LVU211
+ 220:Core/Src/main_functions.c ****     gyro_data_value[5] = abs((int)(100*gyro_data_p[1]) % 10);
+ 913              		.loc 1 220 47 is_stmt 0 view .LVU212
+ 914 01f4 D0ED017A 		vldr.32	s15, [r0, #4]
+ 220:Core/Src/main_functions.c ****     gyro_data_value[5] = abs((int)(100*gyro_data_p[1]) % 10);
+ 915              		.loc 1 220 35 view .LVU213
+ 916 01f8 67EEA87A 		vmul.f32	s15, s15, s17
+ 220:Core/Src/main_functions.c ****     gyro_data_value[5] = abs((int)(100*gyro_data_p[1]) % 10);
+ 917              		.loc 1 220 27 view .LVU214
+ 918 01fc FDEEE77A 		vcvt.s32.f32	s15, s15
+ 919 0200 17EE902A 		vmov	r2, s15	@ int
+ 220:Core/Src/main_functions.c ****     gyro_data_value[5] = abs((int)(100*gyro_data_p[1]) % 10);
+ 920              		.loc 1 220 53 view .LVU215
+ 921 0204 84FB0231 		smull	r3, r1, r4, r2
+ 922 0208 D317     		asrs	r3, r2, #31
+ 923 020a C3EBA103 		rsb	r3, r3, r1, asr #2
+ 924 020e 03EB8303 		add	r3, r3, r3, lsl #2
+ 925 0212 A2EB4303 		sub	r3, r2, r3, lsl #1
+ 220:Core/Src/main_functions.c ****     gyro_data_value[5] = abs((int)(100*gyro_data_p[1]) % 10);
+ 926              		.loc 1 220 23 view .LVU216
+ 927 0216 002B     		cmp	r3, #0
+ 928 0218 B8BF     		it	lt
+ 929 021a 5B42     		rsblt	r3, r3, #0
+ 220:Core/Src/main_functions.c ****     gyro_data_value[5] = abs((int)(100*gyro_data_p[1]) % 10);
+ 930              		.loc 1 220 21 view .LVU217
+ 931 021c 2B61     		str	r3, [r5, #16]
+ 221:Core/Src/main_functions.c **** 
+ 932              		.loc 1 221 5 is_stmt 1 view .LVU218
+ 221:Core/Src/main_functions.c **** 
+ 933              		.loc 1 221 51 is_stmt 0 view .LVU219
+ 934 021e D0ED017A 		vldr.32	s15, [r0, #4]
+ 221:Core/Src/main_functions.c **** 
+ 935              		.loc 1 221 39 view .LVU220
+ 936 0222 67EE887A 		vmul.f32	s15, s15, s16
+ 221:Core/Src/main_functions.c **** 
+ 937              		.loc 1 221 30 view .LVU221
+ 938 0226 FDEEE77A 		vcvt.s32.f32	s15, s15
+ 939 022a 17EE902A 		vmov	r2, s15	@ int
+ 221:Core/Src/main_functions.c **** 
+ 940              		.loc 1 221 56 view .LVU222
+ 941 022e 84FB0231 		smull	r3, r1, r4, r2
+ 942 0232 D317     		asrs	r3, r2, #31
+ 943 0234 C3EBA103 		rsb	r3, r3, r1, asr #2
+ 944 0238 03EB8303 		add	r3, r3, r3, lsl #2
+ 945 023c A2EB4303 		sub	r3, r2, r3, lsl #1
+ 221:Core/Src/main_functions.c **** 
+ 946              		.loc 1 221 26 view .LVU223
+ 947 0240 002B     		cmp	r3, #0
+ 948 0242 B8BF     		it	lt
+ 949 0244 5B42     		rsblt	r3, r3, #0
+ 221:Core/Src/main_functions.c **** 
+ 950              		.loc 1 221 24 view .LVU224
+ 951 0246 6B61     		str	r3, [r5, #20]
+ 223:Core/Src/main_functions.c **** 	gyro_data_value[7] = abs((int)(10*gyro_data_p[2])  % 10);
+ARM GAS  C:\Users\samue\AppData\Local\Temp\cczngwaN.s 			page 27
+
+
+ 952              		.loc 1 223 2 is_stmt 1 view .LVU225
+ 223:Core/Src/main_functions.c **** 	gyro_data_value[7] = abs((int)(10*gyro_data_p[2])  % 10);
+ 953              		.loc 1 223 43 is_stmt 0 view .LVU226
+ 954 0248 D0ED027A 		vldr.32	s15, [r0, #8]
+ 223:Core/Src/main_functions.c **** 	gyro_data_value[7] = abs((int)(10*gyro_data_p[2])  % 10);
+ 955              		.loc 1 223 27 view .LVU227
+ 956 024c FDEEE77A 		vcvt.s32.f32	s15, s15
+ 957 0250 17EE903A 		vmov	r3, s15	@ int
+ 223:Core/Src/main_functions.c **** 	gyro_data_value[7] = abs((int)(10*gyro_data_p[2])  % 10);
+ 958              		.loc 1 223 23 view .LVU228
+ 959 0254 002B     		cmp	r3, #0
+ 960 0256 B8BF     		it	lt
+ 961 0258 5B42     		rsblt	r3, r3, #0
+ 223:Core/Src/main_functions.c **** 	gyro_data_value[7] = abs((int)(10*gyro_data_p[2])  % 10);
+ 962              		.loc 1 223 21 view .LVU229
+ 963 025a AB61     		str	r3, [r5, #24]
+ 224:Core/Src/main_functions.c ****     gyro_data_value[8] = abs((int)(100*gyro_data_p[2]) % 10);
+ 964              		.loc 1 224 2 is_stmt 1 view .LVU230
+ 224:Core/Src/main_functions.c ****     gyro_data_value[8] = abs((int)(100*gyro_data_p[2]) % 10);
+ 965              		.loc 1 224 47 is_stmt 0 view .LVU231
+ 966 025c D0ED027A 		vldr.32	s15, [r0, #8]
+ 224:Core/Src/main_functions.c ****     gyro_data_value[8] = abs((int)(100*gyro_data_p[2]) % 10);
+ 967              		.loc 1 224 35 view .LVU232
+ 968 0260 67EEA87A 		vmul.f32	s15, s15, s17
+ 224:Core/Src/main_functions.c ****     gyro_data_value[8] = abs((int)(100*gyro_data_p[2]) % 10);
+ 969              		.loc 1 224 27 view .LVU233
+ 970 0264 FDEEE77A 		vcvt.s32.f32	s15, s15
+ 971 0268 17EE902A 		vmov	r2, s15	@ int
+ 224:Core/Src/main_functions.c ****     gyro_data_value[8] = abs((int)(100*gyro_data_p[2]) % 10);
+ 972              		.loc 1 224 53 view .LVU234
+ 973 026c 84FB0231 		smull	r3, r1, r4, r2
+ 974 0270 D317     		asrs	r3, r2, #31
+ 975 0272 C3EBA103 		rsb	r3, r3, r1, asr #2
+ 976 0276 03EB8303 		add	r3, r3, r3, lsl #2
+ 977 027a A2EB4303 		sub	r3, r2, r3, lsl #1
+ 224:Core/Src/main_functions.c ****     gyro_data_value[8] = abs((int)(100*gyro_data_p[2]) % 10);
+ 978              		.loc 1 224 23 view .LVU235
+ 979 027e 002B     		cmp	r3, #0
+ 980 0280 B8BF     		it	lt
+ 981 0282 5B42     		rsblt	r3, r3, #0
+ 224:Core/Src/main_functions.c ****     gyro_data_value[8] = abs((int)(100*gyro_data_p[2]) % 10);
+ 982              		.loc 1 224 21 view .LVU236
+ 983 0284 EB61     		str	r3, [r5, #28]
+ 225:Core/Src/main_functions.c **** 
+ 984              		.loc 1 225 5 is_stmt 1 view .LVU237
+ 225:Core/Src/main_functions.c **** 
+ 985              		.loc 1 225 51 is_stmt 0 view .LVU238
+ 986 0286 D0ED027A 		vldr.32	s15, [r0, #8]
+ 225:Core/Src/main_functions.c **** 
+ 987              		.loc 1 225 39 view .LVU239
+ 988 028a 67EE887A 		vmul.f32	s15, s15, s16
+ 225:Core/Src/main_functions.c **** 
+ 989              		.loc 1 225 30 view .LVU240
+ 990 028e FDEEE77A 		vcvt.s32.f32	s15, s15
+ 991 0292 17EE902A 		vmov	r2, s15	@ int
+ 225:Core/Src/main_functions.c **** 
+ 992              		.loc 1 225 56 view .LVU241
+ARM GAS  C:\Users\samue\AppData\Local\Temp\cczngwaN.s 			page 28
+
+
+ 993 0296 84FB0234 		smull	r3, r4, r4, r2
+ 994 029a D317     		asrs	r3, r2, #31
+ 995 029c C3EBA404 		rsb	r4, r3, r4, asr #2
+ 996 02a0 04EB8404 		add	r4, r4, r4, lsl #2
+ 997 02a4 A2EB4404 		sub	r4, r2, r4, lsl #1
+ 225:Core/Src/main_functions.c **** 
+ 998              		.loc 1 225 26 view .LVU242
+ 999 02a8 002C     		cmp	r4, #0
+ 1000 02aa B8BF     		it	lt
+ 1001 02ac 6442     		rsblt	r4, r4, #0
+ 225:Core/Src/main_functions.c **** 
+ 1002              		.loc 1 225 24 view .LVU243
+ 1003 02ae 2C62     		str	r4, [r5, #32]
+ 229:Core/Src/main_functions.c **** 
+ 1004              		.loc 1 229 5 is_stmt 1 view .LVU244
+ 1005 02b0 3B68     		ldr	r3, [r7]
+ 1006 02b2 93ED000A 		vldr.32	s0, [r3]
+ 1007 02b6 0196     		str	r6, [sp, #4]
+ 1008 02b8 0024     		movs	r4, #0
+ 1009 02ba 0094     		str	r4, [sp]
+ 1010 02bc 304B     		ldr	r3, .L32+36
+ 1011 02be 0322     		movs	r2, #3
+ 1012 02c0 0421     		movs	r1, #4
+ 1013 02c2 2046     		mov	r0, r4
+ 1014 02c4 FFF7FEFF 		bl	print_data
+ 1015              	.LVL65:
+ 232:Core/Src/main_functions.c **** 
+ 1016              		.loc 1 232 5 view .LVU245
+ 232:Core/Src/main_functions.c **** 
+ 1017              		.loc 1 232 60 is_stmt 0 view .LVU246
+ 1018 02c8 3B68     		ldr	r3, [r7]
+ 232:Core/Src/main_functions.c **** 
+ 1019              		.loc 1 232 5 view .LVU247
+ 1020 02ca 93ED010A 		vldr.32	s0, [r3, #4]
+ 1021 02ce 0196     		str	r6, [sp, #4]
+ 1022 02d0 4FF00309 		mov	r9, #3
+ 1023 02d4 CDF80090 		str	r9, [sp]
+ 1024 02d8 2A4B     		ldr	r3, .L32+40
+ 1025 02da 4322     		movs	r2, #67
+ 1026 02dc 4421     		movs	r1, #68
+ 1027 02de 4020     		movs	r0, #64
+ 1028 02e0 FFF7FEFF 		bl	print_data
+ 1029              	.LVL66:
+ 235:Core/Src/main_functions.c **** 
+ 1030              		.loc 1 235 5 is_stmt 1 view .LVU248
+ 235:Core/Src/main_functions.c **** 
+ 1031              		.loc 1 235 60 is_stmt 0 view .LVU249
+ 1032 02e4 3B68     		ldr	r3, [r7]
+ 235:Core/Src/main_functions.c **** 
+ 1033              		.loc 1 235 5 view .LVU250
+ 1034 02e6 93ED020A 		vldr.32	s0, [r3, #8]
+ 1035 02ea 0196     		str	r6, [sp, #4]
+ 1036 02ec 0626     		movs	r6, #6
+ 1037 02ee 0096     		str	r6, [sp]
+ 1038 02f0 254B     		ldr	r3, .L32+44
+ 1039 02f2 1722     		movs	r2, #23
+ 1040 02f4 1821     		movs	r1, #24
+ARM GAS  C:\Users\samue\AppData\Local\Temp\cczngwaN.s 			page 29
+
+
+ 1041 02f6 1420     		movs	r0, #20
+ 1042 02f8 FFF7FEFF 		bl	print_data
+ 1043              	.LVL67:
+ 238:Core/Src/main_functions.c **** 
+ 1044              		.loc 1 238 5 is_stmt 1 view .LVU251
+ 1045 02fc D8F80030 		ldr	r3, [r8]
+ 1046 0300 93ED000A 		vldr.32	s0, [r3]
+ 1047 0304 0195     		str	r5, [sp, #4]
+ 1048 0306 0094     		str	r4, [sp]
+ 1049 0308 204B     		ldr	r3, .L32+48
+ 1050 030a 0D22     		movs	r2, #13
+ 1051 030c 0E21     		movs	r1, #14
+ 1052 030e 0A20     		movs	r0, #10
+ 1053 0310 FFF7FEFF 		bl	print_data
+ 1054              	.LVL68:
+ 241:Core/Src/main_functions.c **** 
+ 1055              		.loc 1 241 5 view .LVU252
+ 241:Core/Src/main_functions.c **** 
+ 1056              		.loc 1 241 59 is_stmt 0 view .LVU253
+ 1057 0314 D8F80030 		ldr	r3, [r8]
+ 241:Core/Src/main_functions.c **** 
+ 1058              		.loc 1 241 5 view .LVU254
+ 1059 0318 93ED010A 		vldr.32	s0, [r3, #4]
+ 1060 031c 0195     		str	r5, [sp, #4]
+ 1061 031e CDF80090 		str	r9, [sp]
+ 1062 0322 1B4B     		ldr	r3, .L32+52
+ 1063 0324 4D22     		movs	r2, #77
+ 1064 0326 4E21     		movs	r1, #78
+ 1065 0328 4A20     		movs	r0, #74
+ 1066 032a FFF7FEFF 		bl	print_data
+ 1067              	.LVL69:
+ 244:Core/Src/main_functions.c **** 
+ 1068              		.loc 1 244 5 is_stmt 1 view .LVU255
+ 244:Core/Src/main_functions.c **** 
+ 1069              		.loc 1 244 59 is_stmt 0 view .LVU256
+ 1070 032e D8F80030 		ldr	r3, [r8]
+ 244:Core/Src/main_functions.c **** 
+ 1071              		.loc 1 244 5 view .LVU257
+ 1072 0332 93ED020A 		vldr.32	s0, [r3, #8]
+ 1073 0336 0195     		str	r5, [sp, #4]
+ 1074 0338 0096     		str	r6, [sp]
+ 1075 033a 164B     		ldr	r3, .L32+56
+ 1076 033c 2122     		movs	r2, #33
+ 1077 033e 2221     		movs	r1, #34
+ 1078 0340 1E20     		movs	r0, #30
+ 1079 0342 FFF7FEFF 		bl	print_data
+ 1080              	.LVL70:
+ 247:Core/Src/main_functions.c **** 	lcd_send_string("                    ");
+ 1081              		.loc 1 247 2 is_stmt 1 view .LVU258
+ 1082 0346 D420     		movs	r0, #212
+ 1083 0348 FFF7FEFF 		bl	lcd_send_cmd
+ 1084              	.LVL71:
+ 248:Core/Src/main_functions.c **** }
+ 1085              		.loc 1 248 2 view .LVU259
+ 1086 034c 1248     		ldr	r0, .L32+60
+ 1087 034e FFF7FEFF 		bl	lcd_send_string
+ 1088              	.LVL72:
+ARM GAS  C:\Users\samue\AppData\Local\Temp\cczngwaN.s 			page 30
+
+
+ 249:Core/Src/main_functions.c **** 
+ 1089              		.loc 1 249 1 is_stmt 0 view .LVU260
+ 1090 0352 03B0     		add	sp, sp, #12
+ 1091              	.LCFI12:
+ 1092              		.cfi_def_cfa_offset 36
+ 1093              		@ sp needed
+ 1094 0354 BDEC028B 		vldm	sp!, {d8}
+ 1095              	.LCFI13:
+ 1096              		.cfi_restore 80
+ 1097              		.cfi_restore 81
+ 1098              		.cfi_def_cfa_offset 28
+ 1099 0358 BDE8F083 		pop	{r4, r5, r6, r7, r8, r9, pc}
+ 1100              	.L33:
+ 1101              		.align	2
+ 1102              	.L32:
+ 1103 035c 00000000 		.word	.LANCHOR3
+ 1104 0360 00008046 		.word	1182793728
+ 1105 0364 00000000 		.word	.LANCHOR10
+ 1106 0368 00000000 		.word	.LANCHOR11
+ 1107 036c 67666666 		.word	1717986919
+ 1108 0370 0000C842 		.word	1120403456
+ 1109 0374 00000000 		.word	.LANCHOR5
+ 1110 0378 00000343 		.word	1124270080
+ 1111 037c 00000000 		.word	.LANCHOR13
+ 1112 0380 00000000 		.word	.LANCHOR14
+ 1113 0384 00000000 		.word	.LANCHOR15
+ 1114 0388 00000000 		.word	.LANCHOR16
+ 1115 038c 00000000 		.word	.LANCHOR17
+ 1116 0390 00000000 		.word	.LANCHOR18
+ 1117 0394 00000000 		.word	.LANCHOR19
+ 1118 0398 00000000 		.word	.LC15
+ 1119 039c 00000000 		.word	.LANCHOR12
+ 1120              		.cfi_endproc
+ 1121              	.LFE135:
+ 1123              		.global	FSM
+ 1124              		.global	Gz_string
+ 1125              		.global	Gy_string
+ 1126              		.global	Gx_string
+ 1127              		.global	Az_string
+ 1128              		.global	Ay_string
+ 1129              		.global	Ax_string
+ 1130              		.global	line_pos
+ 1131              		.global	buf
+ 1132              		.global	zero_corr
+ 1133              		.global	gyro_corr_p
+ 1134              		.global	gyro_corr
+ 1135              		.global	gyro_data_p
+ 1136              		.global	gyro_data_value
+ 1137              		.global	accel_corr_p
+ 1138              		.global	accel_corr
+ 1139              		.global	accel_data_p
+ 1140              		.global	accel_data_value
+ 1141              		.global	state
+ 1142              		.global	flag
+ 1143              		.section	.bss.accel_corr,"aw",%nobits
+ 1144              		.align	2
+ 1145              		.set	.LANCHOR3,. + 0
+ARM GAS  C:\Users\samue\AppData\Local\Temp\cczngwaN.s 			page 31
+
+
+ 1148              	accel_corr:
+ 1149 0000 00000000 		.space	12
+ 1149      00000000 
+ 1149      00000000 
+ 1150              		.section	.bss.accel_corr_p,"aw",%nobits
+ 1151              		.align	2
+ 1152              		.set	.LANCHOR2,. + 0
+ 1155              	accel_corr_p:
+ 1156 0000 00000000 		.space	4
+ 1157              		.section	.bss.accel_data_p,"aw",%nobits
+ 1158              		.align	2
+ 1159              		.set	.LANCHOR10,. + 0
+ 1162              	accel_data_p:
+ 1163 0000 00000000 		.space	4
+ 1164              		.section	.bss.accel_data_value,"aw",%nobits
+ 1165              		.align	2
+ 1166              		.set	.LANCHOR11,. + 0
+ 1169              	accel_data_value:
+ 1170 0000 00000000 		.space	36
+ 1170      00000000 
+ 1170      00000000 
+ 1170      00000000 
+ 1170      00000000 
+ 1171              		.section	.bss.buf,"aw",%nobits
+ 1172              		.align	2
+ 1173              		.set	.LANCHOR7,. + 0
+ 1176              	buf:
+ 1177 0000 00000000 		.space	6
+ 1177      0000
+ 1178              		.section	.bss.flag,"aw",%nobits
+ 1179              		.set	.LANCHOR0,. + 0
+ 1182              	flag:
+ 1183 0000 00       		.space	1
+ 1184              		.section	.bss.gyro_corr,"aw",%nobits
+ 1185              		.align	2
+ 1186              		.set	.LANCHOR5,. + 0
+ 1189              	gyro_corr:
+ 1190 0000 00000000 		.space	12
+ 1190      00000000 
+ 1190      00000000 
+ 1191              		.section	.bss.gyro_corr_p,"aw",%nobits
+ 1192              		.align	2
+ 1193              		.set	.LANCHOR4,. + 0
+ 1196              	gyro_corr_p:
+ 1197 0000 00000000 		.space	4
+ 1198              		.section	.bss.gyro_data_p,"aw",%nobits
+ 1199              		.align	2
+ 1200              		.set	.LANCHOR12,. + 0
+ 1203              	gyro_data_p:
+ 1204 0000 00000000 		.space	4
+ 1205              		.section	.bss.gyro_data_value,"aw",%nobits
+ 1206              		.align	2
+ 1207              		.set	.LANCHOR13,. + 0
+ 1210              	gyro_data_value:
+ 1211 0000 00000000 		.space	36
+ 1211      00000000 
+ 1211      00000000 
+ARM GAS  C:\Users\samue\AppData\Local\Temp\cczngwaN.s 			page 32
+
+
+ 1211      00000000 
+ 1211      00000000 
+ 1212              		.section	.bss.line_pos,"aw",%nobits
+ 1213              		.set	.LANCHOR9,. + 0
+ 1216              	line_pos:
+ 1217 0000 00       		.space	1
+ 1218              		.section	.bss.state,"aw",%nobits
+ 1219              		.align	2
+ 1220              		.set	.LANCHOR6,. + 0
+ 1223              	state:
+ 1224 0000 00000000 		.space	4
+ 1225              		.section	.bss.zero_corr,"aw",%nobits
+ 1226              		.align	2
+ 1227              		.set	.LANCHOR1,. + 0
+ 1230              	zero_corr:
+ 1231 0000 00000000 		.space	12
+ 1231      00000000 
+ 1231      00000000 
+ 1232              		.section	.data.Ax_string,"aw"
+ 1233              		.align	2
+ 1234              		.set	.LANCHOR14,. + 0
+ 1237              	Ax_string:
+ 1238 0000 41783D20 		.ascii	"Ax=       \000"
+ 1238      20202020 
+ 1238      202000
+ 1239              		.section	.data.Ay_string,"aw"
+ 1240              		.align	2
+ 1241              		.set	.LANCHOR15,. + 0
+ 1244              	Ay_string:
+ 1245 0000 41793D20 		.ascii	"Ay=       \000"
+ 1245      20202020 
+ 1245      202000
+ 1246              		.section	.data.Az_string,"aw"
+ 1247              		.align	2
+ 1248              		.set	.LANCHOR16,. + 0
+ 1251              	Az_string:
+ 1252 0000 417A3D20 		.ascii	"Az=       \000"
+ 1252      20202020 
+ 1252      202000
+ 1253              		.section	.data.Gx_string,"aw"
+ 1254              		.align	2
+ 1255              		.set	.LANCHOR17,. + 0
+ 1258              	Gx_string:
+ 1259 0000 47783D20 		.ascii	"Gx=       \000"
+ 1259      20202020 
+ 1259      202000
+ 1260              		.section	.data.Gy_string,"aw"
+ 1261              		.align	2
+ 1262              		.set	.LANCHOR18,. + 0
+ 1265              	Gy_string:
+ 1266 0000 47793D20 		.ascii	"Gy=       \000"
+ 1266      20202020 
+ 1266      202000
+ 1267              		.section	.data.Gz_string,"aw"
+ 1268              		.align	2
+ 1269              		.set	.LANCHOR19,. + 0
+ 1272              	Gz_string:
+ARM GAS  C:\Users\samue\AppData\Local\Temp\cczngwaN.s 			page 33
+
+
+ 1273 0000 477A3D20 		.ascii	"Gz=       \000"
+ 1273      20202020 
+ 1273      202000
+ 1274              		.section	.rodata.FSM,"a"
+ 1275              		.align	2
+ 1276              		.set	.LANCHOR8,. + 0
+ 1279              	FSM:
+ 1280 0000 00000000 		.word	normal
+ 1281 0004 F4010000 		.word	500
+ 1282 0008 00000000 		.word	0
+ 1283 000c 01000000 		.word	1
+ 1284 0010 00000000 		.word	accel_cal_prep
+ 1285 0014 E8030000 		.word	1000
+ 1286 0018 01000000 		.word	1
+ 1287 001c 02000000 		.word	2
+ 1288 0020 00000000 		.word	accel_cal
+ 1289 0024 D0070000 		.word	2000
+ 1290 0028 00000000 		.word	0
+ 1291 002c 00000000 		.word	0
+ 1292              		.text
+ 1293              	.Letext0:
+ 1294              		.file 2 "c:\\dev_tools\\gcc-arm-none-eabi-10.3-2021.10-win32\\gcc-arm-none-eabi-10.3-2021.10\\arm-
+ 1295              		.file 3 "c:\\dev_tools\\gcc-arm-none-eabi-10.3-2021.10-win32\\gcc-arm-none-eabi-10.3-2021.10\\arm-
+ 1296              		.file 4 "Core/Inc/i2c-lcd.h"
+ 1297              		.file 5 "Core/Inc/accelerometer_data.h"
+ 1298              		.file 6 "c:\\dev_tools\\gcc-arm-none-eabi-10.3-2021.10-win32\\gcc-arm-none-eabi-10.3-2021.10\\arm-
+ 1299              		.file 7 "Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h"
+ 1300              		.file 8 "Device-Drivers/Inc/sd-card-spi.h"
+ARM GAS  C:\Users\samue\AppData\Local\Temp\cczngwaN.s 			page 34
 
 
 DEFINED SYMBOLS
                             *ABS*:00000000 main_functions.c
-C:\Users\samue\AppData\Local\Temp\ccxwy6p9.s:20     .rodata.accel_cal_prep.str1.4:00000000 $d
-C:\Users\samue\AppData\Local\Temp\ccxwy6p9.s:30     .text.accel_cal_prep:00000000 $t
-C:\Users\samue\AppData\Local\Temp\ccxwy6p9.s:36     .text.accel_cal_prep:00000000 accel_cal_prep
-C:\Users\samue\AppData\Local\Temp\ccxwy6p9.s:95     .text.accel_cal_prep:0000003c $d
-C:\Users\samue\AppData\Local\Temp\ccxwy6p9.s:103    .rodata.accel_cal.str1.4:00000000 $d
-C:\Users\samue\AppData\Local\Temp\ccxwy6p9.s:107    .text.accel_cal:00000000 $t
-C:\Users\samue\AppData\Local\Temp\ccxwy6p9.s:113    .text.accel_cal:00000000 accel_cal
-C:\Users\samue\AppData\Local\Temp\ccxwy6p9.s:196    .text.accel_cal:0000005c $d
-C:\Users\samue\AppData\Local\Temp\ccxwy6p9.s:209    .rodata.main_function.str1.4:00000000 $d
-C:\Users\samue\AppData\Local\Temp\ccxwy6p9.s:213    .text.main_function:00000000 $t
-C:\Users\samue\AppData\Local\Temp\ccxwy6p9.s:219    .text.main_function:00000000 main_function
-C:\Users\samue\AppData\Local\Temp\ccxwy6p9.s:295    .text.main_function:0000005c $d
-C:\Users\samue\AppData\Local\Temp\ccxwy6p9.s:303    .text.HAL_GPIO_EXTI_Callback:00000000 $t
-C:\Users\samue\AppData\Local\Temp\ccxwy6p9.s:309    .text.HAL_GPIO_EXTI_Callback:00000000 HAL_GPIO_EXTI_Callback
-C:\Users\samue\AppData\Local\Temp\ccxwy6p9.s:327    .text.HAL_GPIO_EXTI_Callback:00000008 $d
-C:\Users\samue\AppData\Local\Temp\ccxwy6p9.s:332    .rodata.print_data.str1.4:00000000 $d
-C:\Users\samue\AppData\Local\Temp\ccxwy6p9.s:339    .text.print_data:00000000 $t
-C:\Users\samue\AppData\Local\Temp\ccxwy6p9.s:345    .text.print_data:00000000 print_data
-C:\Users\samue\AppData\Local\Temp\ccxwy6p9.s:460    .text.print_data:00000090 $d
-C:\Users\samue\AppData\Local\Temp\ccxwy6p9.s:468    .rodata.normal.str1.4:00000000 $d
-C:\Users\samue\AppData\Local\Temp\ccxwy6p9.s:472    .text.normal:00000000 $t
-C:\Users\samue\AppData\Local\Temp\ccxwy6p9.s:478    .text.normal:00000000 normal
-C:\Users\samue\AppData\Local\Temp\ccxwy6p9.s:940    .text.normal:0000035c $d
-C:\Users\samue\AppData\Local\Temp\ccxwy6p9.s:1116   .rodata.FSM:00000000 FSM
-C:\Users\samue\AppData\Local\Temp\ccxwy6p9.s:1109   .data.Gz_string:00000000 Gz_string
-C:\Users\samue\AppData\Local\Temp\ccxwy6p9.s:1102   .data.Gy_string:00000000 Gy_string
-C:\Users\samue\AppData\Local\Temp\ccxwy6p9.s:1095   .data.Gx_string:00000000 Gx_string
-C:\Users\samue\AppData\Local\Temp\ccxwy6p9.s:1088   .data.Az_string:00000000 Az_string
-C:\Users\samue\AppData\Local\Temp\ccxwy6p9.s:1081   .data.Ay_string:00000000 Ay_string
-C:\Users\samue\AppData\Local\Temp\ccxwy6p9.s:1074   .data.Ax_string:00000000 Ax_string
-C:\Users\samue\AppData\Local\Temp\ccxwy6p9.s:1053   .bss.line_pos:00000000 line_pos
-C:\Users\samue\AppData\Local\Temp\ccxwy6p9.s:1013   .bss.buf:00000000 buf
-C:\Users\samue\AppData\Local\Temp\ccxwy6p9.s:1067   .bss.zero_corr:00000000 zero_corr
-C:\Users\samue\AppData\Local\Temp\ccxwy6p9.s:1033   .bss.gyro_corr_p:00000000 gyro_corr_p
-C:\Users\samue\AppData\Local\Temp\ccxwy6p9.s:1026   .bss.gyro_corr:00000000 gyro_corr
-C:\Users\samue\AppData\Local\Temp\ccxwy6p9.s:1040   .bss.gyro_data_p:00000000 gyro_data_p
-C:\Users\samue\AppData\Local\Temp\ccxwy6p9.s:1047   .bss.gyro_data_value:00000000 gyro_data_value
-C:\Users\samue\AppData\Local\Temp\ccxwy6p9.s:992    .bss.accel_corr_p:00000000 accel_corr_p
-C:\Users\samue\AppData\Local\Temp\ccxwy6p9.s:985    .bss.accel_corr:00000000 accel_corr
-C:\Users\samue\AppData\Local\Temp\ccxwy6p9.s:999    .bss.accel_data_p:00000000 accel_data_p
-C:\Users\samue\AppData\Local\Temp\ccxwy6p9.s:1006   .bss.accel_data_value:00000000 accel_data_value
-C:\Users\samue\AppData\Local\Temp\ccxwy6p9.s:1060   .bss.state:00000000 state
-C:\Users\samue\AppData\Local\Temp\ccxwy6p9.s:1019   .bss.flag:00000000 flag
-C:\Users\samue\AppData\Local\Temp\ccxwy6p9.s:981    .bss.accel_corr:00000000 $d
-C:\Users\samue\AppData\Local\Temp\ccxwy6p9.s:988    .bss.accel_corr_p:00000000 $d
-C:\Users\samue\AppData\Local\Temp\ccxwy6p9.s:995    .bss.accel_data_p:00000000 $d
-C:\Users\samue\AppData\Local\Temp\ccxwy6p9.s:1002   .bss.accel_data_value:00000000 $d
-C:\Users\samue\AppData\Local\Temp\ccxwy6p9.s:1009   .bss.buf:00000000 $d
-C:\Users\samue\AppData\Local\Temp\ccxwy6p9.s:1020   .bss.flag:00000000 $d
-C:\Users\samue\AppData\Local\Temp\ccxwy6p9.s:1022   .bss.gyro_corr:00000000 $d
-C:\Users\samue\AppData\Local\Temp\ccxwy6p9.s:1029   .bss.gyro_corr_p:00000000 $d
-C:\Users\samue\AppData\Local\Temp\ccxwy6p9.s:1036   .bss.gyro_data_p:00000000 $d
-C:\Users\samue\AppData\Local\Temp\ccxwy6p9.s:1043   .bss.gyro_data_value:00000000 $d
-C:\Users\samue\AppData\Local\Temp\ccxwy6p9.s:1054   .bss.line_pos:00000000 $d
-C:\Users\samue\AppData\Local\Temp\ccxwy6p9.s:1056   .bss.state:00000000 $d
-ARM GAS  C:\Users\samue\AppData\Local\Temp\ccxwy6p9.s 			page 30
+C:\Users\samue\AppData\Local\Temp\cczngwaN.s:20     .rodata.accel_cal_prep.str1.4:00000000 $d
+C:\Users\samue\AppData\Local\Temp\cczngwaN.s:30     .text.accel_cal_prep:00000000 $t
+C:\Users\samue\AppData\Local\Temp\cczngwaN.s:36     .text.accel_cal_prep:00000000 accel_cal_prep
+C:\Users\samue\AppData\Local\Temp\cczngwaN.s:95     .text.accel_cal_prep:0000003c $d
+C:\Users\samue\AppData\Local\Temp\cczngwaN.s:103    .rodata.accel_cal.str1.4:00000000 $d
+C:\Users\samue\AppData\Local\Temp\cczngwaN.s:107    .text.accel_cal:00000000 $t
+C:\Users\samue\AppData\Local\Temp\cczngwaN.s:113    .text.accel_cal:00000000 accel_cal
+C:\Users\samue\AppData\Local\Temp\cczngwaN.s:196    .text.accel_cal:0000005c $d
+C:\Users\samue\AppData\Local\Temp\cczngwaN.s:209    .rodata.main_function.str1.4:00000000 $d
+C:\Users\samue\AppData\Local\Temp\cczngwaN.s:237    .text.main_function:00000000 $t
+C:\Users\samue\AppData\Local\Temp\cczngwaN.s:243    .text.main_function:00000000 main_function
+C:\Users\samue\AppData\Local\Temp\cczngwaN.s:449    .text.main_function:00000110 $d
+C:\Users\samue\AppData\Local\Temp\cczngwaN.s:466    .text.HAL_GPIO_EXTI_Callback:00000000 $t
+C:\Users\samue\AppData\Local\Temp\cczngwaN.s:472    .text.HAL_GPIO_EXTI_Callback:00000000 HAL_GPIO_EXTI_Callback
+C:\Users\samue\AppData\Local\Temp\cczngwaN.s:490    .text.HAL_GPIO_EXTI_Callback:00000008 $d
+C:\Users\samue\AppData\Local\Temp\cczngwaN.s:495    .rodata.print_data.str1.4:00000000 $d
+C:\Users\samue\AppData\Local\Temp\cczngwaN.s:502    .text.print_data:00000000 $t
+C:\Users\samue\AppData\Local\Temp\cczngwaN.s:508    .text.print_data:00000000 print_data
+C:\Users\samue\AppData\Local\Temp\cczngwaN.s:623    .text.print_data:00000090 $d
+C:\Users\samue\AppData\Local\Temp\cczngwaN.s:631    .rodata.normal.str1.4:00000000 $d
+C:\Users\samue\AppData\Local\Temp\cczngwaN.s:635    .text.normal:00000000 $t
+C:\Users\samue\AppData\Local\Temp\cczngwaN.s:641    .text.normal:00000000 normal
+C:\Users\samue\AppData\Local\Temp\cczngwaN.s:1103   .text.normal:0000035c $d
+C:\Users\samue\AppData\Local\Temp\cczngwaN.s:1279   .rodata.FSM:00000000 FSM
+C:\Users\samue\AppData\Local\Temp\cczngwaN.s:1272   .data.Gz_string:00000000 Gz_string
+C:\Users\samue\AppData\Local\Temp\cczngwaN.s:1265   .data.Gy_string:00000000 Gy_string
+C:\Users\samue\AppData\Local\Temp\cczngwaN.s:1258   .data.Gx_string:00000000 Gx_string
+C:\Users\samue\AppData\Local\Temp\cczngwaN.s:1251   .data.Az_string:00000000 Az_string
+C:\Users\samue\AppData\Local\Temp\cczngwaN.s:1244   .data.Ay_string:00000000 Ay_string
+C:\Users\samue\AppData\Local\Temp\cczngwaN.s:1237   .data.Ax_string:00000000 Ax_string
+C:\Users\samue\AppData\Local\Temp\cczngwaN.s:1216   .bss.line_pos:00000000 line_pos
+C:\Users\samue\AppData\Local\Temp\cczngwaN.s:1176   .bss.buf:00000000 buf
+C:\Users\samue\AppData\Local\Temp\cczngwaN.s:1230   .bss.zero_corr:00000000 zero_corr
+C:\Users\samue\AppData\Local\Temp\cczngwaN.s:1196   .bss.gyro_corr_p:00000000 gyro_corr_p
+C:\Users\samue\AppData\Local\Temp\cczngwaN.s:1189   .bss.gyro_corr:00000000 gyro_corr
+C:\Users\samue\AppData\Local\Temp\cczngwaN.s:1203   .bss.gyro_data_p:00000000 gyro_data_p
+C:\Users\samue\AppData\Local\Temp\cczngwaN.s:1210   .bss.gyro_data_value:00000000 gyro_data_value
+C:\Users\samue\AppData\Local\Temp\cczngwaN.s:1155   .bss.accel_corr_p:00000000 accel_corr_p
+C:\Users\samue\AppData\Local\Temp\cczngwaN.s:1148   .bss.accel_corr:00000000 accel_corr
+C:\Users\samue\AppData\Local\Temp\cczngwaN.s:1162   .bss.accel_data_p:00000000 accel_data_p
+C:\Users\samue\AppData\Local\Temp\cczngwaN.s:1169   .bss.accel_data_value:00000000 accel_data_value
+C:\Users\samue\AppData\Local\Temp\cczngwaN.s:1223   .bss.state:00000000 state
+C:\Users\samue\AppData\Local\Temp\cczngwaN.s:1182   .bss.flag:00000000 flag
+C:\Users\samue\AppData\Local\Temp\cczngwaN.s:1144   .bss.accel_corr:00000000 $d
+C:\Users\samue\AppData\Local\Temp\cczngwaN.s:1151   .bss.accel_corr_p:00000000 $d
+C:\Users\samue\AppData\Local\Temp\cczngwaN.s:1158   .bss.accel_data_p:00000000 $d
+C:\Users\samue\AppData\Local\Temp\cczngwaN.s:1165   .bss.accel_data_value:00000000 $d
+C:\Users\samue\AppData\Local\Temp\cczngwaN.s:1172   .bss.buf:00000000 $d
+C:\Users\samue\AppData\Local\Temp\cczngwaN.s:1183   .bss.flag:00000000 $d
+C:\Users\samue\AppData\Local\Temp\cczngwaN.s:1185   .bss.gyro_corr:00000000 $d
+C:\Users\samue\AppData\Local\Temp\cczngwaN.s:1192   .bss.gyro_corr_p:00000000 $d
+C:\Users\samue\AppData\Local\Temp\cczngwaN.s:1199   .bss.gyro_data_p:00000000 $d
+C:\Users\samue\AppData\Local\Temp\cczngwaN.s:1206   .bss.gyro_data_value:00000000 $d
+C:\Users\samue\AppData\Local\Temp\cczngwaN.s:1217   .bss.line_pos:00000000 $d
+C:\Users\samue\AppData\Local\Temp\cczngwaN.s:1219   .bss.state:00000000 $d
+ARM GAS  C:\Users\samue\AppData\Local\Temp\cczngwaN.s 			page 35
 
 
-C:\Users\samue\AppData\Local\Temp\ccxwy6p9.s:1063   .bss.zero_corr:00000000 $d
-C:\Users\samue\AppData\Local\Temp\ccxwy6p9.s:1070   .data.Ax_string:00000000 $d
-C:\Users\samue\AppData\Local\Temp\ccxwy6p9.s:1077   .data.Ay_string:00000000 $d
-C:\Users\samue\AppData\Local\Temp\ccxwy6p9.s:1084   .data.Az_string:00000000 $d
-C:\Users\samue\AppData\Local\Temp\ccxwy6p9.s:1091   .data.Gx_string:00000000 $d
-C:\Users\samue\AppData\Local\Temp\ccxwy6p9.s:1098   .data.Gy_string:00000000 $d
-C:\Users\samue\AppData\Local\Temp\ccxwy6p9.s:1105   .data.Gz_string:00000000 $d
-C:\Users\samue\AppData\Local\Temp\ccxwy6p9.s:1112   .rodata.FSM:00000000 $d
+C:\Users\samue\AppData\Local\Temp\cczngwaN.s:1226   .bss.zero_corr:00000000 $d
+C:\Users\samue\AppData\Local\Temp\cczngwaN.s:1233   .data.Ax_string:00000000 $d
+C:\Users\samue\AppData\Local\Temp\cczngwaN.s:1240   .data.Ay_string:00000000 $d
+C:\Users\samue\AppData\Local\Temp\cczngwaN.s:1247   .data.Az_string:00000000 $d
+C:\Users\samue\AppData\Local\Temp\cczngwaN.s:1254   .data.Gx_string:00000000 $d
+C:\Users\samue\AppData\Local\Temp\cczngwaN.s:1261   .data.Gy_string:00000000 $d
+C:\Users\samue\AppData\Local\Temp\cczngwaN.s:1268   .data.Gz_string:00000000 $d
+C:\Users\samue\AppData\Local\Temp\cczngwaN.s:1275   .rodata.FSM:00000000 $d
 
 UNDEFINED SYMBOLS
 lcd_send_cmd
@@ -1748,5 +2029,6 @@ MPU6050_read
 lcd_init
 MPU6050_Init
 HAL_Delay
-sd_card
+sd_card_init
+sd_card_space
 sprintf

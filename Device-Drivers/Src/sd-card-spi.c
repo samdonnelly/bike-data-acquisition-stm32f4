@@ -17,6 +17,7 @@
 #include <stdlib.h>
 #include <stdint.h>
 #include <string.h>
+#include <stdbool.h>
 
 #include "main_functions.h"
 #include "sd-card-spi.h"
@@ -31,7 +32,7 @@
  * ---------------------------------------------------------------------------------------------
  */
 
-typedef struct spi_vars {
+typedef struct sd_card_file_system {
     //
     FATFS    fs;            // file system 
     FIL      fil;           // file 
@@ -44,12 +45,16 @@ typedef struct spi_vars {
     // Capacity related variables 
     FATFS     *pfs;
     DWORD     fre_clust;
-    uint32_t  total;
-    uint32_t  free_space;
+    uint64_t  total;
+    uint64_t  free_space;
 
-} spi_vars;
+    //
+    bool sd_card_status;
+
+} sd_card_file_system;
 
 
+static sd_card_file_system sd_card_1;
 
 
 /* 
@@ -58,113 +63,89 @@ typedef struct spi_vars {
  * ---------------------------------------------------------------------------------------------
  */
 
-// Main SD card function 
-void sd_card(uint8_t func) 
-{
-    // Initialize data for SD card 
-    static spi_vars sd_card_1;
-
-    // Choose SD card function 
-    switch (func) 
-    {
-    case 0:
-        sd_card_init(&sd_card_1);
-        break;
-
-    // case 1:
-    //     sd_card_create_file(void);
-    //     break;
-
-    // case 2:
-    //     sd_card_update_file(void);
-    //     break;
-
-    // case 3:
-    //     sd_card_remove_file(void);
-    //     break;
-
-    case 4:
-        sd_card_space(&sd_card_1);
-        break;
-    
-    default:
-        break;
-    }
-}
-
-
 // Initialize SD Card
-void sd_card_init(spi_vars *card) 
+bool sd_card_init(void) 
 {
     // Mount SD card
-    card->fresult = f_mount(&(card->fs), "", 0);
+    sd_card_1.fresult = f_mount(&(sd_card_1.fs), "", 0);
 
-    if (card->fresult != FR_OK) 
+    if (sd_card_1.fresult != FR_OK) 
     {
-        // send_uart("Error mounting SD card.\r\n");
-        lcd_send_cmd(0x80|0x00);
-	    lcd_send_string("Error mounting SD");
-        lcd_send_cmd(0x80|0x40);
-	    lcd_send_string("card");
-
-        // If there is an error then enter an error state 
+        sd_card_1.sd_card_status = false;
     }
     else 
     {
-        // send_uart("SD card mounted successfully.\r\n");
-        lcd_send_cmd(0x80|0x00);
-	    lcd_send_string("SD card mounted");
-        lcd_send_cmd(0x80|0x40);
-	    lcd_send_string("successfully");
+        sd_card_1.sd_card_status = true;
     }
 
-    // Give time to read message 
-    HAL_Delay(1500);
-
-    // Clear display 
-    lcd_clear();
+    return sd_card_1.sd_card_status;
 }
 
-void sd_card_space(spi_vars *card)
+
+uint16_t sd_card_space(uint8_t space_parameter)
 {
-    // 
+    //
+    uint16_t space_size;
+
+    // Clear buffer 
+    bufclear(&sd_card_1);
+
     // Get capacity of SD card 
-    f_getfree("", &(card->fre_clust), &(card->pfs));
+    f_getfree("", &(sd_card_1.fre_clust), &(sd_card_1.pfs));
 
-    card->total = (uint32_t)((card->pfs->n_fatent - 2)*(card->pfs->csize)*0.5);
-    // sprintf(card->buffer, "SD card total size: \t%lu\r\n", card->total);
-    // send_uart(card->buffer);
-    lcd_send_cmd(0x80|0x00);
-    lcd_send_string("SD card total size:");
-    // sprintf(card->buffer, "%lu", card->total);
-    sprintf(card->buffer, "%ld", card->total);
-    lcd_send_cmd(0x80|0x40);
+    // Choose which value to get 
+    switch (space_parameter)
+    {
+        case 0:  // TOTAL_SPACE
+            sd_card_1.total = (uint64_t)((sd_card_1.pfs->n_fatent - 2)*(sd_card_1.pfs->csize)*0.5);
+            space_size = (uint16_t)(sd_card_1.total / 1000000);
+            break;
+        
+        case 1:  // FREE_SPACE
+            sd_card_1.free_space = (uint64_t)((sd_card_1.fre_clust)*(sd_card_1.pfs->csize)*0.5);
+            space_size = (uint16_t)(sd_card_1.free_space / 1000000);
+            break;
+        
+        default:
+            break;
+    }
 
-    // Give time to read message 
-    HAL_Delay(3000);
+    // sd_card_1.total = (uint64_t)((sd_card_1.pfs->n_fatent - 2)*(sd_card_1.pfs->csize)*0.5);
+    // // sprintf(card->buffer, "SD card total size: \t%lu\r\n", card->total);
+    // // send_uart(card->buffer);
+    // lcd_send_cmd(0x80|0x00);
+    // lcd_send_string("SD card total size:");
+    // // sprintf(card->buffer, "%lu", card->total);
+    // sprintf(sd_card_1.buffer, "%ld", sd_card_1.total);
+    // lcd_send_cmd(0x80|0x40);
 
-    // Clear display 
-    lcd_clear();
+    // // Give time to read message 
+    // HAL_Delay(3000);
 
-    // Clear buffer 
-    bufclear(card);
+    // // Clear display 
+    // lcd_clear();
 
-    card->free_space = (uint32_t)((card->fre_clust)*(card->pfs->csize)*0.5);
-    // sprintf(card->buffer, "SD card free space: \t%lu\r\n", card->free_space);
-    // send_uart(card->buffer);
-    lcd_send_cmd(0x80|0x00);
-    lcd_send_string("SD card free space:");
-    sprintf(card->buffer, "%lu", card->free_space);
-    lcd_send_cmd(0x80|0x40);
+    // // Clear buffer 
+    // bufclear(&sd_card_1);
 
-    // Give time to read message 
-    HAL_Delay(3000);
+    // sd_card_1.free_space = (uint64_t)((sd_card_1.fre_clust)*(sd_card_1.pfs->csize)*0.5);
+    // // sprintf(card->buffer, "SD card free space: \t%lu\r\n", card->free_space);
+    // // send_uart(card->buffer);
+    // lcd_send_cmd(0x80|0x00);
+    // lcd_send_string("SD card free space:");
+    // sprintf(sd_card_1.buffer, "%lu", sd_card_1.free_space);
+    // lcd_send_cmd(0x80|0x40);
 
-    // Clear display 
-    lcd_clear();
+    // // Give time to read message 
+    // HAL_Delay(3000);
 
-    // Clear buffer 
-    bufclear(card);
+    // // Clear display 
+    // lcd_clear();
+
+    // // Clear buffer 
+    // bufclear(sd_card_1);
+
+    return space_size;
 }
 
 
@@ -277,7 +258,7 @@ void sd_card_space(spi_vars *card)
 // }
 
 // Clear buffer 
-void bufclear(spi_vars *card_buffer) {
+void bufclear(sd_card_file_system *card_buffer) {
     for (int i=0; i < 1024; i++) {
         card_buffer->buffer[i] = '\0';
     }

@@ -17,6 +17,8 @@
 #include <stdlib.h>
 #include <stdint.h>
 #include <string.h>
+#include <inttypes.h>
+#include <stdbool.h>
 
 #include "main.h"
 #include "main_functions.h"
@@ -106,11 +108,57 @@ void main_function(void) {
 
     // SD tests ------------------------------------
 
-    // Initialize card  
-    sd_card(INIT);
+    // Initialize SD card 
+    bool sd_card_1_status = sd_card_init(); 
+
+    if (sd_card_1_status)
+    {
+        lcd_send_cmd(0x80|0x00);
+	    lcd_send_string("SD card mounted");
+        lcd_send_cmd(0x80|0x40);
+	    lcd_send_string("successfully");
+        HAL_Delay(3000);
+        lcd_clear();
+    }
+    else 
+    {
+        lcd_send_cmd(0x80|0x00);
+	    lcd_send_string("Error mounting SD");
+        lcd_send_cmd(0x80|0x40);
+	    lcd_send_string("card");
+        HAL_Delay(3000);
+        lcd_clear();
+
+        // TODO If there is an error then enter an error state 
+    }
 
     // Get available card space
-    sd_card(SPACE);
+    uint16_t sd_card_total_space;
+    uint16_t sd_card_free_space;
+
+    sd_card_total_space = sd_card_space(TOTAL_SPACE);
+    sd_card_free_space  = sd_card_space(FREE_SPACE);
+
+    lcd_send_cmd(0x80|0x00);
+    lcd_send_string("SD card total size:");
+    lcd_send_cmd(0x80|0x40);
+    // sprintf(buf, "%" PRIu16 "", sd_card_total_space);
+    sprintf(buf, "%d", (char)sd_card_total_space);
+    lcd_send_string(buf);
+        // (char)((sd_card_total_space / 1000)),
+        // (char)((sd_card_total_space / 100) % 10),
+        // (char)((sd_card_total_space / 10) % 10),
+        // (char)((sd_card_total_space) % 10));
+    HAL_Delay(3000);
+    lcd_clear();
+
+    lcd_send_cmd(0x80|0x00);
+    lcd_send_string("SD card free space:");
+    lcd_send_cmd(0x80|0x40);
+    sprintf(buf, "%" PRIu16 "", sd_card_free_space);
+    lcd_send_string(buf);
+    HAL_Delay(3000);
+    lcd_clear();
 
     // sd_card(CREATE);
 

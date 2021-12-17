@@ -35,15 +35,16 @@
  * ---------------------------------------------------------------------------------------------
  */
 
-typedef struct spi_vars spi_vars;
+typedef struct sd_card_file_system sd_card_file_system;
+
 
 typedef enum {
-    INIT,
-    CREATE,
-    UPDATE,
-    REMOVE,
-    SPACE
+    TOTAL_SPACE,
+    FREE_SPACE
 } SD_card_functions;
+
+// TODO Define SD card number in an enum and pass that as a parameter to the functions 
+// to know what sd card instance to use
 
 
 /* 
@@ -52,11 +53,11 @@ typedef enum {
  * ---------------------------------------------------------------------------------------------
  */
 
-// Main SD card function 
-void sd_card(uint8_t func);
-
 // Initialize SD card 
-void sd_card_init(spi_vars *card);
+bool sd_card_init(void);
+
+// SD card total and free space 
+uint16_t sd_card_space(uint8_t space_parameter);
 
 // Create file on SD card 
 void sd_card_create_file(void);
@@ -67,14 +68,11 @@ void sd_card_update_file(void);
 // Remove file
 void sd_card_remove_file(void);
 
-// SD card total and free space 
-void sd_card_space(spi_vars *card);
-
 // Determine size of buffer up to which it is filled
 int bufsize(char *buf);
 
 // Clear buffer 
-void bufclear(spi_vars *card_buffer);
+void bufclear(sd_card_file_system *card_buffer);
 
 
 
