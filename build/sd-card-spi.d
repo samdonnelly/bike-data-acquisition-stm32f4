@@ -1,5 +1,5 @@
 build/sd-card-spi.o: Device-Drivers/Src/sd-card-spi.c \
- Core/Inc/main_functions.h Core/Inc/main.h \
+ Core/Inc/main_functions.h Core/Inc/includes.h Core/Inc/main.h \
  Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h \
  Core/Inc/stm32f4xx_hal_conf.h \
  Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_rcc.h \
@@ -27,13 +27,15 @@ build/sd-card-spi.o: Device-Drivers/Src/sd-card-spi.c \
  Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pwr_ex.h \
  Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_spi.h \
  Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_uart.h \
- Device-Drivers/Inc/sd-card-spi.h \
+ Core/Inc/main_functions.h Core/Inc/i2c-lcd.h \
+ Core/Inc/accelerometer_data.h Device-Drivers/Inc/fatfs_sd.h \
  Middlewares/Third_Party/FatFs/src/integer.h \
- Device-Drivers/Inc/fatfs_sd.h Middlewares/Third_Party/FatFs/src/diskio.h \
+ Middlewares/Third_Party/FatFs/src/diskio.h \
  Middlewares/Third_Party/FatFs/src/integer.h \
- Middlewares/Third_Party/FatFs/src/ff.h FATFS/Target/ffconf.h \
- Core/Inc/main.h Core/Inc/i2c-lcd.h
+ Device-Drivers/Inc/sd-card-spi.h Middlewares/Third_Party/FatFs/src/ff.h \
+ FATFS/Target/ffconf.h Core/Inc/main.h Core/Inc/i2c-lcd.h
 Core/Inc/main_functions.h:
+Core/Inc/includes.h:
 Core/Inc/main.h:
 Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h:
 Core/Inc/stm32f4xx_hal_conf.h:
@@ -64,11 +66,14 @@ Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pwr.h:
 Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pwr_ex.h:
 Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_spi.h:
 Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_uart.h:
-Device-Drivers/Inc/sd-card-spi.h:
-Middlewares/Third_Party/FatFs/src/integer.h:
+Core/Inc/main_functions.h:
+Core/Inc/i2c-lcd.h:
+Core/Inc/accelerometer_data.h:
 Device-Drivers/Inc/fatfs_sd.h:
+Middlewares/Third_Party/FatFs/src/integer.h:
 Middlewares/Third_Party/FatFs/src/diskio.h:
 Middlewares/Third_Party/FatFs/src/integer.h:
+Device-Drivers/Inc/sd-card-spi.h:
 Middlewares/Third_Party/FatFs/src/ff.h:
 FATFS/Target/ffconf.h:
 Core/Inc/main.h:

@@ -1,27 +1,44 @@
-/*
- * File: accelerometer_data.c
- * Purpose: Functions that interact with the systems accelerometer
+/**
+ * @file accelerometer_data.c
  * 
- * Created on: Sep 20, 2021
- * Author: Sam Donnelly + External 
+ * @author Sam Donnelly
+ * 
+ * @brief Functions that interact with the systems accelerometer
+ * 
+ * @details 
+ * 
+ * @version 0.1
+ * @date 2022-01-18
+ * 
+ * @copyright Copyright (c) 2022
+ * 
  */
 
-// Libraries 
+//======================================================================================
+// Includes
 
-
-// Header Files 
-#include "main.h"
+// #include "main.h"
 #include "accelerometer_data.h"
-#include "i2c-lcd.h"
+// #include "i2c-lcd.h"
+// #include "includes.h"
 
+//======================================================================================
+
+
+//======================================================================================
 // Variables 
+
 extern I2C_HandleTypeDef hi2c1;  // change your handler here accordingly
 
 uint8_t data[6];
 float accel_data[3];
 
+//======================================================================================
 
+
+//======================================================================================
 // Accelerometer initialization
+
 void MPU6050_Init(void) {
 
 	uint8_t check;
@@ -59,6 +76,12 @@ void MPU6050_Init(void) {
 	}
 }
 
+//======================================================================================
+
+
+//======================================================================================
+// Read data from accelerometer
+
 float* MPU6050_read(float CONST, uint8_t ADDR, uint8_t REG, float data_corr[]) {
 	// Read 6 bytes of data starting from ACCEL_XOUT_H register
 	HAL_I2C_Mem_Read(&hi2c1, ADDR, REG, 1, data, 6, 1000);
@@ -70,4 +93,4 @@ float* MPU6050_read(float CONST, uint8_t ADDR, uint8_t REG, float data_corr[]) {
 	return accel_data;
 }
 
-
+//======================================================================================

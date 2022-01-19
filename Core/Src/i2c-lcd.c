@@ -1,21 +1,38 @@
-/*
- * File: i2c-lcd.c
- * Purpose: Functions that interact with the systems LCD display
+/**
+ * @file i2c-lcd.c
  * 
- * Created on: Sep 20, 2021
- * Author: External
+ * @author Sam Donnelly
+ * 
+ * @brief Functions that interact with the systems LCD display
+ * 
+ * @details 
+ * 
+ * @version 0.1
+ * @date 2022-01-18
+ * 
+ * @copyright Copyright (c) 2022
+ * 
  */
 
-// Libraries 
+//======================================================================================
+// Includes 
 
-
-// Header Files 
-#include "main.h"
+// #include "main.h"
 #include "i2c-lcd.h"
+// #include "includes.h"
 
+//======================================================================================
+
+
+//======================================================================================
 // Variables 
+
 extern I2C_HandleTypeDef hi2c1;  // change your handler here accordingly
 
+//======================================================================================
+
+
+//======================================================================================
 // Functions 
 
 // Initialize the screen 
@@ -88,3 +105,5 @@ void lcd_clear (void) {
 void lcd_send_string (char *str) {
 	while (*str) lcd_send_data (*str++);
 }
+
+//======================================================================================

@@ -1,4 +1,5 @@
-build/main_functions.o: Core/Src/main_functions.c Core/Inc/main.h \
+build/main_functions.o: Core/Src/main_functions.c \
+ Core/Inc/main_functions.h Core/Inc/includes.h Core/Inc/main.h \
  Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h \
  Core/Inc/stm32f4xx_hal_conf.h \
  Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_rcc.h \
@@ -26,12 +27,14 @@ build/main_functions.o: Core/Src/main_functions.c Core/Inc/main.h \
  Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pwr_ex.h \
  Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_spi.h \
  Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_uart.h \
- Core/Inc/main_functions.h Core/Inc/main.h Core/Inc/i2c-lcd.h \
+ Core/Inc/main_functions.h Core/Inc/i2c-lcd.h \
  Core/Inc/accelerometer_data.h Device-Drivers/Inc/fatfs_sd.h \
  Middlewares/Third_Party/FatFs/src/integer.h \
  Middlewares/Third_Party/FatFs/src/diskio.h \
  Middlewares/Third_Party/FatFs/src/integer.h \
  Device-Drivers/Inc/sd-card-spi.h
+Core/Inc/main_functions.h:
+Core/Inc/includes.h:
 Core/Inc/main.h:
 Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h:
 Core/Inc/stm32f4xx_hal_conf.h:
@@ -63,7 +66,6 @@ Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pwr_ex.h:
 Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_spi.h:
 Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_uart.h:
 Core/Inc/main_functions.h:
-Core/Inc/main.h:
 Core/Inc/i2c-lcd.h:
 Core/Inc/accelerometer_data.h:
 Device-Drivers/Inc/fatfs_sd.h:

@@ -1,4 +1,4 @@
-ARM GAS  C:\Users\samue\AppData\Local\Temp\ccRfPJE0.s 			page 1
+ARM GAS  C:\Users\samue\AppData\Local\Temp\cc7R4sUI.s 			page 1
 
 
    1              		.cpu cortex-m4
@@ -27,7 +27,7 @@ ARM GAS  C:\Users\samue\AppData\Local\Temp\ccRfPJE0.s 			page 1
   24              		.thumb_func
   26              	USER_initialize:
   27              	.LVL0:
-  28              	.LFB130:
+  28              	.LFB133:
   29              		.file 1 "FATFS/Target/user_diskio.c"
    1:FATFS/Target/user_diskio.c **** /* USER CODE BEGIN Header */
    2:FATFS/Target/user_diskio.c **** /**
@@ -58,7 +58,7 @@ ARM GAS  C:\Users\samue\AppData\Local\Temp\ccRfPJE0.s 			page 1
   27:FATFS/Target/user_diskio.c ****  * User code previously added there should be copied in the new user sections before
   28:FATFS/Target/user_diskio.c ****  * the section contents can be deleted.
   29:FATFS/Target/user_diskio.c ****  */
-ARM GAS  C:\Users\samue\AppData\Local\Temp\ccRfPJE0.s 			page 2
+ARM GAS  C:\Users\samue\AppData\Local\Temp\cc7R4sUI.s 			page 2
 
 
   30:FATFS/Target/user_diskio.c **** /* USER CODE BEGIN 0 */
@@ -118,7 +118,7 @@ ARM GAS  C:\Users\samue\AppData\Local\Temp\ccRfPJE0.s 			page 1
   84:FATFS/Target/user_diskio.c **** {
   30              		.loc 1 84 1 view -0
   31              		.cfi_startproc
-ARM GAS  C:\Users\samue\AppData\Local\Temp\ccRfPJE0.s 			page 3
+ARM GAS  C:\Users\samue\AppData\Local\Temp\cc7R4sUI.s 			page 3
 
 
   32              		@ args = 0, pretend = 0, frame = 0
@@ -140,7 +140,7 @@ ARM GAS  C:\Users\samue\AppData\Local\Temp\ccRfPJE0.s 			page 1
   44              		.loc 1 88 1 view .LVU4
   45 0006 08BD     		pop	{r3, pc}
   46              		.cfi_endproc
-  47              	.LFE130:
+  47              	.LFE133:
   49              		.section	.text.USER_status,"ax",%progbits
   50              		.align	1
   51              		.global	USER_status
@@ -149,7 +149,7 @@ ARM GAS  C:\Users\samue\AppData\Local\Temp\ccRfPJE0.s 			page 1
   54              		.thumb_func
   56              	USER_status:
   57              	.LVL2:
-  58              	.LFB131:
+  58              	.LFB134:
   89:FATFS/Target/user_diskio.c **** 
   90:FATFS/Target/user_diskio.c **** /**
   91:FATFS/Target/user_diskio.c ****   * @brief  Gets Disk Status
@@ -178,13 +178,13 @@ ARM GAS  C:\Users\samue\AppData\Local\Temp\ccRfPJE0.s 			page 1
   72              	.LVL3:
  101:FATFS/Target/user_diskio.c ****   /* USER CODE END STATUS */
  102:FATFS/Target/user_diskio.c **** }
-ARM GAS  C:\Users\samue\AppData\Local\Temp\ccRfPJE0.s 			page 4
+ARM GAS  C:\Users\samue\AppData\Local\Temp\cc7R4sUI.s 			page 4
 
 
   73              		.loc 1 102 1 view .LVU9
   74 0006 08BD     		pop	{r3, pc}
   75              		.cfi_endproc
-  76              	.LFE131:
+  76              	.LFE134:
   78              		.section	.text.USER_read,"ax",%progbits
   79              		.align	1
   80              		.global	USER_read
@@ -193,7 +193,7 @@ ARM GAS  C:\Users\samue\AppData\Local\Temp\ccRfPJE0.s 			page 1
   83              		.thumb_func
   85              	USER_read:
   86              	.LVL4:
-  87              	.LFB132:
+  87              	.LFB135:
  103:FATFS/Target/user_diskio.c **** 
  104:FATFS/Target/user_diskio.c **** /**
  105:FATFS/Target/user_diskio.c ****   * @brief  Reads Sector(s)
@@ -231,19 +231,19 @@ ARM GAS  C:\Users\samue\AppData\Local\Temp\ccRfPJE0.s 			page 1
  102              		.loc 1 122 1 view .LVU14
  103 0006 08BD     		pop	{r3, pc}
  104              		.cfi_endproc
- 105              	.LFE132:
+ 105              	.LFE135:
  107              		.section	.text.USER_write,"ax",%progbits
  108              		.align	1
  109              		.global	USER_write
  110              		.syntax unified
  111              		.thumb
  112              		.thumb_func
-ARM GAS  C:\Users\samue\AppData\Local\Temp\ccRfPJE0.s 			page 5
+ARM GAS  C:\Users\samue\AppData\Local\Temp\cc7R4sUI.s 			page 5
 
 
  114              	USER_write:
  115              	.LVL6:
- 116              	.LFB133:
+ 116              	.LFB136:
  123:FATFS/Target/user_diskio.c **** 
  124:FATFS/Target/user_diskio.c **** /**
  125:FATFS/Target/user_diskio.c ****   * @brief  Writes Sector(s)
@@ -283,7 +283,7 @@ ARM GAS  C:\Users\samue\AppData\Local\Temp\ccRfPJE0.s 			page 1
  131              		.loc 1 144 1 view .LVU19
  132 0006 08BD     		pop	{r3, pc}
  133              		.cfi_endproc
- 134              	.LFE133:
+ 134              	.LFE136:
  136              		.section	.text.USER_ioctl,"ax",%progbits
  137              		.align	1
  138              		.global	USER_ioctl
@@ -292,13 +292,13 @@ ARM GAS  C:\Users\samue\AppData\Local\Temp\ccRfPJE0.s 			page 1
  141              		.thumb_func
  143              	USER_ioctl:
  144              	.LVL8:
- 145              	.LFB134:
+ 145              	.LFB137:
  145:FATFS/Target/user_diskio.c **** #endif /* _USE_WRITE == 1 */
  146:FATFS/Target/user_diskio.c **** 
  147:FATFS/Target/user_diskio.c **** /**
  148:FATFS/Target/user_diskio.c ****   * @brief  I/O control operation
  149:FATFS/Target/user_diskio.c ****   * @param  pdrv: Physical drive number (0..)
-ARM GAS  C:\Users\samue\AppData\Local\Temp\ccRfPJE0.s 			page 6
+ARM GAS  C:\Users\samue\AppData\Local\Temp\cc7R4sUI.s 			page 6
 
 
  150:FATFS/Target/user_diskio.c ****   * @param  cmd: Control code
@@ -333,7 +333,7 @@ ARM GAS  C:\Users\samue\AppData\Local\Temp\ccRfPJE0.s 			page 1
  160              		.loc 1 164 1 view .LVU24
  161 0006 08BD     		pop	{r3, pc}
  162              		.cfi_endproc
- 163              	.LFE134:
+ 163              	.LFE137:
  165              		.global	USER_Driver
  166              		.section	.data.Stat,"aw"
  169              	Stat:
@@ -352,24 +352,24 @@ ARM GAS  C:\Users\samue\AppData\Local\Temp\ccRfPJE0.s 			page 1
  184              		.file 3 "Middlewares/Third_Party/FatFs/src/diskio.h"
  185              		.file 4 "Middlewares/Third_Party/FatFs/src/ff_gen_drv.h"
  186              		.file 5 "Device-Drivers/Inc/fatfs_sd.h"
-ARM GAS  C:\Users\samue\AppData\Local\Temp\ccRfPJE0.s 			page 7
+ARM GAS  C:\Users\samue\AppData\Local\Temp\cc7R4sUI.s 			page 7
 
 
 DEFINED SYMBOLS
                             *ABS*:00000000 user_diskio.c
-C:\Users\samue\AppData\Local\Temp\ccRfPJE0.s:20     .text.USER_initialize:00000000 $t
-C:\Users\samue\AppData\Local\Temp\ccRfPJE0.s:26     .text.USER_initialize:00000000 USER_initialize
-C:\Users\samue\AppData\Local\Temp\ccRfPJE0.s:50     .text.USER_status:00000000 $t
-C:\Users\samue\AppData\Local\Temp\ccRfPJE0.s:56     .text.USER_status:00000000 USER_status
-C:\Users\samue\AppData\Local\Temp\ccRfPJE0.s:79     .text.USER_read:00000000 $t
-C:\Users\samue\AppData\Local\Temp\ccRfPJE0.s:85     .text.USER_read:00000000 USER_read
-C:\Users\samue\AppData\Local\Temp\ccRfPJE0.s:108    .text.USER_write:00000000 $t
-C:\Users\samue\AppData\Local\Temp\ccRfPJE0.s:114    .text.USER_write:00000000 USER_write
-C:\Users\samue\AppData\Local\Temp\ccRfPJE0.s:137    .text.USER_ioctl:00000000 $t
-C:\Users\samue\AppData\Local\Temp\ccRfPJE0.s:143    .text.USER_ioctl:00000000 USER_ioctl
-C:\Users\samue\AppData\Local\Temp\ccRfPJE0.s:175    .data.USER_Driver:00000000 USER_Driver
-C:\Users\samue\AppData\Local\Temp\ccRfPJE0.s:169    .data.Stat:00000000 Stat
-C:\Users\samue\AppData\Local\Temp\ccRfPJE0.s:172    .data.USER_Driver:00000000 $d
+C:\Users\samue\AppData\Local\Temp\cc7R4sUI.s:20     .text.USER_initialize:00000000 $t
+C:\Users\samue\AppData\Local\Temp\cc7R4sUI.s:26     .text.USER_initialize:00000000 USER_initialize
+C:\Users\samue\AppData\Local\Temp\cc7R4sUI.s:50     .text.USER_status:00000000 $t
+C:\Users\samue\AppData\Local\Temp\cc7R4sUI.s:56     .text.USER_status:00000000 USER_status
+C:\Users\samue\AppData\Local\Temp\cc7R4sUI.s:79     .text.USER_read:00000000 $t
+C:\Users\samue\AppData\Local\Temp\cc7R4sUI.s:85     .text.USER_read:00000000 USER_read
+C:\Users\samue\AppData\Local\Temp\cc7R4sUI.s:108    .text.USER_write:00000000 $t
+C:\Users\samue\AppData\Local\Temp\cc7R4sUI.s:114    .text.USER_write:00000000 USER_write
+C:\Users\samue\AppData\Local\Temp\cc7R4sUI.s:137    .text.USER_ioctl:00000000 $t
+C:\Users\samue\AppData\Local\Temp\cc7R4sUI.s:143    .text.USER_ioctl:00000000 USER_ioctl
+C:\Users\samue\AppData\Local\Temp\cc7R4sUI.s:175    .data.USER_Driver:00000000 USER_Driver
+C:\Users\samue\AppData\Local\Temp\cc7R4sUI.s:169    .data.Stat:00000000 Stat
+C:\Users\samue\AppData\Local\Temp\cc7R4sUI.s:172    .data.USER_Driver:00000000 $d
 
 UNDEFINED SYMBOLS
 SD_disk_initialize

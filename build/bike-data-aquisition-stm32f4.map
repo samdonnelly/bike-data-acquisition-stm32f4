@@ -2230,55 +2230,55 @@ LOAD c:/dev_tools/gcc-arm-none-eabi-10.3-2021.10-win32/gcc-arm-none-eabi-10.3-20
 LOAD c:/dev_tools/gcc-arm-none-eabi-10.3-2021.10-win32/gcc-arm-none-eabi-10.3-2021.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libm.a
 LOAD c:/dev_tools/gcc-arm-none-eabi-10.3-2021.10-win32/gcc-arm-none-eabi-10.3-2021.10/bin/../lib/gcc/arm-none-eabi/10.3.1/thumb/v7e-m+fp/hard\libgcc.a
 
-.debug_info     0x00000000    0x1aabd
+.debug_info     0x00000000    0x1aad7
  .debug_info    0x00000000     0x178b build/main.o
- .debug_info    0x0000178b      0xb0a build/main_functions.o
- .debug_info    0x00002295      0x9e1 build/i2c-lcd.o
- .debug_info    0x00002c76      0x945 build/accelerometer_data.o
- .debug_info    0x000035bb      0x52f build/stm32f4xx_it.o
- .debug_info    0x00003aea     0x132f build/stm32f4xx_hal_msp.o
- .debug_info    0x00004e19      0x5e5 build/system_stm32f4xx.o
- .debug_info    0x000053fe     0x3b41 build/stm32f4xx_hal_i2c.o
- .debug_info    0x00008f3f      0xc14 build/stm32f4xx_hal_rcc.o
- .debug_info    0x00009b53      0x872 build/stm32f4xx_hal_gpio.o
- .debug_info    0x0000a3c5      0xbc9 build/stm32f4xx_hal_dma.o
- .debug_info    0x0000af8e     0x10e4 build/stm32f4xx_hal_cortex.o
- .debug_info    0x0000c072      0xa67 build/stm32f4xx_hal.o
- .debug_info    0x0000cad9     0x43c4 build/stm32f4xx_hal_uart.o
- .debug_info    0x00010e9d     0x200d build/stm32f4xx_hal_spi.o
- .debug_info    0x00012eaa      0x4ed build/diskio.o
- .debug_info    0x00013397     0x4e33 build/ff.o
- .debug_info    0x000181ca      0x440 build/ff_gen_drv.o
- .debug_info    0x0001860a      0x58b build/fatfs.o
- .debug_info    0x00018b95      0x450 build/user_diskio.o
- .debug_info    0x00018fe5     0x13e9 build/fatfs_sd.o
- .debug_info    0x0001a3ce      0x6cd build/sd-card-spi.o
- .debug_info    0x0001aa9b       0x22 build/startup_stm32f411xe.o
+ .debug_info    0x0000178b      0xb0e build/main_functions.o
+ .debug_info    0x00002299      0x9e1 build/i2c-lcd.o
+ .debug_info    0x00002c7a      0x94c build/accelerometer_data.o
+ .debug_info    0x000035c6      0x536 build/stm32f4xx_it.o
+ .debug_info    0x00003afc     0x1336 build/stm32f4xx_hal_msp.o
+ .debug_info    0x00004e32      0x5e5 build/system_stm32f4xx.o
+ .debug_info    0x00005417     0x3b41 build/stm32f4xx_hal_i2c.o
+ .debug_info    0x00008f58      0xc14 build/stm32f4xx_hal_rcc.o
+ .debug_info    0x00009b6c      0x872 build/stm32f4xx_hal_gpio.o
+ .debug_info    0x0000a3de      0xbc9 build/stm32f4xx_hal_dma.o
+ .debug_info    0x0000afa7     0x10e4 build/stm32f4xx_hal_cortex.o
+ .debug_info    0x0000c08b      0xa67 build/stm32f4xx_hal.o
+ .debug_info    0x0000caf2     0x43c4 build/stm32f4xx_hal_uart.o
+ .debug_info    0x00010eb6     0x200d build/stm32f4xx_hal_spi.o
+ .debug_info    0x00012ec3      0x4ed build/diskio.o
+ .debug_info    0x000133b0     0x4e34 build/ff.o
+ .debug_info    0x000181e4      0x440 build/ff_gen_drv.o
+ .debug_info    0x00018624      0x58b build/fatfs.o
+ .debug_info    0x00018baf      0x450 build/user_diskio.o
+ .debug_info    0x00018fff     0x13e9 build/fatfs_sd.o
+ .debug_info    0x0001a3e8      0x6cd build/sd-card-spi.o
+ .debug_info    0x0001aab5       0x22 build/startup_stm32f411xe.o
 
-.debug_abbrev   0x00000000     0x3114
+.debug_abbrev   0x00000000     0x3100
  .debug_abbrev  0x00000000      0x275 build/main.o
- .debug_abbrev  0x00000275      0x1dc build/main_functions.o
- .debug_abbrev  0x00000451      0x204 build/i2c-lcd.o
- .debug_abbrev  0x00000655      0x1f7 build/accelerometer_data.o
- .debug_abbrev  0x0000084c      0x166 build/stm32f4xx_it.o
- .debug_abbrev  0x000009b2      0x1f8 build/stm32f4xx_hal_msp.o
- .debug_abbrev  0x00000baa      0x11b build/system_stm32f4xx.o
- .debug_abbrev  0x00000cc5      0x304 build/stm32f4xx_hal_i2c.o
- .debug_abbrev  0x00000fc9      0x2aa build/stm32f4xx_hal_rcc.o
- .debug_abbrev  0x00001273      0x22b build/stm32f4xx_hal_gpio.o
- .debug_abbrev  0x0000149e      0x2bf build/stm32f4xx_hal_dma.o
- .debug_abbrev  0x0000175d      0x382 build/stm32f4xx_hal_cortex.o
- .debug_abbrev  0x00001adf      0x23a build/stm32f4xx_hal.o
- .debug_abbrev  0x00001d19      0x360 build/stm32f4xx_hal_uart.o
- .debug_abbrev  0x00002079      0x2a6 build/stm32f4xx_hal_spi.o
- .debug_abbrev  0x0000231f      0x1b9 build/diskio.o
- .debug_abbrev  0x000024d8      0x2c4 build/ff.o
- .debug_abbrev  0x0000279c      0x1c9 build/ff_gen_drv.o
- .debug_abbrev  0x00002965      0x16f build/fatfs.o
- .debug_abbrev  0x00002ad4      0x147 build/user_diskio.o
- .debug_abbrev  0x00002c1b      0x323 build/fatfs_sd.o
- .debug_abbrev  0x00002f3e      0x1c4 build/sd-card-spi.o
- .debug_abbrev  0x00003102       0x12 build/startup_stm32f411xe.o
+ .debug_abbrev  0x00000275      0x1c8 build/main_functions.o
+ .debug_abbrev  0x0000043d      0x204 build/i2c-lcd.o
+ .debug_abbrev  0x00000641      0x1f7 build/accelerometer_data.o
+ .debug_abbrev  0x00000838      0x166 build/stm32f4xx_it.o
+ .debug_abbrev  0x0000099e      0x1f8 build/stm32f4xx_hal_msp.o
+ .debug_abbrev  0x00000b96      0x11b build/system_stm32f4xx.o
+ .debug_abbrev  0x00000cb1      0x304 build/stm32f4xx_hal_i2c.o
+ .debug_abbrev  0x00000fb5      0x2aa build/stm32f4xx_hal_rcc.o
+ .debug_abbrev  0x0000125f      0x22b build/stm32f4xx_hal_gpio.o
+ .debug_abbrev  0x0000148a      0x2bf build/stm32f4xx_hal_dma.o
+ .debug_abbrev  0x00001749      0x382 build/stm32f4xx_hal_cortex.o
+ .debug_abbrev  0x00001acb      0x23a build/stm32f4xx_hal.o
+ .debug_abbrev  0x00001d05      0x360 build/stm32f4xx_hal_uart.o
+ .debug_abbrev  0x00002065      0x2a6 build/stm32f4xx_hal_spi.o
+ .debug_abbrev  0x0000230b      0x1b9 build/diskio.o
+ .debug_abbrev  0x000024c4      0x2c4 build/ff.o
+ .debug_abbrev  0x00002788      0x1c9 build/ff_gen_drv.o
+ .debug_abbrev  0x00002951      0x16f build/fatfs.o
+ .debug_abbrev  0x00002ac0      0x147 build/user_diskio.o
+ .debug_abbrev  0x00002c07      0x323 build/fatfs_sd.o
+ .debug_abbrev  0x00002f2a      0x1c4 build/sd-card-spi.o
+ .debug_abbrev  0x000030ee       0x12 build/startup_stm32f411xe.o
 
 .debug_loc      0x00000000    0x1747b
  .debug_loc     0x00000000      0x137 build/main.o
@@ -2377,30 +2377,30 @@ LOAD c:/dev_tools/gcc-arm-none-eabi-10.3-2021.10-win32/gcc-arm-none-eabi-10.3-20
  .debug_ranges  0x00000e90       0x20 build/sd-card-spi.o
  .debug_ranges  0x00000eb0       0x20 build/startup_stm32f411xe.o
 
-.debug_line     0x00000000    0x16e4d
+.debug_line     0x00000000    0x16ec1
  .debug_line    0x00000000      0x62b build/main.o
  .debug_line    0x0000062b      0x5d7 build/main_functions.o
- .debug_line    0x00000c02      0x347 build/i2c-lcd.o
- .debug_line    0x00000f49      0x2c6 build/accelerometer_data.o
- .debug_line    0x0000120f      0x37f build/stm32f4xx_it.o
- .debug_line    0x0000158e      0x4c5 build/stm32f4xx_hal_msp.o
- .debug_line    0x00001a53      0x28c build/system_stm32f4xx.o
- .debug_line    0x00001cdf     0x53a5 build/stm32f4xx_hal_i2c.o
- .debug_line    0x00007084      0xb4c build/stm32f4xx_hal_rcc.o
- .debug_line    0x00007bd0      0x6ff build/stm32f4xx_hal_gpio.o
- .debug_line    0x000082cf      0xe64 build/stm32f4xx_hal_dma.o
- .debug_line    0x00009133      0x7b4 build/stm32f4xx_hal_cortex.o
- .debug_line    0x000098e7      0x5a1 build/stm32f4xx_hal.o
- .debug_line    0x00009e88     0x4614 build/stm32f4xx_hal_uart.o
- .debug_line    0x0000e49c     0x2525 build/stm32f4xx_hal_spi.o
- .debug_line    0x000109c1      0x279 build/diskio.o
- .debug_line    0x00010c3a     0x4d28 build/ff.o
- .debug_line    0x00015962      0x2bb build/ff_gen_drv.o
- .debug_line    0x00015c1d      0x1df build/fatfs.o
- .debug_line    0x00015dfc      0x142 build/user_diskio.o
- .debug_line    0x00015f3e      0xc01 build/fatfs_sd.o
- .debug_line    0x00016b3f      0x298 build/sd-card-spi.o
- .debug_line    0x00016dd7       0x76 build/startup_stm32f411xe.o
+ .debug_line    0x00000c02      0x348 build/i2c-lcd.o
+ .debug_line    0x00000f4a      0x2c7 build/accelerometer_data.o
+ .debug_line    0x00001211      0x37f build/stm32f4xx_it.o
+ .debug_line    0x00001590      0x4c5 build/stm32f4xx_hal_msp.o
+ .debug_line    0x00001a55      0x28c build/system_stm32f4xx.o
+ .debug_line    0x00001ce1     0x53a5 build/stm32f4xx_hal_i2c.o
+ .debug_line    0x00007086      0xb4c build/stm32f4xx_hal_rcc.o
+ .debug_line    0x00007bd2      0x6ff build/stm32f4xx_hal_gpio.o
+ .debug_line    0x000082d1      0xe64 build/stm32f4xx_hal_dma.o
+ .debug_line    0x00009135      0x7b4 build/stm32f4xx_hal_cortex.o
+ .debug_line    0x000098e9      0x5a1 build/stm32f4xx_hal.o
+ .debug_line    0x00009e8a     0x4614 build/stm32f4xx_hal_uart.o
+ .debug_line    0x0000e49e     0x2525 build/stm32f4xx_hal_spi.o
+ .debug_line    0x000109c3      0x279 build/diskio.o
+ .debug_line    0x00010c3c     0x4d9a build/ff.o
+ .debug_line    0x000159d6      0x2bb build/ff_gen_drv.o
+ .debug_line    0x00015c91      0x1df build/fatfs.o
+ .debug_line    0x00015e70      0x142 build/user_diskio.o
+ .debug_line    0x00015fb2      0xc01 build/fatfs_sd.o
+ .debug_line    0x00016bb3      0x298 build/sd-card-spi.o
+ .debug_line    0x00016e4b       0x76 build/startup_stm32f411xe.o
 
 .debug_str      0x00000000     0x4148
  .debug_str     0x00000000     0x1102 build/main.o
@@ -2410,11 +2410,11 @@ LOAD c:/dev_tools/gcc-arm-none-eabi-10.3-2021.10-win32/gcc-arm-none-eabi-10.3-20
  .debug_str     0x0000132c       0x4e build/i2c-lcd.o
                                 0x74c (size before relaxing)
  .debug_str     0x0000137a       0x6c build/accelerometer_data.o
-                                0x777 (size before relaxing)
+                                0x77c (size before relaxing)
  .debug_str     0x000013e6      0x130 build/stm32f4xx_it.o
-                                0x56f (size before relaxing)
+                                0x574 (size before relaxing)
  .debug_str     0x00001516       0xea build/stm32f4xx_hal_msp.o
-                                0xcbd (size before relaxing)
+                                0xcc2 (size before relaxing)
  .debug_str     0x00001600       0xd8 build/system_stm32f4xx.o
                                 0x3b6 (size before relaxing)
  .debug_str     0x000016d8      0x8ce build/stm32f4xx_hal_i2c.o

@@ -1,4 +1,4 @@
-ARM GAS  C:\Users\samue\AppData\Local\Temp\ccOtEUYA.s 			page 1
+ARM GAS  C:\Users\samue\AppData\Local\Temp\ccOgHbKj.s 			page 1
 
 
    1              		.cpu cortex-m4
@@ -27,7 +27,7 @@ ARM GAS  C:\Users\samue\AppData\Local\Temp\ccOtEUYA.s 			page 1
   24              		.thumb_func
   26              	FATFS_LinkDriverEx:
   27              	.LVL0:
-  28              	.LFB130:
+  28              	.LFB133:
   29              		.file 1 "Middlewares/Third_Party/FatFs/src/ff_gen_drv.c"
    1:Middlewares/Third_Party/FatFs/src/ff_gen_drv.c **** /**
    2:Middlewares/Third_Party/FatFs/src/ff_gen_drv.c ****   ******************************************************************************
@@ -58,7 +58,7 @@ ARM GAS  C:\Users\samue\AppData\Local\Temp\ccOtEUYA.s 			page 1
   27:Middlewares/Third_Party/FatFs/src/ff_gen_drv.c **** /* Private functions ---------------------------------------------------------*/
   28:Middlewares/Third_Party/FatFs/src/ff_gen_drv.c **** 
   29:Middlewares/Third_Party/FatFs/src/ff_gen_drv.c **** /**
-ARM GAS  C:\Users\samue\AppData\Local\Temp\ccOtEUYA.s 			page 2
+ARM GAS  C:\Users\samue\AppData\Local\Temp\ccOgHbKj.s 			page 2
 
 
   30:Middlewares/Third_Party/FatFs/src/ff_gen_drv.c ****   * @brief  Links a compatible diskio driver/lun id and increments the number of active
@@ -118,7 +118,7 @@ ARM GAS  C:\Users\samue\AppData\Local\Temp\ccOtEUYA.s 			page 1
   48:Middlewares/Third_Party/FatFs/src/ff_gen_drv.c ****     disk.lun[disk.nbr] = lun;
   65              		.loc 1 48 5 is_stmt 1 view .LVU13
   66              		.loc 1 48 18 is_stmt 0 view .LVU14
-ARM GAS  C:\Users\samue\AppData\Local\Temp\ccOtEUYA.s 			page 3
+ARM GAS  C:\Users\samue\AppData\Local\Temp\ccOgHbKj.s 			page 3
 
 
   67 002c 5C7A     		ldrb	r4, [r3, #9]	@ zero_extendqisi2
@@ -178,7 +178,7 @@ ARM GAS  C:\Users\samue\AppData\Local\Temp\ccOtEUYA.s 			page 1
  111              		.cfi_restore 14
   41:Middlewares/Third_Party/FatFs/src/ff_gen_drv.c ****   uint8_t DiskNum = 0;
  112              		.loc 1 41 11 view .LVU32
-ARM GAS  C:\Users\samue\AppData\Local\Temp\ccOtEUYA.s 			page 4
+ARM GAS  C:\Users\samue\AppData\Local\Temp\ccOgHbKj.s 			page 4
 
 
  113 004c 0120     		movs	r0, #1
@@ -192,7 +192,7 @@ ARM GAS  C:\Users\samue\AppData\Local\Temp\ccOtEUYA.s 			page 1
  120              	.L8:
  121 0050 00000000 		.word	.LANCHOR0
  122              		.cfi_endproc
- 123              	.LFE130:
+ 123              	.LFE133:
  125              		.section	.text.FATFS_LinkDriver,"ax",%progbits
  126              		.align	1
  127              		.global	FATFS_LinkDriver
@@ -201,7 +201,7 @@ ARM GAS  C:\Users\samue\AppData\Local\Temp\ccOtEUYA.s 			page 1
  130              		.thumb_func
  132              	FATFS_LinkDriver:
  133              	.LVL11:
- 134              	.LFB131:
+ 134              	.LFB134:
   59:Middlewares/Third_Party/FatFs/src/ff_gen_drv.c **** 
   60:Middlewares/Third_Party/FatFs/src/ff_gen_drv.c **** /**
   61:Middlewares/Third_Party/FatFs/src/ff_gen_drv.c ****   * @brief  Links a compatible diskio driver and increments the number of active
@@ -233,19 +233,19 @@ ARM GAS  C:\Users\samue\AppData\Local\Temp\ccOtEUYA.s 			page 1
  150              		.loc 1 71 1 view .LVU39
  151 0008 08BD     		pop	{r3, pc}
  152              		.cfi_endproc
- 153              	.LFE131:
+ 153              	.LFE134:
  155              		.section	.text.FATFS_UnLinkDriverEx,"ax",%progbits
  156              		.align	1
  157              		.global	FATFS_UnLinkDriverEx
  158              		.syntax unified
-ARM GAS  C:\Users\samue\AppData\Local\Temp\ccOtEUYA.s 			page 5
+ARM GAS  C:\Users\samue\AppData\Local\Temp\ccOgHbKj.s 			page 5
 
 
  159              		.thumb
  160              		.thumb_func
  162              	FATFS_UnLinkDriverEx:
  163              	.LVL13:
- 164              	.LFB132:
+ 164              	.LFB135:
   72:Middlewares/Third_Party/FatFs/src/ff_gen_drv.c **** 
   73:Middlewares/Third_Party/FatFs/src/ff_gen_drv.c **** /**
   74:Middlewares/Third_Party/FatFs/src/ff_gen_drv.c ****   * @brief  Unlinks a diskio driver and decrements the number of active linked
@@ -298,7 +298,7 @@ ARM GAS  C:\Users\samue\AppData\Local\Temp\ccOtEUYA.s 			page 1
  195 0018 02EB8301 		add	r1, r2, r3, lsl #2
  196              	.LVL15:
  197              		.loc 1 90 25 view .LVU54
-ARM GAS  C:\Users\samue\AppData\Local\Temp\ccOtEUYA.s 			page 6
+ARM GAS  C:\Users\samue\AppData\Local\Temp\ccOgHbKj.s 			page 6
 
 
  198 001c 0020     		movs	r0, #0
@@ -351,19 +351,19 @@ ARM GAS  C:\Users\samue\AppData\Local\Temp\ccOtEUYA.s 			page 1
  234              	.L16:
  235 0038 00000000 		.word	.LANCHOR0
  236              		.cfi_endproc
- 237              	.LFE132:
+ 237              	.LFE135:
  239              		.section	.text.FATFS_UnLinkDriver,"ax",%progbits
  240              		.align	1
  241              		.global	FATFS_UnLinkDriver
  242              		.syntax unified
  243              		.thumb
  244              		.thumb_func
-ARM GAS  C:\Users\samue\AppData\Local\Temp\ccOtEUYA.s 			page 7
+ARM GAS  C:\Users\samue\AppData\Local\Temp\ccOgHbKj.s 			page 7
 
 
  246              	FATFS_UnLinkDriver:
  247              	.LVL22:
- 248              	.LFB133:
+ 248              	.LFB136:
   99:Middlewares/Third_Party/FatFs/src/ff_gen_drv.c **** 
  100:Middlewares/Third_Party/FatFs/src/ff_gen_drv.c **** /**
  101:Middlewares/Third_Party/FatFs/src/ff_gen_drv.c ****   * @brief  Unlinks a diskio driver and decrements the number of active linked
@@ -393,7 +393,7 @@ ARM GAS  C:\Users\samue\AppData\Local\Temp\ccOtEUYA.s 			page 1
  264              		.loc 1 109 1 view .LVU72
  265 0008 08BD     		pop	{r3, pc}
  266              		.cfi_endproc
- 267              	.LFE133:
+ 267              	.LFE136:
  269              		.section	.text.FATFS_GetAttachedDriversNbr,"ax",%progbits
  270              		.align	1
  271              		.global	FATFS_GetAttachedDriversNbr
@@ -401,7 +401,7 @@ ARM GAS  C:\Users\samue\AppData\Local\Temp\ccOtEUYA.s 			page 1
  273              		.thumb
  274              		.thumb_func
  276              	FATFS_GetAttachedDriversNbr:
- 277              	.LFB134:
+ 277              	.LFB137:
  110:Middlewares/Third_Party/FatFs/src/ff_gen_drv.c **** 
  111:Middlewares/Third_Party/FatFs/src/ff_gen_drv.c **** /**
  112:Middlewares/Third_Party/FatFs/src/ff_gen_drv.c ****   * @brief  Gets number of linked drivers to the FatFs module.
@@ -418,7 +418,7 @@ ARM GAS  C:\Users\samue\AppData\Local\Temp\ccOtEUYA.s 			page 1
  118:Middlewares/Third_Party/FatFs/src/ff_gen_drv.c ****   return disk.nbr;
  283              		.loc 1 118 3 view .LVU74
  284              		.loc 1 118 14 is_stmt 0 view .LVU75
-ARM GAS  C:\Users\samue\AppData\Local\Temp\ccOtEUYA.s 			page 8
+ARM GAS  C:\Users\samue\AppData\Local\Temp\ccOgHbKj.s 			page 8
 
 
  285 0000 014B     		ldr	r3, .L21
@@ -431,7 +431,7 @@ ARM GAS  C:\Users\samue\AppData\Local\Temp\ccOtEUYA.s 			page 1
  291              	.L21:
  292 0008 00000000 		.word	.LANCHOR0
  293              		.cfi_endproc
- 294              	.LFE134:
+ 294              	.LFE137:
  296              		.global	disk
  297              		.section	.bss.disk,"aw",%nobits
  298              		.align	2
@@ -447,25 +447,25 @@ ARM GAS  C:\Users\samue\AppData\Local\Temp\ccOtEUYA.s 			page 1
  308              		.file 4 "c:\\dev_tools\\gcc-arm-none-eabi-10.3-2021.10-win32\\gcc-arm-none-eabi-10.3-2021.10\\arm-
  309              		.file 5 "c:\\dev_tools\\gcc-arm-none-eabi-10.3-2021.10-win32\\gcc-arm-none-eabi-10.3-2021.10\\arm-
  310              		.file 6 "Middlewares/Third_Party/FatFs/src/ff_gen_drv.h"
-ARM GAS  C:\Users\samue\AppData\Local\Temp\ccOtEUYA.s 			page 9
+ARM GAS  C:\Users\samue\AppData\Local\Temp\ccOgHbKj.s 			page 9
 
 
 DEFINED SYMBOLS
                             *ABS*:00000000 ff_gen_drv.c
-C:\Users\samue\AppData\Local\Temp\ccOtEUYA.s:20     .text.FATFS_LinkDriverEx:00000000 $t
-C:\Users\samue\AppData\Local\Temp\ccOtEUYA.s:26     .text.FATFS_LinkDriverEx:00000000 FATFS_LinkDriverEx
-C:\Users\samue\AppData\Local\Temp\ccOtEUYA.s:121    .text.FATFS_LinkDriverEx:00000050 $d
-C:\Users\samue\AppData\Local\Temp\ccOtEUYA.s:126    .text.FATFS_LinkDriver:00000000 $t
-C:\Users\samue\AppData\Local\Temp\ccOtEUYA.s:132    .text.FATFS_LinkDriver:00000000 FATFS_LinkDriver
-C:\Users\samue\AppData\Local\Temp\ccOtEUYA.s:156    .text.FATFS_UnLinkDriverEx:00000000 $t
-C:\Users\samue\AppData\Local\Temp\ccOtEUYA.s:162    .text.FATFS_UnLinkDriverEx:00000000 FATFS_UnLinkDriverEx
-C:\Users\samue\AppData\Local\Temp\ccOtEUYA.s:235    .text.FATFS_UnLinkDriverEx:00000038 $d
-C:\Users\samue\AppData\Local\Temp\ccOtEUYA.s:240    .text.FATFS_UnLinkDriver:00000000 $t
-C:\Users\samue\AppData\Local\Temp\ccOtEUYA.s:246    .text.FATFS_UnLinkDriver:00000000 FATFS_UnLinkDriver
-C:\Users\samue\AppData\Local\Temp\ccOtEUYA.s:270    .text.FATFS_GetAttachedDriversNbr:00000000 $t
-C:\Users\samue\AppData\Local\Temp\ccOtEUYA.s:276    .text.FATFS_GetAttachedDriversNbr:00000000 FATFS_GetAttachedDriversNbr
-C:\Users\samue\AppData\Local\Temp\ccOtEUYA.s:292    .text.FATFS_GetAttachedDriversNbr:00000008 $d
-C:\Users\samue\AppData\Local\Temp\ccOtEUYA.s:302    .bss.disk:00000000 disk
-C:\Users\samue\AppData\Local\Temp\ccOtEUYA.s:298    .bss.disk:00000000 $d
+C:\Users\samue\AppData\Local\Temp\ccOgHbKj.s:20     .text.FATFS_LinkDriverEx:00000000 $t
+C:\Users\samue\AppData\Local\Temp\ccOgHbKj.s:26     .text.FATFS_LinkDriverEx:00000000 FATFS_LinkDriverEx
+C:\Users\samue\AppData\Local\Temp\ccOgHbKj.s:121    .text.FATFS_LinkDriverEx:00000050 $d
+C:\Users\samue\AppData\Local\Temp\ccOgHbKj.s:126    .text.FATFS_LinkDriver:00000000 $t
+C:\Users\samue\AppData\Local\Temp\ccOgHbKj.s:132    .text.FATFS_LinkDriver:00000000 FATFS_LinkDriver
+C:\Users\samue\AppData\Local\Temp\ccOgHbKj.s:156    .text.FATFS_UnLinkDriverEx:00000000 $t
+C:\Users\samue\AppData\Local\Temp\ccOgHbKj.s:162    .text.FATFS_UnLinkDriverEx:00000000 FATFS_UnLinkDriverEx
+C:\Users\samue\AppData\Local\Temp\ccOgHbKj.s:235    .text.FATFS_UnLinkDriverEx:00000038 $d
+C:\Users\samue\AppData\Local\Temp\ccOgHbKj.s:240    .text.FATFS_UnLinkDriver:00000000 $t
+C:\Users\samue\AppData\Local\Temp\ccOgHbKj.s:246    .text.FATFS_UnLinkDriver:00000000 FATFS_UnLinkDriver
+C:\Users\samue\AppData\Local\Temp\ccOgHbKj.s:270    .text.FATFS_GetAttachedDriversNbr:00000000 $t
+C:\Users\samue\AppData\Local\Temp\ccOgHbKj.s:276    .text.FATFS_GetAttachedDriversNbr:00000000 FATFS_GetAttachedDriversNbr
+C:\Users\samue\AppData\Local\Temp\ccOgHbKj.s:292    .text.FATFS_GetAttachedDriversNbr:00000008 $d
+C:\Users\samue\AppData\Local\Temp\ccOgHbKj.s:302    .bss.disk:00000000 disk
+C:\Users\samue\AppData\Local\Temp\ccOgHbKj.s:298    .bss.disk:00000000 $d
 
 NO UNDEFINED SYMBOLS

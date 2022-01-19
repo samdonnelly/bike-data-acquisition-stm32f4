@@ -28,7 +28,14 @@ build/ccsbcs.o: Middlewares/Third_Party/FatFs/src/option/ccsbcs.c \
  Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pwr.h \
  Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pwr_ex.h \
  Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_spi.h \
- Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_uart.h
+ Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_uart.h \
+ Core/Inc/includes.h Core/Inc/main.h Core/Inc/main_functions.h \
+ Core/Inc/i2c-lcd.h Core/Inc/accelerometer_data.h \
+ Device-Drivers/Inc/fatfs_sd.h \
+ Middlewares/Third_Party/FatFs/src/integer.h \
+ Middlewares/Third_Party/FatFs/src/diskio.h \
+ Middlewares/Third_Party/FatFs/src/integer.h \
+ Device-Drivers/Inc/sd-card-spi.h
 Middlewares/Third_Party/FatFs/src/option/../ff.h:
 Middlewares/Third_Party/FatFs/src/option/../integer.h:
 FATFS/Target/ffconf.h:
@@ -62,3 +69,13 @@ Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pwr.h:
 Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pwr_ex.h:
 Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_spi.h:
 Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_uart.h:
+Core/Inc/includes.h:
+Core/Inc/main.h:
+Core/Inc/main_functions.h:
+Core/Inc/i2c-lcd.h:
+Core/Inc/accelerometer_data.h:
+Device-Drivers/Inc/fatfs_sd.h:
+Middlewares/Third_Party/FatFs/src/integer.h:
+Middlewares/Third_Party/FatFs/src/diskio.h:
+Middlewares/Third_Party/FatFs/src/integer.h:
+Device-Drivers/Inc/sd-card-spi.h:

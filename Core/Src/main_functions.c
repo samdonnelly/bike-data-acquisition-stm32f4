@@ -1,38 +1,44 @@
-/*
- * File: main_functions.c
- * Purpose: Main source file created to avoid using main.c as much as possible due 
- *          to all the generated code by STM32CubeMX making it hard to read.  
+/**
+ * @file main_functions.c
  * 
- * Created on: Sep 20, 2021
- * Author: External
+ * @author Sam Donnelly
+ * 
+ * @brief Main source file created to avoid using main.c as much as possible due 
+ *        to all the generated code by STM32CubeMX making it hard to read.  
+ * 
+ * @details 
+ * 
+ * @version 0.1
+ * @date 2022-01-18
+ * 
+ * @copyright Copyright (c) 2022
+ * 
  */
 
-/* 
- * ---------------------------------------------------------------------------------------------
- * Libraries and Header Files
- * ---------------------------------------------------------------------------------------------
- */
+//======================================================================================
+// Libraries and Header Files
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <stdint.h>
-#include <string.h>
-#include <inttypes.h>
-#include <stdbool.h>
+// #include <stdio.h>
+// #include <stdlib.h>
+// #include <stdint.h>
+// #include <string.h>
+// #include <inttypes.h>
+// #include <stdbool.h>
 
-#include "main.h"
+// #include "main.h"
 #include "main_functions.h"
-#include "i2c-lcd.h"
-#include "accelerometer_data.h"
-#include "fatfs_sd.h"
-#include "sd-card-spi.h"
+// #include "i2c-lcd.h"
+// #include "accelerometer_data.h"
+// #include "fatfs_sd.h"
+// #include "sd-card-spi.h"
+
+// #include "includes.h"
+
+//======================================================================================
 
 
-/* 
- * ---------------------------------------------------------------------------------------------
- * Variables
- * ---------------------------------------------------------------------------------------------
- */
+//======================================================================================
+// Variables
 
 // External global variables 
 extern SPI_HandleTypeDef hspi2;
@@ -69,12 +75,12 @@ char Gx_string[] = "Gx=       ";
 char Gy_string[] = "Gy=       ";
 char Gz_string[] = "Gz=       ";
 
+//======================================================================================
 
-/* 
- * ---------------------------------------------------------------------------------------------
- * Structures and lists
- * ---------------------------------------------------------------------------------------------
- */
+
+//======================================================================================
+// Structures and lists
+
 
 // Primary state machine structure
 typedef const struct BSDA {
@@ -90,12 +96,12 @@ BSDA FSM[NUM_STATES] = {
     {&accel_cal,      S3_DELAY, {normal_state,         normal_state         }}
 };
 
+//======================================================================================
 
-/* 
- * ---------------------------------------------------------------------------------------------
- * Psudo Main Function 
- * ---------------------------------------------------------------------------------------------
- */
+
+//======================================================================================
+// Psudo Main Function 
+
 void main_function(void) {
      
     flag = 0;
@@ -177,12 +183,11 @@ void main_function(void) {
     }
 }
 
+//======================================================================================
 
-/* 
- * ---------------------------------------------------------------------------------------------
- * Functions
- * ---------------------------------------------------------------------------------------------
- */
+
+//======================================================================================
+// Functions
 
 // External Interrupt
 void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin) {
@@ -310,3 +315,5 @@ void accel_cal(void)
 	lcd_send_cmd(0x80|0x00);
 	lcd_send_string("Calibration Complete");
 }
+
+//======================================================================================
