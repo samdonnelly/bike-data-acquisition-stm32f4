@@ -33,6 +33,8 @@ extern "C" {
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 
+#include "includes.h"
+
 /* USER CODE END Includes */
 
 /* Exported types ------------------------------------------------------------*/

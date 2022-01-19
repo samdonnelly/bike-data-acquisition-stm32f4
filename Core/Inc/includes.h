@@ -1,9 +1,9 @@
 /**
- * @file accelerometer_data.h
+ * @file includes.h
  * 
  * @author Sam Donnelly
  * 
- * @brief Header file for accelerometer_data.c 
+ * @brief Central location for include files 
  * 
  * @details 
  * 
@@ -14,34 +14,33 @@
  * 
  */
 
-
-#ifndef ACCEL_DATA
-#define ACCEL_DATA
+#ifndef INCLUDES_H_
+#define INCLUDES_H_
 
 
 //======================================================================================
 // Libraries 
 
-// #include "stm32f4xx_hal.h"
-#include "includes.h"
+#include <stdio.h>
+#include <stdlib.h>
+#include <stdint.h>
+#include <string.h>
+#include <inttypes.h>
+#include <stdbool.h>
 
 //======================================================================================
 
+//======================================================================================
+// Headers 
+
+#include "main.h"
+#include "main_functions.h"
+#include "i2c-lcd.h"
+#include "accelerometer_data.h"
+#include "fatfs_sd.h"
+#include "sd-card-spi.h"
+#include "stm32f4xx_hal.h"
 
 //======================================================================================
-// Function Prototypes 
-
-// Initiate accelerometer
-void MPU6050_Init(void);
-
-// Read accelerometer data 
-float* MPU6050_read(
-    float CONST, 
-    uint8_t ADDR, 
-    uint8_t REG, 
-    float data_corr[]);
-
-//======================================================================================
-
 
 #endif

@@ -1,19 +1,42 @@
-/*
- * File: i2c-lcd.h
- * Purpose: Header file for i2c-lcd.c 
+/**
+ * @file i2c-lcd.h
  * 
- * Created on: Sep 20, 2021
- * Author: External 
+ * @author Sam Donnelly
+ * 
+ * @brief Header file for i2c-lcd.c 
+ * 
+ * @details 
+ * 
+ * @version 0.1
+ * @date 2022-01-18
+ * 
+ * @copyright Copyright (c) 2022
+ * 
  */
 
-#include "stm32f4xx_hal.h"
 
 #ifndef LCD_I2C
 #define LCD_I2C
 
+
+//======================================================================================
+
+// #include "stm32f4xx_hal.h"
+#include "includes.h"
+
+//======================================================================================
+
+
+//======================================================================================
+// 
+
 // Macros 
 #define SLAVE_ADDRESS_LCD 0x4E // change this according to your setup
 
+//======================================================================================
+
+
+//======================================================================================
 // Function Prototypes
 
 // initialize lcd
@@ -30,5 +53,8 @@ void lcd_send_string(char *str);
 
 // Clear the screen 
 void lcd_clear(void);  
+
+//======================================================================================
+
 
 #endif
