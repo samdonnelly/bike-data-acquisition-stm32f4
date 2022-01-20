@@ -1,3 +1,17 @@
+/**
+ * @file fatfs_sd.c
+ * 
+ * @author Sam Donnelly
+ * 
+ * @brief 
+ * 
+ * @version 0.1
+ * @date 2022-01-19
+ * 
+ * @copyright Copyright (c) 2022
+ * 
+ */
+
 #define TRUE  1
 #define FALSE 0
 #define bool BYTE

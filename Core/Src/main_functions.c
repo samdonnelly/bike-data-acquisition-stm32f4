@@ -18,21 +18,23 @@
 //======================================================================================
 // Libraries and Header Files
 
-// #include <stdio.h>
-// #include <stdlib.h>
-// #include <stdint.h>
-// #include <string.h>
-// #include <inttypes.h>
-// #include <stdbool.h>
-
-// #include "main.h"
 #include "main_functions.h"
-// #include "i2c-lcd.h"
-// #include "accelerometer_data.h"
-// #include "fatfs_sd.h"
-// #include "sd-card-spi.h"
 
-// #include "includes.h"
+//======================================================================================
+
+
+//======================================================================================
+// List of functions to point to 
+
+static bda_state_functions_t state_table[NUM_STATES] = {&startup_state,
+                                                       &idle_state,
+                                                       &mode_set_state,
+                                                       &system_check_state,
+                                                       &pre_recording_state,
+                                                       &recording_state,
+                                                       &post_recording_state,
+                                                       &fault_state,
+                                                       &low_power_mode_state};
 
 //======================================================================================
 
@@ -79,34 +81,20 @@ char Gz_string[] = "Gz=       ";
 
 
 //======================================================================================
-// Structures and lists
-
-
-// Primary state machine structure
-typedef const struct BSDA {
-	void (*output_func)(void);
-	unsigned long time_delay;
-	unsigned long next_state[NUM_OPTIONS];
-} BSDA;
-
-// Primary state machine
-BSDA FSM[NUM_STATES] = {
-    {&normal,         S1_DELAY, {normal_state,         accel_cal_prep_state }},
-    {&accel_cal_prep, S2_DELAY, {accel_cal_prep_state, accel_cal_state      }},
-    {&accel_cal,      S3_DELAY, {normal_state,         normal_state         }}
-};
-
-//======================================================================================
-
-
-//======================================================================================
 // Psudo Main Function 
 
-void main_function(void) {
+void main_function(void) 
+{
+    // Local variables 
+    static bda_trackers_t marin_apline_trail_7;
+    static bda_states_t next_state;
+    static uint16_t input; // temporary placeholder variable 
      
     flag = 0;
     state = accel_cal_state;
 
+    // Initialize components
+    // Init data structure here 
     lcd_init();
     MPU6050_Init();
     lcd_send_string("Initialized");
@@ -173,12 +161,95 @@ void main_function(void) {
     // sd_card(REMOVE);
     
     // Main loop 
-    while(1) {
+    while(1) 
+    {
+        // Make copy of pointer to function 
+        next_state = marin_apline_trail_7.bda_state;
 
-        // Execute state machine 
-        (FSM[state].output_func)();
-        HAL_Delay(FSM[state].time_delay);
-        state = FSM[state].next_state[flag];
+        // Inputs to system 
+        // Read users inputs here 
+
+        // State Machine - shell (will be filled out later)
+        switch (next_state)
+        {
+        case STARTUP_STATE:
+            if (input)
+            {
+                next_state = IDLE_STATE;
+            }
+
+            break;
+
+        case IDLE_STATE:
+            if (input)
+            {
+                next_state = MODE_SET_STATE;
+            }
+            
+            break;
+
+        case MODE_SET_STATE:
+            if (input)
+            {
+                next_state = SYSTEM_CHECK_STATE;
+            }
+            
+            break;
+
+        case SYSTEM_CHECK_STATE:
+            if (input)
+            {
+                next_state = PRE_RECORDING_STATE;
+            }
+            
+            break;
+
+        case PRE_RECORDING_STATE:
+            if (input)
+            {
+                next_state = RECORDING_STATE;
+            }
+            
+            break;
+
+        case RECORDING_STATE:
+            if (input)
+            {
+                next_state = POST_RECORDING_STATE;
+            }
+            
+            break;
+
+        case POST_RECORDING_STATE:
+            if (input)
+            {
+                next_state = FAULT_STATE;
+            }
+            
+            break;
+
+        case FAULT_STATE:
+            if (input)
+            {
+                next_state = LOW_POWER_MODE_STATE;
+            }
+            
+            break;
+
+        case LOW_POWER_MODE_STATE:
+            if (input)
+            {
+                next_state = STARTUP_STATE;
+            }
+            
+            break;
+
+        default:
+            break;
+        }
+
+        // Outputs 
+        marin_apline_trail_7.bda_state = next_state;
 
     }
 }
@@ -187,13 +258,16 @@ void main_function(void) {
 
 
 //======================================================================================
-// Functions
+// Interrupts
 
 // External Interrupt
 void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin) {
 	flag = 1;
 }
 
+//======================================================================================
+
+//======================================================================================
 // Normal run mode
 void normal(void) {
 
@@ -253,6 +327,10 @@ void normal(void) {
 	lcd_send_string("                    ");
 }
 
+//======================================================================================
+
+
+//======================================================================================
 // Print parsed data to the LCD display 
 void print_data(
     uint8_t pos1, 
@@ -278,6 +356,10 @@ void print_data(
 	lcd_send_string(buf);
 }
 
+//======================================================================================
+
+
+//======================================================================================
 // Prepare to calibrate the accelerometer
 void accel_cal_prep(void) 
 {
@@ -294,6 +376,10 @@ void accel_cal_prep(void)
 	lcd_send_string("zero position");
 }
 
+//======================================================================================
+
+
+//======================================================================================
 // Calibrate the accelerometer
 void accel_cal(void) 
 {
@@ -317,3 +403,103 @@ void accel_cal(void)
 }
 
 //======================================================================================
+
+
+//======================================================================================
+// Startup State
+
+void startup_state(void)
+{
+    // 
+}
+
+//======================================================================================
+
+
+//======================================================================================
+// Startup State
+
+void idle_state(void)
+{
+    // 
+}
+
+//======================================================================================
+
+
+//======================================================================================
+// Startup State
+
+void mode_set_state(void)
+{
+    // 
+}
+
+//======================================================================================
+
+
+//======================================================================================
+// Startup State
+
+void system_check_state(void)
+{
+    // 
+}
+
+//======================================================================================
+
+
+//======================================================================================
+// Startup State
+
+void pre_recording_state(void)
+{
+    // 
+}
+
+//======================================================================================
+
+
+//======================================================================================
+// Startup State
+
+void recording_state(void)
+{
+    // 
+}
+
+//======================================================================================
+
+
+//======================================================================================
+// Startup State
+
+void post_recording_state(void)
+{
+    // 
+}
+
+//======================================================================================
+
+
+//======================================================================================
+// Startup State
+
+void fault_state(void)
+{
+    // 
+}
+
+//======================================================================================
+
+
+//======================================================================================
+// Startup State
+
+void low_power_mode_state(void)
+{
+    // 
+}
+
+//======================================================================================
+

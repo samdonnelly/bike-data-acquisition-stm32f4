@@ -38,6 +38,7 @@
 #include "i2c-lcd.h"
 #include "accelerometer_data.h"
 #include "fatfs_sd.h"
+#include "ff.h"
 #include "sd-card-spi.h"
 #include "stm32f4xx_hal.h"
 
