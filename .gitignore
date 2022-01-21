@@ -1,5 +1,10 @@
 # VS Code Files 
 .vscode/
 
+# STM32 files
+STM32F411RETx_FLASH.ld
+startup_stm32f411xe.s
+.mxproject
 
-# Program files 
+# Other file 
+workspace.code-workspace

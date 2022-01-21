@@ -27,14 +27,14 @@
 // List of functions to point to 
 
 static bda_state_functions_t state_table[NUM_STATES] = {&startup_state,
-                                                       &idle_state,
-                                                       &mode_set_state,
-                                                       &system_check_state,
-                                                       &pre_recording_state,
-                                                       &recording_state,
-                                                       &post_recording_state,
-                                                       &fault_state,
-                                                       &low_power_mode_state};
+                                                        &idle_state,
+                                                        &mode_set_state,
+                                                        &system_check_state,
+                                                        &pre_recording_state,
+                                                        &recording_state,
+                                                        &post_recording_state,
+                                                        &fault_state,
+                                                        &low_power_mode_state};
 
 //======================================================================================
 
