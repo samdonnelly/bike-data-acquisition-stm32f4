@@ -88,92 +88,55 @@ void main_function(void)
     // Local variables 
     static bda_trackers_t marin_apline_trail_7;
     static bda_states_t next_state;
-    static uint16_t input; // temporary placeholder variable 
-     
-    flag = 0;
-    state = accel_cal_state;
 
-    // Initialize components
-    // Init data structure here 
-    lcd_init();
-    MPU6050_Init();
-    lcd_send_string("Initialized");
-    HAL_Delay(1500);
+    // Recording button input
+    static uint8_t record_button; 
 
-    // SD tests ------------------------------------
+    // Recording button input
+    static uint8_t select_button; 
 
-    // Initialize SD card 
-    bool sd_card_1_status = sd_card_init(); 
+    // Recording button input
+    static uint8_t toggle_button; 
 
-    if (sd_card_1_status)
-    {
-        lcd_send_cmd(0x80|0x00);
-	    lcd_send_string("SD card mounted");
-        lcd_send_cmd(0x80|0x40);
-	    lcd_send_string("successfully");
-        HAL_Delay(3000);
-        lcd_clear();
-    }
-    else 
-    {
-        lcd_send_cmd(0x80|0x00);
-	    lcd_send_string("Error mounting SD");
-        lcd_send_cmd(0x80|0x40);
-	    lcd_send_string("card");
-        HAL_Delay(3000);
-        lcd_clear();
+    // Startup timer 
+    static uint16_t startup_timer;
 
-        // TODO If there is an error then enter an error state 
-    }
+    // Low power mode
+    static uint8_t low_power_mode;
 
-    // Get available card space
-    uint16_t sd_card_total_space;
-    uint16_t sd_card_free_space;
+    // Fault flag 
+    static uint8_t fault_flag;
 
-    sd_card_total_space = sd_card_space(TOTAL_SPACE);
-    sd_card_free_space  = sd_card_space(FREE_SPACE);
+    // Recording ready flag 
+    static uint8_t recording_status;
 
-    lcd_send_cmd(0x80|0x00);
-    lcd_send_string("SD card total size:");
-    lcd_send_cmd(0x80|0x40);
-    // sprintf(buf, "%" PRIu16 "", sd_card_total_space);
-    sprintf(buf, "%d", (char)sd_card_total_space);
-    lcd_send_string(buf);
-        // (char)((sd_card_total_space / 1000)),
-        // (char)((sd_card_total_space / 100) % 10),
-        // (char)((sd_card_total_space / 10) % 10),
-        // (char)((sd_card_total_space) % 10));
-    HAL_Delay(3000);
-    lcd_clear();
-
-    lcd_send_cmd(0x80|0x00);
-    lcd_send_string("SD card free space:");
-    lcd_send_cmd(0x80|0x40);
-    sprintf(buf, "%" PRIu16 "", sd_card_free_space);
-    lcd_send_string(buf);
-    HAL_Delay(3000);
-    lcd_clear();
-
-    // sd_card(CREATE);
-
-    // sd_card(UPDATE);
-
-    // sd_card(REMOVE);
     
     // Main loop 
     while(1) 
     {
         // Make copy of pointer to function 
+
         next_state = marin_apline_trail_7.bda_state;
 
+
         // Inputs to system 
-        // Read users inputs here 
+
+        record_button = get_record_input();
+
+        if (record_button == 0)
+        {
+            // Only read these if not recording to save time 
+            select_button = get_selector_input(); 
+            toggle_button = get_toggle_input();
+            fault_flag    = fault_checks();
+        }
+        
 
         // State Machine - shell (will be filled out later)
         switch (next_state)
         {
         case STARTUP_STATE:
-            if (input)
+            if (startup_timer >= START_TIME_LIMIT)
             {
                 next_state = IDLE_STATE;
             }
@@ -181,31 +144,69 @@ void main_function(void)
             break;
 
         case IDLE_STATE:
-            if (input)
+            if (record_button)
             {
-                next_state = MODE_SET_STATE;
+                next_state = PRE_RECORDING_STATE;
+            }
+
+            if (low_power_mode)
+            {
+                next_state = LOW_POWER_MODE_STATE;
+            }
+
+            if (select_button == TRUE)
+            {
+                if (toggle_button == TOGGLE_MODE_SET)
+                {
+                    next_state = MODE_SET_STATE;
+                }
+
+                if (toggle_button == TOGGLE_SENSOR_CAL)
+                {
+                    next_state = SENSOR_CAL_STATE;
+                }
+
+                if (toggle_button == TOGGLE_SYS_CHECK)
+                {
+                    next_state = SYSTEM_CHECK_STATE;
+                }
+            }
+
+            if (fault_flag)
+            {
+                next_state = FAULT_STATE;
             }
             
             break;
 
         case MODE_SET_STATE:
-            if (input)
+            // Sub state machine may be needed here
+            // Needs to record which mode to be used in the recording state
+            if (select_button == TRUE)
             {
-                next_state = SYSTEM_CHECK_STATE;
+                next_state = IDLE_STATE;;
             }
             
             break;
 
         case SYSTEM_CHECK_STATE:
-            if (input)
+            if (select_button == TRUE)
             {
-                next_state = PRE_RECORDING_STATE;
+                next_state = IDLE_STATE;;
+            }
+            
+            break;
+        
+        case SENSOR_CAL_STATE:
+            if (select_button == TRUE)
+            {
+                next_state = IDLE_STATE;;
             }
             
             break;
 
         case PRE_RECORDING_STATE:
-            if (input)
+            if (recording_status == TRUE)
             {
                 next_state = RECORDING_STATE;
             }
@@ -213,7 +214,7 @@ void main_function(void)
             break;
 
         case RECORDING_STATE:
-            if (input)
+            if (record_button == FALSE)
             {
                 next_state = POST_RECORDING_STATE;
             }
@@ -221,30 +222,28 @@ void main_function(void)
             break;
 
         case POST_RECORDING_STATE:
-            if (input)
+            if (recording_status == FALSE)
+            {
+                next_state = IDLE_STATE;
+            }
+            
+            break;
+
+        case FAULT_STATE:
+            // Once here a reboot is required 
+
+            break;
+
+        case LOW_POWER_MODE_STATE:
+            if (fault_flag)
             {
                 next_state = FAULT_STATE;
             }
             
             break;
 
-        case FAULT_STATE:
-            if (input)
-            {
-                next_state = LOW_POWER_MODE_STATE;
-            }
-            
-            break;
-
-        case LOW_POWER_MODE_STATE:
-            if (input)
-            {
-                next_state = STARTUP_STATE;
-            }
-            
-            break;
-
         default:
+            next_state = IDLE_STATE;
             break;
         }
 
@@ -266,6 +265,7 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin) {
 }
 
 //======================================================================================
+
 
 //======================================================================================
 // Normal run mode
@@ -361,6 +361,7 @@ void print_data(
 
 //======================================================================================
 // Prepare to calibrate the accelerometer
+
 void accel_cal_prep(void) 
 {
     if (flag == 1) {
@@ -380,26 +381,125 @@ void accel_cal_prep(void)
 
 
 //======================================================================================
-// Calibrate the accelerometer
-void accel_cal(void) 
+// Startup State
+
+void bda_init(void)
 {
-	lcd_clear();
+    // Startup code - to be dealt with 
+
     flag = 0;
-	
-    accel_corr_p = MPU6050_read(ACCEL_CONST, MPU6050_ADDR, ACCEL_XOUT_H_REG, zero_corr);
+    state = accel_cal_state;
 
-    accel_corr[0] = accel_corr_p[0];
-	accel_corr[1] = accel_corr_p[1];
-	accel_corr[2] = accel_corr_p[2];
+    // Initialize components
+    // Init data structure here 
+    lcd_init();
+    MPU6050_Init();
+    lcd_send_string("Initialized");
+    HAL_Delay(1500);
 
-	gyro_corr_p  = MPU6050_read(GYRO_CONST, MPU6050_ADDR, GYRO_XOUT_H_REG, zero_corr);
+    // SD tests ------------------------------------
 
-	gyro_corr[0]  = gyro_corr_p[0];
-	gyro_corr[1]  = gyro_corr_p[1];
-	gyro_corr[2]  = gyro_corr_p[2];
+    // Initialize SD card 
+    bool sd_card_1_status = sd_card_init(); 
 
-	lcd_send_cmd(0x80|0x00);
-	lcd_send_string("Calibration Complete");
+    if (sd_card_1_status)
+    {
+        lcd_send_cmd(0x80|0x00);
+	    lcd_send_string("SD card mounted");
+        lcd_send_cmd(0x80|0x40);
+	    lcd_send_string("successfully");
+        HAL_Delay(3000);
+        lcd_clear();
+    }
+    else 
+    {
+        lcd_send_cmd(0x80|0x00);
+	    lcd_send_string("Error mounting SD");
+        lcd_send_cmd(0x80|0x40);
+	    lcd_send_string("card");
+        HAL_Delay(3000);
+        lcd_clear();
+
+        // TODO If there is an error then enter an error state 
+    }
+
+    // Get available card space
+    uint16_t sd_card_total_space;
+    uint16_t sd_card_free_space;
+
+    sd_card_total_space = sd_card_space(TOTAL_SPACE);
+    sd_card_free_space  = sd_card_space(FREE_SPACE);
+
+    lcd_send_cmd(0x80|0x00);
+    lcd_send_string("SD card total size:");
+    lcd_send_cmd(0x80|0x40);
+    // sprintf(buf, "%" PRIu16 "", sd_card_total_space);
+    sprintf(buf, "%d", (char)sd_card_total_space);
+    lcd_send_string(buf);
+        // (char)((sd_card_total_space / 1000)),
+        // (char)((sd_card_total_space / 100) % 10),
+        // (char)((sd_card_total_space / 10) % 10),
+        // (char)((sd_card_total_space) % 10));
+    HAL_Delay(3000);
+    lcd_clear();
+
+    lcd_send_cmd(0x80|0x00);
+    lcd_send_string("SD card free space:");
+    lcd_send_cmd(0x80|0x40);
+    sprintf(buf, "%" PRIu16 "", sd_card_free_space);
+    lcd_send_string(buf);
+    HAL_Delay(3000);
+    lcd_clear();
+
+    // sd_card(CREATE);
+
+    // sd_card(UPDATE);
+
+    // sd_card(REMOVE);
+}
+
+//======================================================================================
+
+
+//======================================================================================
+// Get input to recoding button
+
+uint8_t get_record_input(void)
+{
+    // 
+}
+
+//======================================================================================
+
+
+//======================================================================================
+// Get input to selector button
+
+uint8_t get_selector_input(void)
+{
+    // 
+}
+
+//======================================================================================
+
+
+//======================================================================================
+// Get input to toggle button
+
+uint8_t get_toggle_input(void)
+{
+    // 
+}
+
+//======================================================================================
+
+
+//======================================================================================
+// Fault checks
+
+uint8_t fault_checks(void)
+{
+    // 
 }
 
 //======================================================================================
@@ -444,6 +544,33 @@ void mode_set_state(void)
 void system_check_state(void)
 {
     // 
+}
+
+//======================================================================================
+
+
+//======================================================================================
+// Calibrate the accelerometer
+
+void sensor_calibration_state(void) 
+{
+	lcd_clear();
+    flag = 0;
+	
+    accel_corr_p = MPU6050_read(ACCEL_CONST, MPU6050_ADDR, ACCEL_XOUT_H_REG, zero_corr);
+
+    accel_corr[0] = accel_corr_p[0];
+	accel_corr[1] = accel_corr_p[1];
+	accel_corr[2] = accel_corr_p[2];
+
+	gyro_corr_p  = MPU6050_read(GYRO_CONST, MPU6050_ADDR, GYRO_XOUT_H_REG, zero_corr);
+
+	gyro_corr[0]  = gyro_corr_p[0];
+	gyro_corr[1]  = gyro_corr_p[1];
+	gyro_corr[2]  = gyro_corr_p[2];
+
+	lcd_send_cmd(0x80|0x00);
+	lcd_send_string("Calibration Complete");
 }
 
 //======================================================================================

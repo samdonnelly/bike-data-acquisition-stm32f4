@@ -31,6 +31,7 @@
 // Macros
 
 #define NUM_STATES 9
+#define START_TIME_LIMIT 1000
 
 //======================================================================================
 
@@ -47,12 +48,27 @@ typedef enum {
     IDLE_STATE,
     MODE_SET_STATE,
     SYSTEM_CHECK_STATE,
+    SENSOR_CAL_STATE,
     PRE_RECORDING_STATE,
     RECORDING_STATE,
     POST_RECORDING_STATE,
     FAULT_STATE,
     LOW_POWER_MODE_STATE
 } bda_states_t;
+
+
+
+typedef enum {
+    TOGGLE_MODE_SET,
+    TOGGLE_SENSOR_CAL,
+    TOGGLE_SYS_CHECK
+} toggle_button_modes_t;
+
+
+typedef enum {
+    FALSE,
+    TRUE
+} bit_set_t;
 
 
 //======================================================================================
@@ -105,6 +121,36 @@ void main_function(void);
  * @brief 
  * 
  */
+void bda_init(void);
+
+/**
+ * @brief Get the record input object
+ * 
+ */
+uint8_t get_record_input(void);
+
+/**
+ * @brief Get the selector input object
+ * 
+ */
+uint8_t get_selector_input(void);
+
+/**
+ * @brief Get the toggle input object
+ * 
+ */
+uint8_t get_toggle_input(void);
+
+/**
+ * @brief 
+ * 
+ */
+uint8_t fault_checks(void);
+
+/**
+ * @brief 
+ * 
+ */
 void startup_state(void);
 
 /**
@@ -124,6 +170,12 @@ void mode_set_state(void);
  * 
  */
 void system_check_state(void);
+
+/**
+ * @brief 
+ * 
+ */
+void sensor_calibration_state(void);
 
 /**
  * @brief 
