@@ -46,37 +46,6 @@ static bda_state_functions_t state_table[NUM_STATES] = {&startup_state,
 extern SPI_HandleTypeDef hspi2;
 extern UART_HandleTypeDef huart2;
 
-// Interrupt flag
-uint8_t flag;
-
-// Current state
-// unsigned long state;
-
-// Accelerometer data handlers 
-// int accel_data_value[9];
-// float *accel_data_p;
-// float accel_corr[3];
-// float *accel_corr_p;
-// int gyro_data_value[9];
-// float *gyro_data_p;
-// float gyro_corr[3];
-// float *gyro_corr_p;
-// float zero_corr[3] = {0.0, 0.0, 0.0};
-
-// Accelerometer data buffer
-char buf[6];
-
-// Position of text on LCD display 
-uint8_t line_pos;
-
-// String to print to the LCD display 
-// char Ax_string[] = "Ax=       ";
-// char Ay_string[] = "Ay=       ";
-// char Az_string[] = "Az=       ";
-// char Gx_string[] = "Gx=       ";
-// char Gy_string[] = "Gy=       ";
-// char Gz_string[] = "Gz=       ";
-
 //======================================================================================
 
 
@@ -85,30 +54,17 @@ uint8_t line_pos;
 
 void main_function(void) 
 {
-    // Local variables 
+    // Data trackers 
     static bda_trackers_t marin_apline_trail_7;
+
+    // System state tracker 
     static bda_states_t next_state;
 
-    // Recording button input
-    static uint8_t record_button; 
+    // System interface trackers 
+    static interface_trackers_t bda_system;
 
-    // Recording button input
-    static uint8_t select_button; 
-
-    // Recording button input
-    static uint8_t toggle_button; 
-
-    // Startup timer 
-    static uint16_t startup_timer;
-
-    // Low power mode
-    static uint8_t low_power_mode;
-
-    // Fault flag 
-    static uint8_t fault_flag;
-
-    // Recording ready flag 
-    static uint8_t recording_status;
+    // Initialize system 
+    bda_init(&marin_apline_trail_7, &bda_system);
 
     
     // Main loop 
@@ -121,58 +77,59 @@ void main_function(void)
 
         // Inputs to system 
 
-        record_button = get_record_input();
+        bda_system.record_button = get_record_input();
+        bda_system.select_button = get_selector_input();
+        bda_system.toggle_button = get_toggle_input();
 
-        if (record_button == 0)
-        {
-            // Only read these if not recording to save time 
-            select_button = get_selector_input(); 
-            toggle_button = get_toggle_input();
-            fault_flag    = fault_checks();
-        }
+        fault_checks(&marin_apline_trail_7, &bda_system);
         
 
-        // State Machine - shell (will be filled out later)
+        // State Machine
         switch (next_state)
         {
         case STARTUP_STATE:
-            if (startup_timer >= START_TIME_LIMIT)
+            if (bda_system.startup_timer >= START_TIME_LIMIT)
             {
                 next_state = IDLE_STATE;
+            }
+
+            if (marin_apline_trail_7.fault_code != 0)
+            {
+                next_state = FAULT_STATE;
             }
 
             break;
 
         case IDLE_STATE:
-            if (record_button)
+            if (bda_system.select_button == TRUE)
             {
-                next_state = PRE_RECORDING_STATE;
-            }
-
-            if (low_power_mode)
-            {
-                next_state = LOW_POWER_MODE_STATE;
-            }
-
-            if (select_button == TRUE)
-            {
-                if (toggle_button == TOGGLE_MODE_SET)
+                if (bda_system.toggle_button == TOGGLE_MODE_SET)
                 {
                     next_state = MODE_SET_STATE;
                 }
 
-                if (toggle_button == TOGGLE_SENSOR_CAL)
+                if (bda_system.toggle_button == TOGGLE_SENSOR_CAL)
                 {
                     next_state = SENSOR_CAL_STATE;
                 }
 
-                if (toggle_button == TOGGLE_SYS_CHECK)
+                if (bda_system.toggle_button == TOGGLE_SYS_CHECK)
                 {
                     next_state = SYSTEM_CHECK_STATE;
                 }
             }
 
-            if (fault_flag)
+            if (bda_system.record_button = TRUE)
+            {
+                next_state = PRE_RECORDING_STATE;
+            }
+
+            if (bda_system.low_power_mode == TRUE)
+            {
+                next_state = LOW_POWER_MODE_STATE;
+            }
+
+            if (marin_apline_trail_7.fault_code != 0)
             {
                 next_state = FAULT_STATE;
             }
@@ -182,7 +139,7 @@ void main_function(void)
         case MODE_SET_STATE:
             // Sub state machine may be needed here
             // Needs to record which mode to be used in the recording state
-            if (select_button == TRUE)
+            if (bda_system.select_button == TRUE)
             {
                 next_state = IDLE_STATE;;
             }
@@ -190,7 +147,7 @@ void main_function(void)
             break;
 
         case SYSTEM_CHECK_STATE:
-            if (select_button == TRUE)
+            if (bda_system.select_button == TRUE)
             {
                 next_state = IDLE_STATE;;
             }
@@ -198,7 +155,7 @@ void main_function(void)
             break;
         
         case SENSOR_CAL_STATE:
-            if (select_button == TRUE)
+            if (bda_system.select_button == TRUE)
             {
                 next_state = IDLE_STATE;;
             }
@@ -206,7 +163,7 @@ void main_function(void)
             break;
 
         case PRE_RECORDING_STATE:
-            if (recording_status == TRUE)
+            if (bda_system.recording_status == TRUE)
             {
                 next_state = RECORDING_STATE;
             }
@@ -214,17 +171,28 @@ void main_function(void)
             break;
 
         case RECORDING_STATE:
-            if (record_button == FALSE)
+            if (bda_system.record_button == FALSE)
             {
+                next_state = POST_RECORDING_STATE;
+            }
+
+            if (marin_apline_trail_7.fault_code != 0)
+            {
+                // Save data before entering fault state 
                 next_state = POST_RECORDING_STATE;
             }
             
             break;
 
         case POST_RECORDING_STATE:
-            if (recording_status == FALSE)
+            if (bda_system.recording_status == FALSE)
             {
                 next_state = IDLE_STATE;
+            }
+
+            if (marin_apline_trail_7.fault_code != 0)
+            {
+                next_state = FAULT_STATE;
             }
             
             break;
@@ -235,7 +203,7 @@ void main_function(void)
             break;
 
         case LOW_POWER_MODE_STATE:
-            if (fault_flag)
+            if (marin_apline_trail_7.fault_code != 0)
             {
                 next_state = FAULT_STATE;
             }
@@ -250,7 +218,7 @@ void main_function(void)
         // Outputs 
 
         // Go to state 
-        state_table[next_state](&marin_apline_trail_7);
+        state_table[next_state](&marin_apline_trail_7, &bda_system);
 
         // Reassign state 
         marin_apline_trail_7.bda_state = next_state;
@@ -262,23 +230,72 @@ void main_function(void)
 
 
 //======================================================================================
-// Interrupts
-
-// External Interrupt
-void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin) {
-	flag = 1;
-}
-
-//======================================================================================
-
-
-//======================================================================================
 // Startup State
 
-void bda_init(void)
+void bda_init(
+    bda_trackers_t *data_trackers, 
+    interface_trackers_t *system_trackers)
 {
-    lcd_init();
-    MPU6050_Init();
+    // Initialize screen 
+    system_trackers->lcd_status = lcd_init();
+
+    // Initialize accelerometer 
+    system_trackers->mpu6050_status = MPU6050_Init();
+    
+    // Initialize SD card reader 
+
+
+    // Check potentiometer readings 
+
+
+    // Initialize data tracking variables 
+    data_trackers->bda_state = STARTUP_STATE;
+
+    data_trackers->fault_code = 0;
+
+    data_trackers->fork_pot_1 = 0;
+
+    data_trackers->fork_pot_2 = 0;
+
+    data_trackers->shock_pot = 0;
+
+    data_trackers->steering_angle = 0;
+
+    data_trackers->wheel_speed = 0;
+
+    data_trackers->x_accel = 0;
+
+    data_trackers->y_accel = 0;
+
+    data_trackers->z_accel = 0;
+
+    data_trackers->x_rotation = 0;
+
+    data_trackers->y_rotation = 0;
+
+    data_trackers->z_rotation = 0;
+
+
+    // Initialize system interface variables 
+    system_trackers->record_button = 0;
+
+    system_trackers->flag_button = 0;
+
+    system_trackers->select_button = 0;
+
+    system_trackers->toggle_button = 0;
+
+    system_trackers->startup_timer = 0;
+
+    system_trackers->low_power_mode = 0;
+
+    system_trackers->fault_flag = 0;
+
+    system_trackers->recording_status = 0;
+
+    system_trackers->mpu6050_status = 0;
+
+    system_trackers->lcd_status = 0;
 }
 
 //======================================================================================
@@ -289,7 +306,24 @@ void bda_init(void)
 
 uint8_t get_record_input(void)
 {
-    // 
+    // Read ADC input 
+    // Use digital input for state testing
+
+    // Parse data to get reoord button input 
+}
+
+//======================================================================================
+
+
+//======================================================================================
+// Get input to flag button
+
+uint8_t get_flag_input(void)
+{
+    // Read ADC input 
+    // Use digital input for state testing
+
+    // Parse data to get flag button input 
 }
 
 //======================================================================================
@@ -300,7 +334,10 @@ uint8_t get_record_input(void)
 
 uint8_t get_selector_input(void)
 {
-    // 
+    // Read ADC input 
+    // Use digital input for state testing
+
+    // Parse data to get selector button input 
 }
 
 //======================================================================================
@@ -311,7 +348,10 @@ uint8_t get_selector_input(void)
 
 uint8_t get_toggle_input(void)
 {
-    // 
+    // Read ADC input 
+    // Use digital input for state testing
+
+    // Parse data to get toggle button input 
 }
 
 //======================================================================================
@@ -320,9 +360,35 @@ uint8_t get_toggle_input(void)
 //======================================================================================
 // Fault checks
 
-uint8_t fault_checks(void)
+uint8_t fault_checks(
+    bda_trackers_t *data_trackers, 
+    interface_trackers_t *system_trackers)
 {
     // 
+    static uint8_t fault_flag;
+    fault_flag = data_trackers->fault_code;
+
+    if (system_trackers->mpu6050_status != 104)
+    {
+        fault_flag = fault_flag | MPU6050_FAULT_CODE;
+    }
+
+    if (system_trackers->lcd_status != 0)
+    {
+        fault_flag = fault_flag | LCD_FAULT_CODE;
+    }
+
+    // if (system_trackers->batt_voltage < BATT_VOLT_THRESH)
+    // {
+    //     fault_flag = fault_flag | BATT_VOLT_FAULT_CODE;
+    // }
+
+    // if (data_trackers->steering_angle > STEERING_ANGLE_THRESH)
+    // {
+    //     fault_flag = fault_flag | STEER_ANGLE_FAULT_CODE;
+    // }
+
+    data_trackers->fault_code = fault_flag;
 }
 
 //======================================================================================
@@ -331,9 +397,15 @@ uint8_t fault_checks(void)
 //======================================================================================
 // Startup state
 
-void startup_state(bda_trackers_t *trackers)
+void startup_state(
+    bda_trackers_t *data_trackers,
+    interface_trackers_t *system_trackers)
 {
-    // 
+    // LCD screen welcome message 
+    lcd_send_string("Bike Data Aquisition");
+
+    // Incremeent startup timer 
+    (system_trackers->startup_timer)++;
 }
 
 //======================================================================================
@@ -342,8 +414,12 @@ void startup_state(bda_trackers_t *trackers)
 //======================================================================================
 // Idle state
 
-void idle_state(bda_trackers_t *trackers)
+void idle_state(
+    bda_trackers_t *data_trackers,
+    interface_trackers_t *system_trackers)
 {
+    // Low power mode checks 
+
     // 
 }
 
@@ -353,7 +429,9 @@ void idle_state(bda_trackers_t *trackers)
 //======================================================================================
 // Mode set state
 
-void mode_set_state(bda_trackers_t *trackers)
+void mode_set_state(
+    bda_trackers_t *data_trackers,
+    interface_trackers_t *system_trackers)
 {
     // 
 }
@@ -364,7 +442,9 @@ void mode_set_state(bda_trackers_t *trackers)
 //======================================================================================
 // System check State
 
-void system_check_state(bda_trackers_t *trackers)
+void system_check_state(
+    bda_trackers_t *data_trackers,
+    interface_trackers_t *system_trackers)
 {
     // 
 }
@@ -375,7 +455,9 @@ void system_check_state(bda_trackers_t *trackers)
 //======================================================================================
 // Sensor calibration state
 
-void sensor_calibration_state(bda_trackers_t *trackers) 
+void sensor_calibration_state(
+    bda_trackers_t *data_trackers,
+    interface_trackers_t *system_trackers) 
 {
 	// lcd_clear();
     // flag = 0;
@@ -402,9 +484,14 @@ void sensor_calibration_state(bda_trackers_t *trackers)
 //======================================================================================
 // Pre-recording state
 
-void pre_recording_state(bda_trackers_t *trackers)
+void pre_recording_state(
+    bda_trackers_t *data_trackers,
+    interface_trackers_t *system_trackers)
 {
-    // 
+    // Prepare sd card for recording data 
+
+    // Once pre-recording operations are done then return true
+    system_trackers->recording_status = TRUE;
 }
 
 //======================================================================================
@@ -413,10 +500,21 @@ void pre_recording_state(bda_trackers_t *trackers)
 //======================================================================================
 // Recording state
 
-void recording_state(bda_trackers_t *trackers)
+void recording_state(
+    bda_trackers_t *data_trackers,
+    interface_trackers_t *system_trackers)
 {
-    // 
-    MPU6050_read(trackers);	
+    // Read flag input 
+    system_trackers->flag_button = get_flag_input();
+    // If flag input is true record a data point in time 
+
+    // Read accelerometer data 
+    MPU6050_read(data_trackers);
+
+    // Read potentiomater data
+    
+
+    // Read wheel speed data 
 }
 
 //======================================================================================
@@ -425,9 +523,14 @@ void recording_state(bda_trackers_t *trackers)
 //======================================================================================
 // Post recording state
 
-void post_recording_state(bda_trackers_t *trackers)
+void post_recording_state(
+    bda_trackers_t *data_trackers,
+    interface_trackers_t *system_trackers)
 {
-    // 
+    // Save all data to file on sd card and close file 
+
+    // Once post recording operations are done then return false
+    system_trackers->recording_status = FALSE;
 }
 
 //======================================================================================
@@ -436,9 +539,12 @@ void post_recording_state(bda_trackers_t *trackers)
 //======================================================================================
 // Fault state
 
-void fault_state(bda_trackers_t *trackers)
+void fault_state(
+    bda_trackers_t *data_trackers,
+    interface_trackers_t *system_trackers)
 {
     // 
+    lcd_send_string("System fault        ");
 }
 
 //======================================================================================
@@ -447,12 +553,46 @@ void fault_state(bda_trackers_t *trackers)
 //======================================================================================
 // Low power mode state
 
-void low_power_mode_state(bda_trackers_t *trackers)
+void low_power_mode_state(
+    bda_trackers_t *data_trackers,
+    interface_trackers_t *system_trackers)
 {
-    // 
+    // Display warning message 
+    lcd_send_string("Battery Low         ");
+
+    // Update battery voltage level 
 }
 
 //======================================================================================
+
+
+
+// Old code. To be deleted. 
+
+// Accelerometer data handlers 
+// int accel_data_value[9];
+// float *accel_data_p;
+// float accel_corr[3];
+// float *accel_corr_p;
+// int gyro_data_value[9];
+// float *gyro_data_p;
+// float gyro_corr[3];
+// float *gyro_corr_p;
+// float zero_corr[3] = {0.0, 0.0, 0.0};
+
+// Accelerometer data buffer
+// char buf[6];
+
+// Position of text on LCD display 
+// uint8_t line_pos;
+
+// String to print to the LCD display 
+// char Ax_string[] = "Ax=       ";
+// char Ay_string[] = "Ay=       ";
+// char Az_string[] = "Az=       ";
+// char Gx_string[] = "Gx=       ";
+// char Gy_string[] = "Gy=       ";
+// char Gz_string[] = "Gz=       ";
 
 
 //======================================================================================

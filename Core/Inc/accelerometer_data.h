@@ -65,7 +65,7 @@ typedef enum {
  * @brief Initiate accelerometer
  * 
  */
-void MPU6050_Init(void);
+uint8_t MPU6050_Init(void);
 
 
 /**

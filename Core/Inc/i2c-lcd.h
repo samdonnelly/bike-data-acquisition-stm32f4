@@ -39,7 +39,7 @@
 // Function Prototypes
 
 // initialize lcd
-void lcd_init(void);
+uint8_t lcd_init(void);
 
 // send command to the lcd
 void lcd_send_cmd(char cmd);

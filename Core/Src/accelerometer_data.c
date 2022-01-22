@@ -36,7 +36,7 @@ float accel_data[3];
 //======================================================================================
 // Accelerometer initialization
 
-void MPU6050_Init(void) {
+uint8_t MPU6050_Init(void) {
 
 	uint8_t check;
 	uint8_t Data;
@@ -68,9 +68,13 @@ void MPU6050_Init(void) {
 	}
 
 	else {
+		// Trigger a fault flag here 
+
 		lcd_send_string("Sensor Not Resp");
 		HAL_Delay(5000);
 	}
+
+	return check;
 }
 
 //======================================================================================

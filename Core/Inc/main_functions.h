@@ -31,7 +31,7 @@
 // Macros
 
 #define NUM_STATES 9
-#define START_TIME_LIMIT 1000
+#define START_TIME_LIMIT 10000
 
 //======================================================================================
 
@@ -57,7 +57,33 @@ typedef enum {
 } bda_states_t;
 
 
+/**
+ * @brief 
+ * 
+ */
+typedef enum {
+    MPU6050_FAULT_CODE     = 0x01,  // Accelerometer setup fault 
+    LCD_FAULT_CODE         = 0x02,  // LCD screen setup fault 
+    BATT_VOLT_FAULT_CODE   = 0x03,  // Battery voltage too low 
+    STEER_ANGLE_FAULT_CODE = 0x04   // Steering angle too far - system misaligned 
+} bda_fault_codes_t;
 
+
+/**
+ * @brief 
+ * 
+ */
+typedef enum {
+    BATT_VOLT_LOW_PWR     = 4,    // Battery voltage for low power mode 
+    BATT_VOLT_THRESH      = 3,    // Battery voltage for system fault 
+    STEERING_ANGLE_THRESH = 300   // Rotary pot angle exceeded - system misaligned
+} system_operating_limit_t;
+
+
+/**
+ * @brief 
+ * 
+ */
 typedef enum {
     TOGGLE_MODE_SET,
     TOGGLE_SENSOR_CAL,
@@ -65,6 +91,10 @@ typedef enum {
 } toggle_button_modes_t;
 
 
+/**
+ * @brief 
+ * 
+ */
 typedef enum {
     FALSE,
     TRUE
@@ -77,9 +107,13 @@ typedef enum {
 //======================================================================================
 // Structures 
 
-typedef struct bda_trackers_s {
+typedef struct bda_trackers_s 
+{
     // State of the state machine
     bda_states_t bda_state;
+
+    // Accelerometer fault code 
+    uint8_t fault_code;
 
     // Fork pot 1 
     uint16_t fork_pot_1;
@@ -116,6 +150,45 @@ typedef struct bda_trackers_s {
 
 } bda_trackers_t;
 
+
+typedef struct interface_trackers_s 
+{
+    // Recording button input
+    uint8_t record_button; 
+
+    // Flag button input 
+    uint8_t flag_button;
+
+    // Selecting button input
+    uint8_t select_button; 
+
+    // Toggle button input
+    uint8_t toggle_button; 
+
+    // Startup timer 
+    uint16_t startup_timer;
+
+    // Low power mode
+    uint8_t low_power_mode;
+
+    // Fault flag 
+    uint8_t fault_flag;
+
+    // Recording ready flag 
+    uint8_t recording_status;
+
+    // Accelerometer device status 
+    uint8_t mpu6050_status;
+
+    // LED screen status 
+    uint8_t lcd_status;
+
+    // Battery voltage 
+    uint8_t batt_voltage;
+
+} interface_trackers_t;
+
+
 //======================================================================================
 
 
@@ -123,7 +196,8 @@ typedef struct bda_trackers_s {
 // Function pointers
 
 typedef void (*bda_state_functions_t)(
-    bda_trackers_t *trackers);
+    bda_trackers_t *data_trackers,
+    interface_trackers_t *system_trackers);
 
 //======================================================================================
 
@@ -141,13 +215,22 @@ void main_function(void);
  * @brief 
  * 
  */
-void bda_init(void);
+void bda_init(
+    bda_trackers_t *data_trackers, 
+    interface_trackers_t *system_trackers);
 
 /**
  * @brief Get the record input object
  * 
  */
 uint8_t get_record_input(void);
+
+
+/**
+ * @brief Get the record input object
+ * 
+ */
+uint8_t get_flag_input(void);
 
 /**
  * @brief Get the selector input object
@@ -165,67 +248,89 @@ uint8_t get_toggle_input(void);
  * @brief 
  * 
  */
-uint8_t fault_checks(void);
+uint8_t fault_checks(
+    bda_trackers_t *data_trackers, 
+    interface_trackers_t *system_trackers);
 
 /**
  * @brief 
  * 
  */
-void startup_state(bda_trackers_t *trackers);
+void startup_state(
+    bda_trackers_t *data_trackers,
+    interface_trackers_t *system_trackers);
 
 /**
  * @brief 
  * 
  */
-void idle_state(bda_trackers_t *trackers);
+void idle_state(
+    bda_trackers_t *data_trackers,
+    interface_trackers_t *system_trackers);
 
 /**
  * @brief 
  * 
  */
-void mode_set_state(bda_trackers_t *trackers);
+void mode_set_state(
+    bda_trackers_t *data_trackers,
+    interface_trackers_t *system_trackers);
 
 /**
  * @brief 
  * 
  */
-void system_check_state(bda_trackers_t *trackers);
+void system_check_state(
+    bda_trackers_t *data_trackers,
+    interface_trackers_t *system_trackers);
 
 /**
  * @brief 
  * 
  */
-void sensor_calibration_state(bda_trackers_t *trackers);
+void sensor_calibration_state(
+    bda_trackers_t *data_trackers,
+    interface_trackers_t *system_trackers);
 
 /**
  * @brief 
  * 
  */
-void pre_recording_state(bda_trackers_t *trackers);
+void pre_recording_state(
+    bda_trackers_t *data_trackers,
+    interface_trackers_t *system_trackers);
 
 /**
  * @brief 
  * 
  */
-void recording_state(bda_trackers_t *trackers);
+void recording_state(
+    bda_trackers_t *data_trackers,
+    interface_trackers_t *system_trackers);
 
 /**
  * @brief 
  * 
  */
-void post_recording_state(bda_trackers_t *trackers);
+void post_recording_state(
+    bda_trackers_t *data_trackers,
+    interface_trackers_t *system_trackers);
 
 /**
  * @brief 
  * 
  */
-void fault_state(bda_trackers_t *trackers);
+void fault_state(
+    bda_trackers_t *data_trackers,
+    interface_trackers_t *system_trackers);
 
 /**
  * @brief 
  * 
  */
-void low_power_mode_state(bda_trackers_t *trackers);
+void low_power_mode_state(
+    bda_trackers_t *data_trackers,
+    interface_trackers_t *system_trackers);
 
 
 /**
