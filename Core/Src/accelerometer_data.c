@@ -79,15 +79,59 @@ void MPU6050_Init(void) {
 //======================================================================================
 // Read data from accelerometer
 
-float* MPU6050_read(float CONST, uint8_t ADDR, uint8_t REG, float data_corr[]) {
+void MPU6050_read(bda_trackers_t *trackers) 
+{
+	// accel_data[0] = ((int16_t)(data[0] << 8 | data[1]))/CONST - data_corr[0];
+	// accel_data[1] = ((int16_t)(data[2] << 8 | data[3]))/CONST - data_corr[1];
+	// accel_data[2] = ((int16_t)(data[4] << 8 | data[5]))/CONST - data_corr[2];
+
+	// trackers->x_accel = ((int16_t)(data[0] << 8 | data[1]))/ACCEL_SCALAR - data_corr[0];
+	// trackers->y_accel = ((int16_t)(data[2] << 8 | data[3]))/ACCEL_SCALAR - data_corr[1];
+	// trackers->z_accel = ((int16_t)(data[4] << 8 | data[5]))/ACCEL_SCALAR - data_corr[2];
+
+	// trackers->x_rotation = ((int16_t)(data[0] << 8 | data[1]))/GYRO_SCALAR  - data_corr[0];
+	// trackers->y_rotation = ((int16_t)(data[2] << 8 | data[3]))/GYRO_SCALAR  - data_corr[1];
+	// trackers->z_rotation = ((int16_t)(data[4] << 8 | data[5]))/GYRO_SCALAR  - data_corr[2];
+
 	// Read 6 bytes of data starting from ACCEL_XOUT_H register
-	HAL_I2C_Mem_Read(&hi2c1, ADDR, REG, 1, data, 6, 1000);
+	// Read linear acceleration data (x, y, z) - in units of gravity (g's)
+	HAL_I2C_Mem_Read(
+		&hi2c1, 
+		MPU6050_ADDR, 
+		ACCEL_XOUT_H_REG, 
+		(uint16_t)MEM_SIZE, 
+		data, 
+		(uint16_t)NUM_BYTES, 
+		(uint32_t)TIMEOUT);
 
-	accel_data[0] = ((int16_t)(data[0] << 8 | data[1]))/CONST - data_corr[0];
-	accel_data[1] = ((int16_t)(data[2] << 8 | data[3]))/CONST - data_corr[1];
-	accel_data[2] = ((int16_t)(data[4] << 8 | data[5]))/CONST - data_corr[2];
+	trackers->x_accel = 
+			(int16_t)(((((int16_t)data[0] << 8) | ((int16_t)data[1])) / ACCEL_SCALAR) * 100);
 
-	return accel_data;
+	trackers->y_accel = 
+			(int16_t)(((((int16_t)data[2] << 8) | ((int16_t)data[3])) / ACCEL_SCALAR) * 100);
+
+	trackers->z_accel = 
+			(int16_t)(((((int16_t)data[4] << 8) | ((int16_t)data[5])) / ACCEL_SCALAR) * 100);
+
+
+	// Read angular acceleration data (alpha, beta, gamma) - in units of deg/s
+	HAL_I2C_Mem_Read(
+		&hi2c1, 
+		MPU6050_ADDR, 
+		GYRO_XOUT_H_REG, 
+		(uint16_t)MEM_SIZE, 
+		data, 
+		(uint16_t)NUM_BYTES, 
+		(uint32_t)TIMEOUT);
+
+	trackers->x_rotation = 
+			(int16_t)(((((int16_t)data[0] << 8) | ((int16_t)data[1])) / GYRO_SCALAR) * 100);
+
+	trackers->y_rotation = 
+			(int16_t)(((((int16_t)data[2] << 8) | ((int16_t)data[3])) / GYRO_SCALAR) * 100);
+
+	trackers->z_rotation = 
+			(int16_t)(((((int16_t)data[4] << 8) | ((int16_t)data[5])) / GYRO_SCALAR) * 100);
 }
 
 //======================================================================================

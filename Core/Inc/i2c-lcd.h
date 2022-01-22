@@ -30,7 +30,7 @@
 // 
 
 // Macros 
-#define SLAVE_ADDRESS_LCD 0x4E // change this according to your setup
+#define SLAVE_ADDRESS_LCD 0x4E  // LCD address - change this according to your setup
 
 //======================================================================================
 

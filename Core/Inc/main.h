@@ -89,35 +89,35 @@ void Error_Handler(void);
 /* USER CODE BEGIN Private defines */
 
 // State machine states
-#define normal_state          0 
-#define accel_cal_prep_state  1 
-#define accel_cal_state       2 
+// #define normal_state          0 
+// #define accel_cal_prep_state  1 
+// #define accel_cal_state       2 
 
 // Accelerometer hardware registers
-#define MPU6050_ADDR       0xD0      // MPU6050 ID
+// #define MPU6050_ADDR       0xD0      // MPU6050 ID
 
-#define SMPLRT_DIV_REG     0x19      // Sample rate divider
-#define GYRO_CONFIG_REG    0x1B      // Gyroscope configuration
-#define ACCEL_CONFIG_REG   0x1C      // Accelerometer configuration
-#define ACCEL_XOUT_H_REG   0x3B      // Accelerometer measurements
-#define TEMP_OUT_H_REG     0x41      // Temperature measurement
-#define GYRO_XOUT_H_REG    0x43      // Gyroscope measurements
-#define PWR_MGMT_1_REG     0x6B      // Power management 1
-#define WHO_AM_I_REG       0x75      // Who am I - verify device identity
+// #define SMPLRT_DIV_REG     0x19      // Sample rate divider
+// #define GYRO_CONFIG_REG    0x1B      // Gyroscope configuration
+// #define ACCEL_CONFIG_REG   0x1C      // Accelerometer configuration
+// #define ACCEL_XOUT_H_REG   0x3B      // Accelerometer measurements
+// #define TEMP_OUT_H_REG     0x41      // Temperature measurement
+// #define GYRO_XOUT_H_REG    0x43      // Gyroscope measurements
+// #define PWR_MGMT_1_REG     0x6B      // Power management 1
+// #define WHO_AM_I_REG       0x75      // Who am I - verify device identity
 
 // Constants
-#define NUM_OPTIONS  2
-#define NUM_STATES   3
-#define S0_DELAY     3000
-#define S1_DELAY     500
-#define S2_DELAY     1000
-#define S3_DELAY     2000
+// #define NUM_OPTIONS  2
+// #define NUM_STATES   3
+// #define S0_DELAY     3000
+// #define S1_DELAY     500
+// #define S2_DELAY     1000
+// #define S3_DELAY     2000
 
-#define ACCEL_CONST  16384.0
-#define GYRO_CONST   131.0
+// // #define ACCEL_CONST  16384.0
+// // #define GYRO_CONST   131.0
 
-// LCD address - hardware specific
-#define SLAVE_ADDRESS_LCD 0x4E
+// // LCD address - hardware specific
+// #define SLAVE_ADDRESS_LCD 0x4E
 
 /* USER CODE END Private defines */
 

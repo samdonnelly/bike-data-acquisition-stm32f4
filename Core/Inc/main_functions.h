@@ -15,8 +15,8 @@
  */
 
 
-#ifndef MAIN_FUNCTIONS
-#define MAIN_FUNCTIONS
+#ifndef MAIN_FUNCTIONS_H_
+#define MAIN_FUNCTIONS_H_
 
 
 //======================================================================================
@@ -95,6 +95,25 @@ typedef struct bda_trackers_s {
 
     // Wheel speed
     uint16_t wheel_speed;
+
+    // x-axis acceleration 
+    int16_t x_accel;
+
+    // y-axis acceleration 
+    int16_t y_accel;
+
+    // z-axis acceleration 
+    int16_t z_accel;
+
+    // x-axis rotation 
+    int16_t x_rotation;
+
+    // y-axis rotation
+    int16_t y_rotation;
+
+    // z-axis rotation 
+    int16_t z_rotation;
+
 } bda_trackers_t;
 
 //======================================================================================
@@ -103,7 +122,8 @@ typedef struct bda_trackers_s {
 //======================================================================================
 // Function pointers
 
-typedef void (*bda_state_functions_t)(void);
+typedef void (*bda_state_functions_t)(
+    bda_trackers_t *trackers);
 
 //======================================================================================
 
@@ -151,65 +171,65 @@ uint8_t fault_checks(void);
  * @brief 
  * 
  */
-void startup_state(void);
+void startup_state(bda_trackers_t *trackers);
 
 /**
  * @brief 
  * 
  */
-void idle_state(void);
+void idle_state(bda_trackers_t *trackers);
 
 /**
  * @brief 
  * 
  */
-void mode_set_state(void);
+void mode_set_state(bda_trackers_t *trackers);
 
 /**
  * @brief 
  * 
  */
-void system_check_state(void);
+void system_check_state(bda_trackers_t *trackers);
 
 /**
  * @brief 
  * 
  */
-void sensor_calibration_state(void);
+void sensor_calibration_state(bda_trackers_t *trackers);
 
 /**
  * @brief 
  * 
  */
-void pre_recording_state(void);
+void pre_recording_state(bda_trackers_t *trackers);
 
 /**
  * @brief 
  * 
  */
-void recording_state(void);
+void recording_state(bda_trackers_t *trackers);
 
 /**
  * @brief 
  * 
  */
-void post_recording_state(void);
+void post_recording_state(bda_trackers_t *trackers);
 
 /**
  * @brief 
  * 
  */
-void fault_state(void);
+void fault_state(bda_trackers_t *trackers);
 
 /**
  * @brief 
  * 
  */
-void low_power_mode_state(void);
+void low_power_mode_state(bda_trackers_t *trackers);
 
 
 /**
- * @brief Normal run mode
+ * @brief 
  * 
  */
 void normal(void);
@@ -244,13 +264,6 @@ void accel_cal_prep(void);
 
 
 /**
- * @brief Calibrate the accelerometer
- * 
- */
-void accel_cal(void);
-
-
-/**
  * @brief Send information over UART
  * 
  * @param string 
@@ -260,4 +273,4 @@ void send_uart(char *string);
 //======================================================================================
 
 
-#endif   // MAIN_FUNCTIONS
+#endif   // MAIN_FUNCTIONS_H_
