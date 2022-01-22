@@ -50,18 +50,18 @@ extern UART_HandleTypeDef huart2;
 uint8_t flag;
 
 // Current state
-unsigned long state;  
+// unsigned long state;
 
 // Accelerometer data handlers 
-int accel_data_value[9];
-float *accel_data_p;
-float accel_corr[3];
-float *accel_corr_p;
-int gyro_data_value[9];
-float *gyro_data_p;
-float gyro_corr[3];
-float *gyro_corr_p;
-float zero_corr[3] = {0.0, 0.0, 0.0};
+// int accel_data_value[9];
+// float *accel_data_p;
+// float accel_corr[3];
+// float *accel_corr_p;
+// int gyro_data_value[9];
+// float *gyro_data_p;
+// float gyro_corr[3];
+// float *gyro_corr_p;
+// float zero_corr[3] = {0.0, 0.0, 0.0};
 
 // Accelerometer data buffer
 char buf[6];
@@ -70,12 +70,12 @@ char buf[6];
 uint8_t line_pos;
 
 // String to print to the LCD display 
-char Ax_string[] = "Ax=       ";
-char Ay_string[] = "Ay=       ";
-char Az_string[] = "Az=       ";
-char Gx_string[] = "Gx=       ";
-char Gy_string[] = "Gy=       ";
-char Gz_string[] = "Gz=       ";
+// char Ax_string[] = "Ax=       ";
+// char Ay_string[] = "Ay=       ";
+// char Az_string[] = "Az=       ";
+// char Gx_string[] = "Gx=       ";
+// char Gy_string[] = "Gy=       ";
+// char Gz_string[] = "Gz=       ";
 
 //======================================================================================
 
