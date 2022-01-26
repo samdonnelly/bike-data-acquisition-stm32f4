@@ -1,0 +1,216 @@
+\hypertarget{accelerometer__data_8h}{}\doxysection{Core/\+Inc/accelerometer\+\_\+data.h File Reference}
+\label{accelerometer__data_8h}\index{Core/Inc/accelerometer\_data.h@{Core/Inc/accelerometer\_data.h}}
+
+
+Header file for \mbox{\hyperlink{accelerometer__data_8c}{accelerometer\+\_\+data.\+c}}.  
+
+
+{\ttfamily \#include \char`\"{}includes.\+h\char`\"{}}\newline
+Include dependency graph for accelerometer\+\_\+data.\+h\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{accelerometer__data_8h__incl}
+\end{center}
+\end{figure}
+This graph shows which files directly or indirectly include this file\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{accelerometer__data_8h__dep__incl}
+\end{center}
+\end{figure}
+\doxysubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \mbox{\hyperlink{accelerometer__data_8h_a996115529bf54bf0f726ea3ef5edb328}{ACCEL\+\_\+\+SCALAR}}~16384
+\item 
+\#define \mbox{\hyperlink{accelerometer__data_8h_a99b4852cc4134c946ba05c473852a106}{GYRO\+\_\+\+SCALAR}}~131
+\item 
+\#define \mbox{\hyperlink{accelerometer__data_8h_a2dcf8c45f945dd0c4301a94700f2112c}{MEM\+\_\+\+SIZE}}~1
+\item 
+\#define \mbox{\hyperlink{accelerometer__data_8h_a7206e1a3cf67c8d51a3732252593a0fb}{NUM\+\_\+\+BYTES}}~6
+\item 
+\#define \mbox{\hyperlink{accelerometer__data_8h_a45ba202b05caf39795aeca91b0ae547e}{TIMEOUT}}~1000
+\end{DoxyCompactItemize}
+\doxysubsection*{Enumerations}
+\begin{DoxyCompactItemize}
+\item 
+enum \mbox{\hyperlink{accelerometer__data_8h_a5ed0f6e41f5b48eda9f739e8972d057f}{register\+\_\+and\+\_\+device\+\_\+addresses\+\_\+t}} \{ \newline
+\mbox{\hyperlink{accelerometer__data_8h_a5ed0f6e41f5b48eda9f739e8972d057fa88e3910b6356f9a6d49b934aba78133c}{MPU6050\+\_\+\+ADDR}} = 0x\+D0
+, \mbox{\hyperlink{accelerometer__data_8h_a5ed0f6e41f5b48eda9f739e8972d057fae6b7f861806f53684a2e3bcad2bc665e}{SMPLRT\+\_\+\+DIV\+\_\+\+REG}} = 0x19
+, \mbox{\hyperlink{accelerometer__data_8h_a5ed0f6e41f5b48eda9f739e8972d057fa13d6797ac9a861c35bfa8f0b9d8273af}{GYRO\+\_\+\+CONFIG\+\_\+\+REG}} = 0x1B
+, \mbox{\hyperlink{accelerometer__data_8h_a5ed0f6e41f5b48eda9f739e8972d057fa5d760249c20a0cf92d1d95fb21403d56}{ACCEL\+\_\+\+CONFIG\+\_\+\+REG}} = 0x1C
+, \newline
+\mbox{\hyperlink{accelerometer__data_8h_a5ed0f6e41f5b48eda9f739e8972d057fa4cebe56f5155e56c53f2b86f480ecb90}{ACCEL\+\_\+\+XOUT\+\_\+\+H\+\_\+\+REG}} = 0x3B
+, \mbox{\hyperlink{accelerometer__data_8h_a5ed0f6e41f5b48eda9f739e8972d057fa71b7606cebec54cdb54664e73e4e9eef}{TEMP\+\_\+\+OUT\+\_\+\+H\+\_\+\+REG}} = 0x41
+, \mbox{\hyperlink{accelerometer__data_8h_a5ed0f6e41f5b48eda9f739e8972d057faf287ce8ab1a53ef8ebe412a821373281}{GYRO\+\_\+\+XOUT\+\_\+\+H\+\_\+\+REG}} = 0x43
+, \mbox{\hyperlink{accelerometer__data_8h_a5ed0f6e41f5b48eda9f739e8972d057fad46203d37d7a936180d00631ecb244d1}{PWR\+\_\+\+MGMT\+\_\+1\+\_\+\+REG}} = 0x6B
+, \newline
+\mbox{\hyperlink{accelerometer__data_8h_a5ed0f6e41f5b48eda9f739e8972d057fa9911cc25c11659adce1251fa4983cb50}{WHO\+\_\+\+AM\+\_\+\+I\+\_\+\+REG}} = 0x75
+ \}
+\end{DoxyCompactItemize}
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+uint8\+\_\+t \mbox{\hyperlink{accelerometer__data_8h_ae7cae8a1f87165c318400071effa97a6}{MPU6050\+\_\+\+Init}} (void)
+\begin{DoxyCompactList}\small\item\em Initiate accelerometer. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{accelerometer__data_8h_a2c5ba03e9ada15dd7bb5e83425ddb948}{MPU6050\+\_\+read}} (\mbox{\hyperlink{main__functions_8h_a2f89dc4c646ea6418ea97ea96f5f8a66}{bda\+\_\+trackers\+\_\+t}} $\ast$trackers)
+\begin{DoxyCompactList}\small\item\em Read accelerometer data. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Header file for \mbox{\hyperlink{accelerometer__data_8c}{accelerometer\+\_\+data.\+c}}. 
+
+\begin{DoxyAuthor}{Author}
+Sam Donnelly
+\end{DoxyAuthor}
+\begin{DoxyVersion}{Version}
+0.\+1 
+\end{DoxyVersion}
+\begin{DoxyDate}{Date}
+2022-\/01-\/18
+\end{DoxyDate}
+\begin{DoxyCopyright}{Copyright}
+Copyright (c) 2022 
+\end{DoxyCopyright}
+
+
+\doxysubsection{Macro Definition Documentation}
+\mbox{\Hypertarget{accelerometer__data_8h_a996115529bf54bf0f726ea3ef5edb328}\label{accelerometer__data_8h_a996115529bf54bf0f726ea3ef5edb328}} 
+\index{accelerometer\_data.h@{accelerometer\_data.h}!ACCEL\_SCALAR@{ACCEL\_SCALAR}}
+\index{ACCEL\_SCALAR@{ACCEL\_SCALAR}!accelerometer\_data.h@{accelerometer\_data.h}}
+\doxysubsubsection{\texorpdfstring{ACCEL\_SCALAR}{ACCEL\_SCALAR}}
+{\footnotesize\ttfamily \#define ACCEL\+\_\+\+SCALAR~16384}
+
+\mbox{\Hypertarget{accelerometer__data_8h_a99b4852cc4134c946ba05c473852a106}\label{accelerometer__data_8h_a99b4852cc4134c946ba05c473852a106}} 
+\index{accelerometer\_data.h@{accelerometer\_data.h}!GYRO\_SCALAR@{GYRO\_SCALAR}}
+\index{GYRO\_SCALAR@{GYRO\_SCALAR}!accelerometer\_data.h@{accelerometer\_data.h}}
+\doxysubsubsection{\texorpdfstring{GYRO\_SCALAR}{GYRO\_SCALAR}}
+{\footnotesize\ttfamily \#define GYRO\+\_\+\+SCALAR~131}
+
+\mbox{\Hypertarget{accelerometer__data_8h_a2dcf8c45f945dd0c4301a94700f2112c}\label{accelerometer__data_8h_a2dcf8c45f945dd0c4301a94700f2112c}} 
+\index{accelerometer\_data.h@{accelerometer\_data.h}!MEM\_SIZE@{MEM\_SIZE}}
+\index{MEM\_SIZE@{MEM\_SIZE}!accelerometer\_data.h@{accelerometer\_data.h}}
+\doxysubsubsection{\texorpdfstring{MEM\_SIZE}{MEM\_SIZE}}
+{\footnotesize\ttfamily \#define MEM\+\_\+\+SIZE~1}
+
+\mbox{\Hypertarget{accelerometer__data_8h_a7206e1a3cf67c8d51a3732252593a0fb}\label{accelerometer__data_8h_a7206e1a3cf67c8d51a3732252593a0fb}} 
+\index{accelerometer\_data.h@{accelerometer\_data.h}!NUM\_BYTES@{NUM\_BYTES}}
+\index{NUM\_BYTES@{NUM\_BYTES}!accelerometer\_data.h@{accelerometer\_data.h}}
+\doxysubsubsection{\texorpdfstring{NUM\_BYTES}{NUM\_BYTES}}
+{\footnotesize\ttfamily \#define NUM\+\_\+\+BYTES~6}
+
+\mbox{\Hypertarget{accelerometer__data_8h_a45ba202b05caf39795aeca91b0ae547e}\label{accelerometer__data_8h_a45ba202b05caf39795aeca91b0ae547e}} 
+\index{accelerometer\_data.h@{accelerometer\_data.h}!TIMEOUT@{TIMEOUT}}
+\index{TIMEOUT@{TIMEOUT}!accelerometer\_data.h@{accelerometer\_data.h}}
+\doxysubsubsection{\texorpdfstring{TIMEOUT}{TIMEOUT}}
+{\footnotesize\ttfamily \#define TIMEOUT~1000}
+
+
+
+\doxysubsection{Enumeration Type Documentation}
+\mbox{\Hypertarget{accelerometer__data_8h_a5ed0f6e41f5b48eda9f739e8972d057f}\label{accelerometer__data_8h_a5ed0f6e41f5b48eda9f739e8972d057f}} 
+\index{accelerometer\_data.h@{accelerometer\_data.h}!register\_and\_device\_addresses\_t@{register\_and\_device\_addresses\_t}}
+\index{register\_and\_device\_addresses\_t@{register\_and\_device\_addresses\_t}!accelerometer\_data.h@{accelerometer\_data.h}}
+\doxysubsubsection{\texorpdfstring{register\_and\_device\_addresses\_t}{register\_and\_device\_addresses\_t}}
+{\footnotesize\ttfamily enum \mbox{\hyperlink{accelerometer__data_8h_a5ed0f6e41f5b48eda9f739e8972d057f}{register\+\_\+and\+\_\+device\+\_\+addresses\+\_\+t}}}
+
+\begin{DoxyEnumFields}{Enumerator}
+\raisebox{\heightof{T}}[0pt][0pt]{\index{MPU6050\_ADDR@{MPU6050\_ADDR}!accelerometer\_data.h@{accelerometer\_data.h}}\index{accelerometer\_data.h@{accelerometer\_data.h}!MPU6050\_ADDR@{MPU6050\_ADDR}}}\mbox{\Hypertarget{accelerometer__data_8h_a5ed0f6e41f5b48eda9f739e8972d057fa88e3910b6356f9a6d49b934aba78133c}\label{accelerometer__data_8h_a5ed0f6e41f5b48eda9f739e8972d057fa88e3910b6356f9a6d49b934aba78133c}} 
+MPU6050\+\_\+\+ADDR&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{SMPLRT\_DIV\_REG@{SMPLRT\_DIV\_REG}!accelerometer\_data.h@{accelerometer\_data.h}}\index{accelerometer\_data.h@{accelerometer\_data.h}!SMPLRT\_DIV\_REG@{SMPLRT\_DIV\_REG}}}\mbox{\Hypertarget{accelerometer__data_8h_a5ed0f6e41f5b48eda9f739e8972d057fae6b7f861806f53684a2e3bcad2bc665e}\label{accelerometer__data_8h_a5ed0f6e41f5b48eda9f739e8972d057fae6b7f861806f53684a2e3bcad2bc665e}} 
+SMPLRT\+\_\+\+DIV\+\_\+\+REG&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{GYRO\_CONFIG\_REG@{GYRO\_CONFIG\_REG}!accelerometer\_data.h@{accelerometer\_data.h}}\index{accelerometer\_data.h@{accelerometer\_data.h}!GYRO\_CONFIG\_REG@{GYRO\_CONFIG\_REG}}}\mbox{\Hypertarget{accelerometer__data_8h_a5ed0f6e41f5b48eda9f739e8972d057fa13d6797ac9a861c35bfa8f0b9d8273af}\label{accelerometer__data_8h_a5ed0f6e41f5b48eda9f739e8972d057fa13d6797ac9a861c35bfa8f0b9d8273af}} 
+GYRO\+\_\+\+CONFIG\+\_\+\+REG&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{ACCEL\_CONFIG\_REG@{ACCEL\_CONFIG\_REG}!accelerometer\_data.h@{accelerometer\_data.h}}\index{accelerometer\_data.h@{accelerometer\_data.h}!ACCEL\_CONFIG\_REG@{ACCEL\_CONFIG\_REG}}}\mbox{\Hypertarget{accelerometer__data_8h_a5ed0f6e41f5b48eda9f739e8972d057fa5d760249c20a0cf92d1d95fb21403d56}\label{accelerometer__data_8h_a5ed0f6e41f5b48eda9f739e8972d057fa5d760249c20a0cf92d1d95fb21403d56}} 
+ACCEL\+\_\+\+CONFIG\+\_\+\+REG&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{ACCEL\_XOUT\_H\_REG@{ACCEL\_XOUT\_H\_REG}!accelerometer\_data.h@{accelerometer\_data.h}}\index{accelerometer\_data.h@{accelerometer\_data.h}!ACCEL\_XOUT\_H\_REG@{ACCEL\_XOUT\_H\_REG}}}\mbox{\Hypertarget{accelerometer__data_8h_a5ed0f6e41f5b48eda9f739e8972d057fa4cebe56f5155e56c53f2b86f480ecb90}\label{accelerometer__data_8h_a5ed0f6e41f5b48eda9f739e8972d057fa4cebe56f5155e56c53f2b86f480ecb90}} 
+ACCEL\+\_\+\+XOUT\+\_\+\+H\+\_\+\+REG&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{TEMP\_OUT\_H\_REG@{TEMP\_OUT\_H\_REG}!accelerometer\_data.h@{accelerometer\_data.h}}\index{accelerometer\_data.h@{accelerometer\_data.h}!TEMP\_OUT\_H\_REG@{TEMP\_OUT\_H\_REG}}}\mbox{\Hypertarget{accelerometer__data_8h_a5ed0f6e41f5b48eda9f739e8972d057fa71b7606cebec54cdb54664e73e4e9eef}\label{accelerometer__data_8h_a5ed0f6e41f5b48eda9f739e8972d057fa71b7606cebec54cdb54664e73e4e9eef}} 
+TEMP\+\_\+\+OUT\+\_\+\+H\+\_\+\+REG&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{GYRO\_XOUT\_H\_REG@{GYRO\_XOUT\_H\_REG}!accelerometer\_data.h@{accelerometer\_data.h}}\index{accelerometer\_data.h@{accelerometer\_data.h}!GYRO\_XOUT\_H\_REG@{GYRO\_XOUT\_H\_REG}}}\mbox{\Hypertarget{accelerometer__data_8h_a5ed0f6e41f5b48eda9f739e8972d057faf287ce8ab1a53ef8ebe412a821373281}\label{accelerometer__data_8h_a5ed0f6e41f5b48eda9f739e8972d057faf287ce8ab1a53ef8ebe412a821373281}} 
+GYRO\+\_\+\+XOUT\+\_\+\+H\+\_\+\+REG&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{PWR\_MGMT\_1\_REG@{PWR\_MGMT\_1\_REG}!accelerometer\_data.h@{accelerometer\_data.h}}\index{accelerometer\_data.h@{accelerometer\_data.h}!PWR\_MGMT\_1\_REG@{PWR\_MGMT\_1\_REG}}}\mbox{\Hypertarget{accelerometer__data_8h_a5ed0f6e41f5b48eda9f739e8972d057fad46203d37d7a936180d00631ecb244d1}\label{accelerometer__data_8h_a5ed0f6e41f5b48eda9f739e8972d057fad46203d37d7a936180d00631ecb244d1}} 
+PWR\+\_\+\+MGMT\+\_\+1\+\_\+\+REG&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{WHO\_AM\_I\_REG@{WHO\_AM\_I\_REG}!accelerometer\_data.h@{accelerometer\_data.h}}\index{accelerometer\_data.h@{accelerometer\_data.h}!WHO\_AM\_I\_REG@{WHO\_AM\_I\_REG}}}\mbox{\Hypertarget{accelerometer__data_8h_a5ed0f6e41f5b48eda9f739e8972d057fa9911cc25c11659adce1251fa4983cb50}\label{accelerometer__data_8h_a5ed0f6e41f5b48eda9f739e8972d057fa9911cc25c11659adce1251fa4983cb50}} 
+WHO\+\_\+\+AM\+\_\+\+I\+\_\+\+REG&\\
+\hline
+
+\end{DoxyEnumFields}
+
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{accelerometer__data_8h_ae7cae8a1f87165c318400071effa97a6}\label{accelerometer__data_8h_ae7cae8a1f87165c318400071effa97a6}} 
+\index{accelerometer\_data.h@{accelerometer\_data.h}!MPU6050\_Init@{MPU6050\_Init}}
+\index{MPU6050\_Init@{MPU6050\_Init}!accelerometer\_data.h@{accelerometer\_data.h}}
+\doxysubsubsection{\texorpdfstring{MPU6050\_Init()}{MPU6050\_Init()}}
+{\footnotesize\ttfamily uint8\+\_\+t MPU6050\+\_\+\+Init (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+
+
+Initiate accelerometer. 
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{accelerometer__data_8h_ae7cae8a1f87165c318400071effa97a6_cgraph}
+\end{center}
+\end{figure}
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{accelerometer__data_8h_ae7cae8a1f87165c318400071effa97a6_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{accelerometer__data_8h_a2c5ba03e9ada15dd7bb5e83425ddb948}\label{accelerometer__data_8h_a2c5ba03e9ada15dd7bb5e83425ddb948}} 
+\index{accelerometer\_data.h@{accelerometer\_data.h}!MPU6050\_read@{MPU6050\_read}}
+\index{MPU6050\_read@{MPU6050\_read}!accelerometer\_data.h@{accelerometer\_data.h}}
+\doxysubsubsection{\texorpdfstring{MPU6050\_read()}{MPU6050\_read()}}
+{\footnotesize\ttfamily void MPU6050\+\_\+read (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{main__functions_8h_a2f89dc4c646ea6418ea97ea96f5f8a66}{bda\+\_\+trackers\+\_\+t}} $\ast$}]{trackers }\end{DoxyParamCaption})}
+
+
+
+Read accelerometer data. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em trackers} & \\
+\hline
+{\em ADDR} & \\
+\hline
+{\em REG} & \\
+\hline
+{\em data\+\_\+corr} & \\
+\hline
+\end{DoxyParams}
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=282pt]{accelerometer__data_8h_a2c5ba03e9ada15dd7bb5e83425ddb948_icgraph}
+\end{center}
+\end{figure}

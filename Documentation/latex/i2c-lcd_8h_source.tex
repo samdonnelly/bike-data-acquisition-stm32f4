@@ -1,0 +1,49 @@
+\hypertarget{i2c-lcd_8h_source}{}\doxysection{i2c-\/lcd.h}
+\label{i2c-lcd_8h_source}\index{Core/Inc/i2c-\/lcd.h@{Core/Inc/i2c-\/lcd.h}}
+\mbox{\hyperlink{i2c-lcd_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 }
+\DoxyCodeLine{18 \textcolor{preprocessor}{\#ifndef LCD\_I2C}}
+\DoxyCodeLine{19 \textcolor{preprocessor}{\#define LCD\_I2C}}
+\DoxyCodeLine{20 }
+\DoxyCodeLine{21 }
+\DoxyCodeLine{22 \textcolor{comment}{//======================================================================================}}
+\DoxyCodeLine{23 }
+\DoxyCodeLine{24 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{includes_8h}{includes.h}}"{}}}
+\DoxyCodeLine{25 }
+\DoxyCodeLine{26 \textcolor{comment}{//======================================================================================}}
+\DoxyCodeLine{27 }
+\DoxyCodeLine{28 }
+\DoxyCodeLine{29 \textcolor{comment}{//======================================================================================}}
+\DoxyCodeLine{30 \textcolor{comment}{// }}
+\DoxyCodeLine{31 }
+\DoxyCodeLine{32 \textcolor{comment}{// Macros }}
+\DoxyCodeLine{33 \textcolor{preprocessor}{\#define SLAVE\_ADDRESS\_LCD 0x4E  }\textcolor{comment}{// LCD address -\/ change this according to your setup}}
+\DoxyCodeLine{34 }
+\DoxyCodeLine{35 \textcolor{comment}{//======================================================================================}}
+\DoxyCodeLine{36 }
+\DoxyCodeLine{37 }
+\DoxyCodeLine{38 \textcolor{comment}{//======================================================================================}}
+\DoxyCodeLine{39 \textcolor{comment}{// Function Prototypes}}
+\DoxyCodeLine{40 }
+\DoxyCodeLine{41 \textcolor{comment}{// initialize lcd}}
+\DoxyCodeLine{42 uint8\_t \mbox{\hyperlink{i2c-lcd_8h_af4fbb9b354b4788d9987c76ae9017a1e}{lcd\_init}}(\textcolor{keywordtype}{void});}
+\DoxyCodeLine{43 }
+\DoxyCodeLine{44 \textcolor{comment}{// send command to the lcd}}
+\DoxyCodeLine{45 \textcolor{keywordtype}{void} \mbox{\hyperlink{i2c-lcd_8h_a0934da706080d3b0b3b2f04c9d044e67}{lcd\_send\_cmd}}(\textcolor{keywordtype}{char} cmd);}
+\DoxyCodeLine{46 }
+\DoxyCodeLine{47 \textcolor{comment}{// send data to the lcd}}
+\DoxyCodeLine{48 \textcolor{keywordtype}{void} \mbox{\hyperlink{i2c-lcd_8h_ac6c9650fc3a35bf393a6bf535e6d0b9f}{lcd\_send\_data}}(\textcolor{keywordtype}{char} \mbox{\hyperlink{accelerometer__data_8c_a8bfd79faff98a8b652ff64958dec9a18}{data}});}
+\DoxyCodeLine{49 }
+\DoxyCodeLine{50 \textcolor{comment}{// send string to the lcd}}
+\DoxyCodeLine{51 \textcolor{keywordtype}{void} \mbox{\hyperlink{i2c-lcd_8h_a234ae1cb5d91fa756d1216e3540222ad}{lcd\_send\_string}}(\textcolor{keywordtype}{char} *str);}
+\DoxyCodeLine{52 }
+\DoxyCodeLine{53 \textcolor{comment}{// Clear the screen }}
+\DoxyCodeLine{54 \textcolor{keywordtype}{void} \mbox{\hyperlink{i2c-lcd_8h_ad235a86241458b1e7b8771688bfdaf9a}{lcd\_clear}}(\textcolor{keywordtype}{void});  }
+\DoxyCodeLine{55 }
+\DoxyCodeLine{56 \textcolor{comment}{//======================================================================================}}
+\DoxyCodeLine{57 }
+\DoxyCodeLine{58 }
+\DoxyCodeLine{59 \textcolor{preprocessor}{\#endif}}
+
+\end{DoxyCode}

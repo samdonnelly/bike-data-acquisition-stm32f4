@@ -1,0 +1,4 @@
+<map id="lcd_send_string" name="lcd_send_string">
+<area shape="rect" id="node1" title=" " alt="" coords="5,5,119,32"/>
+<area shape="rect" id="node2" href="$i2c-lcd_8c.html#ac6c9650fc3a35bf393a6bf535e6d0b9f" title=" " alt="" coords="167,5,273,32"/>
+</map>

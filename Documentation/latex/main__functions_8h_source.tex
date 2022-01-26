@@ -1,0 +1,259 @@
+\hypertarget{main__functions_8h_source}{}\doxysection{main\+\_\+functions.\+h}
+\label{main__functions_8h_source}\index{Core/Inc/main\_functions.h@{Core/Inc/main\_functions.h}}
+\mbox{\hyperlink{main__functions_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 }
+\DoxyCodeLine{18 \textcolor{preprocessor}{\#ifndef MAIN\_FUNCTIONS\_H\_}}
+\DoxyCodeLine{19 \textcolor{preprocessor}{\#define MAIN\_FUNCTIONS\_H\_}}
+\DoxyCodeLine{20 }
+\DoxyCodeLine{21 }
+\DoxyCodeLine{22 \textcolor{comment}{//======================================================================================}}
+\DoxyCodeLine{23 \textcolor{comment}{// Includes}}
+\DoxyCodeLine{24 }
+\DoxyCodeLine{25 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{includes_8h}{includes.h}}"{}}}
+\DoxyCodeLine{26 }
+\DoxyCodeLine{27 \textcolor{comment}{//======================================================================================}}
+\DoxyCodeLine{28 }
+\DoxyCodeLine{29 }
+\DoxyCodeLine{30 \textcolor{comment}{//======================================================================================}}
+\DoxyCodeLine{31 \textcolor{comment}{// Macros}}
+\DoxyCodeLine{32 }
+\DoxyCodeLine{33 \textcolor{preprocessor}{\#define NUM\_STATES 9}}
+\DoxyCodeLine{34 \textcolor{preprocessor}{\#define START\_TIME\_LIMIT 10000}}
+\DoxyCodeLine{35 }
+\DoxyCodeLine{36 \textcolor{comment}{//======================================================================================}}
+\DoxyCodeLine{37 }
+\DoxyCodeLine{38 }
+\DoxyCodeLine{39 \textcolor{comment}{//======================================================================================}}
+\DoxyCodeLine{40 \textcolor{comment}{// Enums}}
+\DoxyCodeLine{41 }
+\DoxyCodeLine{46 \textcolor{keyword}{typedef} \textcolor{keyword}{enum} \{}
+\DoxyCodeLine{47     \mbox{\hyperlink{main__functions_8h_a2c82c3c246868ce8a681eb6c7f2f2dd4abece39ab07d6e99b6352cf61ea169a0d}{STARTUP\_STATE}},}
+\DoxyCodeLine{48     \mbox{\hyperlink{main__functions_8h_a2c82c3c246868ce8a681eb6c7f2f2dd4aeca4500f6f729608a014643f8c8f4003}{IDLE\_STATE}},}
+\DoxyCodeLine{49     \mbox{\hyperlink{main__functions_8h_a2c82c3c246868ce8a681eb6c7f2f2dd4adacc6e0c2a85f4447d83e8d7ba2b96e3}{MODE\_SET\_STATE}},}
+\DoxyCodeLine{50     \mbox{\hyperlink{main__functions_8h_a2c82c3c246868ce8a681eb6c7f2f2dd4a954648f97a8f6b09ab21ba6833058d27}{SYSTEM\_CHECK\_STATE}},}
+\DoxyCodeLine{51     \mbox{\hyperlink{main__functions_8h_a2c82c3c246868ce8a681eb6c7f2f2dd4ad9579c65ebbb367488a1467cd1b9f306}{SENSOR\_CAL\_STATE}},}
+\DoxyCodeLine{52     \mbox{\hyperlink{main__functions_8h_a2c82c3c246868ce8a681eb6c7f2f2dd4a26a8eba2ec1d1ec6bc2836af24be2611}{PRE\_RECORDING\_STATE}},}
+\DoxyCodeLine{53     \mbox{\hyperlink{main__functions_8h_a2c82c3c246868ce8a681eb6c7f2f2dd4ab1405067584cd9d6647fea8bc6b16667}{RECORDING\_STATE}},}
+\DoxyCodeLine{54     \mbox{\hyperlink{main__functions_8h_a2c82c3c246868ce8a681eb6c7f2f2dd4ac54c47db7dc2d43902cf2c17de79cc7b}{POST\_RECORDING\_STATE}},}
+\DoxyCodeLine{55     \mbox{\hyperlink{main__functions_8h_a2c82c3c246868ce8a681eb6c7f2f2dd4aa369585a250430e128ba0ef57a8e2692}{FAULT\_STATE}},}
+\DoxyCodeLine{56     \mbox{\hyperlink{main__functions_8h_a2c82c3c246868ce8a681eb6c7f2f2dd4a0a670b4b8bd0212e83d44b18644ad4b2}{LOW\_POWER\_MODE\_STATE}}}
+\DoxyCodeLine{57 \} \mbox{\hyperlink{main__functions_8h_a2c82c3c246868ce8a681eb6c7f2f2dd4}{bda\_states\_t}};}
+\DoxyCodeLine{58 }
+\DoxyCodeLine{59 }
+\DoxyCodeLine{64 \textcolor{keyword}{typedef} \textcolor{keyword}{enum} \{}
+\DoxyCodeLine{65     \mbox{\hyperlink{main__functions_8h_a7086ee2c8b232d813f83484ca6b37ca3a11a9356aaf9a951838595da5734791c4}{MPU6050\_FAULT\_CODE}}     = 0x01,  \textcolor{comment}{// Accelerometer setup fault }}
+\DoxyCodeLine{66     \mbox{\hyperlink{main__functions_8h_a7086ee2c8b232d813f83484ca6b37ca3aea381dd60656b1c454a9071d56265d57}{LCD\_FAULT\_CODE}}         = 0x02,  \textcolor{comment}{// LCD screen setup fault }}
+\DoxyCodeLine{67     \mbox{\hyperlink{main__functions_8h_a7086ee2c8b232d813f83484ca6b37ca3ac5d40fc5f83f4f30e9583636500263ee}{BATT\_VOLT\_FAULT\_CODE}}   = 0x03,  \textcolor{comment}{// Battery voltage too low }}
+\DoxyCodeLine{68     \mbox{\hyperlink{main__functions_8h_a7086ee2c8b232d813f83484ca6b37ca3ab661bc842edc1b40f858343c39713bad}{STEER\_ANGLE\_FAULT\_CODE}} = 0x04   \textcolor{comment}{// Steering angle too far -\/ system misaligned }}
+\DoxyCodeLine{69 \} \mbox{\hyperlink{main__functions_8h_a7086ee2c8b232d813f83484ca6b37ca3}{bda\_fault\_codes\_t}};}
+\DoxyCodeLine{70 }
+\DoxyCodeLine{71 }
+\DoxyCodeLine{76 \textcolor{keyword}{typedef} \textcolor{keyword}{enum} \{}
+\DoxyCodeLine{77     \mbox{\hyperlink{main__functions_8h_a7ac6fd14aee3749462f2ad9a0ebf900da40bf72ad1126c8d579672bed403aff20}{BATT\_VOLT\_LOW\_PWR}}     = 4,    \textcolor{comment}{// Battery voltage for low power mode }}
+\DoxyCodeLine{78     \mbox{\hyperlink{main__functions_8h_a7ac6fd14aee3749462f2ad9a0ebf900da15fac7211fc647dd95654bd5d1c399a8}{BATT\_VOLT\_THRESH}}      = 3,    \textcolor{comment}{// Battery voltage for system fault }}
+\DoxyCodeLine{79     \mbox{\hyperlink{main__functions_8h_a7ac6fd14aee3749462f2ad9a0ebf900da3187444a8f354a229bfe0758aec36007}{STEERING\_ANGLE\_THRESH}} = 300   \textcolor{comment}{// Rotary pot angle exceeded -\/ system misaligned}}
+\DoxyCodeLine{80 \} \mbox{\hyperlink{main__functions_8h_a7ac6fd14aee3749462f2ad9a0ebf900d}{system\_operating\_limit\_t}};}
+\DoxyCodeLine{81 }
+\DoxyCodeLine{82 }
+\DoxyCodeLine{87 \textcolor{keyword}{typedef} \textcolor{keyword}{enum} \{}
+\DoxyCodeLine{88     \mbox{\hyperlink{main__functions_8h_a7c0d56ad5939e4f00ed454d55866bb8da30675d443ca5c454fda57e6ab2aa8cbd}{TOGGLE\_MODE\_SET}},}
+\DoxyCodeLine{89     \mbox{\hyperlink{main__functions_8h_a7c0d56ad5939e4f00ed454d55866bb8da6d89d6dbd1544c5a5b9e15739fbfbe63}{TOGGLE\_SENSOR\_CAL}},}
+\DoxyCodeLine{90     \mbox{\hyperlink{main__functions_8h_a7c0d56ad5939e4f00ed454d55866bb8dac17e68327a2a4d5d40776b1064fc8b5e}{TOGGLE\_SYS\_CHECK}}}
+\DoxyCodeLine{91 \} \mbox{\hyperlink{main__functions_8h_a7c0d56ad5939e4f00ed454d55866bb8d}{toggle\_button\_modes\_t}};}
+\DoxyCodeLine{92 }
+\DoxyCodeLine{93 }
+\DoxyCodeLine{98 \textcolor{keyword}{typedef} \textcolor{keyword}{enum} \{}
+\DoxyCodeLine{99     \mbox{\hyperlink{main__functions_8h_ac749da37c4a5885f97b1c56253ce5f9faa1e095cc966dbecf6a0d8aad75348d1a}{FALSE}},}
+\DoxyCodeLine{100     \mbox{\hyperlink{main__functions_8h_ac749da37c4a5885f97b1c56253ce5f9faa82764c3079aea4e60c80e45befbb839}{TRUE}}}
+\DoxyCodeLine{101 \} \mbox{\hyperlink{main__functions_8h_ac749da37c4a5885f97b1c56253ce5f9f}{bit\_set\_t}};}
+\DoxyCodeLine{102 }
+\DoxyCodeLine{103 }
+\DoxyCodeLine{104 \textcolor{comment}{//======================================================================================}}
+\DoxyCodeLine{105 }
+\DoxyCodeLine{106 }
+\DoxyCodeLine{107 \textcolor{comment}{//======================================================================================}}
+\DoxyCodeLine{108 \textcolor{comment}{// Structures }}
+\DoxyCodeLine{109 }
+\DoxyCodeLine{110 \textcolor{keyword}{typedef} \textcolor{keyword}{struct }\mbox{\hyperlink{structbda__trackers__s}{bda\_trackers\_s}} }
+\DoxyCodeLine{111 \{}
+\DoxyCodeLine{112     \textcolor{comment}{// State of the state machine}}
+\DoxyCodeLine{113     \mbox{\hyperlink{main__functions_8h_a2c82c3c246868ce8a681eb6c7f2f2dd4}{bda\_states\_t}} \mbox{\hyperlink{structbda__trackers__s_a332f22d8f4d580b68a41ec655c4f28bf}{bda\_state}};}
+\DoxyCodeLine{114 }
+\DoxyCodeLine{115     \textcolor{comment}{// Accelerometer fault code }}
+\DoxyCodeLine{116     uint8\_t \mbox{\hyperlink{structbda__trackers__s_a0ee1cdff1d9f5e4f10436a150ff145d1}{fault\_code}};}
+\DoxyCodeLine{117 }
+\DoxyCodeLine{118     \textcolor{comment}{// Fork pot 1 }}
+\DoxyCodeLine{119     uint16\_t \mbox{\hyperlink{structbda__trackers__s_ae2f9568e5a26d62e8f19ef6e50232e6f}{fork\_pot\_1}};}
+\DoxyCodeLine{120 }
+\DoxyCodeLine{121     \textcolor{comment}{// Fork pot 2 }}
+\DoxyCodeLine{122     uint16\_t \mbox{\hyperlink{structbda__trackers__s_ab5f8fc2c4559fd6241553ae013deafe7}{fork\_pot\_2}};}
+\DoxyCodeLine{123 }
+\DoxyCodeLine{124     \textcolor{comment}{// Shock pot }}
+\DoxyCodeLine{125     uint16\_t \mbox{\hyperlink{structbda__trackers__s_ad08c552d7db16d8c71fb82a0402c1eac}{shock\_pot}};}
+\DoxyCodeLine{126 }
+\DoxyCodeLine{127     \textcolor{comment}{// Steering angle}}
+\DoxyCodeLine{128     uint16\_t \mbox{\hyperlink{structbda__trackers__s_ae8b3d651e5a5d55aa85251b96ee4b20d}{steering\_angle}};}
+\DoxyCodeLine{129 }
+\DoxyCodeLine{130     \textcolor{comment}{// Wheel speed}}
+\DoxyCodeLine{131     uint16\_t \mbox{\hyperlink{structbda__trackers__s_ade8e7bce5a20f016d74fb9274342cc56}{wheel\_speed}};}
+\DoxyCodeLine{132 }
+\DoxyCodeLine{133     \textcolor{comment}{// x-\/axis acceleration }}
+\DoxyCodeLine{134     int16\_t \mbox{\hyperlink{structbda__trackers__s_aeea1d09c266ba1316c4c127560fb5f97}{x\_accel}};}
+\DoxyCodeLine{135 }
+\DoxyCodeLine{136     \textcolor{comment}{// y-\/axis acceleration }}
+\DoxyCodeLine{137     int16\_t \mbox{\hyperlink{structbda__trackers__s_a4e11cf0570dcb936182c6eb09d519415}{y\_accel}};}
+\DoxyCodeLine{138 }
+\DoxyCodeLine{139     \textcolor{comment}{// z-\/axis acceleration }}
+\DoxyCodeLine{140     int16\_t \mbox{\hyperlink{structbda__trackers__s_abc921c665a153f18c08cb16be2675cf1}{z\_accel}};}
+\DoxyCodeLine{141 }
+\DoxyCodeLine{142     \textcolor{comment}{// x-\/axis rotation }}
+\DoxyCodeLine{143     int16\_t \mbox{\hyperlink{structbda__trackers__s_a2d95c89a1415091464612b2947b6408f}{x\_rotation}};}
+\DoxyCodeLine{144 }
+\DoxyCodeLine{145     \textcolor{comment}{// y-\/axis rotation}}
+\DoxyCodeLine{146     int16\_t \mbox{\hyperlink{structbda__trackers__s_add475ac92b517ee363316fa42ec2f3f9}{y\_rotation}};}
+\DoxyCodeLine{147 }
+\DoxyCodeLine{148     \textcolor{comment}{// z-\/axis rotation }}
+\DoxyCodeLine{149     int16\_t \mbox{\hyperlink{structbda__trackers__s_ae84bd6bafdae1274100fed2e6f67a78a}{z\_rotation}};}
+\DoxyCodeLine{150 }
+\DoxyCodeLine{151 \} \mbox{\hyperlink{main__functions_8h_a2f89dc4c646ea6418ea97ea96f5f8a66}{bda\_trackers\_t}};}
+\DoxyCodeLine{152 }
+\DoxyCodeLine{153 }
+\DoxyCodeLine{154 \textcolor{keyword}{typedef} \textcolor{keyword}{struct }\mbox{\hyperlink{structinterface__trackers__s}{interface\_trackers\_s}} }
+\DoxyCodeLine{155 \{}
+\DoxyCodeLine{156     \textcolor{comment}{// Recording button input}}
+\DoxyCodeLine{157     uint8\_t \mbox{\hyperlink{structinterface__trackers__s_a33d955fd4384e8aec9dce82d8e3e3b36}{record\_button}}; }
+\DoxyCodeLine{158 }
+\DoxyCodeLine{159     \textcolor{comment}{// Flag button input }}
+\DoxyCodeLine{160     uint8\_t \mbox{\hyperlink{structinterface__trackers__s_a51a698cab74e71f57bfc02aff6c71a4a}{flag\_button}};}
+\DoxyCodeLine{161 }
+\DoxyCodeLine{162     \textcolor{comment}{// Selecting button input}}
+\DoxyCodeLine{163     uint8\_t \mbox{\hyperlink{structinterface__trackers__s_a2b0c496fe39cb112594902e66cb2353c}{select\_button}}; }
+\DoxyCodeLine{164 }
+\DoxyCodeLine{165     \textcolor{comment}{// Toggle button input}}
+\DoxyCodeLine{166     uint8\_t \mbox{\hyperlink{structinterface__trackers__s_a0eb82178536ece81251ca2563933944d}{toggle\_button}}; }
+\DoxyCodeLine{167 }
+\DoxyCodeLine{168     \textcolor{comment}{// Startup timer }}
+\DoxyCodeLine{169     uint16\_t \mbox{\hyperlink{structinterface__trackers__s_a792bc66c365e9e3ac28126acd778e2f2}{startup\_timer}};}
+\DoxyCodeLine{170 }
+\DoxyCodeLine{171     \textcolor{comment}{// Low power mode}}
+\DoxyCodeLine{172     uint8\_t \mbox{\hyperlink{structinterface__trackers__s_aa5edf40f5d88a1c140cf4a1f00c9ed7f}{low\_power\_mode}};}
+\DoxyCodeLine{173 }
+\DoxyCodeLine{174     \textcolor{comment}{// Fault flag }}
+\DoxyCodeLine{175     uint8\_t \mbox{\hyperlink{structinterface__trackers__s_a26675f28b5e99cbcd6a98e3771047f32}{fault\_flag}};}
+\DoxyCodeLine{176 }
+\DoxyCodeLine{177     \textcolor{comment}{// Recording ready flag }}
+\DoxyCodeLine{178     uint8\_t \mbox{\hyperlink{structinterface__trackers__s_ad8f169e97c35ccd82dec7842720caa71}{recording\_status}};}
+\DoxyCodeLine{179 }
+\DoxyCodeLine{180     \textcolor{comment}{// Accelerometer device status }}
+\DoxyCodeLine{181     uint8\_t \mbox{\hyperlink{structinterface__trackers__s_a2f0d5a8128032cb0c7dbb9a1f914168b}{mpu6050\_status}};}
+\DoxyCodeLine{182 }
+\DoxyCodeLine{183     \textcolor{comment}{// LED screen status }}
+\DoxyCodeLine{184     uint8\_t \mbox{\hyperlink{structinterface__trackers__s_a337946ccf0f727ee1352e4dd26ce2333}{lcd\_status}};}
+\DoxyCodeLine{185 }
+\DoxyCodeLine{186     \textcolor{comment}{// Battery voltage }}
+\DoxyCodeLine{187     uint8\_t \mbox{\hyperlink{structinterface__trackers__s_a40144a3616bdd7db975368a3510a09f6}{batt\_voltage}};}
+\DoxyCodeLine{188 }
+\DoxyCodeLine{189 \} \mbox{\hyperlink{main__functions_8h_ad1773e92818f6317a3f0de03751e5533}{interface\_trackers\_t}};}
+\DoxyCodeLine{190 }
+\DoxyCodeLine{191 }
+\DoxyCodeLine{192 \textcolor{comment}{//======================================================================================}}
+\DoxyCodeLine{193 }
+\DoxyCodeLine{194 }
+\DoxyCodeLine{195 \textcolor{comment}{//======================================================================================}}
+\DoxyCodeLine{196 \textcolor{comment}{// Function pointers}}
+\DoxyCodeLine{197 }
+\DoxyCodeLine{198 \textcolor{keyword}{typedef} void (*\mbox{\hyperlink{main__functions_8h_acde3071ddf50452ff6df1e8cd3543f47}{bda\_state\_functions\_t}})(}
+\DoxyCodeLine{199     \mbox{\hyperlink{structbda__trackers__s}{bda\_trackers\_t}} *data\_trackers,}
+\DoxyCodeLine{200     \mbox{\hyperlink{structinterface__trackers__s}{interface\_trackers\_t}} *system\_trackers);}
+\DoxyCodeLine{201 }
+\DoxyCodeLine{202 \textcolor{comment}{//======================================================================================}}
+\DoxyCodeLine{203 }
+\DoxyCodeLine{204 }
+\DoxyCodeLine{205 \textcolor{comment}{//======================================================================================}}
+\DoxyCodeLine{206 \textcolor{comment}{// Function Prototypes }}
+\DoxyCodeLine{207 }
+\DoxyCodeLine{212 \textcolor{keywordtype}{void} \mbox{\hyperlink{main__functions_8h_a65e9d759464be779107b699b63bb240d}{main\_function}}(\textcolor{keywordtype}{void});}
+\DoxyCodeLine{213 }
+\DoxyCodeLine{218 \textcolor{keywordtype}{void} \mbox{\hyperlink{main__functions_8h_a5e75ba74927931ccfd8cf36e7385bb51}{bda\_init}}(}
+\DoxyCodeLine{219     \mbox{\hyperlink{structbda__trackers__s}{bda\_trackers\_t}} *data\_trackers, }
+\DoxyCodeLine{220     \mbox{\hyperlink{structinterface__trackers__s}{interface\_trackers\_t}} *system\_trackers);}
+\DoxyCodeLine{221 }
+\DoxyCodeLine{226 uint8\_t \mbox{\hyperlink{main__functions_8h_ac1cfb5c11cbe8a08fce692963c4f493b}{get\_record\_input}}(\textcolor{keywordtype}{void});}
+\DoxyCodeLine{227 }
+\DoxyCodeLine{228 }
+\DoxyCodeLine{233 uint8\_t \mbox{\hyperlink{main__functions_8h_a2def30e0c16b21e88fafafca3a5e2452}{get\_flag\_input}}(\textcolor{keywordtype}{void});}
+\DoxyCodeLine{234 }
+\DoxyCodeLine{239 uint8\_t \mbox{\hyperlink{main__functions_8h_a2bf9e9fbd4772e1cddbc98afa971a32e}{get\_selector\_input}}(\textcolor{keywordtype}{void});}
+\DoxyCodeLine{240 }
+\DoxyCodeLine{245 uint8\_t \mbox{\hyperlink{main__functions_8h_a2661cd4da465775e0b9287c26ce21f68}{get\_toggle\_input}}(\textcolor{keywordtype}{void});}
+\DoxyCodeLine{246 }
+\DoxyCodeLine{251 uint8\_t \mbox{\hyperlink{main__functions_8h_ae7b97c635d1b73636ffc3381cc068c6b}{fault\_checks}}(}
+\DoxyCodeLine{252     \mbox{\hyperlink{structbda__trackers__s}{bda\_trackers\_t}} *data\_trackers, }
+\DoxyCodeLine{253     \mbox{\hyperlink{structinterface__trackers__s}{interface\_trackers\_t}} *system\_trackers);}
+\DoxyCodeLine{254 }
+\DoxyCodeLine{259 \textcolor{keywordtype}{void} \mbox{\hyperlink{main__functions_8h_a316dac03e7c4ad7c196c52ea8b7579eb}{startup\_state}}(}
+\DoxyCodeLine{260     \mbox{\hyperlink{structbda__trackers__s}{bda\_trackers\_t}} *data\_trackers,}
+\DoxyCodeLine{261     \mbox{\hyperlink{structinterface__trackers__s}{interface\_trackers\_t}} *system\_trackers);}
+\DoxyCodeLine{262 }
+\DoxyCodeLine{267 \textcolor{keywordtype}{void} \mbox{\hyperlink{main__functions_8h_ae41b6b4360c205b6b507208af95dd425}{idle\_state}}(}
+\DoxyCodeLine{268     \mbox{\hyperlink{structbda__trackers__s}{bda\_trackers\_t}} *data\_trackers,}
+\DoxyCodeLine{269     \mbox{\hyperlink{structinterface__trackers__s}{interface\_trackers\_t}} *system\_trackers);}
+\DoxyCodeLine{270 }
+\DoxyCodeLine{275 \textcolor{keywordtype}{void} \mbox{\hyperlink{main__functions_8h_a6c8729ba5f2fbc9a53206a39ac1d0ab7}{mode\_set\_state}}(}
+\DoxyCodeLine{276     \mbox{\hyperlink{structbda__trackers__s}{bda\_trackers\_t}} *data\_trackers,}
+\DoxyCodeLine{277     \mbox{\hyperlink{structinterface__trackers__s}{interface\_trackers\_t}} *system\_trackers);}
+\DoxyCodeLine{278 }
+\DoxyCodeLine{283 \textcolor{keywordtype}{void} \mbox{\hyperlink{main__functions_8h_a57d508de48af7c033aa61775a01b8df4}{system\_check\_state}}(}
+\DoxyCodeLine{284     \mbox{\hyperlink{structbda__trackers__s}{bda\_trackers\_t}} *data\_trackers,}
+\DoxyCodeLine{285     \mbox{\hyperlink{structinterface__trackers__s}{interface\_trackers\_t}} *system\_trackers);}
+\DoxyCodeLine{286 }
+\DoxyCodeLine{291 \textcolor{keywordtype}{void} \mbox{\hyperlink{main__functions_8h_a80cd35d705e2c429a439c45f44bf06a7}{sensor\_calibration\_state}}(}
+\DoxyCodeLine{292     \mbox{\hyperlink{structbda__trackers__s}{bda\_trackers\_t}} *data\_trackers,}
+\DoxyCodeLine{293     \mbox{\hyperlink{structinterface__trackers__s}{interface\_trackers\_t}} *system\_trackers);}
+\DoxyCodeLine{294 }
+\DoxyCodeLine{299 \textcolor{keywordtype}{void} \mbox{\hyperlink{main__functions_8h_ad1cd352bfc3485ca340f6a440e95d7e1}{pre\_recording\_state}}(}
+\DoxyCodeLine{300     \mbox{\hyperlink{structbda__trackers__s}{bda\_trackers\_t}} *data\_trackers,}
+\DoxyCodeLine{301     \mbox{\hyperlink{structinterface__trackers__s}{interface\_trackers\_t}} *system\_trackers);}
+\DoxyCodeLine{302 }
+\DoxyCodeLine{307 \textcolor{keywordtype}{void} \mbox{\hyperlink{main__functions_8h_ae30e24ccd149516b70814535232d28b8}{recording\_state}}(}
+\DoxyCodeLine{308     \mbox{\hyperlink{structbda__trackers__s}{bda\_trackers\_t}} *data\_trackers,}
+\DoxyCodeLine{309     \mbox{\hyperlink{structinterface__trackers__s}{interface\_trackers\_t}} *system\_trackers);}
+\DoxyCodeLine{310 }
+\DoxyCodeLine{315 \textcolor{keywordtype}{void} \mbox{\hyperlink{main__functions_8h_abecf1c68c70b2e7c4ce15a2e9d085617}{post\_recording\_state}}(}
+\DoxyCodeLine{316     \mbox{\hyperlink{structbda__trackers__s}{bda\_trackers\_t}} *data\_trackers,}
+\DoxyCodeLine{317     \mbox{\hyperlink{structinterface__trackers__s}{interface\_trackers\_t}} *system\_trackers);}
+\DoxyCodeLine{318 }
+\DoxyCodeLine{323 \textcolor{keywordtype}{void} \mbox{\hyperlink{main__functions_8h_a2ef7173326181de96ae39beba56625ed}{fault\_state}}(}
+\DoxyCodeLine{324     \mbox{\hyperlink{structbda__trackers__s}{bda\_trackers\_t}} *data\_trackers,}
+\DoxyCodeLine{325     \mbox{\hyperlink{structinterface__trackers__s}{interface\_trackers\_t}} *system\_trackers);}
+\DoxyCodeLine{326 }
+\DoxyCodeLine{331 \textcolor{keywordtype}{void} \mbox{\hyperlink{main__functions_8h_aa7342f05779b5a526ef99218a1fb5b4f}{low\_power\_mode\_state}}(}
+\DoxyCodeLine{332     \mbox{\hyperlink{structbda__trackers__s}{bda\_trackers\_t}} *data\_trackers,}
+\DoxyCodeLine{333     \mbox{\hyperlink{structinterface__trackers__s}{interface\_trackers\_t}} *system\_trackers);}
+\DoxyCodeLine{334 }
+\DoxyCodeLine{335 }
+\DoxyCodeLine{340 \textcolor{keywordtype}{void} \mbox{\hyperlink{main__functions_8h_ae73b11ed21f2506f849fdb589c29bd91}{normal}}(\textcolor{keywordtype}{void});}
+\DoxyCodeLine{341 }
+\DoxyCodeLine{342 }
+\DoxyCodeLine{354 \textcolor{keywordtype}{void} \mbox{\hyperlink{main__functions_8h_adf779e4fafbb09d0b6f1859c64d6daf2}{print\_data}}(}
+\DoxyCodeLine{355     uint8\_t pos1, }
+\DoxyCodeLine{356     uint8\_t pos2, }
+\DoxyCodeLine{357     uint8\_t pos3, }
+\DoxyCodeLine{358     \textcolor{keywordtype}{char} str[], }
+\DoxyCodeLine{359     uint8\_t index, }
+\DoxyCodeLine{360     \textcolor{keywordtype}{float} val,}
+\DoxyCodeLine{361     \textcolor{keywordtype}{int} \mbox{\hyperlink{accelerometer__data_8c_a8bfd79faff98a8b652ff64958dec9a18}{data}}[]);}
+\DoxyCodeLine{362 }
+\DoxyCodeLine{363 }
+\DoxyCodeLine{368 \textcolor{keywordtype}{void} \mbox{\hyperlink{main__functions_8h_ae750d5a4a123a49df07a50ed894f7914}{accel\_cal\_prep}}(\textcolor{keywordtype}{void});}
+\DoxyCodeLine{369 }
+\DoxyCodeLine{370 }
+\DoxyCodeLine{376 \textcolor{keywordtype}{void} \mbox{\hyperlink{main__functions_8h_ad91b8f660823d2d017802da9e3954965}{send\_uart}}(\textcolor{keywordtype}{char} *\textcolor{keywordtype}{string});}
+\DoxyCodeLine{377 }
+\DoxyCodeLine{378 \textcolor{comment}{//======================================================================================}}
+\DoxyCodeLine{379 }
+\DoxyCodeLine{380 }
+\DoxyCodeLine{381 \textcolor{preprocessor}{\#endif   }\textcolor{comment}{// MAIN\_FUNCTIONS\_H\_}}
+
+\end{DoxyCode}

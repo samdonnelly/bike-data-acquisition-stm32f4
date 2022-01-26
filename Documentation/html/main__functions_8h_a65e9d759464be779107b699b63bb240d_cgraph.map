@@ -1,0 +1,13 @@
+<map id="main_function" name="main_function">
+<area shape="rect" id="node1" title="Psudo main function." alt="" coords="5,132,108,159"/>
+<area shape="rect" id="node2" href="$main__functions_8c.html#a5e75ba74927931ccfd8cf36e7385bb51" title=" " alt="" coords="187,31,253,57"/>
+<area shape="rect" id="node8" href="$main__functions_8c.html#ae7b97c635d1b73636ffc3381cc068c6b" title=" " alt="" coords="173,81,267,108"/>
+<area shape="rect" id="node9" href="$main__functions_8c.html#ac1cfb5c11cbe8a08fce692963c4f493b" title="Get the record input object." alt="" coords="161,132,279,159"/>
+<area shape="rect" id="node10" href="$main__functions_8c.html#a2bf9e9fbd4772e1cddbc98afa971a32e" title="Get the selector input object." alt="" coords="156,183,284,209"/>
+<area shape="rect" id="node11" href="$main__functions_8c.html#a2661cd4da465775e0b9287c26ce21f68" title="Get the toggle input object." alt="" coords="161,233,279,260"/>
+<area shape="rect" id="node3" href="$i2c-lcd_8c.html#af4fbb9b354b4788d9987c76ae9017a1e" title=" " alt="" coords="352,5,415,32"/>
+<area shape="rect" id="node5" href="$accelerometer__data_8c.html#ae7cae8a1f87165c318400071effa97a6" title="Initiate accelerometer." alt="" coords="332,56,435,83"/>
+<area shape="rect" id="node4" href="$i2c-lcd_8c.html#a0934da706080d3b0b3b2f04c9d044e67" title=" " alt="" coords="486,5,593,32"/>
+<area shape="rect" id="node6" href="$i2c-lcd_8c.html#a234ae1cb5d91fa756d1216e3540222ad" title=" " alt="" coords="483,56,596,83"/>
+<area shape="rect" id="node7" href="$i2c-lcd_8c.html#ac6c9650fc3a35bf393a6bf535e6d0b9f" title=" " alt="" coords="644,56,751,83"/>
+</map>

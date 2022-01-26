@@ -1,0 +1,65 @@
+\hypertarget{fatfs__sd_8h_source}{}\doxysection{fatfs\+\_\+sd.\+h}
+\label{fatfs__sd_8h_source}\index{Device-\/Drivers/Inc/fatfs\_sd.h@{Device-\/Drivers/Inc/fatfs\_sd.h}}
+\mbox{\hyperlink{fatfs__sd_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 }
+\DoxyCodeLine{15 \textcolor{preprocessor}{\#ifndef \_\_FATFS\_SD\_H}}
+\DoxyCodeLine{16 \textcolor{preprocessor}{\#define \_\_FATFS\_SD\_H}}
+\DoxyCodeLine{17 }
+\DoxyCodeLine{18 }
+\DoxyCodeLine{19 \textcolor{comment}{//======================================================================================}}
+\DoxyCodeLine{20 \textcolor{comment}{// Includes }}
+\DoxyCodeLine{21 }
+\DoxyCodeLine{22 \textcolor{preprocessor}{\#include "{}integer.h"{}}}
+\DoxyCodeLine{23 \textcolor{preprocessor}{\#include "{}diskio.h"{}}}
+\DoxyCodeLine{24 }
+\DoxyCodeLine{25 \textcolor{comment}{//======================================================================================}}
+\DoxyCodeLine{26 }
+\DoxyCodeLine{27 }
+\DoxyCodeLine{28 \textcolor{comment}{//======================================================================================}}
+\DoxyCodeLine{29 \textcolor{comment}{// Macros}}
+\DoxyCodeLine{30 }
+\DoxyCodeLine{31 \textcolor{preprocessor}{\#define SPI\_TIMEOUT 100 }}
+\DoxyCodeLine{32 }
+\DoxyCodeLine{33 \textcolor{comment}{// Definitions for MMC/SDC command}}
+\DoxyCodeLine{34 \textcolor{preprocessor}{\#define CMD0     (0x40+0)       }\textcolor{comment}{// GO\_IDLE\_STATE}}
+\DoxyCodeLine{35 \textcolor{preprocessor}{\#define CMD1     (0x40+1)       }\textcolor{comment}{// SEND\_OP\_COND}}
+\DoxyCodeLine{36 \textcolor{preprocessor}{\#define CMD8     (0x40+8)       }\textcolor{comment}{// SEND\_IF\_COND}}
+\DoxyCodeLine{37 \textcolor{preprocessor}{\#define CMD9     (0x40+9)       }\textcolor{comment}{// SEND\_CSD}}
+\DoxyCodeLine{38 \textcolor{preprocessor}{\#define CMD10    (0x40+10)      }\textcolor{comment}{// SEND\_CID}}
+\DoxyCodeLine{39 \textcolor{preprocessor}{\#define CMD12    (0x40+12)      }\textcolor{comment}{// STOP\_TRANSMISSION}}
+\DoxyCodeLine{40 \textcolor{preprocessor}{\#define CMD16    (0x40+16)      }\textcolor{comment}{// SET\_BLOCKLEN}}
+\DoxyCodeLine{41 \textcolor{preprocessor}{\#define CMD17    (0x40+17)      }\textcolor{comment}{// READ\_SINGLE\_BLOCK}}
+\DoxyCodeLine{42 \textcolor{preprocessor}{\#define CMD18    (0x40+18)      }\textcolor{comment}{// READ\_MULTIPLE\_BLOCK}}
+\DoxyCodeLine{43 \textcolor{preprocessor}{\#define CMD23    (0x40+23)      }\textcolor{comment}{// SET\_BLOCK\_COUNT}}
+\DoxyCodeLine{44 \textcolor{preprocessor}{\#define CMD24    (0x40+24)      }\textcolor{comment}{// WRITE\_BLOCK}}
+\DoxyCodeLine{45 \textcolor{preprocessor}{\#define CMD25    (0x40+25)      }\textcolor{comment}{// WRITE\_MULTIPLE\_BLOCK}}
+\DoxyCodeLine{46 \textcolor{preprocessor}{\#define CMD41    (0x40+41)      }\textcolor{comment}{// SEND\_OP\_COND (ACMD)}}
+\DoxyCodeLine{47 \textcolor{preprocessor}{\#define CMD55    (0x40+55)      }\textcolor{comment}{// APP\_CMD}}
+\DoxyCodeLine{48 \textcolor{preprocessor}{\#define CMD58    (0x40+58)      }\textcolor{comment}{// READ\_OCR}}
+\DoxyCodeLine{49 }
+\DoxyCodeLine{50 \textcolor{comment}{// MMC card type flags (MMC\_GET\_TYPE)}}
+\DoxyCodeLine{51 \textcolor{preprocessor}{\#define CT\_MMC      0x01        }\textcolor{comment}{// MMC ver 3}}
+\DoxyCodeLine{52 \textcolor{preprocessor}{\#define CT\_SD1      0x02        }\textcolor{comment}{// SD ver 1}}
+\DoxyCodeLine{53 \textcolor{preprocessor}{\#define CT\_SD2      0x04        }\textcolor{comment}{// SD ver 2}}
+\DoxyCodeLine{54 \textcolor{preprocessor}{\#define CT\_SDC      0x06        }\textcolor{comment}{// SD}}
+\DoxyCodeLine{55 \textcolor{preprocessor}{\#define CT\_BLOCK    0x08        }\textcolor{comment}{// Block addressing}}
+\DoxyCodeLine{56 }
+\DoxyCodeLine{57 \textcolor{comment}{//======================================================================================}}
+\DoxyCodeLine{58 }
+\DoxyCodeLine{59 }
+\DoxyCodeLine{60 \textcolor{comment}{//======================================================================================}}
+\DoxyCodeLine{61 \textcolor{comment}{// Functions}}
+\DoxyCodeLine{62 }
+\DoxyCodeLine{63 DSTATUS \mbox{\hyperlink{fatfs__sd_8h_af2a40446de9bbb9de81a0220227a6c22}{SD\_disk\_initialize}} (BYTE pdrv);}
+\DoxyCodeLine{64 DSTATUS \mbox{\hyperlink{fatfs__sd_8h_a3b6d8a36e6ae7d47bbbf4c3c79aba082}{SD\_disk\_status}} (BYTE pdrv);}
+\DoxyCodeLine{65 DRESULT \mbox{\hyperlink{fatfs__sd_8h_af48460111fe5bb4f17ef7a44960aca5f}{SD\_disk\_read}} (BYTE pdrv, BYTE* buff, DWORD sector, UINT count);}
+\DoxyCodeLine{66 DRESULT \mbox{\hyperlink{fatfs__sd_8h_aac0b616ac2848931b42f68495ea5f8f2}{SD\_disk\_write}} (BYTE pdrv, \textcolor{keyword}{const} BYTE* buff, DWORD sector, UINT count);}
+\DoxyCodeLine{67 DRESULT \mbox{\hyperlink{fatfs__sd_8h_ae7705ac9e8ddd4c2931a2ce4b4f232d7}{SD\_disk\_ioctl}} (BYTE pdrv, BYTE cmd, \textcolor{keywordtype}{void}* buff);}
+\DoxyCodeLine{68 }
+\DoxyCodeLine{69 \textcolor{comment}{//======================================================================================}}
+\DoxyCodeLine{70 }
+\DoxyCodeLine{71 }
+\DoxyCodeLine{72 \textcolor{preprocessor}{\#endif}}
+
+\end{DoxyCode}

@@ -1,0 +1,25 @@
+var main__functions_8c =
+[
+    [ "accel_cal_prep", "main__functions_8c.html#ae750d5a4a123a49df07a50ed894f7914", null ],
+    [ "bda_init", "main__functions_8c.html#a5e75ba74927931ccfd8cf36e7385bb51", null ],
+    [ "fault_checks", "main__functions_8c.html#ae7b97c635d1b73636ffc3381cc068c6b", null ],
+    [ "fault_state", "main__functions_8c.html#a2ef7173326181de96ae39beba56625ed", null ],
+    [ "get_flag_input", "main__functions_8c.html#a2def30e0c16b21e88fafafca3a5e2452", null ],
+    [ "get_record_input", "main__functions_8c.html#ac1cfb5c11cbe8a08fce692963c4f493b", null ],
+    [ "get_selector_input", "main__functions_8c.html#a2bf9e9fbd4772e1cddbc98afa971a32e", null ],
+    [ "get_toggle_input", "main__functions_8c.html#a2661cd4da465775e0b9287c26ce21f68", null ],
+    [ "idle_state", "main__functions_8c.html#ae41b6b4360c205b6b507208af95dd425", null ],
+    [ "low_power_mode_state", "main__functions_8c.html#aa7342f05779b5a526ef99218a1fb5b4f", null ],
+    [ "main_function", "main__functions_8c.html#a65e9d759464be779107b699b63bb240d", null ],
+    [ "mode_set_state", "main__functions_8c.html#a6c8729ba5f2fbc9a53206a39ac1d0ab7", null ],
+    [ "normal", "main__functions_8c.html#ae73b11ed21f2506f849fdb589c29bd91", null ],
+    [ "post_recording_state", "main__functions_8c.html#abecf1c68c70b2e7c4ce15a2e9d085617", null ],
+    [ "pre_recording_state", "main__functions_8c.html#ad1cd352bfc3485ca340f6a440e95d7e1", null ],
+    [ "print_data", "main__functions_8c.html#adf779e4fafbb09d0b6f1859c64d6daf2", null ],
+    [ "recording_state", "main__functions_8c.html#ae30e24ccd149516b70814535232d28b8", null ],
+    [ "sensor_calibration_state", "main__functions_8c.html#a80cd35d705e2c429a439c45f44bf06a7", null ],
+    [ "startup_state", "main__functions_8c.html#a316dac03e7c4ad7c196c52ea8b7579eb", null ],
+    [ "system_check_state", "main__functions_8c.html#a57d508de48af7c033aa61775a01b8df4", null ],
+    [ "hspi2", "main__functions_8c.html#ab9da65f935e805137e2eb4e18c5ab224", null ],
+    [ "huart2", "main__functions_8c.html#aa9479c261d65eecedd3d9582f7f0f89c", null ]
+];

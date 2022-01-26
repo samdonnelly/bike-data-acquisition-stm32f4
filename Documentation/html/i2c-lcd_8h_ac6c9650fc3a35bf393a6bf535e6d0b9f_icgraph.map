@@ -1,0 +1,11 @@
+<map id="lcd_send_data" name="lcd_send_data">
+<area shape="rect" id="node1" title=" " alt="" coords="637,56,744,83"/>
+<area shape="rect" id="node2" href="$i2c-lcd_8c.html#ad235a86241458b1e7b8771688bfdaf9a" title=" " alt="" coords="495,31,570,57"/>
+<area shape="rect" id="node3" href="$i2c-lcd_8c.html#a234ae1cb5d91fa756d1216e3540222ad" title=" " alt="" coords="476,81,589,108"/>
+<area shape="rect" id="node4" href="$main__functions_8c.html#a2ef7173326181de96ae39beba56625ed" title=" " alt="" coords="308,5,391,32"/>
+<area shape="rect" id="node5" href="$main__functions_8c.html#aa7342f05779b5a526ef99218a1fb5b4f" title=" " alt="" coords="271,56,428,83"/>
+<area shape="rect" id="node6" href="$accelerometer__data_8c.html#ae7cae8a1f87165c318400071effa97a6" title="Initiate accelerometer." alt="" coords="298,107,401,133"/>
+<area shape="rect" id="node9" href="$main__functions_8c.html#a316dac03e7c4ad7c196c52ea8b7579eb" title=" " alt="" coords="300,157,399,184"/>
+<area shape="rect" id="node7" href="$main__functions_8c.html#a5e75ba74927931ccfd8cf36e7385bb51" title=" " alt="" coords="156,107,223,133"/>
+<area shape="rect" id="node8" href="$main__functions_8c.html#a65e9d759464be779107b699b63bb240d" title="Psudo main function." alt="" coords="5,107,108,133"/>
+</map>

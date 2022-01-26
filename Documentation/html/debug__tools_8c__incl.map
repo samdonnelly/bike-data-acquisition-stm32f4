@@ -1,0 +1,21 @@
+<map id="Tools/Src/debug_tools.c" name="Tools/Src/debug_tools.c">
+<area shape="rect" id="node1" title=" " alt="" coords="277,5,440,32"/>
+<area shape="rect" id="node2" title=" " alt="" coords="5,229,67,256"/>
+<area shape="rect" id="node3" title=" " alt="" coords="91,229,155,256"/>
+<area shape="rect" id="node4" title=" " alt="" coords="179,229,245,256"/>
+<area shape="rect" id="node5" title=" " alt="" coords="269,229,334,256"/>
+<area shape="rect" id="node6" href="$main_8h.html" title=": Header for main.c file. This file contains the common defines of the application." alt="" coords="580,80,641,107"/>
+<area shape="rect" id="node7" title=" " alt="" coords="359,229,476,256"/>
+<area shape="rect" id="node11" href="$main__functions_8h.html" title="Header file for main_functions.c." alt="" coords="1256,229,1376,256"/>
+<area shape="rect" id="node19" href="$debug__tools_8h.html" title=" " alt="" coords="785,80,887,107"/>
+<area shape="rect" id="node8" href="$includes_8h.html" title="Central location for include files." alt="" coords="627,155,709,181"/>
+<area shape="rect" id="node9" title=" " alt="" coords="787,229,866,256"/>
+<area shape="rect" id="node10" title=" " alt="" coords="891,229,965,256"/>
+<area shape="rect" id="node12" href="$i2c-lcd_8h.html" title="Header file for i2c&#45;lcd.c." alt="" coords="990,229,1061,256"/>
+<area shape="rect" id="node13" href="$accelerometer__data_8h.html" title="Header file for accelerometer_data.c." alt="" coords="1085,229,1232,256"/>
+<area shape="rect" id="node14" href="$fatfs__sd_8h.html" title=" " alt="" coords="501,229,579,256"/>
+<area shape="rect" id="node17" title=" " alt="" coords="603,229,642,256"/>
+<area shape="rect" id="node18" href="$sd-card-spi_8h.html" title=" " alt="" coords="666,229,763,256"/>
+<area shape="rect" id="node15" title=" " alt="" coords="457,304,529,331"/>
+<area shape="rect" id="node16" title=" " alt="" coords="553,304,620,331"/>
+</map>

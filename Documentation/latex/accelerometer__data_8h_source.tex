@@ -1,0 +1,63 @@
+\hypertarget{accelerometer__data_8h_source}{}\doxysection{accelerometer\+\_\+data.\+h}
+\label{accelerometer__data_8h_source}\index{Core/Inc/accelerometer\_data.h@{Core/Inc/accelerometer\_data.h}}
+\mbox{\hyperlink{accelerometer__data_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 }
+\DoxyCodeLine{18 \textcolor{preprocessor}{\#ifndef ACCEL\_DATA}}
+\DoxyCodeLine{19 \textcolor{preprocessor}{\#define ACCEL\_DATA}}
+\DoxyCodeLine{20 }
+\DoxyCodeLine{21 }
+\DoxyCodeLine{22 \textcolor{comment}{//======================================================================================}}
+\DoxyCodeLine{23 \textcolor{comment}{// Libraries }}
+\DoxyCodeLine{24 }
+\DoxyCodeLine{25 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{includes_8h}{includes.h}}"{}}}
+\DoxyCodeLine{26 }
+\DoxyCodeLine{27 \textcolor{comment}{//======================================================================================}}
+\DoxyCodeLine{28 }
+\DoxyCodeLine{29 }
+\DoxyCodeLine{30 \textcolor{comment}{//======================================================================================}}
+\DoxyCodeLine{31 \textcolor{comment}{// Macros}}
+\DoxyCodeLine{32 }
+\DoxyCodeLine{33 \textcolor{preprocessor}{\#define ACCEL\_SCALAR 16384}}
+\DoxyCodeLine{34 \textcolor{preprocessor}{\#define GYRO\_SCALAR  131}}
+\DoxyCodeLine{35 }
+\DoxyCodeLine{36 \textcolor{preprocessor}{\#define MEM\_SIZE 1}}
+\DoxyCodeLine{37 \textcolor{preprocessor}{\#define NUM\_BYTES 6}}
+\DoxyCodeLine{38 \textcolor{preprocessor}{\#define TIMEOUT 1000}}
+\DoxyCodeLine{39 }
+\DoxyCodeLine{40 \textcolor{comment}{//======================================================================================}}
+\DoxyCodeLine{41 }
+\DoxyCodeLine{42 }
+\DoxyCodeLine{43 \textcolor{comment}{//======================================================================================}}
+\DoxyCodeLine{44 \textcolor{comment}{// Enums}}
+\DoxyCodeLine{45 }
+\DoxyCodeLine{46 \textcolor{keyword}{typedef} \textcolor{keyword}{enum} \{}
+\DoxyCodeLine{47     \mbox{\hyperlink{accelerometer__data_8h_a5ed0f6e41f5b48eda9f739e8972d057fa88e3910b6356f9a6d49b934aba78133c}{MPU6050\_ADDR}}      = 0xD0,   \textcolor{comment}{// MPU6050 ID}}
+\DoxyCodeLine{48     \mbox{\hyperlink{accelerometer__data_8h_a5ed0f6e41f5b48eda9f739e8972d057fae6b7f861806f53684a2e3bcad2bc665e}{SMPLRT\_DIV\_REG}}    = 0x19,   \textcolor{comment}{// Sample rate divider}}
+\DoxyCodeLine{49     \mbox{\hyperlink{accelerometer__data_8h_a5ed0f6e41f5b48eda9f739e8972d057fa13d6797ac9a861c35bfa8f0b9d8273af}{GYRO\_CONFIG\_REG}}   = 0x1B,   \textcolor{comment}{// Gyroscope configuration}}
+\DoxyCodeLine{50     \mbox{\hyperlink{accelerometer__data_8h_a5ed0f6e41f5b48eda9f739e8972d057fa5d760249c20a0cf92d1d95fb21403d56}{ACCEL\_CONFIG\_REG}}  = 0x1C,   \textcolor{comment}{// Accelerometer configuration}}
+\DoxyCodeLine{51     \mbox{\hyperlink{accelerometer__data_8h_a5ed0f6e41f5b48eda9f739e8972d057fa4cebe56f5155e56c53f2b86f480ecb90}{ACCEL\_XOUT\_H\_REG}}  = 0x3B,   \textcolor{comment}{// Accelerometer measurements}}
+\DoxyCodeLine{52     \mbox{\hyperlink{accelerometer__data_8h_a5ed0f6e41f5b48eda9f739e8972d057fa71b7606cebec54cdb54664e73e4e9eef}{TEMP\_OUT\_H\_REG}}    = 0x41,   \textcolor{comment}{// Temperature measurement}}
+\DoxyCodeLine{53     \mbox{\hyperlink{accelerometer__data_8h_a5ed0f6e41f5b48eda9f739e8972d057faf287ce8ab1a53ef8ebe412a821373281}{GYRO\_XOUT\_H\_REG}}   = 0x43,   \textcolor{comment}{// Gyroscope measurements}}
+\DoxyCodeLine{54     \mbox{\hyperlink{accelerometer__data_8h_a5ed0f6e41f5b48eda9f739e8972d057fad46203d37d7a936180d00631ecb244d1}{PWR\_MGMT\_1\_REG}}    = 0x6B,   \textcolor{comment}{// Power management 1}}
+\DoxyCodeLine{55     \mbox{\hyperlink{accelerometer__data_8h_a5ed0f6e41f5b48eda9f739e8972d057fa9911cc25c11659adce1251fa4983cb50}{WHO\_AM\_I\_REG}}      = 0x75    \textcolor{comment}{// Who am I -\/ verify device identity}}
+\DoxyCodeLine{56 \} \mbox{\hyperlink{accelerometer__data_8h_a5ed0f6e41f5b48eda9f739e8972d057f}{register\_and\_device\_addresses\_t}};}
+\DoxyCodeLine{57 }
+\DoxyCodeLine{58 \textcolor{comment}{//======================================================================================}}
+\DoxyCodeLine{59 }
+\DoxyCodeLine{60 }
+\DoxyCodeLine{61 \textcolor{comment}{//======================================================================================}}
+\DoxyCodeLine{62 \textcolor{comment}{// Function Prototypes }}
+\DoxyCodeLine{63 }
+\DoxyCodeLine{68 uint8\_t \mbox{\hyperlink{accelerometer__data_8h_ae7cae8a1f87165c318400071effa97a6}{MPU6050\_Init}}(\textcolor{keywordtype}{void});}
+\DoxyCodeLine{69 }
+\DoxyCodeLine{70 }
+\DoxyCodeLine{79 \textcolor{keywordtype}{void} \mbox{\hyperlink{accelerometer__data_8h_a2c5ba03e9ada15dd7bb5e83425ddb948}{MPU6050\_read}}(}
+\DoxyCodeLine{80     \mbox{\hyperlink{structbda__trackers__s}{bda\_trackers\_t}} *trackers);}
+\DoxyCodeLine{81 }
+\DoxyCodeLine{82 \textcolor{comment}{//======================================================================================}}
+\DoxyCodeLine{83 }
+\DoxyCodeLine{84 }
+\DoxyCodeLine{85 \textcolor{preprocessor}{\#endif}}
+
+\end{DoxyCode}

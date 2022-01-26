@@ -1,0 +1,150 @@
+\hypertarget{fatfs__sd_8c}{}\doxysection{Device-\/\+Drivers/\+Src/fatfs\+\_\+sd.c File Reference}
+\label{fatfs__sd_8c}\index{Device-\/Drivers/Src/fatfs\_sd.c@{Device-\/Drivers/Src/fatfs\_sd.c}}
+{\ttfamily \#include \char`\"{}stm32f4xx\+\_\+hal.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}diskio.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}fatfs\+\_\+sd.\+h\char`\"{}}\newline
+Include dependency graph for fatfs\+\_\+sd.\+c\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=293pt]{fatfs__sd_8c__incl}
+\end{center}
+\end{figure}
+\doxysubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \mbox{\hyperlink{fatfs__sd_8c_aa8cecfc5c5c054d2875c03e77b7be15d}{TRUE}}~1
+\item 
+\#define \mbox{\hyperlink{fatfs__sd_8c_aa93f0eb578d23995850d61f7d61c55c1}{FALSE}}~0
+\item 
+\#define \mbox{\hyperlink{fatfs__sd_8c_abb452686968e48b67397da5f97445f5b}{bool}}~BYTE
+\item 
+\#define \mbox{\hyperlink{fatfs__sd_8c_aa0ea6263aeeeae2c7091c9de81f078c0}{HSPI\+\_\+\+SDCARD}}~\&\mbox{\hyperlink{fatfs__sd_8c_ab9da65f935e805137e2eb4e18c5ab224}{hspi2}}
+\item 
+\#define \mbox{\hyperlink{fatfs__sd_8c_a5f934a7642239adfef3e9607d3ad16bc}{SD\+\_\+\+CS\+\_\+\+PORT}}~GPIOB
+\item 
+\#define \mbox{\hyperlink{fatfs__sd_8c_a04d57a6c18b2d5e81f31093e58ed0c62}{SD\+\_\+\+CS\+\_\+\+PIN}}~GPIO\+\_\+\+PIN\+\_\+13
+\end{DoxyCompactItemize}
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+DSTATUS \mbox{\hyperlink{fatfs__sd_8c_a2a9756a0824608cafe4795652996c999}{SD\+\_\+disk\+\_\+initialize}} (BYTE drv)
+\item 
+DSTATUS \mbox{\hyperlink{fatfs__sd_8c_aab274cdd8e1c1d404ed23ed3ab08af7f}{SD\+\_\+disk\+\_\+status}} (BYTE drv)
+\item 
+DRESULT \mbox{\hyperlink{fatfs__sd_8c_af48460111fe5bb4f17ef7a44960aca5f}{SD\+\_\+disk\+\_\+read}} (BYTE pdrv, BYTE $\ast$buff, DWORD sector, UINT count)
+\item 
+DRESULT \mbox{\hyperlink{fatfs__sd_8c_ad9dda39726dcb45694f3da737df6baae}{SD\+\_\+disk\+\_\+ioctl}} (BYTE drv, BYTE ctrl, void $\ast$buff)
+\end{DoxyCompactItemize}
+\doxysubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+SPI\+\_\+\+Handle\+Type\+Def \mbox{\hyperlink{fatfs__sd_8c_ab9da65f935e805137e2eb4e18c5ab224}{hspi2}}
+\item 
+volatile uint16\+\_\+t \mbox{\hyperlink{fatfs__sd_8c_aa68d0f4bf591b8c1486383e76b3cc4fd}{Timer1}}
+\item 
+volatile uint16\+\_\+t \mbox{\hyperlink{fatfs__sd_8c_a5bc0b5f9e08ce3274413c1790df5bc48}{Timer2}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+\begin{DoxyAuthor}{Author}
+Sam Donnelly
+\end{DoxyAuthor}
+\begin{DoxyVersion}{Version}
+0.\+1 
+\end{DoxyVersion}
+\begin{DoxyDate}{Date}
+2022-\/01-\/19
+\end{DoxyDate}
+\begin{DoxyCopyright}{Copyright}
+Copyright (c) 2022 
+\end{DoxyCopyright}
+
+
+\doxysubsection{Macro Definition Documentation}
+\mbox{\Hypertarget{fatfs__sd_8c_abb452686968e48b67397da5f97445f5b}\label{fatfs__sd_8c_abb452686968e48b67397da5f97445f5b}} 
+\index{fatfs\_sd.c@{fatfs\_sd.c}!bool@{bool}}
+\index{bool@{bool}!fatfs\_sd.c@{fatfs\_sd.c}}
+\doxysubsubsection{\texorpdfstring{bool}{bool}}
+{\footnotesize\ttfamily \#define bool~BYTE}
+
+\mbox{\Hypertarget{fatfs__sd_8c_aa93f0eb578d23995850d61f7d61c55c1}\label{fatfs__sd_8c_aa93f0eb578d23995850d61f7d61c55c1}} 
+\index{fatfs\_sd.c@{fatfs\_sd.c}!FALSE@{FALSE}}
+\index{FALSE@{FALSE}!fatfs\_sd.c@{fatfs\_sd.c}}
+\doxysubsubsection{\texorpdfstring{FALSE}{FALSE}}
+{\footnotesize\ttfamily \#define FALSE~0}
+
+\mbox{\Hypertarget{fatfs__sd_8c_aa0ea6263aeeeae2c7091c9de81f078c0}\label{fatfs__sd_8c_aa0ea6263aeeeae2c7091c9de81f078c0}} 
+\index{fatfs\_sd.c@{fatfs\_sd.c}!HSPI\_SDCARD@{HSPI\_SDCARD}}
+\index{HSPI\_SDCARD@{HSPI\_SDCARD}!fatfs\_sd.c@{fatfs\_sd.c}}
+\doxysubsubsection{\texorpdfstring{HSPI\_SDCARD}{HSPI\_SDCARD}}
+{\footnotesize\ttfamily \#define HSPI\+\_\+\+SDCARD~\&\mbox{\hyperlink{fatfs__sd_8c_ab9da65f935e805137e2eb4e18c5ab224}{hspi2}}}
+
+\mbox{\Hypertarget{fatfs__sd_8c_a04d57a6c18b2d5e81f31093e58ed0c62}\label{fatfs__sd_8c_a04d57a6c18b2d5e81f31093e58ed0c62}} 
+\index{fatfs\_sd.c@{fatfs\_sd.c}!SD\_CS\_PIN@{SD\_CS\_PIN}}
+\index{SD\_CS\_PIN@{SD\_CS\_PIN}!fatfs\_sd.c@{fatfs\_sd.c}}
+\doxysubsubsection{\texorpdfstring{SD\_CS\_PIN}{SD\_CS\_PIN}}
+{\footnotesize\ttfamily \#define SD\+\_\+\+CS\+\_\+\+PIN~GPIO\+\_\+\+PIN\+\_\+13}
+
+\mbox{\Hypertarget{fatfs__sd_8c_a5f934a7642239adfef3e9607d3ad16bc}\label{fatfs__sd_8c_a5f934a7642239adfef3e9607d3ad16bc}} 
+\index{fatfs\_sd.c@{fatfs\_sd.c}!SD\_CS\_PORT@{SD\_CS\_PORT}}
+\index{SD\_CS\_PORT@{SD\_CS\_PORT}!fatfs\_sd.c@{fatfs\_sd.c}}
+\doxysubsubsection{\texorpdfstring{SD\_CS\_PORT}{SD\_CS\_PORT}}
+{\footnotesize\ttfamily \#define SD\+\_\+\+CS\+\_\+\+PORT~GPIOB}
+
+\mbox{\Hypertarget{fatfs__sd_8c_aa8cecfc5c5c054d2875c03e77b7be15d}\label{fatfs__sd_8c_aa8cecfc5c5c054d2875c03e77b7be15d}} 
+\index{fatfs\_sd.c@{fatfs\_sd.c}!TRUE@{TRUE}}
+\index{TRUE@{TRUE}!fatfs\_sd.c@{fatfs\_sd.c}}
+\doxysubsubsection{\texorpdfstring{TRUE}{TRUE}}
+{\footnotesize\ttfamily \#define TRUE~1}
+
+
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{fatfs__sd_8c_a2a9756a0824608cafe4795652996c999}\label{fatfs__sd_8c_a2a9756a0824608cafe4795652996c999}} 
+\index{fatfs\_sd.c@{fatfs\_sd.c}!SD\_disk\_initialize@{SD\_disk\_initialize}}
+\index{SD\_disk\_initialize@{SD\_disk\_initialize}!fatfs\_sd.c@{fatfs\_sd.c}}
+\doxysubsubsection{\texorpdfstring{SD\_disk\_initialize()}{SD\_disk\_initialize()}}
+{\footnotesize\ttfamily DSTATUS SD\+\_\+disk\+\_\+initialize (\begin{DoxyParamCaption}\item[{BYTE}]{drv }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{fatfs__sd_8c_ad9dda39726dcb45694f3da737df6baae}\label{fatfs__sd_8c_ad9dda39726dcb45694f3da737df6baae}} 
+\index{fatfs\_sd.c@{fatfs\_sd.c}!SD\_disk\_ioctl@{SD\_disk\_ioctl}}
+\index{SD\_disk\_ioctl@{SD\_disk\_ioctl}!fatfs\_sd.c@{fatfs\_sd.c}}
+\doxysubsubsection{\texorpdfstring{SD\_disk\_ioctl()}{SD\_disk\_ioctl()}}
+{\footnotesize\ttfamily DRESULT SD\+\_\+disk\+\_\+ioctl (\begin{DoxyParamCaption}\item[{BYTE}]{drv,  }\item[{BYTE}]{ctrl,  }\item[{void $\ast$}]{buff }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{fatfs__sd_8c_af48460111fe5bb4f17ef7a44960aca5f}\label{fatfs__sd_8c_af48460111fe5bb4f17ef7a44960aca5f}} 
+\index{fatfs\_sd.c@{fatfs\_sd.c}!SD\_disk\_read@{SD\_disk\_read}}
+\index{SD\_disk\_read@{SD\_disk\_read}!fatfs\_sd.c@{fatfs\_sd.c}}
+\doxysubsubsection{\texorpdfstring{SD\_disk\_read()}{SD\_disk\_read()}}
+{\footnotesize\ttfamily DRESULT SD\+\_\+disk\+\_\+read (\begin{DoxyParamCaption}\item[{BYTE}]{pdrv,  }\item[{BYTE $\ast$}]{buff,  }\item[{DWORD}]{sector,  }\item[{UINT}]{count }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{fatfs__sd_8c_aab274cdd8e1c1d404ed23ed3ab08af7f}\label{fatfs__sd_8c_aab274cdd8e1c1d404ed23ed3ab08af7f}} 
+\index{fatfs\_sd.c@{fatfs\_sd.c}!SD\_disk\_status@{SD\_disk\_status}}
+\index{SD\_disk\_status@{SD\_disk\_status}!fatfs\_sd.c@{fatfs\_sd.c}}
+\doxysubsubsection{\texorpdfstring{SD\_disk\_status()}{SD\_disk\_status()}}
+{\footnotesize\ttfamily DSTATUS SD\+\_\+disk\+\_\+status (\begin{DoxyParamCaption}\item[{BYTE}]{drv }\end{DoxyParamCaption})}
+
+
+
+\doxysubsection{Variable Documentation}
+\mbox{\Hypertarget{fatfs__sd_8c_ab9da65f935e805137e2eb4e18c5ab224}\label{fatfs__sd_8c_ab9da65f935e805137e2eb4e18c5ab224}} 
+\index{fatfs\_sd.c@{fatfs\_sd.c}!hspi2@{hspi2}}
+\index{hspi2@{hspi2}!fatfs\_sd.c@{fatfs\_sd.c}}
+\doxysubsubsection{\texorpdfstring{hspi2}{hspi2}}
+{\footnotesize\ttfamily SPI\+\_\+\+Handle\+Type\+Def hspi2\hspace{0.3cm}{\ttfamily [extern]}}
+
+\mbox{\Hypertarget{fatfs__sd_8c_aa68d0f4bf591b8c1486383e76b3cc4fd}\label{fatfs__sd_8c_aa68d0f4bf591b8c1486383e76b3cc4fd}} 
+\index{fatfs\_sd.c@{fatfs\_sd.c}!Timer1@{Timer1}}
+\index{Timer1@{Timer1}!fatfs\_sd.c@{fatfs\_sd.c}}
+\doxysubsubsection{\texorpdfstring{Timer1}{Timer1}}
+{\footnotesize\ttfamily volatile uint16\+\_\+t Timer1\hspace{0.3cm}{\ttfamily [extern]}}
+
+\mbox{\Hypertarget{fatfs__sd_8c_a5bc0b5f9e08ce3274413c1790df5bc48}\label{fatfs__sd_8c_a5bc0b5f9e08ce3274413c1790df5bc48}} 
+\index{fatfs\_sd.c@{fatfs\_sd.c}!Timer2@{Timer2}}
+\index{Timer2@{Timer2}!fatfs\_sd.c@{fatfs\_sd.c}}
+\doxysubsubsection{\texorpdfstring{Timer2}{Timer2}}
+{\footnotesize\ttfamily volatile uint16\+\_\+t Timer2}
+

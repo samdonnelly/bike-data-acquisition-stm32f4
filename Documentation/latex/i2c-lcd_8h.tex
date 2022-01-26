@@ -1,0 +1,157 @@
+\hypertarget{i2c-lcd_8h}{}\doxysection{Core/\+Inc/i2c-\/lcd.h File Reference}
+\label{i2c-lcd_8h}\index{Core/Inc/i2c-\/lcd.h@{Core/Inc/i2c-\/lcd.h}}
+
+
+Header file for \mbox{\hyperlink{i2c-lcd_8c}{i2c-\/lcd.\+c}}.  
+
+
+{\ttfamily \#include \char`\"{}includes.\+h\char`\"{}}\newline
+Include dependency graph for i2c-\/lcd.h\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{i2c-lcd_8h__incl}
+\end{center}
+\end{figure}
+This graph shows which files directly or indirectly include this file\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{i2c-lcd_8h__dep__incl}
+\end{center}
+\end{figure}
+\doxysubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \mbox{\hyperlink{i2c-lcd_8h_a16b338f4ba8614530cf7e484066f29c5}{SLAVE\+\_\+\+ADDRESS\+\_\+\+LCD}}~0x4E
+\end{DoxyCompactItemize}
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+uint8\+\_\+t \mbox{\hyperlink{i2c-lcd_8h_af4fbb9b354b4788d9987c76ae9017a1e}{lcd\+\_\+init}} (void)
+\item 
+void \mbox{\hyperlink{i2c-lcd_8h_a0934da706080d3b0b3b2f04c9d044e67}{lcd\+\_\+send\+\_\+cmd}} (char cmd)
+\item 
+void \mbox{\hyperlink{i2c-lcd_8h_ac6c9650fc3a35bf393a6bf535e6d0b9f}{lcd\+\_\+send\+\_\+data}} (char \mbox{\hyperlink{accelerometer__data_8c_a8bfd79faff98a8b652ff64958dec9a18}{data}})
+\item 
+void \mbox{\hyperlink{i2c-lcd_8h_a234ae1cb5d91fa756d1216e3540222ad}{lcd\+\_\+send\+\_\+string}} (char $\ast$str)
+\item 
+void \mbox{\hyperlink{i2c-lcd_8h_ad235a86241458b1e7b8771688bfdaf9a}{lcd\+\_\+clear}} (void)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Header file for \mbox{\hyperlink{i2c-lcd_8c}{i2c-\/lcd.\+c}}. 
+
+\begin{DoxyAuthor}{Author}
+Sam Donnelly
+\end{DoxyAuthor}
+\begin{DoxyVersion}{Version}
+0.\+1 
+\end{DoxyVersion}
+\begin{DoxyDate}{Date}
+2022-\/01-\/18
+\end{DoxyDate}
+\begin{DoxyCopyright}{Copyright}
+Copyright (c) 2022 
+\end{DoxyCopyright}
+
+
+\doxysubsection{Macro Definition Documentation}
+\mbox{\Hypertarget{i2c-lcd_8h_a16b338f4ba8614530cf7e484066f29c5}\label{i2c-lcd_8h_a16b338f4ba8614530cf7e484066f29c5}} 
+\index{i2c-\/lcd.h@{i2c-\/lcd.h}!SLAVE\_ADDRESS\_LCD@{SLAVE\_ADDRESS\_LCD}}
+\index{SLAVE\_ADDRESS\_LCD@{SLAVE\_ADDRESS\_LCD}!i2c-\/lcd.h@{i2c-\/lcd.h}}
+\doxysubsubsection{\texorpdfstring{SLAVE\_ADDRESS\_LCD}{SLAVE\_ADDRESS\_LCD}}
+{\footnotesize\ttfamily \#define SLAVE\+\_\+\+ADDRESS\+\_\+\+LCD~0x4E}
+
+
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{i2c-lcd_8h_ad235a86241458b1e7b8771688bfdaf9a}\label{i2c-lcd_8h_ad235a86241458b1e7b8771688bfdaf9a}} 
+\index{i2c-\/lcd.h@{i2c-\/lcd.h}!lcd\_clear@{lcd\_clear}}
+\index{lcd\_clear@{lcd\_clear}!i2c-\/lcd.h@{i2c-\/lcd.h}}
+\doxysubsubsection{\texorpdfstring{lcd\_clear()}{lcd\_clear()}}
+{\footnotesize\ttfamily void lcd\+\_\+clear (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=252pt]{i2c-lcd_8h_ad235a86241458b1e7b8771688bfdaf9a_cgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{i2c-lcd_8h_af4fbb9b354b4788d9987c76ae9017a1e}\label{i2c-lcd_8h_af4fbb9b354b4788d9987c76ae9017a1e}} 
+\index{i2c-\/lcd.h@{i2c-\/lcd.h}!lcd\_init@{lcd\_init}}
+\index{lcd\_init@{lcd\_init}!i2c-\/lcd.h@{i2c-\/lcd.h}}
+\doxysubsubsection{\texorpdfstring{lcd\_init()}{lcd\_init()}}
+{\footnotesize\ttfamily uint8\+\_\+t lcd\+\_\+init (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=243pt]{i2c-lcd_8h_af4fbb9b354b4788d9987c76ae9017a1e_cgraph}
+\end{center}
+\end{figure}
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=326pt]{i2c-lcd_8h_af4fbb9b354b4788d9987c76ae9017a1e_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{i2c-lcd_8h_a0934da706080d3b0b3b2f04c9d044e67}\label{i2c-lcd_8h_a0934da706080d3b0b3b2f04c9d044e67}} 
+\index{i2c-\/lcd.h@{i2c-\/lcd.h}!lcd\_send\_cmd@{lcd\_send\_cmd}}
+\index{lcd\_send\_cmd@{lcd\_send\_cmd}!i2c-\/lcd.h@{i2c-\/lcd.h}}
+\doxysubsubsection{\texorpdfstring{lcd\_send\_cmd()}{lcd\_send\_cmd()}}
+{\footnotesize\ttfamily void lcd\+\_\+send\+\_\+cmd (\begin{DoxyParamCaption}\item[{char}]{cmd }\end{DoxyParamCaption})}
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{i2c-lcd_8h_a0934da706080d3b0b3b2f04c9d044e67_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{i2c-lcd_8h_ac6c9650fc3a35bf393a6bf535e6d0b9f}\label{i2c-lcd_8h_ac6c9650fc3a35bf393a6bf535e6d0b9f}} 
+\index{i2c-\/lcd.h@{i2c-\/lcd.h}!lcd\_send\_data@{lcd\_send\_data}}
+\index{lcd\_send\_data@{lcd\_send\_data}!i2c-\/lcd.h@{i2c-\/lcd.h}}
+\doxysubsubsection{\texorpdfstring{lcd\_send\_data()}{lcd\_send\_data()}}
+{\footnotesize\ttfamily void lcd\+\_\+send\+\_\+data (\begin{DoxyParamCaption}\item[{char}]{data }\end{DoxyParamCaption})}
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{i2c-lcd_8h_ac6c9650fc3a35bf393a6bf535e6d0b9f_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{i2c-lcd_8h_a234ae1cb5d91fa756d1216e3540222ad}\label{i2c-lcd_8h_a234ae1cb5d91fa756d1216e3540222ad}} 
+\index{i2c-\/lcd.h@{i2c-\/lcd.h}!lcd\_send\_string@{lcd\_send\_string}}
+\index{lcd\_send\_string@{lcd\_send\_string}!i2c-\/lcd.h@{i2c-\/lcd.h}}
+\doxysubsubsection{\texorpdfstring{lcd\_send\_string()}{lcd\_send\_string()}}
+{\footnotesize\ttfamily void lcd\+\_\+send\+\_\+string (\begin{DoxyParamCaption}\item[{char $\ast$}]{str }\end{DoxyParamCaption})}
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=281pt]{i2c-lcd_8h_a234ae1cb5d91fa756d1216e3540222ad_cgraph}
+\end{center}
+\end{figure}
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{i2c-lcd_8h_a234ae1cb5d91fa756d1216e3540222ad_icgraph}
+\end{center}
+\end{figure}

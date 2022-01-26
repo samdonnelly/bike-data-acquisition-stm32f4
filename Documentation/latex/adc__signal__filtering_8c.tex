@@ -1,0 +1,150 @@
+\hypertarget{adc__signal__filtering_8c}{}\doxysection{Tools/\+Src/adc\+\_\+signal\+\_\+filtering.c File Reference}
+\label{adc__signal__filtering_8c}\index{Tools/Src/adc\_signal\_filtering.c@{Tools/Src/adc\_signal\_filtering.c}}
+{\ttfamily \#include \char`\"{}main.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}main\+\_\+functions.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}adc\+\_\+signal\+\_\+filtering.\+h\char`\"{}}\newline
+{\ttfamily \#include $<$stdint.\+h$>$}\newline
+{\ttfamily \#include $<$stdio.\+h$>$}\newline
+{\ttfamily \#include $<$stdlib.\+h$>$}\newline
+{\ttfamily \#include $<$math.\+h$>$}\newline
+Include dependency graph for adc\+\_\+signal\+\_\+filtering.\+c\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{adc__signal__filtering_8c__incl}
+\end{center}
+\end{figure}
+\doxysubsection*{Data Structures}
+\begin{DoxyCompactItemize}
+\item 
+struct \mbox{\hyperlink{structfilter__eqn__const}{filter\+\_\+eqn\+\_\+const}}
+\item 
+struct \mbox{\hyperlink{structsensor__data}{sensor\+\_\+data}}
+\item 
+struct \mbox{\hyperlink{structsensor__list}{sensor\+\_\+list}}
+\end{DoxyCompactItemize}
+\doxysubsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+typedef struct \mbox{\hyperlink{structfilter__eqn__const}{filter\+\_\+eqn\+\_\+const}} \mbox{\hyperlink{adc__signal__filtering_8c_a0f4ae867f566dae1cce14b5b9e2bde3e}{filter\+\_\+eqn\+\_\+const}}
+\item 
+typedef struct \mbox{\hyperlink{structsensor__data}{sensor\+\_\+data}} \mbox{\hyperlink{adc__signal__filtering_8c_a33bcd57fdf325a2665ab5838abb1ebce}{sensor\+\_\+data}}
+\item 
+typedef struct \mbox{\hyperlink{structsensor__list}{sensor\+\_\+list}} \mbox{\hyperlink{adc__signal__filtering_8c_a70f12d5c8424e2e330f7edb72ae798ef}{sensor\+\_\+list}}
+\end{DoxyCompactItemize}
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+double \mbox{\hyperlink{adc__signal__filtering_8c_a99b7df61255a15fae85d2f774f2cb228}{butterworth\+\_\+filter}} (uint8\+\_\+t function, uint8\+\_\+t sensor\+\_\+select, double sensor\+\_\+raw)
+\item 
+void \mbox{\hyperlink{adc__signal__filtering_8c_ac0e8292e5d3f29a1b0dcb6bbb1ed95dc}{butterworth\+\_\+filter\+\_\+setup}} (\mbox{\hyperlink{structsensor__list}{sensor\+\_\+list}} $\ast$sensor\+\_\+setup)
+\item 
+void \mbox{\hyperlink{adc__signal__filtering_8c_adeb5c42ae037bccfd2e1f4073d7b65eb}{butterworth\+\_\+filter\+\_\+ic}} (\mbox{\hyperlink{structsensor__list}{sensor\+\_\+list}} $\ast$ic)
+\item 
+void \mbox{\hyperlink{adc__signal__filtering_8c_ace0e30a424309791feace4f3c93252b4}{butterworth\+\_\+filter\+\_\+constants}} (\mbox{\hyperlink{structsensor__list}{sensor\+\_\+list}} $\ast$constants, double c1, double c2)
+\item 
+void \mbox{\hyperlink{adc__signal__filtering_8c_abe163e6cbdd0a58526534b4af4ec03ae}{butterworth\+\_\+filter\+\_\+equation}} (\mbox{\hyperlink{structsensor__list}{sensor\+\_\+list}} $\ast$eqn)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Typedef Documentation}
+\mbox{\Hypertarget{adc__signal__filtering_8c_a0f4ae867f566dae1cce14b5b9e2bde3e}\label{adc__signal__filtering_8c_a0f4ae867f566dae1cce14b5b9e2bde3e}} 
+\index{adc\_signal\_filtering.c@{adc\_signal\_filtering.c}!filter\_eqn\_const@{filter\_eqn\_const}}
+\index{filter\_eqn\_const@{filter\_eqn\_const}!adc\_signal\_filtering.c@{adc\_signal\_filtering.c}}
+\doxysubsubsection{\texorpdfstring{filter\_eqn\_const}{filter\_eqn\_const}}
+{\footnotesize\ttfamily typedef struct \mbox{\hyperlink{structfilter__eqn__const}{filter\+\_\+eqn\+\_\+const}} \mbox{\hyperlink{structfilter__eqn__const}{filter\+\_\+eqn\+\_\+const}}}
+
+\mbox{\Hypertarget{adc__signal__filtering_8c_a33bcd57fdf325a2665ab5838abb1ebce}\label{adc__signal__filtering_8c_a33bcd57fdf325a2665ab5838abb1ebce}} 
+\index{adc\_signal\_filtering.c@{adc\_signal\_filtering.c}!sensor\_data@{sensor\_data}}
+\index{sensor\_data@{sensor\_data}!adc\_signal\_filtering.c@{adc\_signal\_filtering.c}}
+\doxysubsubsection{\texorpdfstring{sensor\_data}{sensor\_data}}
+{\footnotesize\ttfamily typedef struct \mbox{\hyperlink{structsensor__data}{sensor\+\_\+data}} \mbox{\hyperlink{structsensor__data}{sensor\+\_\+data}}}
+
+\mbox{\Hypertarget{adc__signal__filtering_8c_a70f12d5c8424e2e330f7edb72ae798ef}\label{adc__signal__filtering_8c_a70f12d5c8424e2e330f7edb72ae798ef}} 
+\index{adc\_signal\_filtering.c@{adc\_signal\_filtering.c}!sensor\_list@{sensor\_list}}
+\index{sensor\_list@{sensor\_list}!adc\_signal\_filtering.c@{adc\_signal\_filtering.c}}
+\doxysubsubsection{\texorpdfstring{sensor\_list}{sensor\_list}}
+{\footnotesize\ttfamily typedef struct \mbox{\hyperlink{structsensor__list}{sensor\+\_\+list}} \mbox{\hyperlink{structsensor__list}{sensor\+\_\+list}}}
+
+
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{adc__signal__filtering_8c_a99b7df61255a15fae85d2f774f2cb228}\label{adc__signal__filtering_8c_a99b7df61255a15fae85d2f774f2cb228}} 
+\index{adc\_signal\_filtering.c@{adc\_signal\_filtering.c}!butterworth\_filter@{butterworth\_filter}}
+\index{butterworth\_filter@{butterworth\_filter}!adc\_signal\_filtering.c@{adc\_signal\_filtering.c}}
+\doxysubsubsection{\texorpdfstring{butterworth\_filter()}{butterworth\_filter()}}
+{\footnotesize\ttfamily double butterworth\+\_\+filter (\begin{DoxyParamCaption}\item[{uint8\+\_\+t}]{function,  }\item[{uint8\+\_\+t}]{sensor\+\_\+select,  }\item[{double}]{sensor\+\_\+raw }\end{DoxyParamCaption})}
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{adc__signal__filtering_8c_a99b7df61255a15fae85d2f774f2cb228_cgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{adc__signal__filtering_8c_ace0e30a424309791feace4f3c93252b4}\label{adc__signal__filtering_8c_ace0e30a424309791feace4f3c93252b4}} 
+\index{adc\_signal\_filtering.c@{adc\_signal\_filtering.c}!butterworth\_filter\_constants@{butterworth\_filter\_constants}}
+\index{butterworth\_filter\_constants@{butterworth\_filter\_constants}!adc\_signal\_filtering.c@{adc\_signal\_filtering.c}}
+\doxysubsubsection{\texorpdfstring{butterworth\_filter\_constants()}{butterworth\_filter\_constants()}}
+{\footnotesize\ttfamily void butterworth\+\_\+filter\+\_\+constants (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structsensor__list}{sensor\+\_\+list}} $\ast$}]{constants,  }\item[{double}]{c1,  }\item[{double}]{c2 }\end{DoxyParamCaption})}
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{adc__signal__filtering_8c_ace0e30a424309791feace4f3c93252b4_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{adc__signal__filtering_8c_abe163e6cbdd0a58526534b4af4ec03ae}\label{adc__signal__filtering_8c_abe163e6cbdd0a58526534b4af4ec03ae}} 
+\index{adc\_signal\_filtering.c@{adc\_signal\_filtering.c}!butterworth\_filter\_equation@{butterworth\_filter\_equation}}
+\index{butterworth\_filter\_equation@{butterworth\_filter\_equation}!adc\_signal\_filtering.c@{adc\_signal\_filtering.c}}
+\doxysubsubsection{\texorpdfstring{butterworth\_filter\_equation()}{butterworth\_filter\_equation()}}
+{\footnotesize\ttfamily void butterworth\+\_\+filter\+\_\+equation (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structsensor__list}{sensor\+\_\+list}} $\ast$}]{eqn }\end{DoxyParamCaption})}
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=292pt]{adc__signal__filtering_8c_abe163e6cbdd0a58526534b4af4ec03ae_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{adc__signal__filtering_8c_adeb5c42ae037bccfd2e1f4073d7b65eb}\label{adc__signal__filtering_8c_adeb5c42ae037bccfd2e1f4073d7b65eb}} 
+\index{adc\_signal\_filtering.c@{adc\_signal\_filtering.c}!butterworth\_filter\_ic@{butterworth\_filter\_ic}}
+\index{butterworth\_filter\_ic@{butterworth\_filter\_ic}!adc\_signal\_filtering.c@{adc\_signal\_filtering.c}}
+\doxysubsubsection{\texorpdfstring{butterworth\_filter\_ic()}{butterworth\_filter\_ic()}}
+{\footnotesize\ttfamily void butterworth\+\_\+filter\+\_\+ic (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structsensor__list}{sensor\+\_\+list}} $\ast$}]{ic }\end{DoxyParamCaption})}
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{adc__signal__filtering_8c_adeb5c42ae037bccfd2e1f4073d7b65eb_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{adc__signal__filtering_8c_ac0e8292e5d3f29a1b0dcb6bbb1ed95dc}\label{adc__signal__filtering_8c_ac0e8292e5d3f29a1b0dcb6bbb1ed95dc}} 
+\index{adc\_signal\_filtering.c@{adc\_signal\_filtering.c}!butterworth\_filter\_setup@{butterworth\_filter\_setup}}
+\index{butterworth\_filter\_setup@{butterworth\_filter\_setup}!adc\_signal\_filtering.c@{adc\_signal\_filtering.c}}
+\doxysubsubsection{\texorpdfstring{butterworth\_filter\_setup()}{butterworth\_filter\_setup()}}
+{\footnotesize\ttfamily void butterworth\+\_\+filter\+\_\+setup (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structsensor__list}{sensor\+\_\+list}} $\ast$}]{sensor\+\_\+setup }\end{DoxyParamCaption})}
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=305pt]{adc__signal__filtering_8c_ac0e8292e5d3f29a1b0dcb6bbb1ed95dc_cgraph}
+\end{center}
+\end{figure}
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=292pt]{adc__signal__filtering_8c_ac0e8292e5d3f29a1b0dcb6bbb1ed95dc_icgraph}
+\end{center}
+\end{figure}

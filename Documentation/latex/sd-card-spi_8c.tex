@@ -1,0 +1,91 @@
+\hypertarget{sd-card-spi_8c}{}\doxysection{Device-\/\+Drivers/\+Src/sd-\/card-\/spi.c File Reference}
+\label{sd-card-spi_8c}\index{Device-\/Drivers/Src/sd-\/card-\/spi.c@{Device-\/Drivers/Src/sd-\/card-\/spi.c}}
+{\ttfamily \#include \char`\"{}sd-\/card-\/spi.\+h\char`\"{}}\newline
+Include dependency graph for sd-\/card-\/spi.c\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{sd-card-spi_8c__incl}
+\end{center}
+\end{figure}
+\doxysubsection*{Data Structures}
+\begin{DoxyCompactItemize}
+\item 
+struct \mbox{\hyperlink{structsd__card__file__system}{sd\+\_\+card\+\_\+file\+\_\+system}}
+\end{DoxyCompactItemize}
+\doxysubsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+typedef struct \mbox{\hyperlink{structsd__card__file__system}{sd\+\_\+card\+\_\+file\+\_\+system}} \mbox{\hyperlink{sd-card-spi_8c_a4644d9ac5a25aec261ba814628f272a8}{sd\+\_\+card\+\_\+file\+\_\+system}}
+\end{DoxyCompactItemize}
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{fatfs__sd_8c_abb452686968e48b67397da5f97445f5b}{bool}} \mbox{\hyperlink{sd-card-spi_8c_a7e603476b243181725120704f45713bc}{sd\+\_\+card\+\_\+init}} (void)
+\item 
+uint16\+\_\+t \mbox{\hyperlink{sd-card-spi_8c_aa5f494708578adb845ab2be2b5dd15e8}{sd\+\_\+card\+\_\+space}} (uint8\+\_\+t space\+\_\+parameter)
+\item 
+void \mbox{\hyperlink{sd-card-spi_8c_adb4fdeb8cd68ca546a3ee1086a63d91a}{bufclear}} (\mbox{\hyperlink{structsd__card__file__system}{sd\+\_\+card\+\_\+file\+\_\+system}} $\ast$card\+\_\+buffer)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+\begin{DoxyAuthor}{Author}
+Sam Donnelly
+\end{DoxyAuthor}
+\begin{DoxyVersion}{Version}
+0.\+1 
+\end{DoxyVersion}
+\begin{DoxyDate}{Date}
+2022-\/01-\/19
+\end{DoxyDate}
+\begin{DoxyCopyright}{Copyright}
+Copyright (c) 2022 
+\end{DoxyCopyright}
+
+
+\doxysubsection{Typedef Documentation}
+\mbox{\Hypertarget{sd-card-spi_8c_a4644d9ac5a25aec261ba814628f272a8}\label{sd-card-spi_8c_a4644d9ac5a25aec261ba814628f272a8}} 
+\index{sd-\/card-\/spi.c@{sd-\/card-\/spi.c}!sd\_card\_file\_system@{sd\_card\_file\_system}}
+\index{sd\_card\_file\_system@{sd\_card\_file\_system}!sd-\/card-\/spi.c@{sd-\/card-\/spi.c}}
+\doxysubsubsection{\texorpdfstring{sd\_card\_file\_system}{sd\_card\_file\_system}}
+{\footnotesize\ttfamily typedef struct \mbox{\hyperlink{structsd__card__file__system}{sd\+\_\+card\+\_\+file\+\_\+system}} \mbox{\hyperlink{structsd__card__file__system}{sd\+\_\+card\+\_\+file\+\_\+system}}}
+
+
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{sd-card-spi_8c_adb4fdeb8cd68ca546a3ee1086a63d91a}\label{sd-card-spi_8c_adb4fdeb8cd68ca546a3ee1086a63d91a}} 
+\index{sd-\/card-\/spi.c@{sd-\/card-\/spi.c}!bufclear@{bufclear}}
+\index{bufclear@{bufclear}!sd-\/card-\/spi.c@{sd-\/card-\/spi.c}}
+\doxysubsubsection{\texorpdfstring{bufclear()}{bufclear()}}
+{\footnotesize\ttfamily void bufclear (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structsd__card__file__system}{sd\+\_\+card\+\_\+file\+\_\+system}} $\ast$}]{card\+\_\+buffer }\end{DoxyParamCaption})}
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=249pt]{sd-card-spi_8c_adb4fdeb8cd68ca546a3ee1086a63d91a_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{sd-card-spi_8c_a7e603476b243181725120704f45713bc}\label{sd-card-spi_8c_a7e603476b243181725120704f45713bc}} 
+\index{sd-\/card-\/spi.c@{sd-\/card-\/spi.c}!sd\_card\_init@{sd\_card\_init}}
+\index{sd\_card\_init@{sd\_card\_init}!sd-\/card-\/spi.c@{sd-\/card-\/spi.c}}
+\doxysubsubsection{\texorpdfstring{sd\_card\_init()}{sd\_card\_init()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{fatfs__sd_8c_abb452686968e48b67397da5f97445f5b}{bool}} sd\+\_\+card\+\_\+init (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{sd-card-spi_8c_aa5f494708578adb845ab2be2b5dd15e8}\label{sd-card-spi_8c_aa5f494708578adb845ab2be2b5dd15e8}} 
+\index{sd-\/card-\/spi.c@{sd-\/card-\/spi.c}!sd\_card\_space@{sd\_card\_space}}
+\index{sd\_card\_space@{sd\_card\_space}!sd-\/card-\/spi.c@{sd-\/card-\/spi.c}}
+\doxysubsubsection{\texorpdfstring{sd\_card\_space()}{sd\_card\_space()}}
+{\footnotesize\ttfamily uint16\+\_\+t sd\+\_\+card\+\_\+space (\begin{DoxyParamCaption}\item[{uint8\+\_\+t}]{space\+\_\+parameter }\end{DoxyParamCaption})}
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=249pt]{sd-card-spi_8c_aa5f494708578adb845ab2be2b5dd15e8_cgraph}
+\end{center}
+\end{figure}

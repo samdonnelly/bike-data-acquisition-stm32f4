@@ -1,0 +1,64 @@
+\hypertarget{sd-card-spi_8h_source}{}\doxysection{sd-\/card-\/spi.h}
+\label{sd-card-spi_8h_source}\index{Device-\/Drivers/Inc/sd-\/card-\/spi.h@{Device-\/Drivers/Inc/sd-\/card-\/spi.h}}
+\mbox{\hyperlink{sd-card-spi_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 }
+\DoxyCodeLine{15 \textcolor{preprocessor}{\#ifndef SD\_CARD\_SPI}}
+\DoxyCodeLine{16 \textcolor{preprocessor}{\#define SD\_CARD\_SPI}}
+\DoxyCodeLine{17 }
+\DoxyCodeLine{18 }
+\DoxyCodeLine{19 \textcolor{comment}{//======================================================================================}}
+\DoxyCodeLine{20 \textcolor{comment}{// Includes}}
+\DoxyCodeLine{21 }
+\DoxyCodeLine{22 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{includes_8h}{includes.h}}"{}}}
+\DoxyCodeLine{23 }
+\DoxyCodeLine{24 \textcolor{comment}{//======================================================================================}}
+\DoxyCodeLine{25 }
+\DoxyCodeLine{26 }
+\DoxyCodeLine{27 \textcolor{comment}{//======================================================================================}}
+\DoxyCodeLine{28 \textcolor{comment}{// Variables }}
+\DoxyCodeLine{29 }
+\DoxyCodeLine{30 \textcolor{keyword}{typedef} \textcolor{keyword}{struct }\mbox{\hyperlink{structsd__card__file__system}{sd\_card\_file\_system}} \mbox{\hyperlink{structsd__card__file__system}{sd\_card\_file\_system}};}
+\DoxyCodeLine{31 }
+\DoxyCodeLine{32 }
+\DoxyCodeLine{33 \textcolor{keyword}{typedef} \textcolor{keyword}{enum} \{}
+\DoxyCodeLine{34     \mbox{\hyperlink{sd-card-spi_8h_af10e69d664665129f8d643f1ca33d3b5a4ff3d8654533905491fcba9ed80565e1}{TOTAL\_SPACE}},}
+\DoxyCodeLine{35     \mbox{\hyperlink{sd-card-spi_8h_af10e69d664665129f8d643f1ca33d3b5a6f7a2cf1923ad84ceaa7620841adcd9b}{FREE\_SPACE}}}
+\DoxyCodeLine{36 \} \mbox{\hyperlink{sd-card-spi_8h_af10e69d664665129f8d643f1ca33d3b5}{SD\_card\_functions}};}
+\DoxyCodeLine{37 }
+\DoxyCodeLine{38 \textcolor{comment}{// TODO Define SD card number in an enum and pass that as a parameter to the functions }}
+\DoxyCodeLine{39 \textcolor{comment}{// to know what sd card instance to use}}
+\DoxyCodeLine{40 }
+\DoxyCodeLine{41 \textcolor{comment}{//======================================================================================}}
+\DoxyCodeLine{42 }
+\DoxyCodeLine{43 }
+\DoxyCodeLine{44 \textcolor{comment}{//======================================================================================}}
+\DoxyCodeLine{45 \textcolor{comment}{// Function prototypes}}
+\DoxyCodeLine{46 }
+\DoxyCodeLine{47 \textcolor{comment}{// Initialize SD card }}
+\DoxyCodeLine{48 \textcolor{keywordtype}{bool} \mbox{\hyperlink{sd-card-spi_8h_a7e603476b243181725120704f45713bc}{sd\_card\_init}}(\textcolor{keywordtype}{void});}
+\DoxyCodeLine{49 }
+\DoxyCodeLine{50 \textcolor{comment}{// SD card total and free space }}
+\DoxyCodeLine{51 uint16\_t \mbox{\hyperlink{sd-card-spi_8h_aa5f494708578adb845ab2be2b5dd15e8}{sd\_card\_space}}(uint8\_t space\_parameter);}
+\DoxyCodeLine{52 }
+\DoxyCodeLine{53 \textcolor{comment}{// Create file on SD card }}
+\DoxyCodeLine{54 \textcolor{keywordtype}{void} \mbox{\hyperlink{sd-card-spi_8h_a0ae85c55f7cf1284d69f8d09f2dbb1b4}{sd\_card\_create\_file}}(\textcolor{keywordtype}{void});}
+\DoxyCodeLine{55 }
+\DoxyCodeLine{56 \textcolor{comment}{// Update an existing file }}
+\DoxyCodeLine{57 \textcolor{keywordtype}{void} \mbox{\hyperlink{sd-card-spi_8h_a3dc5e7d97bd3a324719819c24fc646dd}{sd\_card\_update\_file}}(\textcolor{keywordtype}{void});}
+\DoxyCodeLine{58 }
+\DoxyCodeLine{59 \textcolor{comment}{// Remove file}}
+\DoxyCodeLine{60 \textcolor{keywordtype}{void} \mbox{\hyperlink{sd-card-spi_8h_ac48b9cc67b3fcc4c3d674d3ee45a8c54}{sd\_card\_remove\_file}}(\textcolor{keywordtype}{void});}
+\DoxyCodeLine{61 }
+\DoxyCodeLine{62 \textcolor{comment}{// Determine size of buffer up to which it is filled}}
+\DoxyCodeLine{63 \textcolor{keywordtype}{int} \mbox{\hyperlink{sd-card-spi_8h_a3d58516bba6fae33b5a617ca1ec8c5f2}{bufsize}}(\textcolor{keywordtype}{char} *buf);}
+\DoxyCodeLine{64 }
+\DoxyCodeLine{65 \textcolor{comment}{// Clear buffer }}
+\DoxyCodeLine{66 \textcolor{keywordtype}{void} \mbox{\hyperlink{sd-card-spi_8h_adb4fdeb8cd68ca546a3ee1086a63d91a}{bufclear}}(\mbox{\hyperlink{structsd__card__file__system}{sd\_card\_file\_system}} *card\_buffer);}
+\DoxyCodeLine{67 }
+\DoxyCodeLine{68 \textcolor{comment}{//======================================================================================}}
+\DoxyCodeLine{69 }
+\DoxyCodeLine{70 }
+\DoxyCodeLine{71 \textcolor{preprocessor}{\#endif  }\textcolor{comment}{// SD\_CARD\_SPI}}
+
+\end{DoxyCode}

@@ -1,0 +1,128 @@
+\hypertarget{accelerometer__data_8c}{}\doxysection{Core/\+Src/accelerometer\+\_\+data.c File Reference}
+\label{accelerometer__data_8c}\index{Core/Src/accelerometer\_data.c@{Core/Src/accelerometer\_data.c}}
+
+
+Functions that interact with the systems accelerometer.  
+
+
+{\ttfamily \#include \char`\"{}accelerometer\+\_\+data.\+h\char`\"{}}\newline
+Include dependency graph for accelerometer\+\_\+data.\+c\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{accelerometer__data_8c__incl}
+\end{center}
+\end{figure}
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+uint8\+\_\+t \mbox{\hyperlink{accelerometer__data_8c_ae7cae8a1f87165c318400071effa97a6}{MPU6050\+\_\+\+Init}} (void)
+\begin{DoxyCompactList}\small\item\em Initiate accelerometer. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{accelerometer__data_8c_a2c5ba03e9ada15dd7bb5e83425ddb948}{MPU6050\+\_\+read}} (\mbox{\hyperlink{main__functions_8h_a2f89dc4c646ea6418ea97ea96f5f8a66}{bda\+\_\+trackers\+\_\+t}} $\ast$trackers)
+\begin{DoxyCompactList}\small\item\em Read accelerometer data. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+I2\+C\+\_\+\+Handle\+Type\+Def \mbox{\hyperlink{accelerometer__data_8c_af7b2c26e44dadaaa798a5c3d82914ba7}{hi2c1}}
+\item 
+uint8\+\_\+t \mbox{\hyperlink{accelerometer__data_8c_a8bfd79faff98a8b652ff64958dec9a18}{data}} \mbox{[}6\mbox{]}
+\item 
+float \mbox{\hyperlink{accelerometer__data_8c_aef9c910c050f1f4442d77306cc0a48db}{accel\+\_\+data}} \mbox{[}3\mbox{]}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Functions that interact with the systems accelerometer. 
+
+\begin{DoxyAuthor}{Author}
+Sam Donnelly
+\end{DoxyAuthor}
+\begin{DoxyVersion}{Version}
+0.\+1 
+\end{DoxyVersion}
+\begin{DoxyDate}{Date}
+2022-\/01-\/18
+\end{DoxyDate}
+\begin{DoxyCopyright}{Copyright}
+Copyright (c) 2022 
+\end{DoxyCopyright}
+
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{accelerometer__data_8c_ae7cae8a1f87165c318400071effa97a6}\label{accelerometer__data_8c_ae7cae8a1f87165c318400071effa97a6}} 
+\index{accelerometer\_data.c@{accelerometer\_data.c}!MPU6050\_Init@{MPU6050\_Init}}
+\index{MPU6050\_Init@{MPU6050\_Init}!accelerometer\_data.c@{accelerometer\_data.c}}
+\doxysubsubsection{\texorpdfstring{MPU6050\_Init()}{MPU6050\_Init()}}
+{\footnotesize\ttfamily uint8\+\_\+t MPU6050\+\_\+\+Init (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+
+
+Initiate accelerometer. 
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{accelerometer__data_8c_ae7cae8a1f87165c318400071effa97a6_cgraph}
+\end{center}
+\end{figure}
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{accelerometer__data_8c_ae7cae8a1f87165c318400071effa97a6_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{accelerometer__data_8c_a2c5ba03e9ada15dd7bb5e83425ddb948}\label{accelerometer__data_8c_a2c5ba03e9ada15dd7bb5e83425ddb948}} 
+\index{accelerometer\_data.c@{accelerometer\_data.c}!MPU6050\_read@{MPU6050\_read}}
+\index{MPU6050\_read@{MPU6050\_read}!accelerometer\_data.c@{accelerometer\_data.c}}
+\doxysubsubsection{\texorpdfstring{MPU6050\_read()}{MPU6050\_read()}}
+{\footnotesize\ttfamily void MPU6050\+\_\+read (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{main__functions_8h_a2f89dc4c646ea6418ea97ea96f5f8a66}{bda\+\_\+trackers\+\_\+t}} $\ast$}]{trackers }\end{DoxyParamCaption})}
+
+
+
+Read accelerometer data. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em trackers} & \\
+\hline
+{\em ADDR} & \\
+\hline
+{\em REG} & \\
+\hline
+{\em data\+\_\+corr} & \\
+\hline
+\end{DoxyParams}
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=282pt]{accelerometer__data_8c_a2c5ba03e9ada15dd7bb5e83425ddb948_icgraph}
+\end{center}
+\end{figure}
+
+
+\doxysubsection{Variable Documentation}
+\mbox{\Hypertarget{accelerometer__data_8c_aef9c910c050f1f4442d77306cc0a48db}\label{accelerometer__data_8c_aef9c910c050f1f4442d77306cc0a48db}} 
+\index{accelerometer\_data.c@{accelerometer\_data.c}!accel\_data@{accel\_data}}
+\index{accel\_data@{accel\_data}!accelerometer\_data.c@{accelerometer\_data.c}}
+\doxysubsubsection{\texorpdfstring{accel\_data}{accel\_data}}
+{\footnotesize\ttfamily float accel\+\_\+data\mbox{[}3\mbox{]}}
+
+\mbox{\Hypertarget{accelerometer__data_8c_a8bfd79faff98a8b652ff64958dec9a18}\label{accelerometer__data_8c_a8bfd79faff98a8b652ff64958dec9a18}} 
+\index{accelerometer\_data.c@{accelerometer\_data.c}!data@{data}}
+\index{data@{data}!accelerometer\_data.c@{accelerometer\_data.c}}
+\doxysubsubsection{\texorpdfstring{data}{data}}
+{\footnotesize\ttfamily uint8\+\_\+t data\mbox{[}6\mbox{]}}
+
+\mbox{\Hypertarget{accelerometer__data_8c_af7b2c26e44dadaaa798a5c3d82914ba7}\label{accelerometer__data_8c_af7b2c26e44dadaaa798a5c3d82914ba7}} 
+\index{accelerometer\_data.c@{accelerometer\_data.c}!hi2c1@{hi2c1}}
+\index{hi2c1@{hi2c1}!accelerometer\_data.c@{accelerometer\_data.c}}
+\doxysubsubsection{\texorpdfstring{hi2c1}{hi2c1}}
+{\footnotesize\ttfamily I2\+C\+\_\+\+Handle\+Type\+Def hi2c1\hspace{0.3cm}{\ttfamily [extern]}}
+
